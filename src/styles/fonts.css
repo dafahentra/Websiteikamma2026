@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ─── Font Utama: Inter ────────────────────────────────────────── */
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+/* ─── Font Sekunder: Libre Caslon Text Normal ─────────────────────
+   Digunakan untuk heading, judul section, display text            */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-caslon {
+  font-family: 'Libre Caslon Text', serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* ─── Pengganti Bold: Libre Caslon Text Italic ────────────────────
+   Digunakan sebagai penekanan/emphasis sebagai ganti font-weight   */
+strong,
+b,
+.font-caslon-italic,
+.font-caslon-bold,
+.font-bold-caslon {
+  font-family: 'Libre Caslon Text', serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+}
+
+/* ─── Utility override ────────────────────────────────────────── */
+.font-inter {
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal !important;
+}

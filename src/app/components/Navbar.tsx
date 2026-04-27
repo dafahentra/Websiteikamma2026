@@ -7,31 +7,29 @@ import {
   useTransform,
   useAnimationFrame,
   useMotionValue,
+  MotionValue,
 } from 'motion/react';
 import { Home, Info, BookOpen, CalendarDays, Phone, ChevronDown } from 'lucide-react';
+import LogoPutihRaw from '../../imports/LogoPutih.svg?raw';
 
-/* ── Logo putih (inline SVG) ─────────────────────────────────────── */
+/* ── Ekstrak isi SVG (path, dll) dari raw string ─────────────────── */
+const svgInner = LogoPutihRaw
+  .replace(/<\?xml[^>]*\?>/g, '')
+  .replace(/<svg[^>]*>/g, '')
+  .replace(/<\/svg>/g, '')
+  .trim();
+
+/* ── Logo putih — full path via ?raw import ──────────────────────── */
 function IkammaLogo({ className }: { className?: string }) {
   return (
-    <div className="flex items-center gap-2">
-      <svg
-        viewBox="0 0 749 538"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className={className}
-        aria-label="IKAMMA"
-      >
-        <path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M374.847 7.87903L375.125 15.7581L383.725 15.972C469.196 18.0979 547.426 40.5861 609.586 80.899C697.056 137.628 739.319 221.498 722.578 305.133C710.984 363.062 672.173 416 612.78 454.898C604.526 460.304 595.622 465.968 592.994 467.486C587.827 470.471 558.494 485.157 557.7 485.157C557.435 485.157 554.946 486.195 552.172 487.463C540.572 492.766 518.675 500.203 494.093 507.189C487.847 508.963 471.183 512.456 453.481 515.7C447.908 516.722 429.509 518.978 413.825 520.563C397.304 522.232 346.687 521.941 328.779 520.073C310.536 518.17 300.14 516.847 293.901 515.634C291.273 515.124 286.758 514.254 283.868 513.702C278.193 512.618 274.876 511.916 263.801 509.458C252.475 506.945 231.838 500.894 218.857 496.28C203.02 490.653 203.912 491.008 187.355 483.76C178.044 479.684 154.667 467.644 150.896 464.982C149.501 463.997 148.119 463.191 147.823 463.191C146.795 463.191 130.427 452.342 121.421 445.69C112.259 438.924 95.6828 425.016 92.4214 421.36C90.6928 419.421 90.7129 419.299 93.377 415.574C94.8734 413.481 107.903 395.727 122.33 376.119C136.758 356.512 154.367 332.519 161.462 322.801C208.156 258.851 229.686 230.052 254.636 198.169C264.09 186.088 272.063 175.989 272.352 175.726C272.642 175.464 274.583 173.1 276.668 170.473C293.684 149.028 321.982 118.676 333.806 109.186C340.518 103.8 348.888 99.3273 352.191 99.3636C354.601 99.3894 356.769 101.036 358.427 104.099C361.949 110.608 360.153 142.396 354.567 172.384C347.828 208.568 346.558 215.014 344.074 225.627C342.482 232.429 338.679 251.301 336.424 263.589C334.807 272.396 333.876 276.961 331.257 288.898C329.876 295.201 328.279 302.507 327.71 305.133C327.141 307.76 326.343 311.413 325.937 313.251C325.53 315.089 323.846 322.825 322.195 330.442C320.543 338.058 318.773 345.794 318.259 347.632C317.426 350.615 310.283 386.603 307.832 400.159C307.311 403.048 306.643 409.065 306.349 413.529C305.91 420.201 306.121 422.242 307.535 424.99C309.194 428.212 309.426 428.322 314.001 428.028C327.167 427.182 345.389 415.266 360.411 397.681C378.511 376.491 388.597 359.817 418.127 302.268C423.787 291.237 430.449 278.345 432.932 273.617C435.413 268.89 440.573 259.005 444.398 251.651C448.222 244.298 453.832 233.553 456.863 227.775C459.894 221.998 465.865 210.407 470.132 202.02C477.571 187.395 486.235 172.899 487.552 172.873C487.896 172.867 487.999 174.473 487.78 176.442C487.563 178.413 486.956 187.115 486.432 195.782C485.908 204.449 484.851 219.491 484.08 229.208C482.32 251.428 482.309 263.633 484.03 284.122C488.746 340.281 504.057 379.541 532.286 407.87C549.847 425.493 556.563 429.294 565.331 426.576C584.669 420.581 622.145 400.653 620.929 397.01C620.727 396.402 618.863 395.413 616.79 394.812C612.004 393.427 601.914 388.363 596.339 384.546C586.308 377.681 568.356 358.512 560.737 346.533C547.298 325.4 537.518 292.321 534.174 256.694C532.643 240.374 533.528 189.875 536.045 149.94C538.15 116.543 538.514 102.189 537.258 102.189C535.689 102.189 524.011 107.136 515.464 111.422C500.361 118.995 489.53 128.423 477.651 144.334C472.1 151.771 465.426 161.969 465.426 163.016C465.426 163.358 464.843 164.316 464.131 165.145C462.864 166.62 458.365 174.732 450.85 189.097C448.788 193.036 445.69 198.838 443.966 201.99C442.241 205.141 439.548 210.083 437.983 212.972C436.417 215.861 433.618 221.019 431.762 224.433C429.907 227.847 426.879 233.434 425.034 236.848C421.926 242.599 415.402 254.519 409.091 265.977C395.969 289.799 372.28 329.55 367.305 336.093C365.658 338.259 366.555 321.376 368.901 306.088C369.384 302.937 370.456 295.416 371.281 289.375C372.106 283.335 373.198 275.814 373.708 272.662C374.218 269.51 376.361 255.469 378.472 241.457C380.583 227.447 382.515 214.769 382.764 213.284C384.025 205.803 388.173 179.78 389.513 170.951C391.482 157.976 392.051 154.438 397.425 121.767C400.049 105.81 400.784 100.904 403.325 82.427C404.563 73.4258 404.538 53.8572 403.285 51.5193C400.836 46.9456 390.525 45.1425 382.577 47.8978C374.259 50.781 358.643 60.4068 346.609 70.066C307.45 101.503 256.732 157.734 190.15 243.534C160.388 281.886 103.281 359.318 76.5982 397.496C75.2355 399.447 73.9054 401.03 73.6426 401.016C72.3898 400.947 63.0759 388.922 55.9655 378.193C38.2741 351.499 28.0027 325.443 23.4007 295.583C22.6725 290.855 22.0686 285.432 22.0591 283.531C22.0428 280.283 21.8259 280.039 18.4585 279.483C12.7853 278.546 1.49712 278.774 0.42306 279.848C-1.18516 281.455 2.04084 304.509 5.89943 318.981C13.8068 348.639 29.2946 378.226 51.0367 405.208C62.6574 419.631 62.1222 418.344 58.5245 423.234C50.8513 433.66 48.8914 436.392 44.6735 442.553C39.5966 449.965 38.8465 452.088 39.4915 457.213C39.9645 460.973 43.4122 470.606 44.771 471.964C45.9148 473.107 56.8934 461.732 68.1719 447.715C73.5461 441.037 78.2618 435.555 78.6526 435.534C79.0425 435.512 83.4467 438.928 88.4386 443.123C111.776 462.734 138.165 479.625 167.03 493.431C173.989 496.76 179.908 499.483 180.185 499.483C180.461 499.483 182.725 500.392 185.216 501.503C194.293 505.555 201.643 508.329 217.456 513.671C252.233 525.419 289.274 532.846 333.08 536.851C351.445 538.531 402.334 538.205 420.935 536.289C442.442 534.075 466.241 530.601 476.415 528.192C478.517 527.694 485.182 526.151 491.226 524.763C512.898 519.787 542.059 510.579 557.638 503.793C559.215 503.106 563.945 501.131 568.149 499.402C576.358 496.029 600.926 483.641 606.961 479.834C608.982 478.56 610.882 477.517 611.185 477.517C612.493 477.517 639.806 458.908 649.851 451.173C663.596 440.59 692.14 412.186 701.118 400.159C720.944 373.6 734.287 347.284 741.215 321.082C751.045 283.906 750.532 248.701 739.625 212.007C728.061 173.103 704.151 136.511 668.962 103.863C656.47 92.2725 656.407 92.219 643.627 82.6009C607.903 55.7147 561.424 33.0107 514.638 19.5935C511.484 18.6891 507.829 17.5908 506.515 17.1524C503.804 16.2489 489.582 12.8213 482.252 11.3057C462.211 7.16179 444.12 4.23175 430.07 2.85459C415.697 1.44592 393.519 0.128927 382.97 0.0572997L374.569 0L374.847 7.87903Z"
-          fill="white"
-        />
-      </svg>
-      <span className="text-white text-xl font-semibold tracking-wide" style={{ fontFamily: 'Inter, sans-serif' }}>
-        IKAMMA
-      </span>
-    </div>
+    <svg
+      viewBox="0 0 749 538"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-label="IKAMMA"
+      dangerouslySetInnerHTML={{ __html: svgInner }}
+    />
   );
 }
 
@@ -111,22 +109,24 @@ function MenuIcon({ isOpen }: { isOpen: boolean }) {
 }
 
 /* ── Desktop dropdown — dirender via portal ke document.body ─────── */
-// Ini menghindari backdrop-filter pada nav yang membuat position:fixed
-// menjadi relatif terhadap nav, bukan viewport.
 function DesktopDropdown({
   open,
   items,
   dropLeft,
   navTop,
   dropHalfWRef,
+  navBg,
+  navBorder,
   onMouseEnter,
   onMouseLeave,
 }: {
   open:         boolean;
   items:        DropdownItem[];
-  dropLeft:     ReturnType<typeof useMotionValue<number>>;
-  navTop:       ReturnType<typeof useMotionValue<number>>;
+  dropLeft:     MotionValue<number>;
+  navTop:       MotionValue<number>;
   dropHalfWRef: React.MutableRefObject<number>;
+  navBg:        MotionValue<string>;
+  navBorder:    MotionValue<string>;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }) {
@@ -159,10 +159,10 @@ function DesktopDropdown({
             left:                 dropLeft,
             zIndex:               9999,
             minWidth:             '176px',
-            background:           'rgba(6,36,74,0.92)',
-            backdropFilter:       'blur(24px) saturate(120%)',
-            WebkitBackdropFilter: 'blur(24px) saturate(120%)',
-            border:               '1px solid rgba(118,132,173,0.25)',
+            background:           navBg,
+            backdropFilter:       'blur(28px) saturate(150%)',
+            WebkitBackdropFilter: 'blur(28px) saturate(150%)',
+            border:               navBorder,
             boxShadow:            '0 12px 40px rgba(6,36,74,0.45)',
             borderRadius:         '14px',
             overflow:             'hidden',
@@ -203,7 +203,12 @@ function DesktopDropdown({
 }
 
 /* ── Desktop nav item ────────────────────────────────────────────── */
-function DesktopNavItem({ link, navTop }: { link: NavLink; navTop: ReturnType<typeof useMotionValue<number>> }) {
+function DesktopNavItem({ link, navTop, navBg, navBorder }: {
+  link:      NavLink;
+  navTop:    MotionValue<number>;
+  navBg:     MotionValue<string>;
+  navBorder: MotionValue<string>;
+}) {
   const [open, setOpen]   = useState(false);
   const closeTimer        = useRef<ReturnType<typeof setTimeout> | null>(null);
   const liRef             = useRef<HTMLLIElement>(null);
@@ -252,6 +257,8 @@ function DesktopNavItem({ link, navTop }: { link: NavLink; navTop: ReturnType<ty
           dropLeft={dropLeft}
           navTop={navTop}
           dropHalfWRef={dropHalfWRef}
+          navBg={navBg}
+          navBorder={navBorder}
           onMouseEnter={show}
           onMouseLeave={hide}
         />
@@ -301,6 +308,10 @@ export function Navbar() {
   const shadowAnim       = useTransform(scrollY, [0, 400], ['0 0px 0px rgba(0,0,0,0)', '0 8px 40px rgba(6,36,74,0.40)']);
   const borderAnim       = useTransform(scrollY, [0, 400], ['1px solid rgba(255,255,255,0)', '1px solid rgba(118,132,173,0.28)']);
   const paddingAnim      = useTransform(scrollY, [0, 400], ['1.4rem 2.5rem', '0.7rem 1.8rem']);
+
+  // Dropdown mengikuti warna navbar
+  const dropBgAnim     = useTransform(scrollY, [0, 400], ['rgba(6,36,74,0.55)', 'rgba(6,36,74,0.92)']);
+  const dropBorderAnim = useTransform(scrollY, [0, 400], ['1px solid rgba(118,132,173,0.12)', '1px solid rgba(118,132,173,0.28)']);
 
   const mvLeft  = useMotionValue(0);
   const mvWidth = useMotionValue(typeof window !== 'undefined' ? window.innerWidth : 390);
@@ -352,7 +363,7 @@ export function Navbar() {
           {/* Desktop links */}
           <ul className="hidden lg:flex items-center gap-7">
             {links.map((link) => (
-              <DesktopNavItem key={link.href} link={link} navTop={mvTop} />
+              <DesktopNavItem key={link.href} link={link} navTop={mvTop} navBg={dropBgAnim} navBorder={dropBorderAnim} />
             ))}
           </ul>
 

@@ -310,7 +310,7 @@ export function Navbar() {
   const paddingAnim      = useTransform(scrollY, [0, 400], ['1.4rem 2.5rem', '0.7rem 1.8rem']);
 
   // Dropdown mengikuti warna navbar
-  const dropBgAnim     = useTransform(scrollY, [0, 400], ['rgba(6,36,74,0.55)', 'rgba(6,36,74,0.92)']);
+  const dropBgAnim = useTransform(scrollY, [0, 400], ['rgba(6,36,74,0)', 'rgba(6,36,74,0.85)']);
   const dropBorderAnim = useTransform(scrollY, [0, 400], ['1px solid rgba(118,132,173,0.12)', '1px solid rgba(118,132,173,0.28)']);
 
   const mvLeft  = useMotionValue(0);

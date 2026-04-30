@@ -3,7 +3,7 @@ import { Hero } from './components/Hero';
 import { CurvedDivider } from './components/CurvedDivider';
 import { EventsSection } from './components/EventsSection';
 import { UpcomingEventsSection } from './components/UpcomingEventsSection';
-import { WhatsNewsSection } from './components/WhatsNewsSection';
+import { NewsSection } from './components/NewsSection';
 import { ArticlesSection } from './components/ArticlesSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
@@ -30,7 +30,7 @@ export default function App() {
       {/* New Event & News Sections */}
       <div className="relative z-30 flex flex-col">
         <ArticlesSection />
-        <WhatsNewsSection />
+        <NewsSection />
         <UpcomingEventsSection />
       </div>
 

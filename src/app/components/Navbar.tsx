@@ -40,74 +40,74 @@ type NavLink = {
 };
 
 const links: NavLink[] = [
-  { href: '#home', label: 'Home', icon: Home },
+  { href: '/#home', label: 'Home', icon: Home },
   {
-    href: '#about',
+    href: '/#about',
     label: 'About Us',
     icon: Info,
     dropdown: [
-      { label: 'IKAMMA', href: '#about-ikamma' },
+      { label: 'IKAMMA', href: '/about' },
       { 
         label: 'Bureau', 
         subDropdown: [
-          { label: 'HRM', href: '#bureau-hrm' },
-          { label: 'HRBB', href: '#bureau-hrbb' },
-          { label: 'MM', href: '#bureau-mm' },
-          { label: 'Advance', href: '#bureau-advance' },
+          { label: 'HRM', href: '/#bureau-hrm' },
+          { label: 'HRBB', href: '/#bureau-hrbb' },
+          { label: 'MM', href: '/#bureau-mm' },
+          { label: 'Advance', href: '/#bureau-advance' },
         ]
       },
       { 
         label: 'Department', 
         subDropdown: [
-          { label: 'Internal', href: '#dept-internal' },
-          { label: 'External', href: '#dept-external' },
-          { label: 'Indev', href: '#dept-indev' },
-          { label: 'Entre', href: '#dept-entre' },
-          { label: 'Sparta', href: '#dept-sparta' },
+          { label: 'Internal', href: '/#dept-internal' },
+          { label: 'External', href: '/#dept-external' },
+          { label: 'Indev', href: '/#dept-indev' },
+          { label: 'Entre', href: '/#dept-entre' },
+          { label: 'Sparta', href: '/#dept-sparta' },
         ]
       },
     ],
   },
   {
-    href: '#programs',
+    href: '/#programs',
     label: 'Info Mahasiswa',
     icon: BookOpen,
     dropdown: [
-      { label: 'Artikel', href: '#artikel' },
-      { label: 'Aspirasi Manajemen', href: '#aspirasi' },
+      { label: 'Artikel', href: '/#artikel' },
+      { label: 'Aspirasi Manajemen', href: '/#aspirasi' },
       { 
         label: 'Bank Soal', 
         subDropdown: [
-          { label: 'IUP', href: '#bank-soal-iup' },
-          { label: 'Reguler', href: '#bank-soal-reguler' },
-          { label: 'Textbook', href: '#bank-soal-textbook' },
+          { label: 'IUP', href: '/#bank-soal-iup' },
+          { label: 'Reguler', href: '/#bank-soal-reguler' },
+          { label: 'Textbook', href: '/#bank-soal-textbook' },
         ]
       },
       { 
         label: 'Info Manajemen', 
         subDropdown: [
-          { label: 'Internship', href: '#info-internship' },
-          { label: 'Competition', href: '#info-competition' },
-          { label: 'Beasiswa', href: '#info-beasiswa' },
+          { label: 'Internship', href: '/#info-internship' },
+          { label: 'Competition', href: '/#info-competition' },
+          { label: 'Beasiswa', href: '/#info-beasiswa' },
         ]
       },
       { 
         label: 'Alumni Database', 
         subDropdown: [
-          { label: 'Register', href: '#alumni-register' },
-          { label: 'Database', href: '#alumni-database' },
+          { label: 'Register', href: '/#alumni-register' },
+          { label: 'Database', href: '/#alumni-database' },
         ]
       },
     ],
   },
-  { href: '#events', label: 'Our Events', icon: CalendarDays },
+  { href: '/#events', label: 'Our Events', icon: CalendarDays },
   {
-    href: '#contact',
+    href: '/#contact',
     label: 'Contact Us',
     icon: Phone,
     dropdown: [
-      { label: 'IKAMMA', href: '#contact-ikamma' },
-      { label: 'Event',  href: '#contact-event' },
+      { label: 'IKAMMA', href: '/#contact-ikamma' },
+      { label: 'Event',  href: '/#contact-event' },
     ],
   },
 ];

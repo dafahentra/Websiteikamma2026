@@ -1,80 +1,416 @@
-import { motion, useScroll, useTransform } from "motion/react";
+import { useRef, useEffect, useState, useMemo } from "react";
+import { motion, useScroll, useTransform, useMotionTemplate, MotionValue, useSpring } from "motion/react";
+import { ArrowRight } from "lucide-react";
+import LogoPutihRaw from "../../imports/LogoPutih.svg?raw";
 
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1758270704787-615782711641?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwc3R1ZGVudHMlMjBjYW1wdXMlMjBjb21tdW5pdHklMjBncm91cHxlbnwxfHx8fDE3NzczMDEyNjF8MA&ixlib=rb-4.1.0&q=80&w=1920";
+  "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1920&q=80";
+const LOGO = "/src/imports/LogoPutih.svg";
+const BACKGROUND_IMAGE = "/src/imports/Screenshot_2026-04-27_at_23.54.12.png";
 
-export function Hero() {
-  const { scrollY } = useScroll();
+// A massive scrolling area to accommodate the grand unified sequence
+const SECTION_HEIGHT_PX = 8000;
 
-  /*
-   * Parallax — foto bergerak ke BAWAH lebih lambat dari scroll (efek "tertinggal").
-   *
-   * Cara menghindari white space di atas:
-   *   scale: 1.15  →  foto 15% lebih besar, dengan transformOrigin DEFAULT (center).
-   *   Buffer atas  =  7.5% tinggi viewport  (misal 800px → ~60px).
-   *   y max        =  5vh  ←  lebih kecil dari buffer 60px, atas TIDAK pernah terpotong.
-   */
-  const imgY = useTransform(scrollY, [0, 700], ["0vh", "7vh"]);
+const SCRAPBOOK_PHOTOS = [
+  "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80",
+  "https://images.unsplash.com/photo-1511629091441-ee46146481b6?w=800&q=80",
+  "https://images.unsplash.com/photo-1523580494112-071d16940d14?w=800&q=80",
+  "https://images.unsplash.com/photo-1492538368677-f6e0afe31dcc?w=800&q=80",
+  "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800&q=80",
+  "https://images.unsplash.com/photo-1506869640319-ce1a44a1b026?w=800&q=80",
+  "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+  "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&q=80",
+  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+  "https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?w=800&q=80",
+];
+
+const svgInner = LogoPutihRaw
+  .replace(/<\?xml[^>]*\?>/g, '')
+  .replace(/<svg[^>]*>/g, '')
+  .replace(/<\/svg>/g, '')
+  .trim();
+
+function IkammaLogo({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 749 538"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-label="IKAMMA"
+      dangerouslySetInnerHTML={{ __html: svgInner }}
+    />
+  );
+}
+
+function FlyingPhoto({ 
+  src, 
+  progress, 
+  cfg 
+}: { 
+  src: string, 
+  progress: MotionValue<number>, 
+  cfg: { xStart: number, yStart: number, widthVW: number, startP: number, exitP: number, zIndex: number } 
+}) {
+  const { xStart, yStart, widthVW, startP, exitP, zIndex: configZIndex } = cfg;
+  
+  // Real 3D Z translation
+  const z = useTransform(progress, [startP, exitP], [-3000, 1500]);
+  
+  const duration = exitP - startP;
+  const fadeInEnd = startP + duration * 0.25;
+  const opacity = useTransform(progress, [startP, fadeInEnd], [0, 1]);
+  
+  // PERFORMANCE OPTIMIZATION: 
+  // Continuously applying 'blur(0px)' forces the browser to keep the image in the expensive filter pipeline.
+  // By returning 'none' when the blur is finished, we free up massive amounts of GPU memory!
+  const blurValue = useTransform(progress, [startP, fadeInEnd], [10, 0]);
+  const filter = useMotionTemplate`${blurValue}px`;
+  const optimizedFilter = useTransform(filter, (v) => parseFloat(v) > 0.1 ? `blur(${v})` : "none");
 
   return (
-    <>
-      {/* ── Fixed hero — background [#06244A] agar tidak pernah terlihat putih ── */}
-      <div
-        className="fixed inset-0 overflow-hidden"
-        style={{ zIndex: 1, backgroundColor: "#06244A" }}
+    <motion.div
+      className="absolute pointer-events-none"
+      style={{ 
+        left: "50%", 
+        top: "50%", 
+        x: `${xStart * 4}vw`, 
+        y: `${yStart * 4}vh`, 
+        z, 
+        opacity,
+        zIndex: configZIndex, // Explicitly place older photos above newer ones
+        willChange: "transform, opacity" // GPU Acceleration hint
+      }}
+    >
+      <div 
+        className="absolute -translate-x-1/2 -translate-y-1/2 aspect-[4/3] rounded-md shadow-[0_20px_40px_rgba(0,0,0,0.6)] overflow-hidden"
+        style={{ width: `${widthVW * 4}vw` }}
       >
-        {/* Photo — scale dari CENTER (buffer merata atas & bawah), bergerak perlahan ke bawah */}
-        <motion.img
-          src={HERO_IMAGE}
-          alt="IKAMMA"
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{
-            y: imgY,
-            scale: 1.15,
-            /* transformOrigin dibiarkan default: 'center center'
-               → 7.5% buffer di atas TIDAK tergerus transform */
-          }}
+        <img 
+          src={src} 
+          alt="Scrapbook Memory" 
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover" 
         />
+        {/* We apply the filter to a separate motion div or directly to the wrapper if possible. Actually, applying it to a wrapper is fine, but motion.div requires it. */}
+        <motion.div 
+          className="absolute inset-0 z-20 pointer-events-none bg-transparent"
+          style={{ backdropFilter: optimizedFilter, willChange: "backdrop-filter" }}
+        />
+      </div>
+    </motion.div>
+  );
+}
 
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#06244A]/80 via-[#06244A]/25 to-transparent" />
+export function Hero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerTop, setContainerTop] = useState(0);
 
-        {/* Hero text */}
+  useEffect(() => {
+    function measure() {
+      if (containerRef.current) {
+        setContainerTop(containerRef.current.offsetTop);
+      }
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  const { scrollY } = useScroll();
+
+  const rawProgress = useTransform(
+    scrollY,
+    [containerTop, containerTop + SECTION_HEIGHT_PX],
+    [0, 1],
+    { clamp: true }
+  );
+  
+  // Apply a smooth spring physics wrapper to eliminate rigid mouse-wheel tick stiffness
+  const progress = useSpring(rawProgress, {
+    stiffness: 150,
+    damping: 35,
+    restDelta: 0.001
+  });
+
+  /* === PHASE 1: Hero Zoom Out === */
+  // 0.00 to 0.10
+  // Non-linear array creates an exponential deceleration curve for a cinematic landing
+  const maskScale = useTransform(
+    progress, 
+    [0.0, 0.04, 0.07, 0.09, 0.10], 
+    [70,  15,   4,    1.5,  1]
+  );
+  const maskOpacity = useTransform(progress, [0.0, 0.05], [0, 1]);
+  const captionOpacity = useTransform(progress, [0.0, 0.02], [1, 0]);
+
+  /* === PHASE 2: Text turns white & Logo appears === */
+  // 0.10 to 0.15
+  const whiteLayerOpacity = useTransform(progress, [0.10, 0.15], [0, 1]);
+  const logoOpacity = useTransform(progress, [0.10, 0.15], [0, 1]);
+  const logoY = useTransform(progress, [0.10, 0.15], ["-24px", "0px"]);
+
+  /* === PHASE 3: Hero Flies Past Camera === */
+  // 0.25 to 0.35 (User zooms into the text!)
+  // Non-linear array creates an exponential acceleration curve for realistic camera fly-through
+  const heroScale = useTransform(
+    progress, 
+    [0.25, 0.30, 0.33, 0.35], 
+    [1,    3,    12,   40]
+  );
+  const heroOpacity = useTransform(progress, [0.30, 0.35], [1, 0]);
+
+  // Reduced layout to 25 photos for better balance and performance
+  const PIONIR_LAYOUT = [
+    { x: -28, y: -18, w: 16 }, // Main top left
+    { x: 32, y: 22, w: 18 },   // Main bottom right
+    { x: -12, y: 28, w: 20 },  // Main bottom left
+    { x: 25, y: -25, w: 14 },  // Secondary top right
+    { x: 2, y: -36, w: 12 },   // Small top center
+    { x: -42, y: 8, w: 13 },   // Small far left
+    { x: 44, y: -2, w: 12 },   // Small far right
+    { x: 12, y: 38, w: 16 },   // Secondary bottom center
+    { x: -34, y: 36, w: 12 },  // Small bottom far left
+    { x: 36, y: -38, w: 13 },  // Small top far right
+    { x: -6, y: 6, w: 18 },    // Center left
+    { x: 18, y: 8, w: 14 },    // Center right
+
+    { x: -45, y: -30, w: 11 }, // Far Top Left
+    { x: 45, y: -25, w: 14 },  // Far Top Right
+    { x: -20, y: -38, w: 15 }, // Mid-Top Left
+    { x: 15, y: -42, w: 13 },  // Mid-Top Right
+    { x: -46, y: 25, w: 16 },  // Far Bottom Left
+    { x: 42, y: 38, w: 12 },   // Far Bottom Right
+    { x: -25, y: 12, w: 14 },  // Inner Mid Left
+    { x: 22, y: -5, w: 17 },   // Inner Mid Right
+    { x: -5, y: -15, w: 19 },  // Inner Top Center
+    { x: 5, y: 25, w: 15 },    // Inner Bottom Center
+    
+    { x: -52, y: -15, w: 10 }, // Extreme Left
+    { x: 52, y: 10, w: 11 },   // Extreme Right
+  ];
+
+  const photoConfigs = useMemo(() => {
+    // We shuffle the layout array deterministically so they pop up randomly across the screen
+    // rather than left-to-right, making the "1 by 1" appearance feel much more dynamic!
+    const shuffledLayout = [...PIONIR_LAYOUT].sort((a, b) => (a.x * a.y) % 3 - 1);
+    
+    const configs = [];
+    for (let i = 0; i < shuffledLayout.length; i++) {
+      const { x: xStart, y: yStart, w: widthVW } = shuffledLayout[i];
+      
+      // Sequential appearance: strict 1-by-1 staggered timeline
+      const seq = i / shuffledLayout.length; 
+      const startP = 0.35 + (seq * 0.30); 
+      
+      // Variable duration so some fly slightly faster/slower, adding depth
+      const duration = 0.12 + Math.random() * 0.05; 
+      const exitP = startP + duration;
+      
+      configs.push({
+        xStart,
+        yStart,
+        widthVW,
+        startP,
+        exitP,
+        srcIndex: i % SCRAPBOOK_PHOTOS.length,
+        zIndex: 100 - i // Older photos (lower i) get a higher z-index to stay on top!
+      });
+    }
+    return configs;
+  }, []);
+
+  /* === PHASE 5: Background Photo === */
+  // Spawns during the scrapbook phase (0.55) and finishes as the background (0.85)
+  const finalScale = useTransform(progress, [0.55, 0.85], [0.15, 1]);
+  
+  // Fades in and blurs just like the other scrapbook photos
+  const finalOpacity = useTransform(progress, [0.55, 0.60], [0, 1]);
+  const finalBlur = useTransform(progress, [0.55, 0.60], [10, 0]);
+  const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
+
+  /* === PHASE 6: About IKAMMA Content Fades In === */
+  // 0.85 to 0.95
+  const contentOpacity = useTransform(progress, [0.85, 0.95], [0, 1]);
+  const contentY = useTransform(progress, [0.85, 0.95], [40, 0]);
+  
+  // The dark overlay ONLY appears at the very end when it becomes the background
+  const overlayOpacity = useTransform(progress, [0.80, 0.90], [0, 0.85]);
+
+  return (
+    <div ref={containerRef} className="relative w-full" style={{ height: SECTION_HEIGHT_PX }}>
+      <div 
+        className="sticky top-0 w-full h-screen overflow-hidden bg-[#0C2340]"
+        style={{ perspective: "1000px" }}
+      >
+        
+        {/* === PHASE 5 & 6: Final Background and Content === */}
+        {/* Placed lowest in the DOM so it's behind flying photos */}
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 1,
-            delay: 0.3,
-            ease: [0.25, 0.1, 0.25, 1],
+          className="absolute z-0 flex items-center justify-center overflow-hidden shadow-2xl"
+          style={{
+            width: "100vw",
+            height: "100vh",
+            scale: finalScale,
+            opacity: finalOpacity,
           }}
-          className="absolute left-8 sm:left-14 lg:left-20"
-          style={{ bottom: "28%" }}
         >
-          <h1
-            className="font-caslon text-white"
-            style={{
-              fontSize: "clamp(2.6rem, 6.5vw, 5.5rem)",
-              lineHeight: 1.05,
+          <motion.img
+            src={BACKGROUND_IMAGE}
+            alt="Background"
+            className="w-full h-full object-cover"
+            style={{ filter: finalFilter }}
+          />
+          <motion.div 
+            className="absolute inset-0 bg-black"
+            style={{ opacity: overlayOpacity }}
+          />
+        </motion.div>
+
+        {/* === PHASE 6: Content === */}
+        <motion.div 
+          className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-center"
+          style={{ opacity: contentOpacity, y: contentY }}
+        >
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col gap-16 pointer-events-auto">
+            <h2 className="text-white text-4xl md:text-5xl font-serif italic">
+              — What is IKAMMA??
+            </h2>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+              <div className="text-white/90 space-y-6">
+                <p className="text-lg leading-relaxed text-justify">
+                  <span className="font-bold italic">Ikatan Keluarga Mahasiswa Manajemen (IKAMMA)</span> merupakan sebuah organisasi himpunan mahasiswa Program Studi Manajemen di Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
+                </p>
+                <p className="text-lg leading-relaxed text-justify">
+                  IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
+                </p>
+                <div className="pt-4">
+                  <a
+                    href="#about-more"
+                    className="inline-flex items-center gap-2 bg-[#00B894] hover:bg-[#009b7c] text-white px-6 py-2.5 rounded-full font-medium transition-colors"
+                  >
+                    <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                    See More
+                    <ArrowRight size={18} />
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-start lg:items-end w-full">
+                <div className="w-full max-w-md ml-auto">
+                  <div className="inline-block bg-[#00B894] px-3 py-1 mb-4">
+                    <h3 className="text-white text-xl font-bold">Company Profile</h3>
+                  </div>
+                  <div className="w-full aspect-video bg-[#D9D9D9] rounded-[2rem] shadow-lg mb-4"></div>
+                  <div className="text-right">
+                    <a href="#video" className="text-white hover:text-[#00B894] transition-colors inline-flex items-center gap-2 text-sm underline underline-offset-4">
+                      Click to See Full Video <ArrowRight size={14} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-16 w-full">
+              <h3 className="text-white text-3xl font-bold text-center mb-8">Our Partners</h3>
+              <div className="w-full overflow-hidden flex whitespace-nowrap">
+                <div className="flex gap-16 items-center animate-marquee">
+                  {[...Array(10)].map((_, i) => (
+                    <IkammaLogo key={i} className="w-24 h-24 object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* === PHASE 4: 50 Flying Scrapbook Photos === */}
+        {photoConfigs.map((cfg, i) => (
+          <FlyingPhoto 
+            key={i}
+            src={SCRAPBOOK_PHOTOS[cfg.srcIndex]}
+            progress={progress}
+            cfg={cfg}
+          />
+        ))}
+
+        {/* === PHASE 1, 2 & 3: Hero Initial State === */}
+        <motion.div
+          className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+          style={{ scale: heroScale, opacity: heroOpacity }}
+        >
+          {/* Photo behind the mask */}
+          <div className="absolute inset-0 z-0">
+            <img src={HERO_IMAGE} alt="Graduation" className="w-full h-full object-cover" />
+            <motion.div 
+              className="absolute inset-0 bg-white" 
+              style={{ opacity: whiteLayerOpacity }} 
+            />
+          </div>
+
+          {/* SVG Mask Layer */}
+          <motion.div
+            className="absolute inset-0 z-10"
+            style={{ scale: maskScale, opacity: maskOpacity }}
+          >
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <mask id="textMask">
+                  <rect width="100%" height="100%" fill="white" />
+                  <text
+                    x="50%"
+                    y="50%"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill="black"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontWeight: 700,
+                      fontStyle: "italic",
+                      fontSize: "clamp(2rem, 8vw, 7rem)",
+                      letterSpacing: "-0.045em",
+                    }}
+                  >
+                    #WeShareToInspire
+                  </text>
+                </mask>
+              </defs>
+              <rect width="100%" height="100%" fill="#0C2340" mask="url(#textMask)" />
+            </svg>
+          </motion.div>
+
+          {/* Logo above text */}
+          <motion.div
+            className="absolute z-30 w-full flex justify-center pointer-events-none"
+            style={{ 
+              opacity: logoOpacity, 
+              y: logoY, 
+              bottom: "calc(50% + clamp(1rem, 4vw, 3.5rem) + 50px)" 
             }}
           >
-            Bersama Tumbuh,
-            <span className="block font-caslon-italic text-[#00A855]">
-              Bersama Berkarya
-            </span>
-          </h1>
-        </motion.div>
-      </div>
+            <img src={LOGO} alt="IKAMMA Logo" className="w-28 md:w-40 object-contain" />
+          </motion.div>
 
-      {/* ── Spacer ── */}
-      <div
-        style={{
-          height: "calc(100vh + 120px)",
-          position: "relative",
-          zIndex: 2,
-          pointerEvents: "none",
-        }}
-      />
-    </>
+          {/* Caption */}
+          <motion.p
+            className="absolute z-30 bottom-10 right-8 sm:bottom-14 sm:right-14 md:right-20 italic pointer-events-none"
+            style={{
+              opacity: captionOpacity,
+              fontFamily: "'Inter', sans-serif",
+              fontWeight: 700,
+              fontSize: "clamp(2rem, 5.5vw, 4.5rem)",
+              letterSpacing: "-0.02em",
+              color: "white",
+              textShadow: "0 2px 28px rgba(0,0,0,0.7)",
+            }}
+          >
+            #Bertumbuh Seirama
+          </motion.p>
+        </motion.div>
+
+      </div>
+    </div>
   );
 }

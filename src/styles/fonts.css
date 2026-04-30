@@ -36,3 +36,10 @@ b,
   font-family: 'Inter', sans-serif !important;
   font-style: normal !important;
 }
+
+/* Force Inter for hero elements that need it despite h1 Caslon override */
+.font-inter-display {
+  font-family: 'Inter', sans-serif !important;
+  font-style: italic !important;
+  font-weight: 900 !important;
+}

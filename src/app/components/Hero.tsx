@@ -6,12 +6,12 @@ import LogoPutihRaw from "../../imports/LogoPutih.svg?raw";
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1920&q=80";
 const LOGO = "/src/imports/LogoPutih.svg";
-const BACKGROUND_IMAGE = "/src/imports/Screenshot_2026-04-27_at_23.54.12.png";
+const BACKGROUND_IMAGE = "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2000&auto=format&fit=crop";
 
 import { SCRAPBOOK_PHOTOS } from "../../assets/photos";
 
 // A massive scrolling area to accommodate the grand unified sequence
-const SECTION_HEIGHT_PX = 8000;
+const SECTION_HEIGHT_PX = 11000;
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
@@ -218,6 +218,9 @@ export function Hero() {
   const finalOpacity = useTransform(progress, [0.55, 0.60], [0, 1]);
   const finalBlur = useTransform(progress, [0.55, 0.60], [10, 0]);
   const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
+  
+  // Parallax effect: A subtle, gentle slow pan up.
+  const parallaxY = useTransform(progress, [0.85, 1.00], ["0vh", "-10vh"]);
 
   /* === PHASE 6: About IKAMMA Content Fades In === */
   // 0.85 to 0.95
@@ -237,7 +240,7 @@ export function Hero() {
         {/* === PHASE 5 & 6: Final Background and Content === */}
         {/* Placed lowest in the DOM so it's behind flying photos */}
         <motion.div
-          className="absolute z-0 flex items-center justify-center overflow-hidden shadow-2xl"
+          className="absolute z-0 flex items-start justify-center overflow-hidden shadow-2xl"
           style={{
             width: "100vw",
             height: "100vh",
@@ -248,8 +251,11 @@ export function Hero() {
           <motion.img
             src={BACKGROUND_IMAGE}
             alt="Background"
-            className="w-full h-full object-cover"
-            style={{ filter: finalFilter }}
+            className="w-full h-[110vh] object-cover"
+            style={{ 
+              filter: finalFilter,
+              y: parallaxY 
+            }}
           />
           <motion.div 
             className="absolute inset-0 bg-black"
@@ -259,15 +265,19 @@ export function Hero() {
 
         {/* === PHASE 6: Content === */}
         <motion.div 
-          className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-center"
+          className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-center w-full pt-20"
           style={{ opacity: contentOpacity, y: contentY }}
         >
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col gap-16 pointer-events-auto">
-            <h2 className="text-white text-4xl md:text-5xl font-serif italic">
-              — What is IKAMMA??
+          {/* Main Content inside restricted width */}
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col gap-10 pointer-events-auto">
+            <h2 className="text-white text-4xl md:text-5xl flex items-center gap-3">
+              <span className="text-[#00B894]">—</span>
+              <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">What is</span>
+              <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">IKAMMA</span>
             </h2>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+            {/* Changed from items-start to items-center to make the Company Profile vertically centered! */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               <div className="text-white/90 space-y-6">
                 <p className="text-lg leading-relaxed text-justify">
                   <span className="font-bold italic">Ikatan Keluarga Mahasiswa Manajemen (IKAMMA)</span> merupakan sebuah organisasi himpunan mahasiswa Program Studi Manajemen di Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
@@ -289,10 +299,23 @@ export function Hero() {
 
               <div className="flex flex-col items-start lg:items-end w-full">
                 <div className="w-full max-w-md ml-auto">
-                  <div className="inline-block bg-[#00B894] px-3 py-1 mb-4">
-                    <h3 className="text-white text-xl font-bold">Company Profile</h3>
+                  <div className="inline-block bg-[#00B894] px-4 py-1.5 mb-5 shadow-md">
+                    <h3 className="text-white text-2xl font-black tracking-wide uppercase">Company Profile</h3>
                   </div>
-                  <div className="w-full aspect-video bg-[#D9D9D9] rounded-[2rem] shadow-lg mb-4"></div>
+                  
+                  {/* Embedded YouTube Player */}
+                  <div className="w-full aspect-video rounded-3xl overflow-hidden shadow-2xl mb-4 bg-black/50 border border-white/10">
+                    <iframe 
+                      className="w-full h-full"
+                      src="https://www.youtube.com/embed/8VO2f7XQ7Tw?rel=0" 
+                      title="YouTube video player" 
+                      frameBorder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                      referrerPolicy="strict-origin-when-cross-origin" 
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  
                   <div className="text-right">
                     <a href="#video" className="text-white hover:text-[#00B894] transition-colors inline-flex items-center gap-2 text-sm underline underline-offset-4">
                       Click to See Full Video <ArrowRight size={14} />
@@ -301,16 +324,23 @@ export function Hero() {
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="mt-16 w-full">
-              <h3 className="text-white text-3xl font-bold text-center mb-8">Our Partners</h3>
-              <div className="w-full overflow-hidden flex whitespace-nowrap">
-                <div className="flex gap-16 items-center animate-marquee">
-                  {[...Array(10)].map((_, i) => (
-                    <IkammaLogo key={i} className="w-24 h-24 object-contain opacity-80 hover:opacity-100 transition-opacity" />
-                  ))}
-                </div>
-              </div>
+          {/* Our Partners outside container wrapper to bleed edge-to-edge! */}
+          <div className="mt-12 w-full pointer-events-auto">
+            <h3 className="text-white text-3xl font-bold text-center mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>Our Partners</h3>
+            {/* Infinite Marquee Container */}
+            <div className="w-full overflow-hidden flex whitespace-nowrap">
+              <motion.div 
+                className="flex gap-16 items-center min-w-fit pr-16"
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ ease: "linear", duration: 30, repeat: Infinity }}
+              >
+                {/* We render 12 logos twice (24 total) to create a perfect, seamless endless loop! */}
+                {[...Array(24)].map((_, i) => (
+                  <IkammaLogo key={i} className="w-24 h-24 object-contain opacity-80 hover:opacity-100 transition-opacity flex-shrink-0" />
+                ))}
+              </motion.div>
             </div>
           </div>
         </motion.div>

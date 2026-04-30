@@ -1,29 +1,69 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-// 12 IG posts (4 columns × 3 rows)
-const NEWS_ITEMS = [
-  // Column 1
-  { id: 1, day: '17', month: 'April', year: '2026', image: '' },
-  { id: 2, day: '17', month: 'April', year: '2026', image: '' },
-  { id: 3, day: '17', month: 'April', year: '2026', image: '' },
-  // Column 2
-  { id: 4, day: '17', month: 'April', year: '2026', image: '' },
-  { id: 5, day: '17', month: 'April', year: '2026', image: '' },
-  { id: 6, day: '17', month: 'April', year: '2026', image: '' },
-  // Column 3
-  { id: 7, day: '17', month: 'April', year: '2026', image: '' },
-  { id: 8, day: '17', month: 'April', year: '2026', image: '' },
-  { id: 9, day: '17', month: 'April', year: '2026', image: '' },
-  // Column 4
-  { id: 10, day: '17', month: 'April', year: '2026', image: '' },
-  { id: 11, day: '17', month: 'April', year: '2026', image: '' },
-  { id: 12, day: '17', month: 'April', year: '2026', image: '' },
-];
+// ── Types ──────────────────────────────────────────
+interface IGPost {
+  id: string;
+  media_url: string;
+  thumbnail_url?: string;
+  permalink: string;
+  timestamp: string;
+  media_type: string;
+  caption?: string;
+}
 
-function NewsCard({ item }: { item: typeof NEWS_ITEMS[number] }) {
+interface NewsItem {
+  id: string;
+  day: string;
+  month: string;
+  year: string;
+  image: string;
+  permalink: string;
+}
+
+// ── Helpers ────────────────────────────────────────
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function parseTimestamp(ts: string): { day: string; month: string; year: string } {
+  const d = new Date(ts);
+  return {
+    day: String(d.getDate()),
+    month: MONTHS[d.getMonth()],
+    year: String(d.getFullYear()),
+  };
+}
+
+function igPostToNewsItem(post: IGPost): NewsItem {
+  const { day, month, year } = parseTimestamp(post.timestamp);
+  return {
+    id: post.id,
+    day,
+    month,
+    year,
+    image: post.media_type === 'VIDEO' ? (post.thumbnail_url || post.media_url) : post.media_url,
+    permalink: post.permalink,
+  };
+}
+
+// ── Fallback placeholder data (used when API is unavailable) ──
+const PLACEHOLDER_ITEMS: NewsItem[] = Array.from({ length: 12 }, (_, i) => ({
+  id: String(i + 1),
+  day: '17',
+  month: 'Apr',
+  year: '2026',
+  image: '',
+  permalink: 'https://www.instagram.com/ikamma_ugm/',
+}));
+
+// ── Card Component ─────────────────────────────────
+function NewsCard({ item }: { item: NewsItem }) {
   return (
-    <div className="relative w-full aspect-square cursor-pointer group">
+    <a
+      href={item.permalink}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="relative w-full aspect-square cursor-pointer group block"
+    >
       {/* Card with SVG shape */}
       <svg
         viewBox="0 0 360 360"
@@ -36,28 +76,57 @@ function NewsCard({ item }: { item: typeof NEWS_ITEMS[number] }) {
             <path d="M0 27C0 12.0883 12.0883 0 27 0H101H330C346.569 0 360 13.4315 360 30V291C360 307.569 346.569 321 330 321H238.205C230.38 321 222.864 324.057 217.262 329.52L194.738 351.48C189.136 356.943 181.62 360 173.795 360H30C13.4315 360 0 346.569 0 330V27Z" />
           </clipPath>
         </defs>
-        {/* Background fill with clip */}
+        {/* Background fill */}
         <rect width="360" height="360" fill="#CBD5E1" clipPath={`url(#card-clip-${item.id})`} className="group-hover:fill-[#c0cad4] transition-colors duration-300" />
-        {/* If image exists, use foreignObject */}
+        {/* Image via foreignObject */}
         {item.image && (
           <foreignObject width="360" height="360" clipPath={`url(#card-clip-${item.id})`}>
-            <img src={item.image} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <img
+              src={item.image}
+              alt=""
+              loading="lazy"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
           </foreignObject>
         )}
       </svg>
 
-      {/* Date positioned in the bottom-right notch space */}
+      {/* Date in the bottom-right notch */}
       <div className="absolute bottom-0 right-0 flex items-end pr-1 pb-1">
         <p className="text-sm font-medium text-white/90 whitespace-nowrap">
           {item.day} {item.month} <span className="text-[#00B894]">{item.year}</span>
         </p>
       </div>
-    </div>
+    </a>
   );
 }
 
+// ── Section Component ──────────────────────────────
 export function NewsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [items, setItems] = useState<NewsItem[]>(PLACEHOLDER_ITEMS);
+
+  // Fetch IG posts from Netlify function
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const res = await fetch('/api/instagram');
+        if (!res.ok) throw new Error('API error');
+        const data = await res.json();
+
+        if (data?.data?.length) {
+          const posts: NewsItem[] = data.data
+            .slice(0, 12)
+            .map((p: IGPost) => igPostToNewsItem(p));
+          setItems(posts);
+        }
+      } catch {
+        // Silently fall back to placeholders
+        console.warn('Instagram API unavailable — using placeholders');
+      }
+    }
+    fetchPosts();
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -69,10 +138,10 @@ export function NewsSection() {
 
   // Divide items into 4 columns of 3
   const columns = [
-    NEWS_ITEMS.slice(0, 3),
-    NEWS_ITEMS.slice(3, 6),
-    NEWS_ITEMS.slice(6, 9),
-    NEWS_ITEMS.slice(9, 12),
+    items.slice(0, 3),
+    items.slice(3, 6),
+    items.slice(6, 9),
+    items.slice(9, 12),
   ];
 
   return (

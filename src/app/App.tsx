@@ -21,15 +21,20 @@ export default function App() {
           This masks the bottom of the Hero section to look like a dome,
           without actually cutting the Hero section itself! */}
       <div 
-        className="relative z-30 -mt-[6vh]"
+        className="relative z-30 -mt-[6vh] bg-white"
         style={{ clipPath: "url(#events-curve)" }}
       >
         <EventsSection />
       </div>
 
-      {/* New Event & News Sections */}
-      <div className="relative z-30 flex flex-col">
+      {/* Articles — sits BEHIND EventsSection (z-20) for curtain-reveal parallax.
+          As EventsSection scrolls away, this section is revealed underneath. */}
+      <div className="relative z-20">
         <ArticlesSection />
+      </div>
+
+      {/* Remaining sections on top */}
+      <div className="relative z-30 flex flex-col">
         <NewsSection />
         <UpcomingEventsSection />
       </div>

@@ -21,30 +21,34 @@ const NEWS_ITEMS = [
   { id: 12, day: '17', month: 'April', year: '2026', image: '' },
 ];
 
-const BG = '#102a4e';
-
 function NewsCard({ item }: { item: typeof NEWS_ITEMS[number] }) {
   return (
-    <div className="relative w-full aspect-square rounded-3xl overflow-hidden bg-[#CBD5E1] cursor-pointer group">
-      {item.image
-        ? <img src={item.image} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-        : <div className="absolute inset-0 bg-[#CBD5E1] group-hover:brightness-95 transition-all duration-300" />
-      }
-
-      {/* Bottom-right cutout date badge */}
-      <div
-        className="absolute bottom-0 right-0 flex items-center justify-center px-4 py-2 rounded-tl-2xl"
-        style={{ background: BG }}
+    <div className="relative w-full aspect-square cursor-pointer group">
+      {/* Card with SVG shape */}
+      <svg
+        viewBox="0 0 360 360"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="absolute inset-0 w-full h-full"
       >
-        <div
-          className="absolute -top-5 right-0 w-5 h-5"
-          style={{ boxShadow: `10px 10px 0 0 ${BG}`, borderBottomRightRadius: '20px' }}
-        />
-        <div
-          className="absolute bottom-0 -left-5 w-5 h-5"
-          style={{ boxShadow: `10px 10px 0 0 ${BG}`, borderBottomRightRadius: '20px' }}
-        />
-        <p className="text-sm font-medium text-white/90 whitespace-nowrap z-10">
+        <defs>
+          <clipPath id={`card-clip-${item.id}`}>
+            <path d="M0 27C0 12.0883 12.0883 0 27 0H101H330C346.569 0 360 13.4315 360 30V291C360 307.569 346.569 321 330 321H238.205C230.38 321 222.864 324.057 217.262 329.52L194.738 351.48C189.136 356.943 181.62 360 173.795 360H30C13.4315 360 0 346.569 0 330V27Z" />
+          </clipPath>
+        </defs>
+        {/* Background fill with clip */}
+        <rect width="360" height="360" fill="#CBD5E1" clipPath={`url(#card-clip-${item.id})`} className="group-hover:fill-[#c0cad4] transition-colors duration-300" />
+        {/* If image exists, use foreignObject */}
+        {item.image && (
+          <foreignObject width="360" height="360" clipPath={`url(#card-clip-${item.id})`}>
+            <img src={item.image} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          </foreignObject>
+        )}
+      </svg>
+
+      {/* Date positioned in the bottom-right notch space */}
+      <div className="absolute bottom-0 right-0 flex items-end pr-1 pb-1">
+        <p className="text-sm font-medium text-white/90 whitespace-nowrap">
           {item.day} {item.month} <span className="text-[#00B894]">{item.year}</span>
         </p>
       </div>
@@ -82,11 +86,11 @@ export function NewsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="flex items-center gap-4 text-4xl md:text-6xl font-bold mb-4"
+            className="text-white text-4xl md:text-5xl flex items-center gap-3 mb-4"
           >
-            <span className="text-white">—</span>
-            <span className="text-transparent" style={{ WebkitTextStroke: '1.5px white' }}>See</span>
-            <span className="text-white">What's News</span>
+            <span className="text-[#00B894]">—</span>
+            <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">See</span>
+            <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">What's News</span>
           </motion.h2>
 
           <motion.div

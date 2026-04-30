@@ -37,16 +37,11 @@ export function UpcomingEventsSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="flex items-center gap-4 text-4xl md:text-6xl font-bold"
+            className="text-white text-4xl md:text-5xl flex items-center gap-3"
           >
-            <span className="text-white">—</span>
-            <span 
-              className="text-transparent"
-              style={{ WebkitTextStroke: '1.5px white' }}
-            >
-              Upcoming
-            </span>
-            <span className="text-white">Event</span>
+            <span className="text-[#00B894]">—</span>
+            <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Upcoming</span>
+            <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Event</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}

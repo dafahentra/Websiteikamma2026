@@ -6,7 +6,7 @@ import {
   useScroll,
   useMotionValueEvent,
 } from 'motion/react';
-import { Home, Info, BookOpen, CalendarDays, Phone, ChevronDown } from 'lucide-react';
+import { Home, Info, BookOpen, CalendarDays, Phone, ChevronDown, ChevronRight } from 'lucide-react';
 import LogoPutihRaw from '../../imports/LogoPutih.svg?raw';
 
 /* ── Ekstrak isi SVG (path, dll) dari raw string ─────────────────── */
@@ -30,7 +30,8 @@ function IkammaLogo({ className }: { className?: string }) {
 }
 
 /* ── Nav link data ───────────────────────────────────────────────── */
-type DropdownItem = { label: string; href: string };
+type SubDropdownItem = { label: string; href: string };
+type DropdownItem = { label: string; href?: string; subDropdown?: SubDropdownItem[] };
 type NavLink = {
   href: string;
   label: string;
@@ -45,9 +46,26 @@ const links: NavLink[] = [
     label: 'About Us',
     icon: Info,
     dropdown: [
-      { label: 'IKAMMA',     href: '#about-ikamma' },
-      { label: 'Bureau',     href: '#about-bureau' },
-      { label: 'Department', href: '#about-department' },
+      { label: 'IKAMMA', href: '#about-ikamma' },
+      { 
+        label: 'Bureau', 
+        subDropdown: [
+          { label: 'HRM', href: '#bureau-hrm' },
+          { label: 'HRBB', href: '#bureau-hrbb' },
+          { label: 'MM', href: '#bureau-mm' },
+          { label: 'Advance', href: '#bureau-advance' },
+        ]
+      },
+      { 
+        label: 'Department', 
+        subDropdown: [
+          { label: 'Internal', href: '#dept-internal' },
+          { label: 'External', href: '#dept-external' },
+          { label: 'Indev', href: '#dept-indev' },
+          { label: 'Entre', href: '#dept-entre' },
+          { label: 'Sparta', href: '#dept-sparta' },
+        ]
+      },
     ],
   },
   {
@@ -55,11 +73,31 @@ const links: NavLink[] = [
     label: 'Info Mahasiswa',
     icon: BookOpen,
     dropdown: [
-      { label: 'Artikel',             href: '#artikel' },
-      { label: 'Aspirasi Manajemen',  href: '#aspirasi' },
-      { label: 'Bank Soal',           href: '#bank-soal' },
-      { label: 'Info Manajemen',      href: '#info-manajemen' },
-      { label: 'Alumni Database',     href: '#alumni' },
+      { label: 'Artikel', href: '#artikel' },
+      { label: 'Aspirasi Manajemen', href: '#aspirasi' },
+      { 
+        label: 'Bank Soal', 
+        subDropdown: [
+          { label: 'IUP', href: '#bank-soal-iup' },
+          { label: 'Reguler', href: '#bank-soal-reguler' },
+          { label: 'Textbook', href: '#bank-soal-textbook' },
+        ]
+      },
+      { 
+        label: 'Info Manajemen', 
+        subDropdown: [
+          { label: 'Internship', href: '#info-internship' },
+          { label: 'Competition', href: '#info-competition' },
+          { label: 'Beasiswa', href: '#info-beasiswa' },
+        ]
+      },
+      { 
+        label: 'Alumni Database', 
+        subDropdown: [
+          { label: 'Register', href: '#alumni-register' },
+          { label: 'Database', href: '#alumni-database' },
+        ]
+      },
     ],
   },
   { href: '#events', label: 'Our Events', icon: CalendarDays },
@@ -104,6 +142,68 @@ function MenuIcon({ isOpen }: { isOpen: boolean }) {
   );
 }
 
+/* ── Desktop Dropdown Item (supports nested) ───────────────────── */
+function DesktopDropdownItem({ item }: { item: DropdownItem }) {
+  const [open, setOpen] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const show = () => { if (closeTimer.current) clearTimeout(closeTimer.current); setOpen(true); };
+  const hide = () => { closeTimer.current = setTimeout(() => setOpen(false), 120); };
+
+  const hasSub = !!item.subDropdown;
+
+  return (
+    <li
+      className="relative"
+      onMouseEnter={hasSub ? show : undefined}
+      onMouseLeave={hasSub ? hide : undefined}
+    >
+      <a
+        href={hasSub ? undefined : item.href}
+        className="flex items-center justify-between px-5 py-2.5 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-150 whitespace-nowrap"
+        style={{ fontSize: '13.5px', textDecoration: 'none', cursor: hasSub ? 'default' : 'pointer' }}
+        onClick={hasSub ? (e) => e.preventDefault() : undefined}
+      >
+        {item.label}
+        {hasSub && <ChevronRight size={14} className="ml-4 opacity-70" />}
+      </a>
+
+      <AnimatePresence>
+        {open && hasSub && (
+          <motion.div
+            initial={{ opacity: 0, x: -8, scale: 0.96 }}
+            animate={{ opacity: 1, x: 0,  scale: 1 }}
+            exit={{    opacity: 0, x: -6, scale: 0.97 }}
+            transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
+            className="absolute left-full top-0 ml-1 min-w-[150px] rounded-2xl"
+            style={{
+              background: 'rgba(12, 35, 64, 0.85)',
+              backdropFilter: 'blur(30px) saturate(150%)',
+              WebkitBackdropFilter: 'blur(30px) saturate(150%)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+            }}
+          >
+            <ul className="m-0 list-none py-2">
+              {item.subDropdown!.map((sub) => (
+                <li key={sub.href}>
+                  <a
+                    href={sub.href}
+                    className="block px-5 py-2.5 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-150 whitespace-nowrap"
+                    style={{ fontSize: '13.5px', textDecoration: 'none' }}
+                  >
+                    {sub.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </li>
+  );
+}
+
 /* ── Desktop dropdown — menggunakan Portal agar tidak terpotong overflow ─────── */
 function DesktopDropdown({
   open,
@@ -139,12 +239,12 @@ function DesktopDropdown({
           animate={{ opacity: 1, y: 0,  scale: 1 }}
           exit={{    opacity: 0, y: -6, scale: 0.97 }}
           transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
-          className="fixed -translate-x-1/2 min-w-[176px] rounded-2xl overflow-hidden"
+          className="fixed -translate-x-1/2 min-w-[176px] rounded-2xl"
           style={{
             top: coords.top,
             left: coords.left,
             zIndex: 9999,
-            background: 'rgba(255,255,255,0.05)',
+            background: 'rgba(12, 35, 64, 0.85)',
             backdropFilter: 'blur(30px) saturate(150%)',
             WebkitBackdropFilter: 'blur(30px) saturate(150%)',
             border: '1px solid rgba(255,255,255,0.1)',
@@ -152,16 +252,8 @@ function DesktopDropdown({
           }}
         >
           <ul className="m-0 list-none py-2">
-            {items.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="block px-5 py-2.5 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-150 whitespace-nowrap"
-                  style={{ fontSize: '13.5px', textDecoration: 'none' }}
-                >
-                  {item.label}
-                </a>
-              </li>
+            {items.map((item, idx) => (
+              <DesktopDropdownItem key={idx} item={item} />
             ))}
           </ul>
         </motion.div>
@@ -217,6 +309,64 @@ function DesktopNavItem({ link }: { link: NavLink }) {
   );
 }
 
+/* ── Mobile Accordion Item (supports nested) ───────────────────── */
+function MobileAccordionItem({ item, onClose }: { item: DropdownItem; onClose: () => void }) {
+  const [open, setOpen] = useState(false);
+  const hasSub = !!item.subDropdown;
+
+  return (
+    <li className="flex flex-col">
+      <div className="flex items-center justify-between pr-2">
+        <a
+          href={hasSub ? undefined : item.href}
+          onClick={hasSub ? (e) => { e.preventDefault(); setOpen(!open); } : onClose}
+          className="flex-1 flex items-center gap-3 pl-12 py-[10px] text-white/50 hover:text-white/90 hover:bg-white/5 transition-all duration-150 rounded-full"
+          style={{ fontSize: '13.5px' }}
+        >
+          <span className="w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
+          {item.label}
+        </a>
+        {hasSub && (
+          <button
+            onClick={() => setOpen(!open)}
+            className="p-2 text-white/50 hover:text-white focus:outline-none"
+            aria-label="Toggle submenu"
+          >
+            <motion.span animate={{ rotate: open ? 180 : 0 }} className="inline-flex">
+              <ChevronDown size={14} />
+            </motion.span>
+          </button>
+        )}
+      </div>
+
+      <AnimatePresence>
+        {open && hasSub && (
+          <motion.ul
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22, ease: [0.32, 0.72, 0, 1] }}
+            className="overflow-hidden m-0 list-none"
+          >
+            {item.subDropdown!.map(sub => (
+              <li key={sub.href}>
+                <a
+                  href={sub.href}
+                  onClick={onClose}
+                  className="block pl-16 pr-4 py-2 text-white/40 hover:text-white/80 hover:bg-white/5 transition-all duration-150 rounded-full"
+                  style={{ fontSize: '12.5px' }}
+                >
+                  {sub.label}
+                </a>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </li>
+  );
+}
+
 /* ── Mobile accordion sub-items ──────────────────────────────────── */
 function MobileAccordion({ items, onClose }: { items: DropdownItem[]; onClose: () => void }) {
   return (
@@ -225,20 +375,10 @@ function MobileAccordion({ items, onClose }: { items: DropdownItem[]; onClose: (
       animate={{ opacity: 1, height: 'auto' }}
       exit={{    opacity: 0, height: 0 }}
       transition={{ duration: 0.22, ease: [0.32, 0.72, 0, 1] }}
-      className="overflow-hidden"
+      className="overflow-hidden m-0 list-none"
     >
-      {items.map((item) => (
-        <li key={item.href}>
-          <a
-            href={item.href}
-            className="flex items-center gap-3 pl-12 pr-4 py-[10px] text-white/50 hover:text-white/90 hover:bg-white/5 transition-all duration-150 rounded-full"
-            style={{ fontSize: '13.5px' }}
-            onClick={onClose}
-          >
-            <span className="w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
-            {item.label}
-          </a>
-        </li>
+      {items.map((item, idx) => (
+        <MobileAccordionItem key={idx} item={item} onClose={onClose} />
       ))}
     </motion.ul>
   );
@@ -249,9 +389,11 @@ export function Navbar() {
   const [expanded, setExpanded] = useState(false);
   const [mobileExpand, setMobileExpand] = useState<string | null>(null);
   const [hidden, setHidden] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 50);
     const previous = scrollY.getPrevious();
     // Hide when scrolling down past 150px
     if (latest > previous! && latest > 150) {
@@ -280,9 +422,9 @@ export function Navbar() {
     >
       {/* ── Desktop & Tablet Liquid Glass Pill ─────────────────────────────────── */}
       <nav
-        className="flex items-center h-[56px] pl-4 pr-3 rounded-full pointer-events-auto"
+        className="flex items-center h-[56px] pl-4 pr-3 rounded-full pointer-events-auto transition-colors duration-300"
         style={{
-          background: 'rgba(255, 255, 255, 0.05)',
+          background: isScrolled ? 'rgba(12, 35, 64, 0.85)' : 'rgba(255, 255, 255, 0.05)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
           backdropFilter: 'blur(24px) saturate(150%)',
@@ -339,7 +481,7 @@ export function Navbar() {
               width: 'calc(100vw - 48px)', // Responsive width
               maxWidth: '350px',
               transformOrigin: 'top left',
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: 'rgba(12, 35, 64, 0.95)',
               backdropFilter: 'blur(30px) saturate(150%)',
               WebkitBackdropFilter: 'blur(30px) saturate(150%)',
               border: '1px solid rgba(255, 255, 255, 0.1)',

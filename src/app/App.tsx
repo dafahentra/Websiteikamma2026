@@ -1,6 +1,10 @@
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { CurvedDivider } from './components/CurvedDivider';
 import { EventsSection } from './components/EventsSection';
+import { UpcomingEventsSection } from './components/UpcomingEventsSection';
+import { WhatsNewsSection } from './components/WhatsNewsSection';
+import { ArticlesSection } from './components/ArticlesSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 
@@ -8,18 +12,41 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#0C2340]">
       <Navbar />
-      <Hero />
-
-      {/* The rest of the page sections */}
-      <div className="relative bg-[#0C2340]" style={{ zIndex: 20 }}>
-        
-        {/* White background for the remaining sections */}
-        <div className="bg-white">
-          <EventsSection />
-          <ContactSection />
-          <Footer />
-        </div>
+      {/* Hero section underneath (z-20) */}
+      <div className="relative z-20">
+        <Hero />
       </div>
+
+      {/* Events section ON TOP (z-30) slides UP with a CONCAVE TOP.
+          This masks the bottom of the Hero section to look like a dome,
+          without actually cutting the Hero section itself! */}
+      <div 
+        className="relative z-30 -mt-[6vh]"
+        style={{ clipPath: "url(#events-curve)" }}
+      >
+        <EventsSection />
+      </div>
+
+      {/* New Event & News Sections */}
+      <div className="relative z-30 flex flex-col">
+        <ArticlesSection />
+        <WhatsNewsSection />
+        <UpcomingEventsSection />
+      </div>
+
+      {/* Contact & Footer */}
+      <div className="relative z-30 bg-white">
+        <ContactSection />
+        <Footer />
+      </div>
+
+      {/* SVG definition for the Events section's concave top edge */}
+      <svg style={{ width: 0, height: 0, position: "absolute" }} aria-hidden="true" focusable="false">
+        <clipPath id="events-curve" clipPathUnits="objectBoundingBox">
+          {/* Top-left to top-right with a quadratic bezier dipping in the middle. Gentler curve (0.04) */}
+          <path d="M 0,0 Q 0.5,0.04 1,0 L 1,1 L 0,1 Z" />
+        </clipPath>
+      </svg>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import LOGO from '../../imports/LogoPutih.svg';
 
 const BACKGROUND_IMAGE = "/src/imports/Screenshot_2026-04-27_at_23.54.12.png";
 
@@ -58,13 +59,35 @@ function CarouselCard({ index, activeIndex, photo, unfoldProgress, onClick }: Ca
   return (
     <motion.div
       onClick={onClick}
-      className="absolute w-56 h-72 md:w-72 md:h-96 shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden cursor-pointer rounded-xl bg-black"
+      className="absolute w-56 h-72 md:w-72 md:h-96 overflow-hidden cursor-pointer rounded-xl bg-black"
       style={{ x, y, rotate, scale, zIndex: target.zIndex }}
+      animate={{
+        boxShadow: isCenter 
+          ? "0 20px 50px rgba(0,0,0,0.4), 0 0 60px rgba(0,184,148,0.5)" 
+          : "0 20px 50px rgba(0,0,0,0.4), 0 0 0px rgba(0,184,148,0)"
+      }}
+      transition={{ duration: 0.4 }}
     >
       <motion.img 
         src={photo} 
         className="w-full h-full object-cover" 
         style={{ filter }}
+      />
+      {/* Overlay Logo in the center of the photo */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <img src={LOGO} alt="IKAMMA Logo" className="w-24 md:w-32 opacity-80" />
+      </div>
+      {/* Inner Neon Frame matching Figma */}
+      <motion.div 
+        className="absolute top-4 bottom-4 left-4 right-4 pointer-events-none rounded-sm border-2"
+        animate={{ 
+          borderColor: isCenter ? "rgba(0,184,148,1)" : "rgba(0,184,148,0)",
+          boxShadow: isCenter 
+            ? "0 0 15px rgba(0,184,148,0.5), inset 0 0 15px rgba(0,184,148,0.5)" 
+            : "0 0 0px rgba(0,184,148,0), inset 0 0 0px rgba(0,184,148,0)",
+          opacity: isCenter ? 1 : 0
+        }}
+        transition={{ duration: 0.4 }}
       />
     </motion.div>
   );
@@ -84,7 +107,8 @@ export function EventsSection() {
   const unfoldProgress = useTransform(scrollYProgress, [0.4, 1], [0, 1]);
 
   return (
-    <section ref={sectionRef} id="events" className="relative w-full py-32 overflow-hidden min-h-screen flex flex-col justify-center bg-[#f8f9fa]">
+    <>
+      <section ref={sectionRef} id="events" className="relative w-full pb-32 pt-20 overflow-hidden min-h-screen flex flex-col justify-center bg-[#f8f9fa]">
       {/* Background with Heavy White Overlay */}
       <div className="absolute inset-0 z-0">
         <img
@@ -104,10 +128,11 @@ export function EventsSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-[#04233F] text-4xl md:text-5xl font-serif italic text-right font-bold"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            className="text-[#0C2340] text-4xl md:text-5xl flex items-center gap-3"
           >
-            — Our Notable Events
+            <span className="text-[#00B894]">—</span>
+            <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
+            <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Notable Events</span>
           </motion.h2>
         </div>
 
@@ -142,5 +167,6 @@ export function EventsSection() {
 
       </div>
     </section>
+    </>
   );
 }

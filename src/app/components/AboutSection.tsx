@@ -1,9 +1,9 @@
 import { useRef, useMemo } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import LogoPutihRaw from "../../imports/LogoPutih.svg?raw";
+import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
 
-const BACKGROUND_IMAGE = "/src/imports/Screenshot_2026-04-27_at_23.54.12.png";
+const BACKGROUND_IMAGE = "/src/assets/Screenshot_2026-04-27_at_23.54.12.png";
 
 const SCRAPBOOK_PHOTOS = [
   "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80",
@@ -109,18 +109,18 @@ export function AboutSection() {
   }, []);
 
   // Final Background Photo (The 51st image)
-  // Starts extremely small in the exact center and grows to 100% full screen by the end
-  const finalScale = useTransform(scrollYProgress, [0, 0.85], [0.15, 1]);
+  // Starts extremely small in the exact center and grows to 100% full screen over a long period
+  const finalScale = useTransform(scrollYProgress, [0, 0.7], [0.15, 1]);
   // We don't animate rotation anymore, it stays perfectly straight (0 deg)
-  const finalRadius = useTransform(scrollYProgress, [0, 0.85], ["0px", "0px"]); // No rounded corners
+  const finalRadius = useTransform(scrollYProgress, [0, 0.7], ["0px", "0px"]); // No rounded corners
 
-  // Content (About IKAMMA Text & Logos) fades in at the very end when the background is fully scaled
-  const contentOpacity = useTransform(scrollYProgress, [0.85, 0.95], [0, 1]);
-  const contentY = useTransform(scrollYProgress, [0.85, 0.95], [40, 0]);
-  const overlayOpacity = useTransform(scrollYProgress, [0.8, 0.9], [0, 0.85]);
+  // Content (About IKAMMA Text & Logos) fades in very slowly over 40% of the scroll
+  const contentOpacity = useTransform(scrollYProgress, [0.4, 0.8], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.4, 0.8], [80, 0]);
+  const overlayOpacity = useTransform(scrollYProgress, [0.35, 0.75], [0, 0.45]);
 
   return (
-    <section id="about" ref={containerRef} className="relative w-full h-[600vh] bg-[#0C2340]">
+    <section id="about" ref={containerRef} className="relative w-full h-[1200vh] bg-[#0C2340]">
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
         
         {/* Final Background Photo - Rendered first so it's behind all the flying photos */}

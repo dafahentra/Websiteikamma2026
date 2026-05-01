@@ -77,7 +77,7 @@ function NewsCard({ item }: { item: NewsItem }) {
           </clipPath>
         </defs>
         {/* Background fill */}
-        <rect width="360" height="360" fill="#CBD5E1" clipPath={`url(#card-clip-${item.id})`} className="group-hover:fill-[#c0cad4] transition-colors duration-300" />
+        <rect width="360" height="360" fill="#CBD5E1" clipPath={`url(#card-clip-${item.id})`} />
         {/* Image via foreignObject */}
         {item.image && (
           <foreignObject width="360" height="360" clipPath={`url(#card-clip-${item.id})`}>
@@ -85,7 +85,7 @@ function NewsCard({ item }: { item: NewsItem }) {
               src={item.image}
               alt=""
               loading="lazy"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover"
             />
           </foreignObject>
         )}
@@ -134,7 +134,7 @@ export function NewsSection() {
   });
 
   // Columns 2 & 4 move up as you scroll (parallax)
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -250]);
 
   // Divide items into 4 columns of 3
   const columns = [
@@ -186,7 +186,7 @@ export function NewsSection() {
                 key={colIdx}
                 className="flex flex-col gap-4 md:gap-5"
                 style={{
-                  marginTop: isOffset ? 150 : 0,
+                  marginTop: isOffset ? 200 : 0,
                   y: isOffset ? parallaxY : 0,
                 }}
               >

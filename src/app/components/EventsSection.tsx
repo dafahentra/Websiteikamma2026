@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import LOGO from '../../imports/LogoPutih.svg';
+import LOGO from '../../assets/LogoPutih.svg';
 
-const BACKGROUND_IMAGE = "/src/imports/Screenshot_2026-04-27_at_23.54.12.png";
+const BACKGROUND_IMAGE = "/src/assets/Screenshot_2026-04-27_at_23.54.12.png";
 
 const EVENT_PHOTOS = [
   "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
@@ -100,73 +100,75 @@ export function EventsSection() {
   // Track scroll progress relative to this section
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "center center"]
+    offset: ["start end", "end end"]
   });
 
   // Calculate 0 to 1 unfold progression based on scroll
-  const unfoldProgress = useTransform(scrollYProgress, [0.4, 1], [0, 1]);
+  const unfoldProgress = useTransform(scrollYProgress, [0.2, 0.8], [0, 1]);
 
   return (
     <>
-      <section ref={sectionRef} id="events" className="relative w-full pb-32 pt-20 overflow-hidden min-h-screen flex flex-col justify-center bg-[#f8f9fa]">
-      {/* Background with Heavy White Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={BACKGROUND_IMAGE}
-          alt="Background"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-white/90" />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
-        
-        {/* Title */}
-        <div className="flex justify-center md:justify-end mb-24">
-          <motion.h2 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-[#0C2340] text-4xl md:text-5xl flex items-center gap-3"
-          >
-            <span className="text-[#00B894]">—</span>
-            <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
-            <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Notable Events</span>
-          </motion.h2>
-        </div>
-
-        {/* Stacked Interactive Carousel Visualization */}
-        <div className="relative w-full max-w-4xl mx-auto h-[450px] flex items-center justify-center mb-16 perspective-[1000px]">
-          {EVENT_PHOTOS.map((photo, i) => (
-            <CarouselCard
-              key={i}
-              index={i}
-              activeIndex={activeIndex}
-              photo={photo}
-              unfoldProgress={unfoldProgress}
-              onClick={() => setActiveIndex(i)}
+      <section ref={sectionRef} id="events" className="relative w-full h-[200vh] bg-[#f8f9fa]">
+        <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
+          {/* Background with Heavy White Overlay */}
+          <div className="absolute inset-0 z-0">
+            <img
+              src={BACKGROUND_IMAGE}
+              alt="Background"
+              className="w-full h-full object-cover"
             />
-          ))}
+            <div className="absolute inset-0 bg-white/90" />
+          </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
+            
+            {/* Title */}
+            <div className="flex justify-center md:justify-end mb-16 md:mb-24">
+              <motion.h2 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="text-[#0C2340] text-4xl md:text-5xl flex items-center gap-3"
+              >
+                <span className="text-[#00B894]">—</span>
+                <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
+                <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Notable Events</span>
+              </motion.h2>
+            </div>
+
+            {/* Stacked Interactive Carousel Visualization */}
+            <div className="relative w-full max-w-4xl mx-auto h-[400px] md:h-[450px] flex items-center justify-center mb-12 md:mb-16 perspective-[1000px]">
+              {EVENT_PHOTOS.map((photo, i) => (
+                <CarouselCard
+                  key={i}
+                  index={i}
+                  activeIndex={activeIndex}
+                  photo={photo}
+                  unfoldProgress={unfoldProgress}
+                  onClick={() => setActiveIndex(i)}
+                />
+              ))}
+            </div>
+
+            {/* CTA Button */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="flex justify-center"
+            >
+              <button className="bg-[#00B894] hover:bg-[#009b7c] text-white px-8 py-3 rounded-full font-medium transition-colors inline-flex items-center gap-2 shadow-lg hover:shadow-xl">
+                <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                See More
+                <ArrowRight size={18} />
+              </button>
+            </motion.div>
+
+          </div>
         </div>
-
-        {/* CTA Button */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex justify-center"
-        >
-          <button className="bg-[#00B894] hover:bg-[#009b7c] text-white px-8 py-3 rounded-full font-medium transition-colors inline-flex items-center gap-2 shadow-lg hover:shadow-xl">
-            <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
-            See More
-            <ArrowRight size={18} />
-          </button>
-        </motion.div>
-
-      </div>
-    </section>
+      </section>
     </>
   );
 }

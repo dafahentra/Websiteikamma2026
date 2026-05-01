@@ -20,7 +20,7 @@ export function Home() {
           This masks the bottom of the Hero section to look like a dome,
           without actually cutting the Hero section itself! */}
       <div 
-        className="relative z-30 -mt-[6vh] bg-white"
+        className="relative z-30 -mt-[2vh] bg-white"
         style={{ clipPath: "url(#events-curve)" }}
       >
         <EventsSection />
@@ -47,8 +47,8 @@ export function Home() {
       {/* SVG definition for the Events section's concave top edge */}
       <svg style={{ width: 0, height: 0, position: "absolute" }} aria-hidden="true" focusable="false">
         <clipPath id="events-curve" clipPathUnits="objectBoundingBox">
-          {/* Top-left to top-right with a quadratic bezier dipping in the middle. Gentler curve (0.04) */}
-          <path d="M 0,0 Q 0.5,0.04 1,0 L 1,1 L 0,1 Z" />
+          {/* Top-left to top-right with a quadratic bezier dipping in the middle. Gentler curve (0.01) */}
+          <path d="M 0,0 Q 0.5,0.01 1,0 L 1,1 L 0,1 Z" />
         </clipPath>
       </svg>
     </div>

@@ -1,17 +1,17 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate, MotionValue, useSpring } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import LogoPutihRaw from "../../imports/LogoPutih.svg?raw";
+import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
 
 const HERO_IMAGE =
-  "/src/assets/heroVideo.mp4";
-const LOGO = "/src/imports/LogoPutih.svg";
+  "/src/assets/VidProf.mp4";
+const LOGO = "/src/assets/LogoPutih.svg";
 const BACKGROUND_IMAGE = "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2000&auto=format&fit=crop";
 
 import { SCRAPBOOK_PHOTOS } from "../../assets/photos";
 
 // A massive scrolling area to accommodate the grand unified sequence
-const SECTION_HEIGHT_PX = 11000;
+const SECTION_HEIGHT_PX = 14000;
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
@@ -211,8 +211,9 @@ export function Hero() {
   }, []);
 
   /* === PHASE 5: Background Photo === */
-  // Spawns during the scrapbook phase (0.55) and finishes as the background (0.85)
-  const finalScale = useTransform(progress, [0.55, 0.85], [0.15, 1]);
+  // Spawns during the scrapbook phase (0.55), hits full screen (0.75), 
+  // and then slowly 'elongates' (zooms) to 1.1 for a cinematic effect until the end.
+  const finalScale = useTransform(progress, [0.55, 0.75, 1.0], [0.15, 1, 1.15]);
 
   // Fades in and blurs just like the other scrapbook photos
   const finalOpacity = useTransform(progress, [0.55, 0.60], [0, 1]);
@@ -223,12 +224,12 @@ export function Hero() {
   const parallaxY = useTransform(progress, [0.85, 1.00], ["0vh", "-10vh"]);
 
   /* === PHASE 6: About IKAMMA Content Fades In === */
-  // 0.85 to 0.95
-  const contentOpacity = useTransform(progress, [0.85, 0.95], [0, 1]);
-  const contentY = useTransform(progress, [0.85, 0.95], [40, 0]);
+  // 0.75 to 0.85
+  const contentOpacity = useTransform(progress, [0.75, 0.85], [0, 1]);
+  const contentY = useTransform(progress, [0.75, 0.85], [80, 0]);
 
   // The dark overlay ONLY appears at the very end when it becomes the background
-  const overlayOpacity = useTransform(progress, [0.80, 0.90], [0, 0.85]);
+  const overlayOpacity = useTransform(progress, [0.70, 0.80], [0, 0.50]);
 
   return (
     <div ref={containerRef} className="relative w-full" style={{ height: SECTION_HEIGHT_PX }}>

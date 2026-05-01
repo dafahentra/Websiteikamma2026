@@ -7,7 +7,7 @@ import {
   useMotionValueEvent,
 } from 'motion/react';
 import { Home, Info, BookOpen, CalendarDays, Phone, ChevronDown, ChevronRight } from 'lucide-react';
-import LogoPutihRaw from '../../imports/LogoPutih.svg?raw';
+import LogoPutihRaw from '../../assets/LogoPutih.svg?raw';
 
 /* ── Ekstrak isi SVG (path, dll) dari raw string ─────────────────── */
 const svgInner = LogoPutihRaw
@@ -50,20 +50,20 @@ const links: NavLink[] = [
       { 
         label: 'Bureau', 
         subDropdown: [
-          { label: 'HRM', href: '/#bureau-hrm' },
-          { label: 'HRBB', href: '/#bureau-hrbb' },
-          { label: 'MM', href: '/#bureau-mm' },
-          { label: 'Advance', href: '/#bureau-advance' },
+          { label: 'HRM', href: '/departemen/hr-monitoring' },
+          { label: 'HRBB', href: '/departemen/hrbb' },
+          { label: 'MM', href: '/departemen/mm' },
+          { label: 'Advance', href: '/departemen/advance' },
         ]
       },
       { 
         label: 'Department', 
         subDropdown: [
-          { label: 'Internal', href: '/#dept-internal' },
-          { label: 'External', href: '/#dept-external' },
-          { label: 'Indev', href: '/#dept-indev' },
-          { label: 'Entre', href: '/#dept-entre' },
-          { label: 'Sparta', href: '/#dept-sparta' },
+          { label: 'Internal', href: '/departemen/internal' },
+          { label: 'External', href: '/departemen/external' },
+          { label: 'Indev', href: '/departemen/indev' },
+          { label: 'Entre', href: '/departemen/entre' },
+          { label: 'Sparta', href: '/departemen/sparta' },
         ]
       },
     ],
@@ -73,7 +73,7 @@ const links: NavLink[] = [
     label: 'Info Mahasiswa',
     icon: BookOpen,
     dropdown: [
-      { label: 'Artikel', href: '/#artikel' },
+      { label: 'Artikel', href: '/articles' },
       { label: 'Aspirasi Manajemen', href: '/#aspirasi' },
       { 
         label: 'Bank Soal', 
@@ -100,16 +100,8 @@ const links: NavLink[] = [
       },
     ],
   },
-  { href: '/#events', label: 'Our Events', icon: CalendarDays },
-  {
-    href: '/#contact',
-    label: 'Contact Us',
-    icon: Phone,
-    dropdown: [
-      { label: 'IKAMMA', href: '/#contact-ikamma' },
-      { label: 'Event',  href: '/#contact-event' },
-    ],
-  },
+  { href: '/events', label: 'Our Events', icon: CalendarDays },
+  { href: '/contact', label: 'Contact Us', icon: Phone },
 ];
 
 /* ── Mobile item variants ───────────────────────────────────────── */
@@ -433,7 +425,7 @@ export function Navbar() {
       >
         {/* Always visible: Logo and Burger */}
         <div className="flex items-center gap-4">
-          <a href="#home" className="flex items-center justify-center h-full">
+          <a href="/" className="flex items-center justify-center h-full">
             <IkammaLogo className="h-6 md:h-7 w-auto object-contain" />
           </a>
           <div className="w-[1px] h-5 bg-white/20" />

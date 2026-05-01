@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Instagram, Mail, Linkedin, Youtube, Send, ExternalLink, MapPin, Phone, CalendarDays } from 'lucide-react';
+import { Instagram, Mail, Linkedin, Youtube, Send, Phone, MapPin, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
-/* ── SVG Icons for X and TikTok (not in lucide) ─────────────────── */
+/* ── SVG Icons for X and TikTok ──────────────────────────────────── */
 function XIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -30,58 +30,21 @@ const TABS = [
 
 type TabId = typeof TABS[number]['id'];
 
-/* ── Social Links ─────────────────────────────────────────────────── */
-const SOCIALS = [
-  {
-    icon: Instagram,
-    label: 'Instagram',
-    handle: '@ikamma.ugm',
-    href: 'https://instagram.com/ikamma.ugm',
-    color: 'from-[#f09433] via-[#e6683c] to-[#bc1888]',
-  },
-  {
-    icon: Mail,
-    label: 'Email',
-    handle: 'ikamma@feb.ugm.ac.id',
-    href: 'mailto:ikamma@feb.ugm.ac.id',
-    color: 'from-[#0CA678] to-[#0CA678]',
-  },
-  {
-    icon: Linkedin,
-    label: 'LinkedIn',
-    handle: 'IKAMMA FEB UGM',
-    href: 'https://linkedin.com/company/ikamma',
-    color: 'from-[#0077B5] to-[#0077B5]',
-  },
-  {
-    icon: Youtube,
-    label: 'YouTube',
-    handle: 'IKAMMA FEB UGM',
-    href: 'https://youtube.com/@ikamma',
-    color: 'from-[#FF0000] to-[#CC0000]',
-  },
-  {
-    icon: XIcon,
-    label: 'X (Twitter)',
-    handle: '@ikamma_ugm',
-    href: 'https://x.com/ikamma_ugm',
-    color: 'from-[#1DA1F2] to-[#0d8ecf]',
-  },
-  {
-    icon: TikTokIcon,
-    label: 'TikTok',
-    handle: '@ikamma.ugm',
-    href: 'https://tiktok.com/@ikamma.ugm',
-    color: 'from-[#25F4EE] via-[#FE2C55] to-[#000000]',
-  },
+/* ── Social Icons ─────────────────────────────────────────────────── */
+const SOCIAL_ICONS = [
+  { icon: Instagram, label: 'Instagram', href: 'https://instagram.com/ikamma.ugm' },
+  { icon: Mail, label: 'Email', href: 'mailto:ikamma@feb.ugm.ac.id' },
+  { icon: Linkedin, label: 'LinkedIn', href: 'https://linkedin.com/company/ikamma' },
+  { icon: Youtube, label: 'YouTube', href: 'https://youtube.com/@ikamma' },
+  { icon: XIcon, label: 'X', href: 'https://x.com/ikamma_ugm' },
+  { icon: TikTokIcon, label: 'TikTok', href: 'https://tiktok.com/@ikamma.ugm' },
 ];
 
-/* ── Event Contact Channels ───────────────────────────────────────── */
+/* ── Event Contacts ───────────────────────────────────────────────── */
 const EVENT_CONTACTS = [
   {
-    icon: CalendarDays,
     label: 'IDEAS 2026',
-    description: 'Untuk pertanyaan seputar IDEAS 2026',
+    description: 'Pertanyaan seputar IDEAS 2026',
     contacts: [
       { type: 'Instagram', value: '@ideas.ugm' },
       { type: 'Email', value: 'ideas@feb.ugm.ac.id' },
@@ -89,7 +52,6 @@ const EVENT_CONTACTS = [
     ],
   },
   {
-    icon: CalendarDays,
     label: 'GMBCC 2026',
     description: 'Gadjah Mada Business Case Competition',
     contacts: [
@@ -99,7 +61,6 @@ const EVENT_CONTACTS = [
     ],
   },
   {
-    icon: CalendarDays,
     label: 'Exposure 2026',
     description: 'Management Week — Exposure',
     contacts: [
@@ -109,11 +70,14 @@ const EVENT_CONTACTS = [
   },
 ];
 
+const ENQUIRY_TYPES = ['External', 'Media Partnership'];
+
 export function ContactPage() {
   const { pathname } = useLocation();
   const [activeTab, setActiveTab] = useState<TabId>('ikamma');
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', enquiry: '', subject: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -123,7 +87,7 @@ export function ContactPage() {
     e.preventDefault();
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 4000);
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setFormData({ name: '', email: '', phone: '', enquiry: '', subject: '', message: '' });
   };
 
   return (
@@ -136,27 +100,28 @@ export function ContactPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          className="text-center"
         >
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-inter font-bold mb-4">
             Contact Us
           </h1>
-          <p className="text-white/60 text-lg md:text-xl font-inter max-w-2xl">
+          <p className="text-white/60 text-lg md:text-xl font-inter max-w-2xl mx-auto">
             Any question or remarks? Just write us a message!
           </p>
         </motion.div>
 
-        {/* Tabs — like fore.coffee */}
+        {/* Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex gap-2 mt-10"
+          className="flex justify-center gap-2 mt-10"
         >
           {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`relative px-6 py-2.5 rounded-full text-sm font-inter font-semibold transition-all duration-300 ${
+              className={`relative px-8 py-2.5 rounded-full text-sm font-inter font-semibold transition-all duration-300 ${
                 activeTab === tab.id
                   ? 'bg-[#0CA678] text-white shadow-lg shadow-[#0CA678]/25'
                   : 'bg-white/[0.04] border border-white/[0.08] text-white/50 hover:text-white hover:bg-white/[0.08]'
@@ -169,7 +134,7 @@ export function ContactPage() {
       </section>
 
       {/* Tab Content */}
-      <section className="pb-24 px-6 lg:px-12 max-w-[1400px] mx-auto pt-8">
+      <section className="pb-24 px-6 lg:px-12 max-w-[1400px] mx-auto pt-10">
         <AnimatePresence mode="wait">
           {activeTab === 'ikamma' ? (
             <motion.div
@@ -178,150 +143,219 @@ export function ContactPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 lg:gap-16"
             >
-              {/* ── Left: Contact Info & Social Links ──────────── */}
-              <div>
-                <h2 className="text-2xl md:text-3xl font-inter font-bold mb-2 flex items-center gap-3">
-                  <div className="w-8 h-1.5 bg-[#0CA678] rounded-full" />
-                  Contact Information
-                </h2>
-                <p className="text-white/50 text-base font-inter mb-8 ml-11">
-                  Hubungi kami melalui platform favoritmu atau kirimkan pesan langsung.
-                </p>
+              {/* ── Sector Seven-inspired card layout ──────────── */}
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] rounded-3xl overflow-hidden shadow-2xl shadow-black/30 min-h-[600px]">
 
-                {/* Quick Contact */}
-                <div className="space-y-4 mb-10 ml-11">
-                  <div className="flex items-center gap-3 text-white/70">
-                    <Mail size={18} className="text-[#0CA678] shrink-0" />
-                    <span className="text-sm font-inter">ikamma@feb.ugm.ac.id</span>
+                {/* ── Left: Dark Info Card ───────────────────────── */}
+                <div className="relative bg-[#081C36] p-10 md:p-14 flex flex-col justify-between overflow-hidden">
+                  {/* Decorative circles */}
+                  <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#0CA678]/10 rounded-full blur-xl pointer-events-none" />
+                  <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#0CA678]/5 rounded-full pointer-events-none" />
+
+                  <div className="relative z-10">
+                    <h2 className="text-3xl md:text-4xl font-inter font-bold mb-4">
+                      Contact Information
+                    </h2>
+                    <p className="text-white/60 text-base font-inter leading-relaxed mb-12 max-w-md">
+                      Should you have any question or concern, you can reach us by filling out the contact form, finding us on social networks, or you can personal email us at:
+                    </p>
+
+                    {/* Contact Details */}
+                    <div className="space-y-8">
+                      <div className="flex items-center gap-5">
+                        <div className="w-12 h-12 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                          <Phone size={20} className="text-white/80" />
+                        </div>
+                        <span className="font-inter text-lg text-white">+62 812-3456-7890</span>
+                      </div>
+
+                      <div className="flex items-center gap-5">
+                        <div className="w-12 h-12 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                          <Mail size={20} className="text-white/80" />
+                        </div>
+                        <span className="font-inter text-lg text-white">ikamma@feb.ugm.ac.id</span>
+                      </div>
+
+                      <div className="flex items-start gap-5">
+                        <div className="w-12 h-12 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0 mt-0.5">
+                          <MapPin size={20} className="text-white/80" />
+                        </div>
+                        <div className="font-inter text-base text-white/80 leading-relaxed">
+                          Gedung FEB UGM<br />
+                          Jl. Sosio Humaniora No.1, Bulaksumur<br />
+                          Yogyakarta 55281
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 text-white/70">
-                    <Phone size={18} className="text-[#0CA678] shrink-0" />
-                    <span className="text-sm font-inter">+62 812-3456-7890</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-white/70">
-                    <MapPin size={18} className="text-[#0CA678] shrink-0" />
-                    <span className="text-sm font-inter">Gedung FEB UGM, Bulaksumur, Yogyakarta</span>
+
+                  {/* Social Icons at bottom */}
+                  <div className="relative z-10 mt-12 pt-8 border-t border-white/[0.08]">
+                    <div className="flex gap-3">
+                      {SOCIAL_ICONS.map((social, i) => {
+                        const Icon = social.icon;
+                        return (
+                          <motion.a
+                            key={social.label}
+                            href={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.15, y: -3 }}
+                            className="w-10 h-10 rounded-full bg-white/[0.06] hover:bg-[#0CA678] flex items-center justify-center transition-colors duration-300"
+                            title={social.label}
+                          >
+                            <Icon size={16} />
+                          </motion.a>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
 
-                {/* Social Media Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {SOCIALS.map((social, i) => {
-                    const Icon = social.icon;
-                    return (
-                      <motion.a
-                        key={social.label}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: i * 0.06 }}
-                        whileHover={{ scale: 1.03, y: -2 }}
-                        className="relative group flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.15] hover:bg-white/[0.06] transition-all duration-300 overflow-hidden"
+                {/* ── Right: Form (light bg) ─────────────────────── */}
+                <div className="bg-[#0E2849] p-10 md:p-14">
+                  <form onSubmit={handleSubmit} className="space-y-6 h-full flex flex-col">
+
+                    {submitted && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-[#0CA678]/10 border border-[#0CA678]/30 text-[#0CA678] px-4 py-3 rounded-xl text-sm font-inter"
                       >
-                        <div className={`absolute inset-0 bg-gradient-to-br ${social.color} opacity-0 group-hover:opacity-[0.06] transition-opacity duration-500`} />
-                        <div className="relative w-10 h-10 rounded-xl bg-white/[0.06] flex items-center justify-center shrink-0 group-hover:bg-white/[0.1] transition-colors duration-300">
-                          <Icon size={18} />
-                        </div>
-                        <div className="relative flex-1 min-w-0">
-                          <div className="text-sm font-inter font-semibold text-white">{social.label}</div>
-                          <div className="text-xs text-white/40 truncate">{social.handle}</div>
-                        </div>
-                        <ExternalLink size={13} className="relative text-white/20 group-hover:text-white/50 transition-colors shrink-0" />
-                      </motion.a>
-                    );
-                  })}
-                </div>
-              </div>
+                        ✓ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.
+                      </motion.div>
+                    )}
 
-              {/* ── Right: Contact Form ─────────────────────────── */}
-              <div>
-                <form
-                  onSubmit={handleSubmit}
-                  className="p-8 md:p-10 rounded-3xl bg-white/[0.03] border border-white/[0.06] space-y-6 backdrop-blur-sm"
-                >
-                  <h2 className="text-2xl font-inter font-bold flex items-center gap-3 mb-2">
-                    <div className="w-8 h-1.5 bg-[#0CA678] rounded-full" />
-                    Send a Message
-                  </h2>
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      {/* Name */}
+                      <div>
+                        <label className="block text-white/50 text-sm font-inter mb-2">Name</label>
+                        <input
+                          type="text"
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          required
+                          placeholder="John Doe"
+                          className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] transition-colors text-sm font-inter"
+                        />
+                      </div>
 
-                  {submitted && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="bg-[#0CA678]/10 border border-[#0CA678]/30 text-[#0CA678] px-4 py-3 rounded-xl text-sm font-inter"
-                    >
-                      ✓ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.
-                    </motion.div>
-                  )}
+                      {/* Email */}
+                      <div>
+                        <label className="block text-white/50 text-sm font-inter mb-2">Email</label>
+                        <input
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          required
+                          placeholder="johndoe@example.com"
+                          className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] transition-colors text-sm font-inter"
+                        />
+                      </div>
+                    </div>
 
-                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      {/* Phone */}
+                      <div>
+                        <label className="block text-white/50 text-sm font-inter mb-2">Phone Number</label>
+                        <input
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          placeholder="+62"
+                          className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] transition-colors text-sm font-inter"
+                        />
+                      </div>
+
+                      {/* Type of Enquiry — dropdown */}
+                      <div className="relative">
+                        <label className="block text-white/50 text-sm font-inter mb-2">Type of Enquiry</label>
+                        <button
+                          type="button"
+                          onClick={() => setDropdownOpen(!dropdownOpen)}
+                          className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-left focus:outline-none focus:border-[#0CA678] transition-colors text-sm font-inter flex items-center justify-between"
+                        >
+                          <span className={formData.enquiry ? 'text-white' : 'text-white/25'}>
+                            {formData.enquiry || 'Select type'}
+                          </span>
+                          <ChevronDown size={16} className={`text-white/40 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                          {dropdownOpen && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -5 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -5 }}
+                              transition={{ duration: 0.15 }}
+                              className="absolute top-full left-0 right-0 mt-1 z-20 rounded-xl overflow-hidden border border-white/[0.1]"
+                              style={{
+                                background: 'rgba(12, 35, 64, 0.95)',
+                                backdropFilter: 'blur(20px)',
+                              }}
+                            >
+                              {ENQUIRY_TYPES.map((type) => (
+                                <button
+                                  key={type}
+                                  type="button"
+                                  onClick={() => {
+                                    setFormData({ ...formData, enquiry: type });
+                                    setDropdownOpen(false);
+                                  }}
+                                  className={`w-full text-left px-4 py-3 text-sm font-inter transition-colors duration-150 ${
+                                    formData.enquiry === type
+                                      ? 'bg-[#0CA678]/15 text-[#0CA678]'
+                                      : 'text-white/70 hover:bg-white/[0.06] hover:text-white'
+                                  }`}
+                                >
+                                  {type}
+                                </button>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+
+                    {/* Subject */}
                     <div>
-                      <label className="block text-white/60 text-sm font-inter mb-2">
-                        Full Name <span className="text-[#0CA678]">*</span>
-                      </label>
+                      <label className="block text-white/50 text-sm font-inter mb-2">Subject</label>
                       <input
                         type="text"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        required
-                        placeholder="Your name"
-                        className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] focus:ring-1 focus:ring-[#0CA678]/20 transition-all text-sm font-inter"
+                        value={formData.subject}
+                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                        placeholder="What's this about?"
+                        className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] transition-colors text-sm font-inter"
                       />
                     </div>
-                    <div>
-                      <label className="block text-white/60 text-sm font-inter mb-2">
-                        Email <span className="text-[#0CA678]">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+
+                    {/* Message */}
+                    <div className="flex-1">
+                      <label className="block text-white/50 text-sm font-inter mb-2">Message</label>
+                      <textarea
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         required
-                        placeholder="email@example.com"
-                        className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] focus:ring-1 focus:ring-[#0CA678]/20 transition-all text-sm font-inter"
+                        rows={4}
+                        placeholder="Write Your Message Here..."
+                        className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] transition-colors resize-none text-sm font-inter"
                       />
                     </div>
-                  </div>
 
-                  <div>
-                    <label className="block text-white/60 text-sm font-inter mb-2">Subject</label>
-                    <input
-                      type="text"
-                      value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      placeholder="What's this about?"
-                      className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] focus:ring-1 focus:ring-[#0CA678]/20 transition-all text-sm font-inter"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-white/60 text-sm font-inter mb-2">
-                      Message <span className="text-[#0CA678]">*</span>
-                    </label>
-                    <textarea
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      required
-                      rows={5}
-                      placeholder="Write your message here..."
-                      className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] focus:ring-1 focus:ring-[#0CA678]/20 transition-all resize-none text-sm font-inter"
-                    />
-                  </div>
-
-                  <motion.button
-                    type="submit"
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.99 }}
-                    className="w-full bg-[#0CA678] hover:bg-[#0b9069] text-white py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 font-inter font-semibold shadow-lg shadow-[#0CA678]/20 hover:shadow-xl hover:shadow-[#0CA678]/30"
-                  >
-                    Send Message <Send size={16} />
-                  </motion.button>
-                </form>
+                    {/* Submit */}
+                    <div className="flex justify-end pt-4">
+                      <motion.button
+                        type="submit"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="bg-[#0CA678] hover:bg-[#0b9069] text-white px-10 py-3.5 rounded-xl transition-all duration-300 flex items-center gap-2 font-inter font-semibold shadow-lg shadow-[#0CA678]/20 hover:shadow-xl hover:shadow-[#0CA678]/30"
+                      >
+                        Send Message <Send size={16} />
+                      </motion.button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </motion.div>
           ) : (
@@ -333,47 +367,29 @@ export function ContactPage() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              <h2 className="text-2xl md:text-3xl font-inter font-bold mb-2 flex items-center gap-3">
-                <div className="w-8 h-1.5 bg-[#0CA678] rounded-full" />
-                Event Contact
-              </h2>
-              <p className="text-white/50 text-base font-inter mb-10 ml-11">
-                Hubungi panitia event yang ingin kamu tanyakan secara langsung.
-              </p>
-
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {EVENT_CONTACTS.map((event, i) => {
-                  const Icon = event.icon;
-                  return (
-                    <motion.div
-                      key={event.label}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
-                      className="p-6 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.05] transition-all duration-300 group"
-                    >
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-11 h-11 rounded-xl bg-[#0CA678]/10 flex items-center justify-center shrink-0 group-hover:bg-[#0CA678]/20 transition-colors duration-300">
-                          <Icon size={20} className="text-[#0CA678]" />
-                        </div>
-                        <div>
-                          <h3 className="font-inter font-bold text-lg text-white">{event.label}</h3>
-                          <p className="text-white/40 text-xs font-inter">{event.description}</p>
-                        </div>
-                      </div>
+                {EVENT_CONTACTS.map((event, i) => (
+                  <motion.div
+                    key={event.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    className="p-8 rounded-2xl bg-[#081C36] border border-white/[0.04] hover:border-white/[0.1] transition-all duration-300 group"
+                  >
+                    <h3 className="font-inter font-bold text-2xl text-white mb-1">{event.label}</h3>
+                    <p className="text-white/40 text-sm font-inter mb-8">{event.description}</p>
 
-                      <div className="space-y-3 mt-5 pt-5 border-t border-white/[0.06]">
-                        {event.contacts.map((c, j) => (
-                          <div key={j} className="flex items-center gap-2">
-                            <span className="text-[#0CA678] text-xs font-inter font-semibold min-w-[75px]">{c.type}</span>
-                            <span className="text-white/60 text-sm font-inter">{c.value}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  );
-                })}
+                    <div className="space-y-4 pt-6 border-t border-white/[0.06]">
+                      {event.contacts.map((c, j) => (
+                        <div key={j} className="flex items-center gap-3">
+                          <span className="text-[#0CA678] text-xs font-inter font-bold min-w-[80px] uppercase tracking-wider">{c.type}</span>
+                          <span className="text-white/60 text-sm font-inter">{c.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
           )}

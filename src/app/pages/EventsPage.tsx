@@ -5,7 +5,7 @@ import { MapPin, Clock, CalendarDays } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
-import { getRandomPhotos } from '../assets/photos';
+import { getRandomPhotos } from '../../assets/photos';
 
 /* ── Sample Data ─────────────────────────────────────────────────── */
 const ONGOING_EVENTS = [

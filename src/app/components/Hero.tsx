@@ -7,12 +7,14 @@ const HERO_IMAGE =
   "/src/assets/VidProf.mp4";
 const LOGO = "/src/assets/LogoPutih.svg";
 
-import { SCRAPBOOK_PHOTOS, getRandomPhotos } from "../../assets/photos";
+import { SCRAPBOOK_PHOTOS, getRandomPhotos, ALL_PHOTOS } from "../../assets/photos";
 
-const BACKGROUND_IMAGE = getRandomPhotos(1)[0];
+// You can change the index here to pick a specific photo for the background
+// For example: ALL_PHOTOS[0] or ALL_PHOTOS[ALL_PHOTOS.length - 1]
+const BACKGROUND_IMAGE = ALL_PHOTOS.find(p => p.includes('FotoHRBB2.jpg')) || getRandomPhotos(1)[0];
 
 // A massive scrolling area to accommodate the grand unified sequence
-const SECTION_HEIGHT_PX = 14000;
+const SECTION_HEIGHT_PX = 16000;
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
@@ -267,12 +269,12 @@ export function Hero() {
 
         {/* === PHASE 6: Content === */}
         <motion.div
-          className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-start md:justify-center w-full pt-[12vh] md:pt-20 pb-[4vh] md:pb-[8vh]"
+          className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-center w-full pt-[12vh] md:pt-20 pb-[6vh] md:pb-[8vh]"
           style={{ opacity: contentOpacity, y: contentY }}
         >
           {/* Main Content inside restricted width */}
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col gap-4 md:gap-10 pointer-events-auto">
-            <h2 className="text-white text-3xl md:text-5xl flex items-center gap-3">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col gap-1 md:gap-10 pointer-events-auto">
+            <h2 className="text-white text-2xl md:text-5xl flex items-center gap-2 md:gap-3">
               <span className="text-[#081C36]">—</span>
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">What is</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">IKAMMA</span>
@@ -281,7 +283,7 @@ export function Hero() {
             {/* Changed from items-start to items-center to make the Company Profile vertically centered! */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 lg:gap-16 items-center">
               <div className="text-white/90 space-y-3 md:space-y-6">
-                <p className="text-sm md:text-lg leading-relaxed text-justify">
+                <p className="text-xs md:text-lg leading-relaxed text-justify">
                   <span className="font-bold italic">Ikatan Keluarga Mahasiswa Manajemen (IKAMMA)</span> merupakan sebuah organisasi himpunan mahasiswa Program Studi Manajemen di Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
                 </p>
                 <p className="text-sm md:text-lg leading-relaxed text-justify hidden sm:block">
@@ -299,10 +301,11 @@ export function Hero() {
                 </div>
               </div>
 
+              {/* Right Column: Company Profile */}
               <div className="flex flex-col items-start lg:items-end w-full">
-                <div className="w-full max-w-md ml-auto">
-                  <div className="inline-block bg-[#081C36] px-3 py-1 md:px-4 md:py-1.5 mb-3 md:mb-5 shadow-md">
-                    <h3 className="text-white text-lg md:text-2xl font-black tracking-wide uppercase">Company Profile</h3>
+                <div className="w-full max-w-[280px] md:max-w-md ml-auto">
+                  <div className="inline-block bg-[#081C36] px-2 py-0.5 md:px-3 md:py-1 mb-1 md:mb-4">
+                    <h3 className="text-white text-sm md:text-xl font-bold uppercase">Company Profile</h3>
                   </div>
 
                   {/* Embedded YouTube Player */}
@@ -329,8 +332,8 @@ export function Hero() {
           </div>
 
           {/* Our Partners outside container wrapper to bleed edge-to-edge! */}
-          <div className="mt-6 md:mt-12 w-full pointer-events-auto">
-            <h3 className="text-white text-xl md:text-3xl font-bold text-center mb-4 md:mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>Our Partners</h3>
+          <div className="mt-2 md:mt-12 w-full pointer-events-auto">
+            <h3 className="text-white text-[10px] md:text-3xl font-bold text-center mb-1 md:mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>Our Partners</h3>
             {/* Infinite Marquee Container */}
             <div className="w-full overflow-hidden flex whitespace-nowrap">
               <motion.div

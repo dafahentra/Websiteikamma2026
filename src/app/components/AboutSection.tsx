@@ -3,11 +3,11 @@ import { motion, useScroll, useTransform, MotionValue } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
 
-const BACKGROUND_IMAGE = "/src/assets/Screenshot_2026-04-27_at_23.54.12.png";
+import { SCRAPBOOK_PHOTOS, getRandomPhotos, ALL_PHOTOS } from '../../assets/photos';
 
-import { getRandomPhotos } from "../../assets/photos";
-
-const SCRAPBOOK_PHOTOS = getRandomPhotos(10);
+// You can change the index here to pick a specific photo for the background
+// For example: ALL_PHOTOS[0] or ALL_PHOTOS[ALL_PHOTOS.length - 1]
+const BACKGROUND_IMAGE = ALL_PHOTOS.find(p => p.includes('FotoInt37.jpg')) || getRandomPhotos(1)[0];
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
@@ -149,16 +149,16 @@ export function AboutSection() {
 
         {/* About Section Content */}
         <motion.div 
-          className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-center"
+          className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-center py-12"
           style={{ opacity: contentOpacity, y: contentY }}
         >
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col gap-16 pointer-events-auto">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col gap-6 md:gap-16 pointer-events-auto">
             {/* Title */}
-            <h2 className="text-white text-4xl md:text-5xl font-serif italic">
+            <h2 className="text-white text-3xl md:text-5xl font-serif italic">
               — What is IKAMMA??
             </h2>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-start">
               {/* Left Column: Description */}
               <div className="text-white/90 space-y-6">
                 <p className="text-lg leading-relaxed text-justify">
@@ -196,12 +196,12 @@ export function AboutSection() {
             </div>
 
             {/* Bottom Section: Our Partners */}
-            <div className="mt-16 w-full">
-              <h3 className="text-white text-3xl font-bold text-center mb-8">Our Partners</h3>
+            <div className="mt-8 md:mt-16 w-full">
+              <h3 className="text-white text-xl md:text-3xl font-bold text-center mb-4 md:mb-8">Our Partners</h3>
               <div className="w-full overflow-hidden flex whitespace-nowrap">
-                <div className="flex gap-16 items-center animate-marquee">
-                  {[...Array(10)].map((_, i) => (
-                    <IkammaLogo key={i} className="w-24 h-24 object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <div className="flex gap-8 md:gap-16 items-center animate-marquee">
+                  {[...Array(20)].map((_, i) => (
+                    <IkammaLogo key={i} className="w-16 h-16 md:w-24 md:h-24 object-contain opacity-80 hover:opacity-100 transition-opacity" />
                   ))}
                 </div>
               </div>

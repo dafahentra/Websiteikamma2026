@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Clock, CalendarDays, Filter, Search, X, ArrowRight } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { getRandomPhotos } from '../assets/photos';
+import { getRandomPhotos } from '../../assets/photos';
 
 /* ── Types ─────────────────────────────────────────────────────── */
 type Category = 'Magang' | 'Lomba' | 'Beasiswa';
@@ -250,11 +250,10 @@ export function InfoMahasiswaPage() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2 text-sm font-inter font-medium transition-all duration-300 rounded-full border ${
-                    activeCategory === cat
+                  className={`px-5 py-2 text-sm font-inter font-medium transition-all duration-300 rounded-full border ${activeCategory === cat
                       ? 'bg-[#081C36] border-[#081C36] text-white'
                       : 'bg-transparent border-[#081C36]/15 text-[#081C36]/60 hover:border-[#081C36]/40 hover:text-[#081C36]'
-                  }`}
+                    }`}
                 >
                   {cat}
                 </button>
@@ -281,11 +280,10 @@ export function InfoMahasiswaPage() {
               <button
                 key={s}
                 onClick={() => setActiveStatus(s)}
-                className={`px-4 py-1.5 text-xs font-inter font-semibold transition-all duration-300 rounded-full border ${
-                  activeStatus === s
+                className={`px-4 py-1.5 text-xs font-inter font-semibold transition-all duration-300 rounded-full border ${activeStatus === s
                     ? 'bg-[#081C36] border-[#081C36] text-white'
                     : 'bg-transparent border-[#081C36]/15 text-[#081C36]/50 hover:border-[#081C36]/30 hover:text-[#081C36]'
-                }`}
+                  }`}
               >
                 {s}
               </button>

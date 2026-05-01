@@ -1,5 +1,5 @@
 // Dynamically import all compressed JPGs
-const imageModules = import.meta.glob('/src/assets/CompressedPhotos/**/*.jpg', { eager: true, query: '?url', import: 'default' });
+const imageModules = import.meta.glob('/src/assets/Compressed/**/*.jpg', { eager: true, query: '?url', import: 'default' });
 
 export const ALL_PHOTOS = Object.values(imageModules) as string[];
 

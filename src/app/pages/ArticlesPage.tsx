@@ -5,7 +5,7 @@ import { Clock, User, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
-import { getRandomPhotos } from '../assets/photos';
+import { getRandomPhotos } from '../../assets/photos';
 
 /* ── Sample Data ─────────────────────────────────────────────────── */
 const CATEGORIES = ['All Topics', 'IKAMMA Insights', 'Campus Life', 'Career', 'Alumni'];
@@ -122,11 +122,10 @@ export function ArticlesPage() {
             <button
               key={cat}
               onClick={() => { setActiveCategory(cat); setVisibleCount(6); }}
-              className={`px-5 py-2 rounded-full text-sm font-inter font-medium transition-all duration-300 border ${
-                activeCategory === cat
+              className={`px-5 py-2 rounded-full text-sm font-inter font-medium transition-all duration-300 border ${activeCategory === cat
                   ? 'bg-[#081C36] border-[#081C36] text-white shadow-lg shadow-[#081C36]/20'
                   : 'bg-[#081C36]/[0.03] border-white/[0.1] text-[#081C36]/50 hover:bg-white/[0.08] hover:text-white'
-              }`}
+                }`}
             >
               {cat}
               {cat !== 'All Topics' && (

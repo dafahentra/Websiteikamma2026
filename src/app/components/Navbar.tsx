@@ -47,23 +47,23 @@ const links: NavLink[] = [
     icon: Info,
     dropdown: [
       { label: 'IKAMMA', href: '/about' },
-      { 
-        label: 'Bureau', 
+      {
+        label: 'Bureau',
         subDropdown: [
-          { label: 'HRM', href: '/departemen/hr-monitoring' },
-          { label: 'HRBB', href: '/departemen/hrbb' },
-          { label: 'MM', href: '/departemen/mm' },
-          { label: 'Advance', href: '/departemen/advance' },
+          { label: 'HR Monitoring', href: '/departemen/hr-monitoring' },
+          { label: 'HR Birdept Buddy', href: '/departemen/hrbb' },
+          { label: 'Marketing & Media', href: '/departemen/mm' },
+          { label: 'Administration & Finance', href: '/departemen/advance' },
         ]
       },
-      { 
-        label: 'Department', 
+      {
+        label: 'Department',
         subDropdown: [
           { label: 'Internal', href: '/departemen/internal' },
           { label: 'External', href: '/departemen/external' },
-          { label: 'Indev', href: '/departemen/indev' },
-          { label: 'Entre', href: '/departemen/entre' },
-          { label: 'Sparta', href: '/departemen/sparta' },
+          { label: 'Intellectual & Development', href: '/departemen/indev' },
+          { label: 'Entrepreneurship', href: '/departemen/entre' },
+          { label: 'Sport and Art Association', href: '/departemen/sparta' },
         ]
       },
     ],
@@ -75,24 +75,24 @@ const links: NavLink[] = [
     dropdown: [
       { label: 'Artikel', href: '/articles' },
       { label: 'Aspirasi Manajemen', href: '/#aspirasi' },
-      { 
-        label: 'Bank Soal', 
+      {
+        label: 'Bank Soal',
         subDropdown: [
           { label: 'IUP', href: '/#bank-soal-iup' },
           { label: 'Reguler', href: '/#bank-soal-reguler' },
           { label: 'Textbook', href: '/#bank-soal-textbook' },
         ]
       },
-      { 
-        label: 'Info Manajemen', 
+      {
+        label: 'Info Manajemen',
         subDropdown: [
           { label: 'Internship', href: '/#info-internship' },
           { label: 'Competition', href: '/#info-competition' },
           { label: 'Beasiswa', href: '/#info-beasiswa' },
         ]
       },
-      { 
-        label: 'Alumni Database', 
+      {
+        label: 'Alumni Database',
         subDropdown: [
           { label: 'Register', href: '/#alumni-register' },
           { label: 'Database', href: '/#alumni-database' },
@@ -106,7 +106,7 @@ const links: NavLink[] = [
 
 /* ── Mobile item variants ───────────────────────────────────────── */
 const itemVariants = {
-  hidden:  { opacity: 0, y: -6 },
+  hidden: { opacity: 0, y: -6 },
   visible: (i: number) => ({
     opacity: 1, y: 0,
     transition: { delay: i * 0.045, duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] as const },
@@ -164,8 +164,8 @@ function DesktopDropdownItem({ item }: { item: DropdownItem }) {
         {open && hasSub && (
           <motion.div
             initial={{ opacity: 0, x: -8, scale: 0.96 }}
-            animate={{ opacity: 1, x: 0,  scale: 1 }}
-            exit={{    opacity: 0, x: -6, scale: 0.97 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -6, scale: 0.97 }}
             transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
             className="absolute left-full top-0 ml-1 min-w-[150px] rounded-2xl"
             style={{
@@ -228,8 +228,8 @@ function DesktopDropdown({
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           initial={{ opacity: 0, y: -8, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0,  scale: 1 }}
-          exit={{    opacity: 0, y: -6, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -6, scale: 0.97 }}
           transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
           className="fixed -translate-x-1/2 min-w-[176px] rounded-2xl"
           style={{
@@ -269,7 +269,7 @@ function DesktopNavItem({ link }: { link: NavLink }) {
       ref={anchorRef}
       className="relative flex items-center"
       onMouseEnter={link.dropdown ? show : undefined}
-      onMouseLeave={link.dropdown ? hide  : undefined}
+      onMouseLeave={link.dropdown ? hide : undefined}
     >
       <a
         href={link.href}
@@ -365,7 +365,7 @@ function MobileAccordion({ items, onClose }: { items: DropdownItem[]; onClose: (
     <motion.ul
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: 'auto' }}
-      exit={{    opacity: 0, height: 0 }}
+      exit={{ opacity: 0, height: 0 }}
       transition={{ duration: 0.22, ease: [0.32, 0.72, 0, 1] }}
       className="overflow-hidden m-0 list-none"
     >
@@ -400,10 +400,10 @@ export function Navbar() {
     setMobileExpand((prev) => (prev === label ? null : label));
 
   return (
-    <motion.div 
+    <motion.div
       className="fixed top-6 left-1/2 z-[50] flex flex-col items-center"
       style={{ x: "-50%" }}
-      animate={{ 
+      animate={{
         opacity: hidden ? 0 : 1,
         y: hidden ? -10 : 0 // slight movement pairs very well with fade
       }}
@@ -463,8 +463,8 @@ export function Navbar() {
         {expanded && (
           <motion.div
             initial={{ opacity: 0, scaleY: 0.9, y: -10, x: "-50%" }}
-            animate={{ opacity: 1, scaleY: 1,    y: 0, x: "-50%" }}
-            exit={{    opacity: 0, scaleY: 0.9, y: -10, x: "-50%" }}
+            animate={{ opacity: 1, scaleY: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, scaleY: 0.9, y: -10, x: "-50%" }}
             transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
             style={{
               position: 'absolute',
@@ -487,7 +487,7 @@ export function Navbar() {
               {links.map((link, i) => {
                 const Icon = link.icon;
                 const hasDropdown = !!link.dropdown;
-                const isExpanded  = mobileExpand === link.label;
+                const isExpanded = mobileExpand === link.label;
 
                 return (
                   <motion.li

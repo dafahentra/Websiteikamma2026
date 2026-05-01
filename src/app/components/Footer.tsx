@@ -1,4 +1,4 @@
-import { MapPin, Mail, Phone } from 'lucide-react';
+import { MapPin, Mail, Phone, ArrowRight } from 'lucide-react';
 import Logo from '../../assets/Logo.svg';
 
 /* ── Sleek Brand SVG Icons ────────────────────────────────────────── */

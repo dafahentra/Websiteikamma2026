@@ -106,7 +106,7 @@ export function NewsSection() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const response = await fetch('/.netlify/functions/instagram');
+        const response = await fetch('/api/instagram');
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         // data.data is the array of posts

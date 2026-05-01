@@ -77,119 +77,76 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-200 text-[#081C36] py-16 px-6 lg:px-12">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-white border-t border-gray-100 text-[#081C36] py-16 px-6">
+      <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
         
-        {/* Top Section: Logo and Brand */}
-        <div className="flex flex-col md:flex-row items-center gap-6 mb-16">
-          <div className="w-24 h-24 flex items-center justify-center">
-            <img src={Logo} alt="IKAMMA Logo" className="w-full h-full object-contain" />
+        {/* Logo Section */}
+        <div className="mb-12">
+          <div className="text-[10px] text-gray-500 mb-2 uppercase tracking-[0.2em]">Your Sector,</div>
+          <div className="w-32 md:w-48 mx-auto flex justify-center">
+            <img src={Logo} alt="IKAMMA Logo" className="w-full h-auto object-contain" />
           </div>
-          <div className="text-center md:text-left">
-            <h2 className="text-xl md:text-2xl font-inter font-bold text-[#081C36] mb-1">
-              Ikatan Keluarga Mahasiswa Manajemen
-            </h2>
-            <p className="text-lg text-[#081C36]/80 font-inter">
-              Fakultas Ekonomika dan Bisnis
+          <div className="text-[10px] text-gray-500 mt-2 italic">Your Soul.</div>
+        </div>
+
+        {/* Info Grid */}
+        <div className="w-full space-y-10 mb-12">
+          {/* Address */}
+          <div className="flex flex-col items-center">
+            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+              <MapPin size={20} className="text-[#081C36]" /> Our Store
+            </h3>
+            <p className="text-sm md:text-base text-gray-600 max-w-md leading-relaxed">
+              Gedung FEB UGM, Jl. Sosio Humaniora No.1, Bulaksumur, Yogyakarta 55281
             </p>
-            <p className="text-lg text-[#081C36]/80 font-inter">
-              Universitas Gadjah Mada
-            </p>
+          </div>
+
+          {/* Phone */}
+          <div className="flex flex-col items-center">
+            <a 
+              href="https://wa.me/6281256720013" 
+              className="flex flex-col items-center gap-2 group"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <WhatsAppIcon size={24} />
+              </div>
+              <span className="text-base md:text-lg font-medium group-hover:text-blue-600 transition-colors">+6281256720013</span>
+            </a>
+          </div>
+
+          {/* Maps */}
+          <div className="w-full max-w-2xl mx-auto">
+            <h3 className="text-lg font-bold mb-4">Find Us At Maps</h3>
+            <div className="w-full aspect-video md:aspect-[21/9] bg-gray-100 rounded-2xl overflow-hidden border border-gray-100 shadow-md">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4905.445452541879!2d110.37635327591678!3d-7.770554077082666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a59b4c17e62a5%3A0xa7b0a99cf63441a6!2sFakultas%20Ekonomika%20dan%20Bisnis%20UGM!5e1!3m2!1sid!2sid!4v1777633924284!5m2!1sid!2sid" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen={true} 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <div className="mt-4">
+               <a href="https://maps.google.com" target="_blank" className="text-[#081C36] text-sm font-bold border border-[#081C36] px-4 py-1.5 rounded-lg inline-flex items-center gap-2 hover:bg-gray-50 transition-colors">
+                  Maps <ArrowRight size={14} />
+               </a>
+            </div>
           </div>
         </div>
 
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          
-          {/* Navigation Column */}
-          <div>
-            <h3 className="text-lg font-inter font-bold mb-6">Navigation</h3>
-            <ul className="space-y-4">
-              {navLinks.map((link) => (
-                <li key={link.label}>
-                  <a 
-                    href={link.href} 
-                    className="text-base text-[#081C36]/70 hover:text-[#081C36] transition-colors duration-300 font-inter"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Social Column */}
-          <div>
-            <h3 className="text-lg font-inter font-bold mb-6">Social</h3>
-            <ul className="space-y-4">
-              {socialLinks.map((social) => (
-                <li key={social.label}>
-                  <a 
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-base text-[#081C36]/70 hover:text-[#081C36] transition-colors duration-300 font-inter"
-                  >
-                    {social.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact Column */}
-          <div>
-            <h3 className="text-lg font-inter font-bold mb-6">Contact</h3>
-            <div className="space-y-6">
-              <a 
-                href="mailto:dafahentra@gmail.com" 
-                className="flex items-center gap-3 text-base text-[#081C36] font-inter font-medium"
-              >
-                <GmailIcon size={20} />
-                <span>dafahentra@gmail.com</span>
-              </a>
-              <a 
-                href="https://wa.me/6281256720013" 
-                className="flex items-center gap-3 text-base text-[#081C36] font-inter font-medium"
-              >
-                <WhatsAppIcon size={20} />
-                <span>+6281256720013</span>
-              </a>
-            </div>
-          </div>
-
-          {/* Maps Column */}
-          <div>
-            <h3 className="text-lg font-inter font-bold mb-6">Find Us At Maps</h3>
-            <div className="space-y-4">
-              {/* Google Maps Embed */}
-              <div className="w-full aspect-video bg-gray-100 rounded-xl overflow-hidden border border-gray-100 shadow-inner">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4905.445452541879!2d110.37635327591678!3d-7.770554077082666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a59b4c17e62a5%3A0xa7b0a99cf63441a6!2sFakultas%20Ekonomika%20dan%20Bisnis%20UGM!5e1!3m2!1sid!2sid!4v1777633924284!5m2!1sid!2sid" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen={true} 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
-              {/* Address */}
-              <div className="flex items-start gap-2 text-sm text-[#081C36]/60 leading-relaxed font-inter">
-                <MapPin size={16} className="mt-1 shrink-0 text-[#081C36]" />
-                <span>
-                  Gedung FEB UGM, Jl. Sosio Humaniora No.1, Bulaksumur, Yogyakarta 55281
-                </span>
-              </div>
-            </div>
-          </div>
-
+        {/* Social Icons */}
+        <div className="flex gap-8 mb-12">
+          <a href="https://linkedin.com/company/ikamma" target="_blank" className="text-black hover:scale-110 transition-transform"><LinkedInIcon size={24} /></a>
+          <a href="https://tiktok.com/@ikamma.ugm" target="_blank" className="text-black hover:scale-110 transition-transform"><TikTokIcon size={24} /></a>
+          <a href="https://instagram.com/ikamma.ugm" target="_blank" className="text-black hover:scale-110 transition-transform"><InstagramIcon size={24} /></a>
         </div>
 
-        {/* Copyright Section */}
-        <div className="mt-16 pt-8 border-t border-gray-100 flex justify-center items-center">
-          <p className="text-sm text-[#081C36]/40 font-inter">
-            © 2026 IKAMMA FEB UGM. All rights reserved.
+        {/* Copyright */}
+        <div className="border-t border-gray-100 w-full pt-8">
+          <p className="text-[12px] text-gray-400">
+            © 2026 IKAMMA FEB UGM, All Rights Reserved
           </p>
         </div>
 

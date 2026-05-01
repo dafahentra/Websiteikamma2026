@@ -1,11 +1,37 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Instagram, Mail, Linkedin, Youtube, Send, Phone, MapPin, ChevronDown } from 'lucide-react';
+import { Send, Phone, MapPin, ChevronDown, Mail } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
-/* ── SVG Icons for X and TikTok ──────────────────────────────────── */
+/* ── Sleek Brand SVG Icons ────────────────────────────────────────── */
+function InstagramIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function LinkedInIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  );
+}
+
+function YouTubeIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+    </svg>
+  );
+}
+
 function XIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -17,7 +43,16 @@ function XIcon({ size = 20 }: { size?: number }) {
 function TikTokIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9a6.33 6.33 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.3 6.34 6.34 0 0 0 9.49 21.64a6.34 6.34 0 0 0 6.34-6.34V8.82a8.26 8.26 0 0 0 4.83 1.54V6.94a4.85 4.85 0 0 1-1.07-.25z" />
+      <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
+    </svg>
+  );
+}
+
+function MailIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
     </svg>
   );
 }
@@ -32,10 +67,10 @@ type TabId = typeof TABS[number]['id'];
 
 /* ── Social Icons ─────────────────────────────────────────────────── */
 const SOCIAL_ICONS = [
-  { icon: Instagram, label: 'Instagram', href: 'https://instagram.com/ikamma.ugm' },
-  { icon: Mail, label: 'Email', href: 'mailto:ikamma@feb.ugm.ac.id' },
-  { icon: Linkedin, label: 'LinkedIn', href: 'https://linkedin.com/company/ikamma' },
-  { icon: Youtube, label: 'YouTube', href: 'https://youtube.com/@ikamma' },
+  { icon: InstagramIcon, label: 'Instagram', href: 'https://instagram.com/ikamma.ugm' },
+  { icon: MailIcon, label: 'Email', href: 'mailto:ikamma@feb.ugm.ac.id' },
+  { icon: LinkedInIcon, label: 'LinkedIn', href: 'https://linkedin.com/company/ikamma' },
+  { icon: YouTubeIcon, label: 'YouTube', href: 'https://youtube.com/@ikamma' },
   { icon: XIcon, label: 'X', href: 'https://x.com/ikamma_ugm' },
   { icon: TikTokIcon, label: 'TikTok', href: 'https://tiktok.com/@ikamma.ugm' },
 ];
@@ -66,6 +101,15 @@ const EVENT_CONTACTS = [
     contacts: [
       { type: 'Instagram', value: '@exposure.ugm' },
       { type: 'Email', value: 'exposure@feb.ugm.ac.id' },
+    ],
+  },
+  {
+    label: 'IKAMMA Cup 2026',
+    description: 'Sport & Art Tournament',
+    contacts: [
+      { type: 'Instagram', value: '@ikammacup.ugm' },
+      { type: 'Email', value: 'ikammacup@feb.ugm.ac.id' },
+      { type: 'WhatsApp', value: '+62 813-5678-1234' },
     ],
   },
 ];
@@ -367,7 +411,7 @@ export function ContactPage() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {EVENT_CONTACTS.map((event, i) => (
                   <motion.div
                     key={event.label}

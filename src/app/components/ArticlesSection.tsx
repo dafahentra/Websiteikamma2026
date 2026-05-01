@@ -1,23 +1,31 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { getRandomPhotos } from "../../assets/photos";
 
 const ARTICLES = [
   {
     date: "April 18, 2025",
     title: "Lorem Ipsum Acikiwir",
-    description: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum..."
+    description: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum...",
+    image: ""
   },
   {
     date: "April 18, 2025",
     title: "Lorem Ipsum Acikiwir",
-    description: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum..."
+    description: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum...",
+    image: ""
   },
   {
     date: "April 18, 2025",
     title: "Lorem Ipsum Acikiwir",
-    description: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum..."
+    description: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum...",
+    image: ""
   }
 ];
+
+// Fill with random local photos
+const randomPhotos = getRandomPhotos(3);
+ARTICLES.forEach((art, i) => { art.image = randomPhotos[i]; });
 
 export function ArticlesSection() {
   return (
@@ -50,9 +58,13 @@ export function ArticlesSection() {
               transition={{ duration: 0.6, delay: i * 0.15 }}
               className="flex flex-col group cursor-pointer w-[80vw] min-w-[80vw] snap-center flex-shrink-0 md:w-auto md:min-w-0 md:flex-shrink"
             >
-              {/* Image Placeholder */}
-              <div className="w-full aspect-[4/3] bg-[#f0f2f5] mb-6 overflow-hidden rounded-2xl md:rounded-none">
-                <div className="w-full h-full bg-[#e8eaed] group-hover:scale-105 transition-transform duration-500"></div>
+              {/* Image */}
+              <div className="w-full aspect-[4/3] bg-[#f0f2f5] mb-6 overflow-hidden rounded-2xl md:rounded-none relative">
+                <img 
+                  src={article.image} 
+                  alt="" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
 
               {/* Text Content */}

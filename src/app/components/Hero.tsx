@@ -6,9 +6,10 @@ import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
 const HERO_IMAGE =
   "/src/assets/VidProf.mp4";
 const LOGO = "/src/assets/LogoPutih.svg";
-const BACKGROUND_IMAGE = "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2000&auto=format&fit=crop";
 
-import { SCRAPBOOK_PHOTOS } from "../../assets/photos";
+import { SCRAPBOOK_PHOTOS, getRandomPhotos } from "../../assets/photos";
+
+const BACKGROUND_IMAGE = getRandomPhotos(1)[0];
 
 // A massive scrolling area to accommodate the grand unified sequence
 const SECTION_HEIGHT_PX = 14000;

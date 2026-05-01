@@ -7,14 +7,25 @@ mkdir -p "$TARGET_DIR"
 find "$SRC_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) | while read -r FILE; do
   # Calculate relative path
   REL_PATH="${FILE#$SRC_DIR/}"
-  DEST_FILE="$TARGET_DIR/${REL_PATH%.*}.jpg"
+  
+  # Sanitize the relative path:
+  # 1. Replace spaces with underscores
+  # 2. Remove characters that cause issues in URLs/Vite (#, ?, &, [, ], (, ))
+  # 3. Keep directory structure
+  DIR_PART=$(dirname "$REL_PATH")
+  FILE_PART=$(basename "$REL_PATH")
+  
+  SAFE_FILE_PART=$(echo "$FILE_PART" | tr ' ' '_' | sed 's/[#?&\[\]()]/_/g')
+  SAFE_REL_PATH="$DIR_PART/$SAFE_FILE_PART"
+  
+  DEST_FILE="$TARGET_DIR/${SAFE_REL_PATH%.*}.jpg"
   
   # Create dest directory if needed
   mkdir -p "$(dirname "$DEST_FILE")"
   
   # Check if destination already exists to avoid redundant work
   if [ ! -f "$DEST_FILE" ]; then
-    echo "Compressing: $REL_PATH"
+    echo "Compressing: $REL_PATH -> $SAFE_REL_PATH"
     # -Z 800 scales longest edge to 800px. -s formatOptions low applies low jpeg quality.
     sips -Z 800 -s format jpeg -s formatOptions low "$FILE" --out "$DEST_FILE" >/dev/null 2>&1
   fi

@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { getRandomPhotos } from '../../assets/photos';
 
 // ── Types ──────────────────────────────────────────
 interface IGPost {
@@ -46,12 +47,13 @@ function igPostToNewsItem(post: IGPost): NewsItem {
 }
 
 // ── Fallback placeholder data (used when API is unavailable) ──
+const randomPlaceholders = getRandomPhotos(12);
 const PLACEHOLDER_ITEMS: NewsItem[] = Array.from({ length: 12 }, (_, i) => ({
   id: String(i + 1),
   day: '17',
   month: 'Apr',
   year: '2026',
-  image: '',
+  image: randomPlaceholders[i],
   permalink: 'https://www.instagram.com/ikamma_ugm/',
 }));
 
@@ -98,24 +100,22 @@ function NewsCard({ item }: { item: NewsItem }) {
 export function NewsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [items, setItems] = useState<NewsItem[]>(PLACEHOLDER_ITEMS);
+  const [bgImage] = useState(() => getRandomPhotos(1)[0]);
 
   // Fetch IG posts from Netlify function
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const res = await fetch('/api/instagram');
-        if (!res.ok) throw new Error('API error');
-        const data = await res.json();
-
-        if (data?.data?.length) {
-          const posts: NewsItem[] = data.data
-            .slice(0, 12)
-            .map((p: IGPost) => igPostToNewsItem(p));
-          setItems(posts);
+        const response = await fetch('/.netlify/functions/instagram');
+        if (!response.ok) throw new Error('Failed to fetch');
+        const data = await response.json();
+        // data.data is the array of posts
+        const formatted = (data.data || []).slice(0, 12).map(igPostToNewsItem);
+        if (formatted.length > 0) {
+          setItems(formatted);
         }
-      } catch {
-        // Silently fall back to placeholders
-        console.warn('Instagram API unavailable — using placeholders');
+      } catch (err) {
+        console.error('Error fetching Instagram posts:', err);
       }
     }
     fetchPosts();
@@ -166,7 +166,7 @@ export function NewsSection() {
         style={{ y: bgParallaxY }}
       >
         <img
-          src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2000&auto=format&fit=crop"
+          src={bgImage}
           alt=""
           className="w-full h-full object-cover"
         />

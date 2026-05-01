@@ -5,12 +5,9 @@ import LOGO from '../../assets/LogoPutih.svg';
 
 const BACKGROUND_IMAGE = "/src/assets/Screenshot_2026-04-27_at_23.54.12.png";
 
-const EVENT_PHOTOS = [
-  "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
-  "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&q=80",
-  "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80",
-  "https://images.unsplash.com/photo-1523580494112-071d16940d14?w=800&q=80",
-];
+import { getRandomPhotos } from "../../assets/photos";
+
+const EVENT_PHOTOS = getRandomPhotos(4);
 
 const POSITIONS = [
   { x: 0, y: 0, rotate: 0, scale: 1, zIndex: 10, brightness: 1 },         // 0: Center (Active)

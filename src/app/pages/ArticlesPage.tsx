@@ -5,6 +5,8 @@ import { Clock, User, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
+import { getRandomPhotos } from '../assets/photos';
+
 /* ── Sample Data ─────────────────────────────────────────────────── */
 const CATEGORIES = ['All Topics', 'IKAMMA Insights', 'Campus Life', 'Career', 'Alumni'];
 
@@ -17,7 +19,7 @@ const ARTICLES = [
     author: 'Tim Redaksi',
     date: 'Apr 28, 2026',
     readTime: '5 min read',
-    image: 'https://images.unsplash.com/photo-1523580494112-071d16940d14?w=800&q=80',
+    image: '',
   },
   {
     id: 2,
@@ -27,7 +29,7 @@ const ARTICLES = [
     author: 'Dept. Indev',
     date: 'Apr 22, 2026',
     readTime: '4 min read',
-    image: 'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=800&q=80',
+    image: '',
   },
   {
     id: 3,
@@ -37,7 +39,7 @@ const ARTICLES = [
     author: 'Dept. External',
     date: 'Apr 15, 2026',
     readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80',
+    image: '',
   },
   {
     id: 4,
@@ -47,7 +49,7 @@ const ARTICLES = [
     author: 'Biro HRM',
     date: 'Apr 10, 2026',
     readTime: '7 min read',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
+    image: '',
   },
   {
     id: 5,
@@ -57,7 +59,7 @@ const ARTICLES = [
     author: 'Tim Redaksi',
     date: 'Apr 5, 2026',
     readTime: '8 min read',
-    image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80',
+    image: '',
   },
   {
     id: 6,
@@ -67,9 +69,13 @@ const ARTICLES = [
     author: 'Dept. Internal',
     date: 'Mar 30, 2026',
     readTime: '5 min read',
-    image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80',
+    image: '',
   },
 ];
+
+// Fill with random local photos
+const randomPhotos = getRandomPhotos(6);
+ARTICLES.forEach((art, i) => { art.image = randomPhotos[i]; });
 
 export function ArticlesPage() {
   const { pathname } = useLocation();

@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { MapPin, Clock } from "lucide-react";
 
+import { getRandomPhotos } from "../../assets/photos";
+
 const UPCOMING_EVENTS = [
   {
     title: "IDEAS",
@@ -8,7 +10,7 @@ const UPCOMING_EVENTS = [
     time: "TBA",
     date: "11",
     monthYear: "Mei 26",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80"
+    image: "" // Placeholder
   },
   {
     title: "Gadjah Mada Business Case Competition",
@@ -16,7 +18,7 @@ const UPCOMING_EVENTS = [
     time: "TBA",
     date: "11",
     monthYear: "Mei 26",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80"
+    image: "" // Placeholder
   },
   {
     title: "Exposure",
@@ -24,9 +26,13 @@ const UPCOMING_EVENTS = [
     time: "TBA",
     date: "11 - 15",
     monthYear: "Mei 26",
-    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80"
+    image: "" // Placeholder
   }
 ];
+
+// Fill with random local photos
+const randomPhotos = getRandomPhotos(3);
+UPCOMING_EVENTS.forEach((ev, i) => { ev.image = randomPhotos[i]; });
 
 export function UpcomingEventsSection() {
   return (

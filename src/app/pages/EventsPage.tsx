@@ -5,6 +5,8 @@ import { MapPin, Clock, CalendarDays } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
+import { getRandomPhotos } from '../assets/photos';
+
 /* ── Sample Data ─────────────────────────────────────────────────── */
 const ONGOING_EVENTS = [
   {
@@ -15,7 +17,7 @@ const ONGOING_EVENTS = [
     date: '11',
     monthYear: 'Mei 26',
     status: 'ongoing' as const,
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
+    image: '',
   },
   {
     id: 2,
@@ -25,7 +27,7 @@ const ONGOING_EVENTS = [
     date: '11',
     monthYear: 'Mei 26',
     status: 'upcoming' as const,
-    image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80',
+    image: '',
   },
   {
     id: 3,
@@ -35,7 +37,7 @@ const ONGOING_EVENTS = [
     date: '11 - 15',
     monthYear: 'Mei 26',
     status: 'upcoming' as const,
-    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&q=80',
+    image: '',
   },
 ];
 
@@ -45,44 +47,50 @@ const PAST_EVENTS = [
     title: 'Malam Keakraban IKAMMA 2026',
     location: 'Jogja National Museum',
     date: 'Mar 15, 2026',
-    image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80',
+    image: '',
   },
   {
     id: 5,
     title: 'Workshop Financial Modeling',
     location: 'Auditorium FEB UGM',
     date: 'Feb 20, 2026',
-    image: 'https://images.unsplash.com/photo-1523580494112-071d16940d14?w=800&q=80',
+    image: '',
   },
   {
     id: 6,
     title: 'Seminar Nasional Ekonomi Digital',
     location: 'Grha Sabha Pramana UGM',
     date: 'Jan 28, 2026',
-    image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80',
+    image: '',
   },
   {
     id: 7,
     title: 'IKAMMA Career Fair 2025',
     location: 'FEB UGM',
     date: 'Dec 10, 2025',
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80',
+    image: '',
   },
   {
     id: 8,
     title: 'Musyawarah Besar IKAMMA',
     location: 'Ruang Sidang FEB UGM',
     date: 'Nov 5, 2025',
-    image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80',
+    image: '',
   },
   {
     id: 9,
     title: 'Inauguration Ceremony 2025',
     location: 'Auditorium FEB UGM',
     date: 'Oct 15, 2025',
-    image: 'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=800&q=80',
+    image: '',
   },
 ];
+
+// Fill with random local photos
+const randomOngoing = getRandomPhotos(3);
+ONGOING_EVENTS.forEach((ev, i) => { ev.image = randomOngoing[i]; });
+const randomPast = getRandomPhotos(6);
+PAST_EVENTS.forEach((ev, i) => { ev.image = randomPast[i]; });
 
 export function EventsPage() {
   const { pathname } = useLocation();

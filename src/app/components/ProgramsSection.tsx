@@ -3,56 +3,56 @@ import { motion } from 'motion/react';
 import { useRef } from 'react';
 import { useInView } from 'motion/react';
 
+import { getRandomPhotos } from '../../assets/photos';
+
 const programs = [
   {
     title: 'Latihan Kepemimpinan Manajemen',
     category: 'Kepemimpinan',
     description:
       'Program LKM sebagai gerbang pengembangan jiwa kepemimpinan mahasiswa baru Manajemen FEB UGM secara terstruktur dan menyeluruh.',
-    image:
-      'https://images.unsplash.com/photo-1616992954106-9c97fdc71f0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwbGVhZGVyc2hpcCUyMHdvcmtzaG9wJTIweYoutglMjBJbmRvbmVzaWF8ZW58MXx8fHwxNzc3Mjk4NDAwfDA&ixlib=rb-4.1.0&q=80&w=600',
+    image: '',
   },
   {
     title: 'Study Group Manajemen',
     category: 'Akademik',
     description:
       'Kelompok belajar intensif yang memfasilitasi diskusi akademik, persiapan ujian, dan peningkatan pemahaman materi kuliah bersama-sama.',
-    image:
-      'https://images.unsplash.com/photo-1758270705518-b61b40527e76?w=600&fit=crop&q=80',
+    image: '',
   },
   {
     title: 'Career Development Center',
     category: 'Karir',
     description:
       'Pembekalan karir melalui workshop, simulasi wawancara, dan sesi networking langsung bersama alumni dan rekruter dari perusahaan terkemuka.',
-    image:
-      'https://images.unsplash.com/photo-1758270705172-07b53627dfcb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xsZWdlJTIwc3R1ZGVudHMlMjBjb2xsYWJvcmF0aW9uJTIwdGVhbXdvcmslMjBtZWV0aW5nfGVufDF8fHx8MTc3NzI5ODQwMXww&ixlib=rb-4.1.0&q=80&w=600',
+    image: '',
   },
   {
     title: 'Sociopreneur IKAMMA',
     category: 'Kewirausahaan',
     description:
       'Program sociopreneur untuk mengembangkan jiwa wirausaha yang berdampak sosial, mempertemukan ide inovatif dengan kebutuhan masyarakat nyata.',
-    image:
-      'https://images.unsplash.com/photo-1763739530672-4aadafbd81ff?w=600&fit=crop&q=80',
+    image: '',
   },
   {
     title: 'Pengabdian Masyarakat',
     category: 'Sosial',
     description:
       'Program bakti sosial dan pengabdian masyarakat di sekitar Yogyakarta untuk menerapkan ilmu manajemen demi solusi nyata bagi komunitas.',
-    image:
-      'https://images.unsplash.com/photo-1517457133997-cca417e4a561?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwY29tbXVuaXR5JTIwdm9sdW50ZWVyaW5nJTIwc29jaWFsJTIwZXZlbnQlMjBvdXRkb29yfGVufDF8fHx8MTc3NzI5ODQwNXww&ixlib=rb-4.1.0&q=80&w=600',
+    image: '',
   },
   {
     title: 'KOMKIS & Kompetisi',
     category: 'Prestasi',
     description:
       'Fasilitasi mahasiswa untuk mengikuti kompetisi karya ilmiah, business plan, dan lomba nasional guna mengharumkan nama FEB UGM.',
-    image:
-      'https://images.unsplash.com/photo-1719409015910-a878b729cb9b?w=600&fit=crop&q=80',
+    image: '',
   },
 ];
+
+// Fill with random local photos
+const randomPhotos = getRandomPhotos(6);
+programs.forEach((p, i) => { p.image = randomPhotos[i]; });
 
 const categoryColors: Record<string, string> = {
   Kepemimpinan: 'bg-blue-600',

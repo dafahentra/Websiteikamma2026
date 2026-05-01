@@ -132,12 +132,18 @@ export function NewsSection() {
   // Locomotive-style background parallax (moves slower than content)
   const bgParallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
-  // Divide items into 4 columns of 3
-  const columns = [
+  // Desktop: 4 columns of 3
+  const colsDesktop = [
     items.slice(0, 3),
     items.slice(3, 6),
     items.slice(6, 9),
     items.slice(9, 12),
+  ];
+
+  // Mobile: 2 columns of 6
+  const colsMobile = [
+    items.filter((_, i) => i % 2 === 0),
+    items.filter((_, i) => i % 2 === 1),
   ];
 
   return (
@@ -194,26 +200,48 @@ export function NewsSection() {
             <a href="https://www.instagram.com/ikamma_ugm/" target="_blank" rel="noopener noreferrer" className="text-white/60 text-lg font-light">
               Follow for more!
             </a>
-            <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#3B82F6]" />
+            <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#002444]" />
           </motion.div>
         </div>
 
-        {/* 4-Column Grid with parallax offset */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
-          {columns.map((col, colIdx) => {
+        {/* Desktop 4-Column Grid */}
+        <div className="hidden md:grid grid-cols-4 gap-5">
+          {colsDesktop.map((col, colIdx) => {
             const isOffset = colIdx === 1 || colIdx === 3;
 
             return (
               <motion.div
-                key={colIdx}
-                className="flex flex-col gap-4 md:gap-5"
+                key={`desktop-${colIdx}`}
+                className="flex flex-col gap-5"
                 style={{
                   marginTop: isOffset ? 200 : 0,
                   y: isOffset ? parallaxY : 0,
                 }}
               >
                 {col.map((item) => (
-                  <NewsCard key={item.id} item={item} />
+                  <NewsCard key={`desktop-${item.id}`} item={item} />
+                ))}
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Mobile 2-Column Grid */}
+        <div className="grid md:hidden grid-cols-2 gap-4">
+          {colsMobile.map((col, colIdx) => {
+            const isOffset = colIdx === 1;
+
+            return (
+              <motion.div
+                key={`mobile-${colIdx}`}
+                className="flex flex-col gap-4"
+                style={{
+                  marginTop: isOffset ? 100 : 0,
+                  y: isOffset ? parallaxY : 0,
+                }}
+              >
+                {col.map((item) => (
+                  <NewsCard key={`mobile-${item.id}`} item={item} />
                 ))}
               </motion.div>
             );

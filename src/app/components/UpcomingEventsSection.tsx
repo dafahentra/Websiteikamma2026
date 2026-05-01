@@ -7,21 +7,24 @@ const UPCOMING_EVENTS = [
     location: "FEB UGM",
     time: "TBA",
     date: "11",
-    monthYear: "Mei 26"
+    monthYear: "Mei 26",
+    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80"
   },
   {
     title: "Gadjah Mada Business Case Competition",
     location: "FEB UGM",
     time: "TBA",
     date: "11",
-    monthYear: "Mei 26"
+    monthYear: "Mei 26",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80"
   },
   {
     title: "Exposure",
     location: "FEB UGM",
     time: "TBA",
     date: "11 - 15",
-    monthYear: "Mei 26"
+    monthYear: "Mei 26",
+    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80"
   }
 ];
 
@@ -45,8 +48,8 @@ export function UpcomingEventsSection() {
           </motion.h2>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Cards Slider/Grid */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 -mx-6 px-6 md:mx-0 md:px-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {UPCOMING_EVENTS.map((event, i) => (
             <motion.div
               key={i}
@@ -54,12 +57,19 @@ export function UpcomingEventsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="flex flex-col group cursor-pointer"
+              className="flex flex-col group cursor-pointer w-[80vw] min-w-[80vw] snap-center flex-shrink-0 md:w-auto md:min-w-0 md:flex-shrink"
             >
               {/* Image Container */}
               <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden mb-6 bg-[#081C36] shadow-lg transition-shadow duration-300 group-hover:shadow-xl">
-                {/* Image placeholder */}
-                <div className="absolute inset-0 bg-[#081C36] transition-colors duration-300 group-hover:bg-[#0a2545]"></div>
+                {/* Image */}
+                <div className="absolute inset-0 bg-[#081C36] overflow-hidden">
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/10 transition-colors duration-300 group-hover:bg-black/20"></div>
+                </div>
                 
                 {/* Date Overlay */}
                 <div className="absolute bottom-0 left-0 bg-white/20 backdrop-blur-md rounded-tr-2xl flex flex-col items-center justify-center px-6 py-3 border-t border-r border-white/30">

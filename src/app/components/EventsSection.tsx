@@ -27,9 +27,9 @@ interface CarouselCardProps {
   onClick: () => void;
 }
 
-function CarouselCard({ index, activeIndex, photo, unfoldProgress, onClick }: CarouselCardProps) {
+function CarouselCard({ index, activeIndex, photo, unfoldProgress, onClick, xFactor }: CarouselCardProps & { xFactor: number }) {
   const posIndex = (index - activeIndex + 4) % 4;
-  const target = POSITIONS[posIndex];
+  const target = { ...POSITIONS[posIndex], x: POSITIONS[posIndex].x * xFactor };
 
   // Motion values for the targets (state-driven)
   const tX = useSpring(target.x, { stiffness: 200, damping: 25 });
@@ -96,6 +96,14 @@ function CarouselCard({ index, activeIndex, photo, unfoldProgress, onClick }: Ca
 export function EventsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [xFactor, setXFactor] = useState(1);
+
+  useEffect(() => {
+    const check = () => setXFactor(window.innerWidth < 768 ? 0.4 : 1);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
   
   // Track scroll progress relative to this section
   const { scrollYProgress } = useScroll({
@@ -146,6 +154,7 @@ export function EventsSection() {
                   activeIndex={activeIndex}
                   photo={photo}
                   unfoldProgress={unfoldProgress}
+                  xFactor={xFactor}
                   onClick={() => setActiveIndex(i)}
                 />
               ))}

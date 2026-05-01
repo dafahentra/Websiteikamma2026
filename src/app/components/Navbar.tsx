@@ -381,10 +381,24 @@ export function Navbar() {
   const [expanded, setExpanded] = useState(false);
   const [mobileExpand, setMobileExpand] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
+    
+    // Hide on scroll down, show on scroll up
+    if (latest > 100) {
+      if (latest > lastScrollY.current) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    } else {
+      setIsVisible(true);
+    }
+    lastScrollY.current = latest;
   });
 
   const toggleExpand = (label: string) =>
@@ -394,21 +408,23 @@ export function Navbar() {
     <motion.div
       className="fixed top-6 left-1/2 z-[50] flex flex-col items-center"
       style={{ x: "-50%" }}
-      initial={false}
+      initial={{ y: 0 }}
+      animate={{ y: isVisible ? 0 : -120 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       {/* ── Desktop & Tablet Liquid Glass Pill ─────────────────────────────────── */}
       <nav
         className="flex items-center h-[56px] pl-4 pr-3 rounded-full pointer-events-auto transition-colors duration-300"
         style={{
-          background: 'rgba(12, 35, 64, 0.9)',
-          border: '1px solid rgba(12, 35, 64, 0.2)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
+          background: isScrolled ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.05)',
+          border: isScrolled ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.15)',
+          boxShadow: isScrolled ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.05)',
           backdropFilter: 'blur(24px) saturate(150%)',
           WebkitBackdropFilter: 'blur(24px) saturate(150%)',
         }}
       >
         {/* Always visible: Logo and Burger */}
-        <div className="flex items-center gap-4">
+        <div className={`flex items-center gap-4 transition-all duration-300 ${isScrolled ? 'invert' : ''}`}>
           <a href="/" className="flex items-center justify-center h-full">
             <IkammaLogo className="h-6 md:h-7 w-auto object-contain" />
           </a>
@@ -430,7 +446,7 @@ export function Navbar() {
               animate={{ width: "auto", opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-              className="hidden lg:flex items-center overflow-hidden h-full"
+              className={`hidden lg:flex items-center overflow-hidden h-full transition-all duration-300 ${isScrolled ? 'invert' : ''}`}
             >
               <ul className="flex items-center h-full gap-7 pl-6 pr-4 whitespace-nowrap m-0 list-none">
                 {links.map((link) => (

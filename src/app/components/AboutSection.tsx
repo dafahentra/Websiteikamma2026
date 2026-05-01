@@ -120,7 +120,7 @@ export function AboutSection() {
   const overlayOpacity = useTransform(scrollYProgress, [0.35, 0.75], [0, 0.45]);
 
   return (
-    <section id="about" ref={containerRef} className="relative w-full h-[1200vh] bg-[#0C2340]">
+    <section id="about" ref={containerRef} className="relative w-full h-[1200vh] bg-white">
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
         
         {/* Final Background Photo - Rendered first so it's behind all the flying photos */}
@@ -179,7 +179,7 @@ export function AboutSection() {
                 <div className="pt-4">
                   <a
                     href="#about-more"
-                    className="inline-flex items-center gap-2 bg-[#00B894] hover:bg-[#009b7c] text-white px-6 py-2.5 rounded-full font-medium transition-colors"
+                    className="inline-flex items-center gap-2 bg-[#081C36] hover:bg-[#0a2545] text-white px-6 py-2.5 rounded-full font-medium transition-colors"
                   >
                     <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
                     See More
@@ -191,12 +191,12 @@ export function AboutSection() {
               {/* Right Column: Company Profile */}
               <div className="flex flex-col items-start lg:items-end w-full">
                 <div className="w-full max-w-md ml-auto">
-                  <div className="inline-block bg-[#00B894] px-3 py-1 mb-4">
+                  <div className="inline-block bg-[#081C36] px-3 py-1 mb-4">
                     <h3 className="text-white text-xl font-bold">Company Profile</h3>
                   </div>
                   <div className="w-full aspect-video bg-[#D9D9D9] rounded-[2rem] shadow-lg mb-4"></div>
                   <div className="text-right">
-                    <a href="#video" className="text-white hover:text-[#00B894] transition-colors inline-flex items-center gap-2 text-sm underline underline-offset-4">
+                    <a href="#video" className="text-white hover:text-[#081C36] transition-colors inline-flex items-center gap-2 text-sm underline underline-offset-4">
                       Click to See Full Video <ArrowRight size={14} />
                     </a>
                   </div>

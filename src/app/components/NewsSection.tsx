@@ -58,46 +58,39 @@ const PLACEHOLDER_ITEMS: NewsItem[] = Array.from({ length: 12 }, (_, i) => ({
 // ── Card Component ─────────────────────────────────
 function NewsCard({ item }: { item: NewsItem }) {
   return (
-    <a
-      href={item.permalink}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="relative w-full aspect-square cursor-pointer group block"
-    >
-      {/* Card with SVG shape */}
-      <svg
-        viewBox="0 0 360 360"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute inset-0 w-full h-full"
+    <div className="relative w-full aspect-square group">
+      {/* The Clipped Image Container */}
+      <a
+        href={item.permalink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute inset-0 cursor-pointer block"
+        style={{ clipPath: 'url(#news-clip-path)' }}
       >
-        <defs>
-          <clipPath id={`card-clip-${item.id}`}>
-            <path d="M0 27C0 12.0883 12.0883 0 27 0H101H330C346.569 0 360 13.4315 360 30V291C360 307.569 346.569 321 330 321H238.205C230.38 321 222.864 324.057 217.262 329.52L194.738 351.48C189.136 356.943 181.62 360 173.795 360H30C13.4315 360 0 346.569 0 330V27Z" />
-          </clipPath>
-        </defs>
-        {/* Background fill */}
-        <rect width="360" height="360" fill="#CBD5E1" clipPath={`url(#card-clip-${item.id})`} />
-        {/* Image via foreignObject */}
-        {item.image && (
-          <foreignObject width="360" height="360" clipPath={`url(#card-clip-${item.id})`}>
+        <div className="w-full h-full overflow-hidden bg-[#1A2E44]">
+          {item.image ? (
             <img
               src={item.image}
               alt=""
               loading="lazy"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             />
-          </foreignObject>
-        )}
-      </svg>
+          ) : (
+            <div className="w-full h-full bg-[#1A2E44]" />
+          )}
+        </div>
+        {/* Overlay on hover */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+      </a>
 
-      {/* Date in the bottom-right notch */}
-      <div className="absolute bottom-0 right-0 flex items-end pr-1 pb-1">
-        <p className="text-sm font-medium text-white/90 whitespace-nowrap">
-          {item.day} {item.month} <span className="text-[#00B894]">{item.year}</span>
+      {/* Date - outside the clip path so it shows up in the bottom right corner */}
+      <div className="absolute bottom-[2%] right-[2%] pointer-events-none z-20">
+        <p className="text-[12px] md:text-[14px] font-inter font-bold leading-none tracking-tight whitespace-nowrap">
+          <span className="text-white">{item.day} {item.month}</span>{' '}
+          <span className="text-[#3B82F6]">{item.year}</span>
         </p>
       </div>
-    </a>
+    </div>
   );
 }
 
@@ -136,6 +129,9 @@ export function NewsSection() {
   // Columns 2 & 4 move up as you scroll (parallax)
   const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -250]);
 
+  // Locomotive-style background parallax (moves slower than content)
+  const bgParallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+
   // Divide items into 4 columns of 3
   const columns = [
     items.slice(0, 3),
@@ -145,8 +141,34 @@ export function NewsSection() {
   ];
 
   return (
-    <section ref={sectionRef} className="relative w-full py-24 bg-[#102a4e] text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
+    <section ref={sectionRef} className="relative w-full py-24 text-white overflow-hidden">
+      {/* Invisible SVG for clip-path */}
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <clipPath id="news-clip-path" clipPathUnits="objectBoundingBox">
+            <path 
+              transform="scale(0.002777777777777778, 0.002777777777777778)"
+              d="M0 27C0 12.0883 12.0883 0 27 0H101H330C346.569 0 360 13.4315 360 30V291C360 307.569 346.569 321 330 321H238.205C230.38 321 222.864 324.057 217.262 329.52L194.738 351.48C189.136 356.943 181.62 360 173.795 360H30C13.4315 360 0 346.569 0 330V27Z" 
+            />
+          </clipPath>
+        </defs>
+      </svg>
+
+      {/* Locomotive-scroll parallax background */}
+      <motion.div
+        className="absolute inset-0 w-full h-[130%] -top-[15%]"
+        style={{ y: bgParallaxY }}
+      >
+        <img
+          src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2000&auto=format&fit=crop"
+          alt=""
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
+      {/* Dark overlay — subtle enough to see the photo clearly */}
+      <div className="absolute inset-0 bg-[#081C36]/60" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
 
         {/* Header */}
         <div className="flex flex-col items-center justify-center mb-16">
@@ -157,7 +179,7 @@ export function NewsSection() {
             transition={{ duration: 0.8 }}
             className="text-white text-4xl md:text-5xl flex items-center gap-3 mb-4"
           >
-            <span className="text-[#00B894]">—</span>
+            <span className="text-[#002444]">—</span>
             <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">See</span>
             <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">What's News</span>
           </motion.h2>
@@ -169,10 +191,10 @@ export function NewsSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <a href="https://www.instagram.com/ikamma_ugm/" target="_blank" rel="noopener noreferrer" className="text-white/70 text-lg font-light">
+            <a href="https://www.instagram.com/ikamma_ugm/" target="_blank" rel="noopener noreferrer" className="text-white/60 text-lg font-light">
               Follow for more!
             </a>
-            <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#00B894]" />
+            <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#3B82F6]" />
           </motion.div>
         </div>
 

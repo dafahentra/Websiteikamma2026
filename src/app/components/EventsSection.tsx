@@ -63,8 +63,8 @@ function CarouselCard({ index, activeIndex, photo, unfoldProgress, onClick }: Ca
       style={{ x, y, rotate, scale, zIndex: target.zIndex }}
       animate={{
         boxShadow: isCenter 
-          ? "0 20px 50px rgba(0,0,0,0.4), 0 0 60px rgba(0,184,148,0.5)" 
-          : "0 20px 50px rgba(0,0,0,0.4), 0 0 0px rgba(0,184,148,0)"
+          ? "0 20px 50px rgba(0,0,0,0.4), 0 0 60px rgba(8,28,54,0.5)" 
+          : "0 20px 50px rgba(0,0,0,0.4), 0 0 0px rgba(8,28,54,0)"
       }}
       transition={{ duration: 0.4 }}
     >
@@ -81,10 +81,10 @@ function CarouselCard({ index, activeIndex, photo, unfoldProgress, onClick }: Ca
       <motion.div 
         className="absolute top-4 bottom-4 left-4 right-4 pointer-events-none rounded-sm border-2"
         animate={{ 
-          borderColor: isCenter ? "rgba(0,184,148,1)" : "rgba(0,184,148,0)",
+          borderColor: isCenter ? "rgba(8,28,54,1)" : "rgba(8,28,54,0)",
           boxShadow: isCenter 
-            ? "0 0 15px rgba(0,184,148,0.5), inset 0 0 15px rgba(0,184,148,0.5)" 
-            : "0 0 0px rgba(0,184,148,0), inset 0 0 0px rgba(0,184,148,0)",
+            ? "0 0 15px rgba(8,28,54,0.5), inset 0 0 15px rgba(8,28,54,0.5)" 
+            : "0 0 0px rgba(8,28,54,0), inset 0 0 0px rgba(8,28,54,0)",
           opacity: isCenter ? 1 : 0
         }}
         transition={{ duration: 0.4 }}
@@ -120,7 +120,7 @@ export function EventsSection() {
             <div className="absolute inset-0 bg-white/90" />
           </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full pt-[25px]">
             
             {/* Title */}
             <div className="flex justify-center md:justify-end mb-16 md:mb-24">
@@ -131,7 +131,7 @@ export function EventsSection() {
                 transition={{ duration: 0.8 }}
                 className="text-[#0C2340] text-4xl md:text-5xl flex items-center gap-3"
               >
-                <span className="text-[#00B894]">—</span>
+                <span className="text-[#081C36]">—</span>
                 <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
                 <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Notable Events</span>
               </motion.h2>
@@ -159,7 +159,7 @@ export function EventsSection() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="flex justify-center"
             >
-              <button className="bg-[#00B894] hover:bg-[#009b7c] text-white px-8 py-3 rounded-full font-medium transition-colors inline-flex items-center gap-2 shadow-lg hover:shadow-xl">
+              <button className="bg-[#081C36] hover:bg-[#0a2545] text-white px-8 py-3 rounded-full font-medium transition-colors inline-flex items-center gap-2 shadow-lg hover:shadow-xl">
                 <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
                 See More
                 <ArrowRight size={18} />

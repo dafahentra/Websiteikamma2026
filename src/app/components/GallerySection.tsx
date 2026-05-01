@@ -43,7 +43,7 @@ export function GallerySection() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="gallery" className="py-24 bg-[#06244A] relative z-20 overflow-hidden" ref={ref}>
+    <section id="gallery" className="py-24 bg-white relative z-20 overflow-hidden" ref={ref}>
       <div
         className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
@@ -52,27 +52,27 @@ export function GallerySection() {
         }}
       />
 
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00A855]/50 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00A855]/50 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#081C36]/50 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#081C36]/50 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-0.5 bg-[#00A855]" />
-              <span className="text-[#00A855] tracking-widest uppercase text-xs font-semibold">
+              <div className="w-10 h-0.5 bg-[#081C36]" />
+              <span className="text-[#081C36] tracking-widest uppercase text-xs font-semibold">
                 Galeri Foto
               </span>
             </div>
-            <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-caslon leading-tight">
+            <h2 className="text-[#081C36] text-3xl md:text-4xl lg:text-5xl font-caslon leading-tight">
               Momen Berkesan
             </h2>
-            <p className="text-white/60 mt-3 text-base max-w-2xl">
+            <p className="text-[#081C36]/50 mt-3 text-base max-w-2xl">
               Rekam jejak kegiatan dan perjalanan IKAMMA FEB UGM dalam gambar
             </p>
           </div>
 
-          <button className="inline-flex items-center gap-2 border border-white/20 text-white/80 hover:text-white hover:bg-white/10 px-5 py-2.5 rounded-xl transition-all text-sm flex-shrink-0">
+          <button className="inline-flex items-center gap-2 border border-[#081C36]/15 text-[#081C36]/70 hover:text-[#081C36] hover:bg-[#081C36]/5 px-5 py-2.5 rounded-xl transition-all text-sm flex-shrink-0">
             <Images size={16} />
             Lihat Semua Foto
           </button>
@@ -97,7 +97,7 @@ export function GallerySection() {
                     <p className="text-white font-medium text-sm md:text-base leading-snug translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                       {img.alt}
                     </p>
-                    <div className="w-8 h-0.5 bg-[#00A855] mt-3 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 delay-100" />
+                    <div className="w-8 h-0.5 bg-[#081C36] mt-3 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 delay-100" />
                   </div>
                 </div>
               ))}

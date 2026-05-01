@@ -5,6 +5,7 @@ import { DepartmentDetail } from './pages/DepartmentDetail';
 import { ArticlesPage } from './pages/ArticlesPage';
 import { EventsPage } from './pages/EventsPage';
 import { ContactPage } from './pages/ContactPage';
+import { InfoMahasiswaPage } from './pages/InfoMahasiswaPage';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <Route path="/articles" element={<ArticlesPage />} />
       <Route path="/events" element={<EventsPage />} />
       <Route path="/contact" element={<ContactPage />} />
+      <Route path="/info-mahasiswa" element={<InfoMahasiswaPage />} />
     </Routes>
   );
 }

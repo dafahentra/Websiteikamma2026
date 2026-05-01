@@ -47,14 +47,14 @@ export function ContactSection() {
         {/* Header */}
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-10 h-0.5 bg-[#00A855]" />
+            <div className="w-10 h-0.5 bg-[#081C36]" />
             <span
-              className="text-[#00A855] tracking-widest uppercase"
+              className="text-[#081C36] tracking-widest uppercase"
               style={{ fontSize: '12px' }}
             >
               Kontak
             </span>
-            <div className="w-10 h-0.5 bg-[#00A855]" />
+            <div className="w-10 h-0.5 bg-[#081C36]" />
           </div>
           <h2
             className="font-caslon text-[#06244A] mb-4"
@@ -78,7 +78,7 @@ export function ContactSection() {
               {contactInfo.map(({ icon: Icon, label, lines }, i) => (
                 <div key={i} className="flex items-start gap-5">
                   <div className="w-12 h-12 bg-[#06244A] rounded-2xl flex items-center justify-center flex-shrink-0 shadow-md">
-                    <Icon className="text-[#00A855]" size={20} />
+                    <Icon className="text-[#081C36]" size={20} />
                   </div>
                   <div>
                     <div
@@ -140,7 +140,7 @@ export function ContactSection() {
               className="bg-gray-50 border border-gray-100 rounded-2xl p-8 space-y-5"
             >
               {submitted && (
-                <div className="bg-[#00A855]/10 border border-[#00A855]/30 text-[#00A855] px-4 py-3 rounded-xl" style={{ fontSize: '14px' }}>
+                <div className="bg-[#081C36]/10 border border-[#081C36]/30 text-[#081C36] px-4 py-3 rounded-xl" style={{ fontSize: '14px' }}>
                   ✓ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.
                 </div>
               )}
@@ -151,7 +151,7 @@ export function ContactSection() {
                     className="block text-[#06244A] mb-2"
                     style={{ fontSize: '14px' }}
                   >
-                    Nama Lengkap <span className="text-[#00A855]">*</span>
+                    Nama Lengkap <span className="text-[#081C36]">*</span>
                   </label>
                   <input
                     type="text"
@@ -159,7 +159,7 @@ export function ContactSection() {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                     placeholder="Nama Anda"
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[#06244A] placeholder-gray-400 focus:outline-none focus:border-[#00A855] focus:ring-2 focus:ring-[#00A855]/10 transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[#06244A] placeholder-gray-400 focus:outline-none focus:border-[#081C36] focus:ring-2 focus:ring-[#081C36]/10 transition-all"
                     style={{ fontSize: '14px' }}
                   />
                 </div>
@@ -168,7 +168,7 @@ export function ContactSection() {
                     className="block text-[#06244A] mb-2"
                     style={{ fontSize: '14px' }}
                   >
-                    Alamat Email <span className="text-[#00A855]">*</span>
+                    Alamat Email <span className="text-[#081C36]">*</span>
                   </label>
                   <input
                     type="email"
@@ -176,7 +176,7 @@ export function ContactSection() {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                     placeholder="email@example.com"
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[#06244A] placeholder-gray-400 focus:outline-none focus:border-[#00A855] focus:ring-2 focus:ring-[#00A855]/10 transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[#06244A] placeholder-gray-400 focus:outline-none focus:border-[#081C36] focus:ring-2 focus:ring-[#081C36]/10 transition-all"
                     style={{ fontSize: '14px' }}
                   />
                 </div>
@@ -194,7 +194,7 @@ export function ContactSection() {
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="Topik pesan Anda"
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[#06244A] placeholder-gray-400 focus:outline-none focus:border-[#00A855] focus:ring-2 focus:ring-[#00A855]/10 transition-all"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[#06244A] placeholder-gray-400 focus:outline-none focus:border-[#081C36] focus:ring-2 focus:ring-[#081C36]/10 transition-all"
                   style={{ fontSize: '14px' }}
                 />
               </div>
@@ -204,7 +204,7 @@ export function ContactSection() {
                   className="block text-[#06244A] mb-2"
                   style={{ fontSize: '14px' }}
                 >
-                  Pesan <span className="text-[#00A855]">*</span>
+                  Pesan <span className="text-[#081C36]">*</span>
                 </label>
                 <textarea
                   value={formData.message}
@@ -212,7 +212,7 @@ export function ContactSection() {
                   required
                   rows={5}
                   placeholder="Tulis pesan Anda di sini..."
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[#06244A] placeholder-gray-400 focus:outline-none focus:border-[#00A855] focus:ring-2 focus:ring-[#00A855]/10 transition-all resize-none"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[#06244A] placeholder-gray-400 focus:outline-none focus:border-[#081C36] focus:ring-2 focus:ring-[#081C36]/10 transition-all resize-none"
                   style={{ fontSize: '14px' }}
                 />
               </div>

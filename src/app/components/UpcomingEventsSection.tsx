@@ -27,7 +27,7 @@ const UPCOMING_EVENTS = [
 
 export function UpcomingEventsSection() {
   return (
-    <section className="relative w-full py-24 bg-[#08182D] text-white">
+    <section className="relative w-full py-24 bg-white text-[#081C36]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
         
         {/* Header */}
@@ -37,21 +37,12 @@ export function UpcomingEventsSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-white text-4xl md:text-5xl flex items-center gap-3"
+            className="text-[#081C36] text-4xl md:text-5xl flex items-center gap-3"
           >
-            <span className="text-[#00B894]">—</span>
+            <span className="text-[#081C36]">—</span>
             <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Upcoming</span>
             <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Event</span>
           </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-white/80 mt-2 text-xl md:text-2xl font-light"
-          >
-            Discover Deez Nuts!
-          </motion.p>
         </div>
 
         {/* Cards Grid */}
@@ -66,9 +57,9 @@ export function UpcomingEventsSection() {
               className="flex flex-col group cursor-pointer"
             >
               {/* Image Container */}
-              <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden mb-6 bg-[#00B894] shadow-lg transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-xl">
-                {/* Image placeholder - can be replaced with actual image later */}
-                <div className="absolute inset-0 bg-[#00B894] transition-colors duration-300 group-hover:bg-[#00d2a8]"></div>
+              <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden mb-6 bg-[#081C36] shadow-lg transition-shadow duration-300 group-hover:shadow-xl">
+                {/* Image placeholder */}
+                <div className="absolute inset-0 bg-[#081C36] transition-colors duration-300 group-hover:bg-[#0a2545]"></div>
                 
                 {/* Date Overlay */}
                 <div className="absolute bottom-0 left-0 bg-white/20 backdrop-blur-md rounded-tr-2xl flex flex-col items-center justify-center px-6 py-3 border-t border-r border-white/30">
@@ -78,17 +69,17 @@ export function UpcomingEventsSection() {
               </div>
 
               {/* Text Content */}
-              <h3 className="text-2xl font-semibold text-white mb-4 line-clamp-2 min-h-[64px]">
+              <h3 className="text-2xl font-semibold text-[#081C36] mb-4 line-clamp-2 min-h-[64px]">
                 {event.title}
               </h3>
               
               <div className="flex flex-col gap-2 mt-auto">
-                <div className="flex items-center gap-2 text-white/80">
-                  <MapPin size={18} className="text-[#00B894]" />
+                <div className="flex items-center gap-2 text-[#081C36]/60">
+                  <MapPin size={18} className="text-[#081C36]" />
                   <span className="text-sm font-medium">{event.location}</span>
                 </div>
-                <div className="flex items-center gap-2 text-white/80">
-                  <Clock size={18} className="text-[#00B894]" />
+                <div className="flex items-center gap-2 text-[#081C36]/60">
+                  <Clock size={18} className="text-[#081C36]" />
                   <span className="text-sm font-medium">{event.time}</span>
                 </div>
               </div>

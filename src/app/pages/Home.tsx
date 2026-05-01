@@ -8,7 +8,7 @@ import { Footer } from '../components/Footer';
 
 export function Home() {
   return (
-    <div className="min-h-screen bg-[#0C2340]">
+    <div className="min-h-screen bg-white">
       <Navbar />
       {/* Hero section underneath (z-20) */}
       <div className="relative z-20">

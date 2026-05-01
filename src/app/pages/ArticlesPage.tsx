@@ -87,7 +87,7 @@ export function ArticlesPage() {
   const visible = filtered.slice(0, visibleCount);
 
   return (
-    <div className="min-h-screen bg-[#0C2340] text-white">
+    <div className="min-h-screen bg-white text-[#081C36]">
       <Navbar />
 
       {/* Hero */}
@@ -100,7 +100,7 @@ export function ArticlesPage() {
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-inter font-bold mb-4">
             All Posts
           </h1>
-          <p className="text-white/60 text-lg md:text-xl font-inter max-w-2xl">
+          <p className="text-[#081C36]/50 text-lg md:text-xl font-inter max-w-2xl">
             Browse by topic or interest to find what matters most to you.
           </p>
         </motion.div>
@@ -118,8 +118,8 @@ export function ArticlesPage() {
               onClick={() => { setActiveCategory(cat); setVisibleCount(6); }}
               className={`px-5 py-2 rounded-full text-sm font-inter font-medium transition-all duration-300 border ${
                 activeCategory === cat
-                  ? 'bg-[#0CA678] border-[#0CA678] text-white shadow-lg shadow-[#0CA678]/20'
-                  : 'bg-white/[0.04] border-white/[0.1] text-white/60 hover:bg-white/[0.08] hover:text-white'
+                  ? 'bg-[#081C36] border-[#081C36] text-white shadow-lg shadow-[#081C36]/20'
+                  : 'bg-[#081C36]/[0.03] border-white/[0.1] text-[#081C36]/50 hover:bg-white/[0.08] hover:text-white'
               }`}
             >
               {cat}
@@ -144,7 +144,7 @@ export function ArticlesPage() {
               className="group cursor-pointer flex flex-col"
             >
               {/* Image */}
-              <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-5 bg-white/[0.04]">
+              <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-5 bg-[#081C36]/[0.03]">
                 <img
                   src={article.image}
                   alt={article.title}
@@ -153,22 +153,22 @@ export function ArticlesPage() {
               </div>
 
               {/* Category Tag */}
-              <span className="inline-block w-fit px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.08] text-[#0CA678] text-xs font-inter font-medium mb-3">
+              <span className="inline-block w-fit px-3 py-1 rounded-full bg-[#081C36]/[0.04] border border-white/[0.08] text-[#081C36] text-xs font-inter font-medium mb-3">
                 {article.category}
               </span>
 
               {/* Title */}
-              <h3 className="text-xl md:text-2xl font-inter font-bold mb-3 group-hover:text-[#0CA678] transition-colors duration-300 line-clamp-2">
+              <h3 className="text-xl md:text-2xl font-inter font-bold mb-3 group-hover:text-[#081C36] transition-colors duration-300 line-clamp-2">
                 {article.title}
               </h3>
 
               {/* Description */}
-              <p className="text-white/50 text-sm md:text-base font-inter leading-relaxed mb-4 line-clamp-2">
+              <p className="text-[#081C36]/50 text-sm md:text-base font-inter leading-relaxed mb-4 line-clamp-2">
                 {article.description}
               </p>
 
               {/* Meta */}
-              <div className="mt-auto flex items-center justify-between text-white/40 text-sm font-inter">
+              <div className="mt-auto flex items-center justify-between text-[#081C36]/40 text-sm font-inter">
                 <div className="flex items-center gap-1.5">
                   <User size={14} />
                   <span>{article.author}</span>
@@ -195,7 +195,7 @@ export function ArticlesPage() {
           >
             <button
               onClick={() => setVisibleCount(prev => prev + 6)}
-              className="px-8 py-3 rounded-full border border-white/[0.15] text-white/70 font-inter font-medium hover:bg-white/[0.06] hover:text-white transition-all duration-300"
+              className="px-8 py-3 rounded-full border border-white/[0.15] text-[#081C36]/60 font-inter font-medium hover:bg-[#081C36]/[0.04] hover:text-white transition-all duration-300"
             >
               Load More Articles
             </button>

@@ -135,7 +135,7 @@ export function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0C2340] text-white">
+    <div className="min-h-screen bg-white text-[#081C36]">
       <Navbar />
 
       {/* Hero */}
@@ -149,7 +149,7 @@ export function ContactPage() {
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-inter font-bold mb-4">
             Contact Us
           </h1>
-          <p className="text-white/60 text-lg md:text-xl font-inter max-w-2xl mx-auto">
+          <p className="text-[#081C36]/50 text-lg md:text-xl font-inter max-w-2xl mx-auto">
             Any question or remarks? Just write us a message!
           </p>
         </motion.div>
@@ -167,8 +167,8 @@ export function ContactPage() {
               onClick={() => setActiveTab(tab.id)}
               className={`relative px-8 py-2.5 rounded-full text-sm font-inter font-semibold transition-all duration-300 ${
                 activeTab === tab.id
-                  ? 'bg-[#0CA678] text-white shadow-lg shadow-[#0CA678]/25'
-                  : 'bg-white/[0.04] border border-white/[0.08] text-white/50 hover:text-white hover:bg-white/[0.08]'
+                  ? 'bg-[#081C36] text-white shadow-lg shadow-[#081C36]/25'
+                  : 'bg-[#081C36]/[0.05] border border-[#081C36]/15 text-[#081C36]/60 hover:text-[#081C36] hover:bg-[#081C36]/10'
               }`}
             >
               {tab.label}
@@ -192,40 +192,40 @@ export function ContactPage() {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] rounded-3xl overflow-hidden shadow-2xl shadow-black/30 min-h-[600px]">
 
                 {/* ── Left: Dark Info Card ───────────────────────── */}
-                <div className="relative bg-[#081C36] p-10 md:p-14 flex flex-col justify-between overflow-hidden">
+                <div className="relative bg-[#f5f7fa] p-10 md:p-14 flex flex-col justify-between overflow-hidden">
                   {/* Decorative circles */}
-                  <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#0CA678]/10 rounded-full blur-xl pointer-events-none" />
-                  <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#0CA678]/5 rounded-full pointer-events-none" />
+                  <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#081C36]/5 rounded-full blur-xl pointer-events-none" />
+                  <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#081C36]/3 rounded-full pointer-events-none" />
 
                   <div className="relative z-10">
                     <h2 className="text-3xl md:text-4xl font-inter font-bold mb-4">
                       Contact Information
                     </h2>
-                    <p className="text-white/60 text-base font-inter leading-relaxed mb-12 max-w-md">
+                    <p className="text-[#081C36]/60 text-base font-inter leading-relaxed mb-12 max-w-md">
                       Should you have any question or concern, you can reach us by filling out the contact form, finding us on social networks, or you can personal email us at:
                     </p>
 
                     {/* Contact Details */}
                     <div className="space-y-8">
                       <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
-                          <Phone size={20} className="text-white/80" />
+                        <div className="w-12 h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0">
+                          <Phone size={20} className="text-[#081C36]" />
                         </div>
-                        <span className="font-inter text-lg text-white">+62 812-3456-7890</span>
+                        <span className="font-inter text-lg text-[#081C36]">+62 812-3456-7890</span>
                       </div>
 
                       <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
-                          <Mail size={20} className="text-white/80" />
+                        <div className="w-12 h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0">
+                          <Mail size={20} className="text-[#081C36]" />
                         </div>
-                        <span className="font-inter text-lg text-white">ikamma@feb.ugm.ac.id</span>
+                        <span className="font-inter text-lg text-[#081C36]">ikamma@feb.ugm.ac.id</span>
                       </div>
 
                       <div className="flex items-start gap-5">
-                        <div className="w-12 h-12 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0 mt-0.5">
-                          <MapPin size={20} className="text-white/80" />
+                        <div className="w-12 h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0 mt-0.5">
+                          <MapPin size={20} className="text-[#081C36]" />
                         </div>
-                        <div className="font-inter text-base text-white/80 leading-relaxed">
+                        <div className="font-inter text-base text-[#081C36]/70 leading-relaxed">
                           Gedung FEB UGM<br />
                           Jl. Sosio Humaniora No.1, Bulaksumur<br />
                           Yogyakarta 55281
@@ -246,7 +246,7 @@ export function ContactPage() {
                             target="_blank"
                             rel="noopener noreferrer"
                             whileHover={{ scale: 1.15, y: -3 }}
-                            className="w-10 h-10 rounded-full bg-white/[0.06] hover:bg-[#0CA678] flex items-center justify-center transition-colors duration-300"
+                            className="w-10 h-10 rounded-full bg-[#081C36]/[0.04] hover:bg-[#081C36] flex items-center justify-center transition-colors duration-300"
                             title={social.label}
                           >
                             <Icon size={16} />
@@ -258,14 +258,14 @@ export function ContactPage() {
                 </div>
 
                 {/* ── Right: Form (light bg) ─────────────────────── */}
-                <div className="bg-[#0E2849] p-10 md:p-14">
+                <div className="bg-white p-10 md:p-14">
                   <form onSubmit={handleSubmit} className="space-y-6 h-full flex flex-col">
 
                     {submitted && (
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-[#0CA678]/10 border border-[#0CA678]/30 text-[#0CA678] px-4 py-3 rounded-xl text-sm font-inter"
+                        className="bg-[#081C36]/10 border border-[#081C36]/30 text-[#081C36] px-4 py-3 rounded-xl text-sm font-inter"
                       >
                         ✓ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.
                       </motion.div>
@@ -274,27 +274,27 @@ export function ContactPage() {
                     <div className="grid sm:grid-cols-2 gap-6">
                       {/* Name */}
                       <div>
-                        <label className="block text-white/50 text-sm font-inter mb-2">Name</label>
+                        <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Name</label>
                         <input
                           type="text"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           required
                           placeholder="John Doe"
-                          className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] transition-colors text-sm font-inter"
+                          className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter"
                         />
                       </div>
 
                       {/* Email */}
                       <div>
-                        <label className="block text-white/50 text-sm font-inter mb-2">Email</label>
+                        <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Email</label>
                         <input
                           type="email"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           required
                           placeholder="johndoe@example.com"
-                          className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] transition-colors text-sm font-inter"
+                          className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter"
                         />
                       </div>
                     </div>
@@ -302,28 +302,28 @@ export function ContactPage() {
                     <div className="grid sm:grid-cols-2 gap-6">
                       {/* Phone */}
                       <div>
-                        <label className="block text-white/50 text-sm font-inter mb-2">Phone Number</label>
+                        <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Phone Number</label>
                         <input
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           placeholder="+62"
-                          className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] transition-colors text-sm font-inter"
+                          className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter"
                         />
                       </div>
 
                       {/* Type of Enquiry — dropdown */}
                       <div className="relative">
-                        <label className="block text-white/50 text-sm font-inter mb-2">Type of Enquiry</label>
+                        <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Type of Enquiry</label>
                         <button
                           type="button"
                           onClick={() => setDropdownOpen(!dropdownOpen)}
-                          className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-left focus:outline-none focus:border-[#0CA678] transition-colors text-sm font-inter flex items-center justify-between"
+                          className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 text-left focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter flex items-center justify-between"
                         >
-                          <span className={formData.enquiry ? 'text-white' : 'text-white/25'}>
+                          <span className={formData.enquiry ? 'text-[#081C36]' : 'text-[#081C36]/30'}>
                             {formData.enquiry || 'Select type'}
                           </span>
-                          <ChevronDown size={16} className={`text-white/40 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+                          <ChevronDown size={16} className={`text-[#081C36]/40 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
                         </button>
 
                         <AnimatePresence>
@@ -333,9 +333,9 @@ export function ContactPage() {
                               animate={{ opacity: 1, y: 0 }}
                               exit={{ opacity: 0, y: -5 }}
                               transition={{ duration: 0.15 }}
-                              className="absolute top-full left-0 right-0 mt-1 z-20 rounded-xl overflow-hidden border border-white/[0.1]"
+                              className="absolute top-full left-0 right-0 mt-1 z-20 rounded-xl overflow-hidden border border-[#081C36]/10 shadow-lg"
                               style={{
-                                background: 'rgba(12, 35, 64, 0.95)',
+                                background: 'rgba(255, 255, 255, 0.98)',
                                 backdropFilter: 'blur(20px)',
                               }}
                             >
@@ -349,8 +349,8 @@ export function ContactPage() {
                                   }}
                                   className={`w-full text-left px-4 py-3 text-sm font-inter transition-colors duration-150 ${
                                     formData.enquiry === type
-                                      ? 'bg-[#0CA678]/15 text-[#0CA678]'
-                                      : 'text-white/70 hover:bg-white/[0.06] hover:text-white'
+                                      ? 'bg-[#081C36]/10 text-[#081C36] font-semibold'
+                                      : 'text-[#081C36]/60 hover:bg-[#081C36]/5 hover:text-[#081C36]'
                                   }`}
                                 >
                                   {type}
@@ -364,26 +364,26 @@ export function ContactPage() {
 
                     {/* Subject */}
                     <div>
-                      <label className="block text-white/50 text-sm font-inter mb-2">Subject</label>
+                      <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Subject</label>
                       <input
                         type="text"
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                         placeholder="What's this about?"
-                        className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] transition-colors text-sm font-inter"
+                        className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter"
                       />
                     </div>
 
                     {/* Message */}
                     <div className="flex-1">
-                      <label className="block text-white/50 text-sm font-inter mb-2">Message</label>
+                      <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Message</label>
                       <textarea
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         required
                         rows={4}
                         placeholder="Write Your Message Here..."
-                        className="w-full px-0 py-3 bg-transparent border-b border-white/[0.15] text-white placeholder-white/25 focus:outline-none focus:border-[#0CA678] transition-colors resize-none text-sm font-inter"
+                        className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors resize-none text-sm font-inter"
                       />
                     </div>
 
@@ -393,7 +393,7 @@ export function ContactPage() {
                         type="submit"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="bg-[#0CA678] hover:bg-[#0b9069] text-white px-10 py-3.5 rounded-xl transition-all duration-300 flex items-center gap-2 font-inter font-semibold shadow-lg shadow-[#0CA678]/20 hover:shadow-xl hover:shadow-[#0CA678]/30"
+                        className="bg-[#081C36] hover:bg-[#0a2545] text-white px-10 py-3.5 rounded-xl transition-all duration-300 flex items-center gap-2 font-inter font-semibold shadow-lg shadow-[#081C36]/20 hover:shadow-xl hover:shadow-[#081C36]/30"
                       >
                         Send Message <Send size={16} />
                       </motion.button>
@@ -413,26 +413,22 @@ export function ContactPage() {
             >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {EVENT_CONTACTS.map((event, i) => (
-                  <motion.div
+                  <div
                     key={event.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.1 }}
-                    className="p-8 rounded-2xl bg-[#081C36] border border-white/[0.04] hover:border-white/[0.1] transition-all duration-300 group"
+                    className="p-8 rounded-2xl bg-[#f5f7fa] border border-[#081C36]/10 hover:border-[#081C36]/20 hover:shadow-lg transition-all duration-300 group"
                   >
-                    <h3 className="font-inter font-bold text-2xl text-white mb-1">{event.label}</h3>
-                    <p className="text-white/40 text-sm font-inter mb-8">{event.description}</p>
+                    <h3 className="font-inter font-bold text-2xl text-[#081C36] mb-1">{event.label}</h3>
+                    <p className="text-[#081C36]/50 text-sm font-inter mb-8">{event.description}</p>
 
-                    <div className="space-y-4 pt-6 border-t border-white/[0.06]">
+                    <div className="space-y-4 pt-6 border-t border-[#081C36]/10">
                       {event.contacts.map((c, j) => (
                         <div key={j} className="flex items-center gap-3">
-                          <span className="text-[#0CA678] text-xs font-inter font-bold min-w-[80px] uppercase tracking-wider">{c.type}</span>
-                          <span className="text-white/60 text-sm font-inter">{c.value}</span>
+                          <span className="text-[#081C36] text-xs font-inter font-bold min-w-[80px] uppercase tracking-wider">{c.type}</span>
+                          <span className="text-[#081C36]/60 text-sm font-inter">{c.value}</span>
                         </div>
                       ))}
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </motion.div>

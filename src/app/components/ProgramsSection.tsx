@@ -56,7 +56,7 @@ const programs = [
 
 const categoryColors: Record<string, string> = {
   Kepemimpinan: 'bg-blue-600',
-  Akademik: 'bg-emerald-600',
+  Akademik: 'bg-indigo-600',
   Karir: 'bg-purple-600',
   Kewirausahaan: 'bg-orange-500',
   Sosial: 'bg-cyan-600',
@@ -73,20 +73,20 @@ export function ProgramsSection() {
         {/* Header */}
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-10 h-0.5 bg-[#00A855]" />
+            <div className="w-10 h-0.5 bg-[#081C36]" />
             <span
-              className="text-[#00A855] tracking-widest uppercase"
+              className="text-[#081C36] tracking-widest uppercase"
               style={{ fontSize: '12px' }}
             >
               Info Mahasiswa
             </span>
-            <div className="w-10 h-0.5 bg-[#00A855]" />
+            <div className="w-10 h-0.5 bg-[#081C36]" />
           </div>
           <h2
             className="font-caslon text-[#06244A] mb-4"
             style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.15 }}
           >
-            Program Unggulan <span className="font-caslon-italic text-[#00A855]">IKAMMA</span>
+            Program Unggulan <span className="font-caslon-italic text-[#081C36]">IKAMMA</span>
           </h2>
           <p className="text-[#7684AD] max-w-2xl mx-auto" style={{ fontSize: '17px' }}>
             Beragam program dirancang untuk membantu mahasiswa Manajemen FEB UGM berkembang secara
@@ -130,7 +130,7 @@ export function ProgramsSection() {
                   {program.description}
                 </p>
                 <div
-                  className="flex items-center gap-2 text-[#00A855] group-hover:gap-3 transition-all"
+                  className="flex items-center gap-2 text-[#081C36] group-hover:gap-3 transition-all"
                   style={{ fontSize: '14px' }}
                 >
                   <span>Pelajari Lebih</span>

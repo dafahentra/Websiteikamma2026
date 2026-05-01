@@ -92,7 +92,7 @@ export function EventsPage() {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen bg-[#0C2340] text-white">
+    <div className="min-h-screen bg-white text-[#081C36]">
       <Navbar />
 
       {/* Hero */}
@@ -105,7 +105,7 @@ export function EventsPage() {
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-inter font-bold mb-4">
             Our Events
           </h1>
-          <p className="text-white/60 text-lg md:text-xl font-inter max-w-2xl">
+          <p className="text-[#081C36]/50 text-lg md:text-xl font-inter max-w-2xl">
             Discover upcoming events, ongoing activities, and relive past moments with IKAMMA.
           </p>
         </motion.div>
@@ -120,7 +120,7 @@ export function EventsPage() {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-inter font-bold mb-12 flex items-center gap-4"
         >
-          <div className="w-10 h-1.5 md:w-12 md:h-2 bg-[#0CA678] rounded-full" />
+          <div className="w-10 h-1.5 md:w-12 md:h-2 bg-[#081C36] rounded-full" />
           <span>
             <span className="font-caslon-italic">Upcoming</span> Events
           </span>
@@ -137,7 +137,7 @@ export function EventsPage() {
               className="flex flex-col group cursor-pointer"
             >
               {/* Image Container — styled like UpcomingEventsSection */}
-              <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden mb-6 shadow-lg transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-xl group-hover:shadow-[#0CA678]/10">
+              <div className="relative w-full aspect-[4/3] overflow-hidden mb-6 shadow-lg group-hover:shadow-xl group-hover:shadow-[#081C36]/10 transition-shadow duration-300">
                 <img
                   src={event.image}
                   alt={event.title}
@@ -147,35 +147,35 @@ export function EventsPage() {
 
                 {/* Status Badge */}
                 {event.status === 'ongoing' ? (
-                  <div className="absolute top-4 left-4 flex items-center gap-2 bg-[#0CA678] px-3 py-1.5 rounded-full">
+                  <div className="absolute top-4 left-4 flex items-center gap-2 bg-[#081C36] px-3 py-1.5 rounded-full">
                     <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
                     <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">ONGOING</span>
                   </div>
                 ) : (
-                  <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                  <div className="absolute top-4 left-4 bg-[#081C36]/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#081C36]/15">
                     <span className="text-white text-xs font-inter font-medium tracking-wider uppercase">Upcoming</span>
                   </div>
                 )}
 
                 {/* Date Badge */}
-                <div className="absolute bottom-0 left-0 bg-white/20 backdrop-blur-md rounded-tr-2xl flex flex-col items-center justify-center px-6 py-3 border-t border-r border-white/30">
+                <div className="absolute bottom-0 left-0 bg-[#081C36]/10 backdrop-blur-md flex flex-col items-center justify-center px-6 py-3 border-t border-r border-[#081C36]/20">
                   <span className="text-2xl font-bold text-white leading-none font-inter">{event.date}</span>
-                  <span className="text-sm font-medium text-white/90 mt-1 font-inter">{event.monthYear}</span>
+                  <span className="text-sm font-medium text-[#081C36]/80 mt-1 font-inter">{event.monthYear}</span>
                 </div>
               </div>
 
               {/* Content */}
-              <h3 className="text-xl md:text-2xl font-inter font-semibold mb-4 line-clamp-2 min-h-[56px] group-hover:text-[#0CA678] transition-colors duration-300">
+              <h3 className="text-xl md:text-2xl font-inter font-semibold mb-4 line-clamp-2 min-h-[56px] group-hover:text-[#081C36] transition-colors duration-300">
                 {event.title}
               </h3>
 
               <div className="flex flex-col gap-2 mt-auto">
-                <div className="flex items-center gap-2 text-white/60">
-                  <MapPin size={16} className="text-[#0CA678]" />
+                <div className="flex items-center gap-2 text-[#081C36]/50">
+                  <MapPin size={16} className="text-[#081C36]" />
                   <span className="text-sm font-inter">{event.location}</span>
                 </div>
-                <div className="flex items-center gap-2 text-white/60">
-                  <Clock size={16} className="text-[#0CA678]" />
+                <div className="flex items-center gap-2 text-[#081C36]/50">
+                  <Clock size={16} className="text-[#081C36]" />
                   <span className="text-sm font-inter">{event.time}</span>
                 </div>
               </div>
@@ -193,7 +193,7 @@ export function EventsPage() {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-inter font-bold mb-12 flex items-center gap-4"
         >
-          <div className="w-10 h-1.5 md:w-12 md:h-2 bg-[#0CA678] rounded-full" />
+          <div className="w-10 h-1.5 md:w-12 md:h-2 bg-[#081C36] rounded-full" />
           <span>
             <span className="font-caslon-italic">Past</span> Events
           </span>
@@ -210,7 +210,7 @@ export function EventsPage() {
               className="group cursor-pointer flex flex-col"
             >
               {/* Image */}
-              <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-5 bg-white/[0.04] relative">
+              <div className="w-full aspect-[4/3] overflow-hidden mb-5 bg-[#081C36]/[0.03] relative">
                 <img
                   src={event.image}
                   alt={event.title}
@@ -220,12 +220,12 @@ export function EventsPage() {
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-inter font-bold mb-3 group-hover:text-[#0CA678] transition-colors duration-300 line-clamp-2">
+              <h3 className="text-xl font-inter font-bold mb-3 group-hover:text-[#081C36] transition-colors duration-300 line-clamp-2">
                 {event.title}
               </h3>
 
               {/* Meta */}
-              <div className="mt-auto flex items-center gap-4 text-white/40 text-sm font-inter">
+              <div className="mt-auto flex items-center gap-4 text-[#081C36]/40 text-sm font-inter">
                 <div className="flex items-center gap-1.5">
                   <CalendarDays size={14} />
                   <span>{event.date}</span>

@@ -54,22 +54,22 @@ function AboutHero() {
     <div className="flex items-center">
       {[...Array(4)].map((_, i) => (
         <div key={i} className="flex items-center">
-          <span className="text-[6vw] md:text-[70px] text-white/90 font-inter font-bold tracking-tight mx-4 md:mx-6">
+          <span className="text-[6vw] md:text-[70px] text-[#081C36]/80 font-inter font-bold tracking-tight mx-4 md:mx-6">
             We Share to Inspire
           </span>
-          <span className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-[#0CA678]" />
-          <span className="text-[6vw] md:text-[70px] text-white/90 font-caslon-italic font-bold tracking-tight mx-4 md:mx-6">
+          <span className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-[#081C36]" />
+          <span className="text-[6vw] md:text-[70px] text-[#081C36]/80 font-caslon-italic font-bold tracking-tight mx-4 md:mx-6">
             We Share to Inspire
           </span>
-          <span className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-[#0CA678]" />
+          <span className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-[#081C36]" />
         </div>
       ))}
     </div>
   );
 
   return (
-    <div ref={containerRef} className="relative w-full h-[250vh] bg-[#0C2340]">
-      <div className="sticky top-0 w-full h-screen bg-[#0C2340] overflow-hidden">
+    <div ref={containerRef} className="relative w-full h-[250vh] bg-white">
+      <div className="sticky top-0 w-full h-screen bg-white overflow-hidden">
         
         {/* Background Marquee Text - 2 Sliders */}
         <motion.div 
@@ -142,12 +142,12 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
 
   const RowContent = (
     <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 py-6 md:py-8 flex flex-wrap md:flex-nowrap items-center justify-between gap-4">
-      <h3 className="font-inter font-bold text-xl md:text-3xl text-white w-full md:w-auto">{item.name}</h3>
+      <h3 className="font-inter font-bold text-xl md:text-3xl text-[#081C36] w-full md:w-auto">{item.name}</h3>
       <div className="flex items-center gap-6 md:gap-10 w-full md:w-auto justify-end relative z-10">
-        <span className="px-5 py-1.5 md:px-8 md:py-2 rounded-full bg-[#0CA678] text-white font-inter text-sm md:text-base font-medium min-w-[120px] text-center">
+        <span className="px-5 py-1.5 md:px-8 md:py-2 rounded-full bg-[#081C36] text-white font-inter text-sm md:text-base font-medium min-w-[120px] text-center">
           {item.type}
         </span>
-        <svg className="w-6 h-6 md:w-8 md:h-8 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-6 h-6 md:w-8 md:h-8 text-[#081C36] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
       </div>
@@ -160,7 +160,7 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="w-full border-b border-white/20 group hover:bg-white/5 transition-colors cursor-pointer relative"
+      className="w-full border-b border-[#081C36]/15 group hover:bg-white/5 transition-colors cursor-pointer relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onMouseMove={handleMouseMove}
@@ -290,8 +290,8 @@ export function AboutIkamma() {
             <img src={SCRAPBOOK_PHOTOS[8]} alt={member.name} className="w-full h-full object-cover object-center" />
           </div>
         </div>
-        <h3 className="font-inter font-bold text-xl md:text-2xl text-white mb-2">{member.name}</h3>
-        <p className="font-inter text-base md:text-lg text-[#0CA678] max-w-[150px] leading-tight font-medium whitespace-pre-line">
+        <h3 className="font-inter font-bold text-xl md:text-2xl text-[#081C36] mb-2">{member.name}</h3>
+        <p className="font-inter text-base md:text-lg text-[#081C36] max-w-[150px] leading-tight font-medium whitespace-pre-line">
           {member.role}
         </p>
       </>
@@ -320,12 +320,12 @@ export function AboutIkamma() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0C2340] text-white flex flex-col relative">
+    <div className="min-h-screen bg-white text-[#081C36] flex flex-col relative">
       <Navbar />
 
       <AboutHero />
 
-      <main className="flex-grow relative z-10 max-w-[1400px] mx-auto w-full px-6 md:px-12 bg-[#0C2340]">
+      <main className="flex-grow relative z-10 max-w-[1400px] mx-auto w-full px-6 md:px-12 bg-white">
         
         {/* Info Block */}
         <motion.div 
@@ -336,11 +336,11 @@ export function AboutIkamma() {
           className="flex flex-col items-center text-center max-w-[800px] mx-auto pb-32 relative z-20"
           style={{ marginTop: 'calc(50px - 27.5vh)' }} // Precisely 50px gap below the 45vh centered photo
         >
-          <IkammaLogo className="w-24 md:w-32 mb-8 text-white drop-shadow-md" />
-          <p className="text-white/90 text-sm md:text-base leading-relaxed mb-4 font-inter font-light drop-shadow-md">
+          <IkammaLogo className="w-24 md:w-32 mb-8 text-[#081C36] drop-shadow-md" />
+          <p className="text-[#081C36]/80 text-sm md:text-base leading-relaxed mb-4 font-inter font-light drop-shadow-md">
             Ikatan Keluarga Mahasiswa Manajemen (IKAMMA) FEB UGM merupakan sebuah organisasi himpunan mahasiswa Jurusan Manajemen Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
           </p>
-          <p className="text-white/90 text-sm md:text-base leading-relaxed font-inter font-light drop-shadow-md">
+          <p className="text-[#081C36]/80 text-sm md:text-base leading-relaxed font-inter font-light drop-shadow-md">
             IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan
           </p>
         </motion.div>
@@ -349,9 +349,9 @@ export function AboutIkamma() {
         <section className="mb-32 pt-16 relative">
           <div className="flex flex-col items-end justify-end mb-16 w-full">
              <div className="flex flex-wrap items-center justify-end gap-3 md:gap-5 text-4xl md:text-6xl lg:text-7xl text-right">
-                <span className="text-white/50 font-inter font-light">—</span>
+                <span className="text-[#081C36]/50 font-inter font-light">—</span>
                 <span className="font-inter font-bold">Kabinet</span>
-                <span className="font-caslon-italic text-[#0CA678]">Arsanafafifu</span>
+                <span className="font-caslon-italic text-[#081C36]">Arsanafafifu</span>
              </div>
           </div>
 
@@ -360,9 +360,9 @@ export function AboutIkamma() {
             <div className="relative min-h-[320px] flex flex-col justify-start pt-4">
               {/* Static header - never fades */}
               <div className="mb-6 lg:mb-10 flex items-center gap-3">
-                <span className="text-[#0CA678] font-inter text-xl md:text-2xl">01</span>
-                <span className="text-white/50 text-xl">—</span>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl text-white">
+                <span className="text-[#081C36] font-inter text-xl md:text-2xl">01</span>
+                <span className="text-[#081C36]/50 text-xl">—</span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#081C36]">
                   <span className="font-caslon-italic">Filosofi</span> <span className="font-inter font-bold">Logo</span>
                 </h2>
               </div>
@@ -379,10 +379,10 @@ export function AboutIkamma() {
                       transition={{ duration: 0.4 }}
                     >
                       <div className="mb-4 flex items-end gap-3">
-                        <h3 className="font-inter font-bold text-4xl md:text-5xl text-white">Arsanakala</h3>
-                        <span className="font-inter font-light text-2xl md:text-3xl text-white/40 pb-1">[Ar·sa·na·ka·la]</span>
+                        <h3 className="font-inter font-bold text-4xl md:text-5xl text-[#081C36]">Arsanakala</h3>
+                        <span className="font-inter font-light text-2xl md:text-3xl text-[#081C36]/40 pb-1">[Ar·sa·na·ka·la]</span>
                       </div>
-                      <p className="font-inter text-xl md:text-2xl leading-relaxed text-[#0CA678] max-w-lg font-medium">
+                      <p className="font-inter text-xl md:text-2xl leading-relaxed text-[#081C36] max-w-lg font-medium">
                         Kehendak dan daya cipta yang tumbuh seirama, seiring waktu untuk mewujudkan cita.
                       </p>
                     </motion.div>
@@ -396,9 +396,9 @@ export function AboutIkamma() {
                     >
                       <div className="mb-4 flex items-end gap-3">
                         <h3 className="font-inter font-bold text-3xl md:text-5xl">{PHILOSOPHY_DATA[activePhilo].title}</h3>
-                        <span className="font-inter font-light text-xl md:text-2xl text-white/40 pb-1">{PHILOSOPHY_DATA[activePhilo].pron}</span>
+                        <span className="font-inter font-light text-xl md:text-2xl text-[#081C36]/40 pb-1">{PHILOSOPHY_DATA[activePhilo].pron}</span>
                       </div>
-                      <p className="font-inter text-lg md:text-xl leading-relaxed text-white/80 max-w-lg">
+                      <p className="font-inter text-lg md:text-xl leading-relaxed text-[#081C36]/70 max-w-lg">
                         {PHILOSOPHY_DATA[activePhilo].desc}
                       </p>
                     </motion.div>
@@ -462,7 +462,7 @@ export function AboutIkamma() {
                   <button 
                     key={i}
                     onMouseEnter={() => setActivePhilo(i)}
-                    className={`rounded-full transition-all duration-300 focus:outline-none cursor-pointer ${activePhilo === i ? 'w-3 h-3 bg-white' : 'w-2 h-2 bg-white/30 hover:bg-white/60'}`}
+                    className={`rounded-full transition-all duration-300 focus:outline-none cursor-pointer ${activePhilo === i ? 'w-3 h-3 bg-[#081C36]' : 'w-2 h-2 bg-[#081C36]/30 hover:bg-[#081C36]/60'}`}
                   />
                 ))}
               </div>
@@ -473,9 +473,9 @@ export function AboutIkamma() {
         {/* Section: Our Vision */}
         <section className="mb-32 flex flex-col items-end text-right">
           <div className="mb-8 flex items-center justify-end gap-3 w-full">
-            <span className="text-[#0CA678] font-inter text-xl md:text-2xl">02</span>
-            <span className="text-white/50 text-xl">—</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-white">
+            <span className="text-[#081C36] font-inter text-xl md:text-2xl">02</span>
+            <span className="text-[#081C36]/50 text-xl">—</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#081C36]">
               <span className="font-caslon-italic">Our</span> <span className="font-inter font-bold">Vision</span>
             </h2>
           </div>
@@ -487,8 +487,8 @@ export function AboutIkamma() {
             transition={{ duration: 0.6 }}
             className="max-w-[600px]"
           >
-            <p className="font-inter text-xl md:text-2xl leading-relaxed text-white/90">
-              Menjadikan IKAMMA sebagai <strong className="text-[#0CA678]">himpunan mahasiswa terbaik di Indonesia</strong> melalui penguatan sistem internal untuk memberikan dampak nyata bagi masyarakat manajemen dan masyarakat luas.
+            <p className="font-inter text-xl md:text-2xl leading-relaxed text-[#081C36]/80">
+              Menjadikan IKAMMA sebagai <strong className="text-[#081C36]">himpunan mahasiswa terbaik di Indonesia</strong> melalui penguatan sistem internal untuk memberikan dampak nyata bagi masyarakat manajemen dan masyarakat luas.
             </p>
           </motion.div>
         </section>
@@ -496,9 +496,9 @@ export function AboutIkamma() {
         {/* Section: Our Mission */}
         <section className="mb-32">
           <div className="mb-12 flex items-center gap-3 w-full">
-            <span className="text-[#0CA678] font-inter text-xl md:text-2xl">03</span>
-            <span className="text-white/50 text-xl">—</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-white">
+            <span className="text-[#081C36] font-inter text-xl md:text-2xl">03</span>
+            <span className="text-[#081C36]/50 text-xl">—</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#081C36]">
               <span className="font-caslon-italic">Our</span> <span className="font-inter font-bold">Missions</span>
             </h2>
           </div>
@@ -517,10 +517,10 @@ export function AboutIkamma() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="p-5 md:p-6 rounded-2xl bg-white/[0.03] border border-white/[0.06] shadow-lg shadow-black/10 hover:bg-white/[0.06] hover:border-white/[0.12] hover:shadow-xl hover:shadow-black/20 transition-all duration-300 flex items-start gap-4"
+                className="p-5 md:p-6 rounded-2xl bg-[#081C36]/[0.02] border border-[#081C36]/10 shadow-lg shadow-[#081C36]/5 hover:bg-[#081C36]/[0.04] hover:border-[#081C36]/15 hover:shadow-xl hover:shadow-[#081C36]/10 transition-all duration-300 flex items-start gap-4"
               >
-                <span className="text-[#0CA678] font-inter font-bold text-lg mt-0.5 shrink-0">0{i + 1}</span>
-                <p className="font-inter text-base md:text-lg leading-relaxed text-white/70 text-left" dangerouslySetInnerHTML={{ __html: text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') }} />
+                <span className="text-[#081C36] font-inter font-bold text-lg mt-0.5 shrink-0">0{i + 1}</span>
+                <p className="font-inter text-base md:text-lg leading-relaxed text-[#081C36]/60 text-left" dangerouslySetInnerHTML={{ __html: text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-[#081C36]">$1</strong>') }} />
               </motion.div>
             ))}
           </div>
@@ -529,9 +529,9 @@ export function AboutIkamma() {
         {/* Section: Core Values */}
         <section className="mb-32">
           <div className="mb-16 flex items-center justify-center gap-3">
-            <span className="text-[#0CA678] font-inter text-xl md:text-2xl">04</span>
-            <span className="text-white/50 text-xl">—</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-white">
+            <span className="text-[#081C36] font-inter text-xl md:text-2xl">04</span>
+            <span className="text-[#081C36]/50 text-xl">—</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#081C36]">
               <span className="font-caslon-italic">Core</span> <span className="font-inter font-bold">Values</span>
             </h2>
           </div>
@@ -549,13 +549,13 @@ export function AboutIkamma() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="flex flex-col items-center text-center group p-6 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300"
+                className="flex flex-col items-center text-center group p-6 rounded-2xl bg-[#081C36]/[0.02] border border-[#081C36]/10 hover:bg-[#081C36]/[0.04] hover:border-[#081C36]/15 transition-all duration-300"
               >
-                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border border-white/30 mb-5 flex items-center justify-center p-5 group-hover:border-[#0CA678] transition-colors duration-300">
-                  <IkammaLogo className="w-full h-full text-white/50 group-hover:text-white transition-colors duration-300" />
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border border-[#081C36]/20 mb-5 flex items-center justify-center p-5 group-hover:border-[#081C36] transition-colors duration-300">
+                  <IkammaLogo className="w-full h-full text-[#081C36]/50 group-hover:text-[#081C36] transition-colors duration-300" />
                 </div>
-                <h3 className="font-inter font-bold text-lg md:text-xl mb-2 group-hover:text-[#0CA678] transition-colors">{value.title}</h3>
-                <p className="font-inter text-xs md:text-sm text-white/50 leading-relaxed">
+                <h3 className="font-inter font-bold text-lg md:text-xl mb-2 group-hover:text-[#081C36] transition-colors">{value.title}</h3>
+                <p className="font-inter text-xs md:text-sm text-[#081C36]/50 leading-relaxed">
                   {value.desc}
                 </p>
               </motion.div>
@@ -566,9 +566,9 @@ export function AboutIkamma() {
         {/* Section: Our Team */}
         <section className="mb-32 flex flex-col items-end text-right w-full">
           <div className="mb-20 flex items-center justify-end gap-3 w-full">
-            <span className="text-[#0CA678] font-inter text-xl md:text-2xl">05</span>
-            <span className="text-white/50 text-xl">—</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-white">
+            <span className="text-[#081C36] font-inter text-xl md:text-2xl">05</span>
+            <span className="text-[#081C36]/50 text-xl">—</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#081C36]">
               <span className="font-caslon-italic">Our</span> <span className="font-inter font-bold">Team</span>
             </h2>
           </div>
@@ -611,7 +611,7 @@ export function AboutIkamma() {
                    {/* Prev Arrow */}
                    <button 
                      onClick={() => paginate(-1)} 
-                     className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/40 transition-all focus:outline-none"
+                     className="w-10 h-10 rounded-full border border-[#081C36]/15 flex items-center justify-center text-[#081C36] hover:bg-[#081C36]/10 hover:border-[#081C36]/40 transition-all focus:outline-none"
                    >
                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                    </button>
@@ -622,7 +622,7 @@ export function AboutIkamma() {
                        <button 
                          key={i}
                          onClick={() => jumpToSlide(i)}
-                         className={`rounded-full transition-all duration-300 focus:outline-none ${currentSlide === i ? 'w-3 h-3 bg-white' : 'w-2 h-2 bg-white/30 hover:bg-white/60'}`}
+                         className={`rounded-full transition-all duration-300 focus:outline-none ${currentSlide === i ? 'w-3 h-3 bg-[#081C36]' : 'w-2 h-2 bg-[#081C36]/30 hover:bg-[#081C36]/60'}`}
                          aria-label={`Go to slide ${i + 1}`}
                        />
                      ))}
@@ -631,7 +631,7 @@ export function AboutIkamma() {
                    {/* Next Arrow */}
                    <button 
                      onClick={() => paginate(1)} 
-                     className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/40 transition-all focus:outline-none"
+                     className="w-10 h-10 rounded-full border border-[#081C36]/15 flex items-center justify-center text-[#081C36] hover:bg-[#081C36]/10 hover:border-[#081C36]/40 transition-all focus:outline-none"
                    >
                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                    </button>
@@ -643,14 +643,14 @@ export function AboutIkamma() {
         {/* Section: Our Bureau/Department */}
         <section className="mb-32 w-full flex flex-col">
           <div className="mb-12 flex items-center justify-end gap-3 w-full">
-            <span className="text-[#0CA678] font-inter text-xl md:text-2xl">06</span>
-            <span className="text-white/50 text-xl">—</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-white">
+            <span className="text-[#081C36] font-inter text-xl md:text-2xl">06</span>
+            <span className="text-[#081C36]/50 text-xl">—</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#081C36]">
               <span className="font-caslon-italic">Our</span> <span className="font-inter font-bold">Bureau/Department</span>
             </h2>
           </div>
 
-          <div className="w-[100vw] self-center flex flex-col border-t border-white/20 mt-8 relative">
+          <div className="w-[100vw] self-center flex flex-col border-t border-[#081C36]/15 mt-8 relative">
             {[
               { name: "Human Resources Monitoring", type: "Bureau", href: "/departemen/hr-monitoring" },
               { name: "Human Resources Birdept Buddy", type: "Bureau", href: "/departemen/hrbb" },

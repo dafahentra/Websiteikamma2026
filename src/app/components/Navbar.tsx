@@ -69,7 +69,7 @@ const links: NavLink[] = [
     ],
   },
   {
-    href: '/#programs',
+    href: '/info-mahasiswa',
     label: 'Info Mahasiswa',
     icon: BookOpen,
     dropdown: [
@@ -86,9 +86,9 @@ const links: NavLink[] = [
       {
         label: 'Info Manajemen',
         subDropdown: [
-          { label: 'Internship', href: '/#info-internship' },
-          { label: 'Competition', href: '/#info-competition' },
-          { label: 'Beasiswa', href: '/#info-beasiswa' },
+          { label: 'Internship', href: '/info-mahasiswa?category=Magang' },
+          { label: 'Competition', href: '/info-mahasiswa?category=Lomba' },
+          { label: 'Beasiswa', href: '/info-mahasiswa?category=Beasiswa' },
         ]
       },
       {
@@ -380,20 +380,11 @@ function MobileAccordion({ items, onClose }: { items: DropdownItem[]; onClose: (
 export function Navbar() {
   const [expanded, setExpanded] = useState(false);
   const [mobileExpand, setMobileExpand] = useState<string | null>(null);
-  const [hidden, setHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
-    const previous = scrollY.getPrevious();
-    // Hide when scrolling down past 150px
-    if (latest > previous! && latest > 150) {
-      setHidden(true);
-      // Removed setExpanded(false) so it remembers its state
-    } else {
-      setHidden(false);
-    }
   });
 
   const toggleExpand = (label: string) =>
@@ -403,22 +394,15 @@ export function Navbar() {
     <motion.div
       className="fixed top-6 left-1/2 z-[50] flex flex-col items-center"
       style={{ x: "-50%" }}
-      animate={{
-        opacity: hidden ? 0 : 1,
-        y: hidden ? -10 : 0 // slight movement pairs very well with fade
-      }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      // Disable interaction when hidden
       initial={false}
-      pointerEvents={hidden ? "none" : "auto"}
     >
       {/* ── Desktop & Tablet Liquid Glass Pill ─────────────────────────────────── */}
       <nav
         className="flex items-center h-[56px] pl-4 pr-3 rounded-full pointer-events-auto transition-colors duration-300"
         style={{
-          background: isScrolled ? 'rgba(12, 35, 64, 0.85)' : 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
+          background: 'rgba(12, 35, 64, 0.9)',
+          border: '1px solid rgba(12, 35, 64, 0.2)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
           backdropFilter: 'blur(24px) saturate(150%)',
           WebkitBackdropFilter: 'blur(24px) saturate(150%)',
         }}

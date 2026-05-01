@@ -272,7 +272,7 @@ export function Hero() {
           {/* Main Content inside restricted width */}
           <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col gap-10 pointer-events-auto">
             <h2 className="text-white text-4xl md:text-5xl flex items-center gap-3">
-              <span className="text-[#00B894]">—</span>
+              <span className="text-[#081C36]">—</span>
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">What is</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">IKAMMA</span>
             </h2>
@@ -289,7 +289,7 @@ export function Hero() {
                 <div className="pt-4">
                   <a
                     href="#about-more"
-                    className="inline-flex items-center gap-2 bg-[#00B894] hover:bg-[#009b7c] text-white px-6 py-2.5 rounded-full font-medium transition-colors"
+                    className="inline-flex items-center gap-2 bg-[#081C36] hover:bg-[#0a2545] text-white px-6 py-2.5 rounded-full font-medium transition-colors"
                   >
                     <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
                     See More
@@ -300,7 +300,7 @@ export function Hero() {
 
               <div className="flex flex-col items-start lg:items-end w-full">
                 <div className="w-full max-w-md ml-auto">
-                  <div className="inline-block bg-[#00B894] px-4 py-1.5 mb-5 shadow-md">
+                  <div className="inline-block bg-[#081C36] px-4 py-1.5 mb-5 shadow-md">
                     <h3 className="text-white text-2xl font-black tracking-wide uppercase">Company Profile</h3>
                   </div>
 
@@ -318,7 +318,7 @@ export function Hero() {
                   </div>
 
                   <div className="text-right">
-                    <a href="#video" className="text-white hover:text-[#00B894] transition-colors inline-flex items-center gap-2 text-sm underline underline-offset-4">
+                    <a href="#video" className="text-white hover:text-[#081C36] transition-colors inline-flex items-center gap-2 text-sm underline underline-offset-4">
                       Click to See Full Video <ArrowRight size={14} />
                     </a>
                   </div>

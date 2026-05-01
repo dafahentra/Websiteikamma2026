@@ -4,7 +4,6 @@ import { EventsSection } from '../components/EventsSection';
 import { UpcomingEventsSection } from '../components/UpcomingEventsSection';
 import { NewsSection } from '../components/NewsSection';
 import { ArticlesSection } from '../components/ArticlesSection';
-import { ContactSection } from '../components/ContactSection';
 import { Footer } from '../components/Footer';
 
 export function Home() {
@@ -38,9 +37,8 @@ export function Home() {
         <UpcomingEventsSection />
       </div>
 
-      {/* Contact & Footer */}
-      <div className="relative z-30 bg-white">
-        <ContactSection />
+      {/* Footer */}
+      <div className="relative z-30">
         <Footer />
       </div>
 

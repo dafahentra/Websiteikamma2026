@@ -222,9 +222,10 @@ export function DepartmentDetail() {
                 <span className="font-caslon-italic font-bold">About</span> <span className="font-inter font-bold">{department.name}</span>
               </span>
             </h2>
-            <p className="text-[#081C36]/70 text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl text-justify md:text-left">
-              {department.description}
-            </p>
+            <p 
+              className="text-[#081C36]/70 text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl text-justify md:text-left"
+              dangerouslySetInnerHTML={{ __html: department.description.replace(/\*\*(.*?)\*\*/g, '<strong class="text-[#081C36] font-bold">$1</strong>') }}
+            />
           </motion.div>
         </div>
       </section>

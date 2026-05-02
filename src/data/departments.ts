@@ -115,7 +115,14 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    programs: []
+    programs: [
+      { id: 26, title: "Partnership", img: "/program_thumbnail_1777615687215.png" },
+      { id: 27, title: "Terima Kunjungan", img: "/program_thumbnail_1777615687215.png" },
+      { id: 28, title: "Company Visit", img: "/program_thumbnail_1777615687215.png" },
+      { id: 29, title: "iNEXT", img: "/program_thumbnail_1777615687215.png" },
+      { id: 30, title: "IKVIS", img: "/program_thumbnail_1777615687215.png" },
+      { id: 31, title: "IKAMMA Alumni Database", img: "/program_thumbnail_1777615687215.png" },
+    ]
   },
   'indev': {
     slug: 'indev',
@@ -126,7 +133,11 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    programs: []
+    programs: [
+      { id: 32, title: "Management Facilitator", img: "/program_thumbnail_1777615687215.png" },
+      { id: 33, title: "Career Insight", img: "/program_thumbnail_1777615687215.png" },
+      { id: 34, title: "Ready", img: "/program_thumbnail_1777615687215.png" },
+    ]
   },
   'entre': {
     slug: 'entre',
@@ -137,7 +148,10 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    programs: []
+    programs: [
+      { id: 35, title: "YES!", img: "/program_thumbnail_1777615687215.png" },
+      { id: 36, title: "E-Club", img: "/program_thumbnail_1777615687215.png" },
+    ]
   },
   'sparta': {
     slug: 'sparta',
@@ -148,6 +162,11 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    programs: []
+    programs: [
+      { id: 37, title: "SPRITE", img: "/program_thumbnail_1777615687215.png" },
+      { id: 38, title: "POSKAM", img: "/program_thumbnail_1777615687215.png" },
+      { id: 39, title: "Management's Festival", img: "/program_thumbnail_1777615687215.png" },
+      { id: 32, title: "Gadjah Mada Super Cup", img: "/program_thumbnail_1777615687215.png" },
+    ]
   }
 };

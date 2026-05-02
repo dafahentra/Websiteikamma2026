@@ -71,7 +71,7 @@ export function DepartmentDetail() {
       <Navbar />
 
       {/* 1. Hero Section: Welcome & Leaders */}
-      <section className="relative pt-48 pb-0.5 px-6 lg:px-12 flex flex-col items-center min-h-[80vh] md:min-h-screen">
+      <section className="relative pt-48 pb-0 px-6 lg:px-12 flex flex-col items-center h-screen overflow-hidden">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -156,8 +156,8 @@ export const departmentsData: Record<string, DepartmentData> = {
   'sparta': {
     slug: 'sparta',
     name: "Sport and Art Association",
-    manager: "Manager Name",
-    viceManager: "Vice Manager Name",
+    manager: "Nodas Natalleo",
+    viceManager: "Sulthan Fairuz",
     description: "Sport and Art Association Departement (SPARTA) adalah departemen yang hadir untuk **memberikan ruang** kepada teman-teman dalam **mengembangkan minat dan bakat di bidang olahraga dan seni**. SPARTA bertujuan untuk menciptakan keseimbangan antara kegiatan akademis dan non akademis, berfungsi sebagai wadah untuk mengintegrasikan aktivitas fisik dan kreativitas, serta menciptakan keseimbangan antara kehidupan akademik dan non akademik.",
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,

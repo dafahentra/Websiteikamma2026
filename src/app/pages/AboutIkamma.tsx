@@ -376,7 +376,7 @@ export function AboutIkamma() {
             <div className="flex flex-wrap items-center justify-end gap-3 md:gap-5 text-4xl md:text-6xl lg:text-7xl text-right">
               <span className="text-[#081C36]/50 font-inter font-light">—</span>
               <span className="font-inter font-bold">Kabinet</span>
-              <span className="font-caslon-italic text-[#081C36]">Arsanafafifu</span>
+              <span className="font-caslon-italic text-[#081C36]">Arsanakala</span>
             </div>
           </div>
 

@@ -92,7 +92,7 @@ export function Footer() {
         </div>
 
         {/* Links Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 w-full lg:ml-[150px]">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 w-full lg:pl-[120px]">
           
           {/* Navigation */}
           <div className="col-span-1 flex flex-col gap-4">
@@ -137,13 +137,12 @@ export function Footer() {
           </div>
 
           {/* Find Us At Maps */}
-          <div className="col-span-2 lg:col-span-1 hidden md:flex flex-col gap-4">
+          <div className="col-span-2 lg:col-span-2 hidden md:flex flex-col gap-4 pr-0 lg:pr-8">
             <h4 className="font-bold text-base">Find Us At Maps</h4>
-            <div className="w-full h-32 bg-gray-100 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+            <div className="w-full h-32 md:h-40 bg-gray-100 rounded-lg overflow-hidden border border-gray-200 shadow-sm relative">
               <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4905.445452541879!2d110.37635327591678!3d-7.770554077082666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a59b4c17e62a5%3A0xa7b0a99cf63441a6!2sFakultas%20Ekonomika%20dan%20Bisnis%20UGM!5e1!3m2!1sid!2sid!4v1777633924284!5m2!1sid!2sid" 
-                width="100%" 
-                height="100%" 
+                className="absolute inset-0 w-full h-full"
                 style={{ border: 0 }} 
                 allowFullScreen={true} 
                 loading="lazy" 

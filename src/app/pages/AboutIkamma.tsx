@@ -143,13 +143,13 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
   };
 
   const RowContent = (
-    <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 py-6 md:py-8 flex flex-wrap md:flex-nowrap items-center justify-between gap-4">
-      <h3 className="font-inter font-bold text-xl md:text-3xl text-[#081C36] w-full md:w-auto">{item.name}</h3>
-      <div className="flex items-center gap-6 md:gap-10 w-full md:w-auto justify-end relative z-10">
-        <span className="px-5 py-1.5 md:px-8 md:py-2 rounded-full bg-[#081C36] text-white font-inter text-sm md:text-base font-medium min-w-[120px] text-center">
+    <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 py-4 md:py-8 flex items-center justify-between gap-3 md:gap-4">
+      <h3 className="font-inter font-bold text-base md:text-3xl text-[#081C36] flex-1 leading-tight">{item.name}</h3>
+      <div className="flex items-center gap-4 md:gap-10 shrink-0 relative z-10">
+        <span className="px-3 py-1 md:px-8 md:py-2 rounded-full bg-[#081C36] text-white font-inter text-[10px] md:text-base font-medium min-w-[70px] md:min-w-[120px] text-center">
           {item.type}
         </span>
-        <svg className="w-6 h-6 md:w-8 md:h-8 text-[#081C36] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-5 h-5 md:w-8 md:h-8 text-[#081C36] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
       </div>
@@ -290,7 +290,17 @@ export function AboutIkamma() {
   };
 
   const renderTeamMember = (member: { name: string; role: string; img?: string }, i: number, isSlider = false) => {
-    const wrapperClass = "flex flex-col items-center text-center shrink-0 w-44 md:w-56";
+    let wrapperClass = "flex flex-col items-center text-center shrink-0 w-44 md:w-56";
+    
+    if (isSlider && currentSlide === 0) {
+      if (member.role === "Chairman") {
+        wrapperClass = "flex flex-col items-center text-center shrink-0 w-full md:w-56 order-1 md:order-2";
+      } else if (i === 0) {
+        wrapperClass = "flex flex-col items-center text-center shrink-0 w-[45%] md:w-56 order-2 md:order-1";
+      } else {
+        wrapperClass = "flex flex-col items-center text-center shrink-0 w-[45%] md:w-56 order-3";
+      }
+    }
     const innerContent = (
       <>
         <div className="relative w-36 h-36 md:w-44 md:h-44 mb-6 rounded-full">

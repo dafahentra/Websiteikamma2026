@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { motion } from 'framer-motion';
-import { Clock, User, ChevronDown } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Clock, User } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
@@ -80,7 +80,21 @@ ARTICLES.forEach((art, i) => { art.image = randomPhotos[i]; });
 export function ArticlesPage() {
   const { pathname } = useLocation();
   const [activeCategory, setActiveCategory] = useState('All Topics');
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [isMobile, setIsMobile] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Track window size for responsive itemsPerPage
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Reset to page 1 on category change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -90,55 +104,81 @@ export function ArticlesPage() {
     ? ARTICLES
     : ARTICLES.filter(a => a.category === activeCategory);
 
-  const visible = filtered.slice(0, visibleCount);
+  const itemsPerPage = isMobile ? 4 : 6;
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const visible = filtered.slice(startIndex, startIndex + itemsPerPage);
+
+  const scrollToGrid = () => {
+    const grid = document.getElementById('articles-grid');
+    if (grid) {
+      grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(prev => prev + 1);
+      scrollToGrid();
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prev => prev - 1);
+      scrollToGrid();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white text-[#081C36]">
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-40 pb-12 px-6 lg:px-12 max-w-[1400px] mx-auto">
+      <section className="w-full bg-[#081C36] pt-32 md:pt-40 pb-16 md:pb-24 px-6 lg:px-12 relative overflow-hidden flex flex-col items-center justify-center text-center mt-[-80px]">
+        {/* Subtle background pattern/gradient */}
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0%,transparent_100%)]"></div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto relative z-10 pt-16"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-inter font-bold mb-4">
-            All Posts
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-inter font-bold mb-4 text-white tracking-tight">
+            IKAMMA News
           </h1>
-          <p className="text-[#081C36]/50 text-lg md:text-xl font-inter max-w-2xl">
-            Browse by topic or interest to find what matters most to you.
+          <p className="text-white/80 text-sm md:text-xl font-inter max-w-2xl mx-auto px-4">
+            Get the latest updates and deeper insights from IKAMMA FEB UGM
           </p>
         </motion.div>
+      </section>
 
+      {/* Main Content Area */}
+      <div id="articles-grid" className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 pb-24 scroll-mt-24">
+        
         {/* Filter Pills */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap gap-3 mt-10"
+          className="flex flex-wrap items-center justify-start gap-2 md:gap-3 py-8"
         >
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
-              onClick={() => { setActiveCategory(cat); setVisibleCount(6); }}
-              className={`px-5 py-2 rounded-full text-sm font-inter font-medium transition-all duration-300 border ${activeCategory === cat
+              onClick={() => setActiveCategory(cat)}
+              className={`px-4 py-1.5 md:px-5 md:py-2 rounded-full text-xs md:text-sm font-inter font-medium transition-all duration-300 border ${activeCategory === cat
                   ? 'bg-[#081C36] border-[#081C36] text-white shadow-lg shadow-[#081C36]/20'
-                  : 'bg-[#081C36]/[0.03] border-white/[0.1] text-[#081C36]/50 hover:bg-white/[0.08] hover:text-white'
+                  : 'bg-white border-[#081C36]/10 text-[#081C36]/60 hover:bg-[#081C36]/5 hover:text-[#081C36]'
                 }`}
             >
               {cat}
-              {cat !== 'All Topics' && (
-                <ChevronDown size={14} className="inline ml-1.5 opacity-50" />
-              )}
             </button>
           ))}
         </motion.div>
-      </section>
 
-      {/* Articles Grid */}
-      <section className="pb-24 px-6 lg:px-12 max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Articles Grid (2 columns on mobile, 3 on desktop) */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
           {visible.map((article, i) => (
             <motion.article
               key={article.id}
@@ -146,10 +186,10 @@ export function ArticlesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-              className="group cursor-pointer flex flex-col"
+              className="group cursor-pointer flex flex-col bg-white rounded-xl md:rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
             >
               {/* Image */}
-              <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-5 bg-[#081C36]/[0.03]">
+              <div className="w-full aspect-[4/3] md:aspect-[4/3] bg-[#081C36]/[0.03] overflow-hidden relative">
                 <img
                   src={article.image}
                   alt={article.title}
@@ -157,56 +197,108 @@ export function ArticlesPage() {
                 />
               </div>
 
-              {/* Category Tag */}
-              <span className="inline-block w-fit px-3 py-1 rounded-full bg-[#081C36]/[0.04] border border-white/[0.08] text-[#081C36] text-xs font-inter font-medium mb-3">
-                {article.category}
-              </span>
-
-              {/* Title */}
-              <h3 className="text-xl md:text-2xl font-inter font-bold mb-3 group-hover:text-[#081C36] transition-colors duration-300 line-clamp-2">
-                {article.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-[#081C36]/50 text-sm md:text-base font-inter leading-relaxed mb-4 line-clamp-2">
-                {article.description}
-              </p>
-
-              {/* Meta */}
-              <div className="mt-auto flex items-center justify-between text-[#081C36]/40 text-sm font-inter">
-                <div className="flex items-center gap-1.5">
-                  <User size={14} />
-                  <span>{article.author}</span>
+              <div className="p-3 md:p-5 flex flex-col flex-grow">
+                {/* Header Meta: Category & Date */}
+                <div className="flex flex-wrap items-center justify-between gap-1 mb-2 md:mb-3">
+                  <span className="inline-block px-2 py-0.5 md:px-3 md:py-1 rounded-md bg-[#081C36]/[0.06] text-[#081C36] text-[9px] md:text-xs font-inter font-semibold">
+                    {article.category}
+                  </span>
+                  <span className="text-[#081C36]/50 text-[9px] md:text-xs font-inter">
+                    {article.date}
+                  </span>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span>{article.date}</span>
+
+                {/* Title */}
+                <h3 className="text-sm md:text-2xl font-inter font-bold mb-1 group-hover:text-[#081C36]/70 transition-colors duration-300 line-clamp-2 leading-snug">
+                  {article.title}
+                </h3>
+
+                {/* Footer Meta: Author & Read Time */}
+                <div className="flex items-center gap-3 text-[#081C36]/50 text-[9px] md:text-xs font-inter mb-3 md:mb-4">
                   <div className="flex items-center gap-1">
-                    <Clock size={13} />
+                    <User size={10} className="md:w-3 md:h-3" />
+                    <span>{article.author}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock size={10} className="md:w-3 md:h-3" />
                     <span>{article.readTime}</span>
                   </div>
+                </div>
+
+                {/* Description */}
+                <p className="text-[#081C36]/60 text-[11px] md:text-base font-inter leading-relaxed mb-3 md:mb-4 line-clamp-2 md:line-clamp-3">
+                  {article.description}
+                </p>
+
+                {/* Read More */}
+                <div className="mt-auto flex justify-end">
+                  <span className="text-[#081C36] text-[10px] md:text-sm font-bold flex items-center gap-1 group-hover:underline">
+                    Read More <ChevronRight size={14} className="md:w-4 md:h-4" />
+                  </span>
                 </div>
               </div>
             </motion.article>
           ))}
         </div>
 
-        {/* Load More */}
-        {visibleCount < filtered.length && (
+        {/* Pagination */}
+        {totalPages > 1 && (
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="flex justify-center mt-16"
+            className="flex flex-col items-center gap-4 mt-10 md:mt-16"
           >
-            <button
-              onClick={() => setVisibleCount(prev => prev + 6)}
-              className="px-8 py-3 rounded-full border border-white/[0.15] text-[#081C36]/60 font-inter font-medium hover:bg-[#081C36]/[0.04] hover:text-white transition-all duration-300"
-            >
-              Load More Articles
-            </button>
+            <div className="flex items-center gap-4 md:gap-6">
+              <button
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                  currentPage === 1 
+                    ? 'border-[#081C36]/10 text-[#081C36]/30 cursor-not-allowed' 
+                    : 'border-[#081C36]/15 text-[#081C36] hover:bg-[#081C36] hover:text-white'
+                }`}
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              <div className="flex items-center gap-2">
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setCurrentPage(i + 1);
+                      scrollToGrid();
+                    }}
+                    className={`rounded-full transition-all duration-300 ${
+                      currentPage === i + 1 
+                        ? 'w-2.5 h-2.5 md:w-3 md:h-3 bg-[#081C36]' 
+                        : 'w-2 h-2 md:w-2.5 md:h-2.5 bg-[#081C36]/20 hover:bg-[#081C36]/50'
+                    }`}
+                    aria-label={`Go to page ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                  currentPage === totalPages 
+                    ? 'border-[#081C36]/10 text-[#081C36]/30 cursor-not-allowed' 
+                    : 'border-[#081C36]/15 text-[#081C36] hover:bg-[#081C36] hover:text-white'
+                }`}
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+            
+            <span className="text-[#081C36]/50 font-inter text-xs md:text-sm font-medium">
+              Page {currentPage} of {totalPages}
+            </span>
           </motion.div>
         )}
-      </section>
+      </div>
 
       <Footer />
     </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Clock, CalendarDays, Filter, Search, X, ArrowRight } from 'lucide-react';
+import { ExternalLink, Clock, CalendarDays, Filter, Search, X, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { getRandomPhotos } from '../../assets/photos';
@@ -176,6 +176,22 @@ export function InfoMahasiswaPage() {
   const [activeStatus, setActiveStatus] = useState<typeof STATUS_FILTERS[number]>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedItem, setSelectedItem] = useState<InfoItem | null>(null);
+  
+  const [isMobile, setIsMobile] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Track window size for responsive itemsPerPage
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory, activeStatus, searchQuery]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -211,6 +227,32 @@ export function InfoMahasiswaPage() {
       item.organizer.toLowerCase().includes(searchQuery.toLowerCase());
     return matchCategory && matchStatus && matchSearch;
   });
+
+  const itemsPerPage = isMobile ? 4 : 6;
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const visible = filtered.slice(startIndex, startIndex + itemsPerPage);
+
+  const scrollToGrid = () => {
+    const grid = document.getElementById('info-grid');
+    if (grid) {
+      grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(prev => prev + 1);
+      scrollToGrid();
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prev => prev - 1);
+      scrollToGrid();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white text-[#081C36]">
@@ -300,88 +342,85 @@ export function InfoMahasiswaPage() {
       </section>
 
       {/* Cards Grid */}
-      <section className="pb-24 px-6 lg:px-12 max-w-[1400px] mx-auto">
+      <section id="info-grid" className="pb-24 px-4 md:px-6 lg:px-12 max-w-[1400px] mx-auto scroll-mt-24">
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeCategory + activeStatus + searchQuery}
+            key={activeCategory + activeStatus + searchQuery + currentPage}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8"
           >
-            {filtered.map((item, i) => (
+            {visible.map((item, i) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
                 onClick={() => setSelectedItem(item)}
-                className="flex flex-col border border-[#081C36]/10 bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                className="group cursor-pointer flex flex-col bg-white rounded-xl md:rounded-2xl border border-[#081C36]/10 overflow-hidden hover:shadow-lg transition-all duration-300"
               >
                 {/* Poster Image */}
-                <div className="relative w-full aspect-[4/3] overflow-hidden">
+                <div className="relative w-full aspect-[4/3] md:aspect-[4/3] overflow-hidden bg-[#081C36]/[0.03]">
                   <img
                     src={item.poster}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
                   {/* Status Badge */}
-                  {item.status === 'open' ? (
-                    <div className="absolute top-4 left-4 flex items-center gap-2 bg-[#081C36] px-3 py-1.5 rounded-full">
-                      <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
-                    </div>
-                  ) : (
-                    <div className="absolute top-4 left-4 bg-red-500/90 px-3 py-1.5 rounded-full">
-                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
-                    </div>
-                  )}
-
-                  {/* Category Badge */}
-                  <div className={`absolute top-4 right-4 ${CATEGORY_COLORS[item.category]} px-3 py-1.5 rounded-full`}>
-                    <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">{item.category}</span>
+                  <div className="absolute top-2 left-2 md:top-3 md:left-3">
+                    {item.status === 'open' ? (
+                      <div className="flex items-center gap-1.5 bg-[#081C36]/90 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1.5 rounded-full">
+                        <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse" />
+                        <span className="text-white text-[9px] md:text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
+                      </div>
+                    ) : (
+                      <div className="bg-red-500/90 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1.5 rounded-full">
+                        <span className="text-white text-[9px] md:text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col flex-1 p-6">
-                  {/* Posted Date */}
-                  <p className="text-[#081C36]/35 text-xs font-inter mb-2">
-                    Diposting {item.postedDate}
-                  </p>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-inter font-bold mb-3 line-clamp-2 min-h-[56px] text-[#081C36] group-hover:text-[#081C36]/70 transition-colors duration-300">
-                    {item.title}
-                  </h3>
-
-                  {/* Organizer */}
-                  <p className="text-[#081C36] text-sm font-inter font-semibold mb-2">
-                    {item.organizer}
-                  </p>
-
-                  {/* Description */}
-                  <p className="text-[#081C36]/50 text-sm font-inter leading-relaxed mb-5 line-clamp-2 flex-1">
-                    {item.description}
-                  </p>
-
-                  {/* Period */}
-                  <div className="flex items-center gap-2 text-[#081C36]/50 mb-2">
-                    <CalendarDays size={14} className="text-[#081C36] shrink-0" />
-                    <span className="text-sm font-inter">
-                      {item.periodStart} — {item.periodEnd}
+                <div className="p-3 md:p-5 flex flex-col flex-grow">
+                  {/* Header Meta: Category & Date */}
+                  <div className="flex flex-wrap items-center justify-between gap-1 mb-2 md:mb-3">
+                    <span className={`inline-block px-2 py-0.5 md:px-3 md:py-1 rounded-md text-white text-[9px] md:text-xs font-inter font-semibold ${CATEGORY_COLORS[item.category]}`}>
+                      {item.category}
+                    </span>
+                    <span className="text-[#081C36]/50 text-[9px] md:text-xs font-inter">
+                      {item.postedDate}
                     </span>
                   </div>
 
-                  {/* View Detail CTA */}
-                  <div className="mt-4 pt-4 border-t border-[#081C36]/10 flex items-center justify-between">
-                    <span className="text-sm font-inter font-semibold text-[#081C36] group-hover:text-[#081C36]/70 transition-colors">
-                      Lihat Detail
+                  {/* Title */}
+                  <h3 className="text-sm md:text-2xl font-inter font-bold mb-1 group-hover:text-[#081C36]/70 transition-colors duration-300 line-clamp-2 leading-snug">
+                    {item.title}
+                  </h3>
+
+                  {/* Footer Meta: Organizer & Period */}
+                  <div className="flex flex-col gap-1 md:gap-2 text-[#081C36]/50 text-[9px] md:text-xs font-inter mb-3 md:mb-4">
+                    <div className="flex items-center gap-1 font-semibold text-[#081C36]">
+                      <span>{item.organizer}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <CalendarDays size={10} className="md:w-3 md:h-3" />
+                      <span className="line-clamp-1">{item.periodStart} — {item.periodEnd}</span>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-[#081C36]/60 text-[11px] md:text-base font-inter leading-relaxed mb-3 md:mb-4 line-clamp-2 md:line-clamp-3">
+                    {item.description}
+                  </p>
+
+                  {/* CTA */}
+                  <div className="mt-auto flex justify-end">
+                    <span className="text-[#081C36] text-[10px] md:text-sm font-bold flex items-center gap-1 group-hover:underline">
+                      Lihat Detail <ArrowRight size={14} className="md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
                     </span>
-                    <ArrowRight size={16} className="text-[#081C36] group-hover:translate-x-1 transition-transform duration-300" />
                   </div>
                 </div>
               </motion.div>
@@ -397,6 +436,64 @@ export function InfoMahasiswaPage() {
             className="text-center py-24"
           >
             <p className="text-[#081C36]/40 text-lg font-inter">Tidak ada info yang ditemukan.</p>
+          </motion.div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="flex flex-col items-center gap-4 mt-10 md:mt-16"
+          >
+            <div className="flex items-center gap-4 md:gap-6">
+              <button
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                  currentPage === 1 
+                    ? 'border-[#081C36]/10 text-[#081C36]/30 cursor-not-allowed' 
+                    : 'border-[#081C36]/15 text-[#081C36] hover:bg-[#081C36] hover:text-white'
+                }`}
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              <div className="flex items-center gap-2">
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setCurrentPage(i + 1);
+                      scrollToGrid();
+                    }}
+                    className={`rounded-full transition-all duration-300 ${
+                      currentPage === i + 1 
+                        ? 'w-2.5 h-2.5 md:w-3 md:h-3 bg-[#081C36]' 
+                        : 'w-2 h-2 md:w-2.5 md:h-2.5 bg-[#081C36]/20 hover:bg-[#081C36]/50'
+                    }`}
+                    aria-label={`Go to page ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                  currentPage === totalPages 
+                    ? 'border-[#081C36]/10 text-[#081C36]/30 cursor-not-allowed' 
+                    : 'border-[#081C36]/15 text-[#081C36] hover:bg-[#081C36] hover:text-white'
+                }`}
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+            
+            <span className="text-[#081C36]/50 font-inter text-xs md:text-sm font-medium">
+              Page {currentPage} of {totalPages}
+            </span>
           </motion.div>
         )}
       </section>

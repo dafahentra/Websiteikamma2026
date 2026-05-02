@@ -71,7 +71,7 @@ export function DepartmentDetail() {
       <Navbar />
 
       {/* 1. Hero Section: Welcome & Leaders */}
-      <section className="relative pt-52 pb-24 px-6 lg:px-12 flex flex-col items-center min-h-[80vh] md:min-h-screen">
+      <section className="relative pt-52 pb-0 px-6 lg:px-12 flex flex-col items-center min-h-[80vh] md:min-h-screen">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -79,7 +79,7 @@ export function DepartmentDetail() {
           className="text-center mb-8"
         >
           <p className="text-[#081C36] font-inter font-medium mb-4 uppercase tracking-widest text-xs">Welcome to</p>
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-inter tracking-tight max-w-5xl text-[#081C36] leading-tight" style={{ fontWeight: 800 }}>
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-inter tracking-tight max-w-5xl text-[#081C36] leading-tight" style={{ fontWeight: 800 }}>
             {department.name}
           </h1>
         </motion.div>

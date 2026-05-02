@@ -23,8 +23,8 @@ export const departmentsData: Record<string, DepartmentData> = {
   'hrbb': {
     slug: 'hr-bb',
     name: "HR Birdept Buddy",
-    manager: "Dondo D.D.",
-    viceManager: "Abednego S.",
+    manager: "Rafeyfa Ammara",
+    viceManager: "Kireina Nayla",
     description: "Human Resources Birdept Buddy (HRBB) merupakan biro yang berperan dalam **pengembangan sumber daya manusia** yang ada pada kepengurusan IKAMMA, khususnya pada **pendampingan program kerja, pengembangan kompetensi**, serta **apresiasi kinerja**. Biro HR Birdept Buddy akan memastikan setiap biro/departemen merasa didukung dan didengar, sehingga kesejahteraan dan produktivitas di IKAMMA tetap terjaga.",
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,

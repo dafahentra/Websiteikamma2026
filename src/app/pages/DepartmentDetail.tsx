@@ -79,7 +79,7 @@ export function DepartmentDetail() {
           className="text-center mb-8"
         >
           <p className="text-[#081C36] font-inter font-medium mb-4 uppercase tracking-widest text-xs">Welcome to</p>
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-inter font-bold tracking-tight max-w-5xl text-[#081C36] leading-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-7xl font-inter font-extrabold tracking-tight max-w-5xl text-[#081C36] leading-tight">
             {department.name}
           </h1>
         </motion.div>
@@ -113,7 +113,7 @@ export function DepartmentDetail() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold font-inter whitespace-nowrap drop-shadow-md">{department.manager}</h3>
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold font-inter whitespace-nowrap drop-shadow-md">{department.manager}</h3>
                 <p className="text-[#081C36] text-lg lg:text-xl font-medium drop-shadow-md">Manager</p>
               </motion.div>
             </div>
@@ -132,7 +132,7 @@ export function DepartmentDetail() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold font-inter whitespace-nowrap drop-shadow-md">{department.viceManager}</h3>
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold font-inter whitespace-nowrap drop-shadow-md">{department.viceManager}</h3>
                 <p className="text-[#081C36] text-lg lg:text-xl font-medium drop-shadow-md">Vice Manager</p>
               </motion.div>
               <motion.img
@@ -149,11 +149,11 @@ export function DepartmentDetail() {
           {/* Mobile Labels - positioned near heads like desktop */}
           <div className="md:hidden absolute top-[12%] left-1/2 -translate-x-1/2 flex justify-between items-start z-20 w-full px-[60px]">
             <div className="text-left">
-              <h3 className="text-sm font-bold font-inter text-[#081C36] drop-shadow-sm">{department.manager}</h3>
+              <h3 className="text-sm font-extrabold font-inter text-[#081C36] drop-shadow-sm">{department.manager}</h3>
               <p className="text-[#081C36]/50 text-[10px] font-bold uppercase tracking-widest">Manager</p>
             </div>
             <div className="text-right">
-              <h3 className="text-sm font-bold font-inter text-[#081C36] drop-shadow-sm">{department.viceManager}</h3>
+              <h3 className="text-sm font-extrabold font-inter text-[#081C36] drop-shadow-sm">{department.viceManager}</h3>
               <p className="text-[#081C36]/50 text-[10px] font-bold uppercase tracking-widest">Vice Manager</p>
             </div>
           </div>

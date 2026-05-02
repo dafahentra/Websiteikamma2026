@@ -71,28 +71,22 @@ export function DepartmentDetail() {
       <Navbar />
 
       {/* 1. Hero Section: Welcome & Leaders */}
-      <section className="relative w-full h-[100dvh] flex flex-col items-center justify-between overflow-hidden">
-        {/* Top Spacer to account for Navbar and visual balance */}
-        <div className="w-full flex-[0.8] min-h-[12vh]"></div>
-
+      <section className="relative w-full min-h-[102vh] flex flex-col items-center pt-[15vh] px-6 lg:px-12 pb-0">
         {/* Title Container */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center z-20 flex-shrink-0 px-4"
+          className="text-center w-full z-20 mb-8"
         >
-          <p className="text-[#081C36] font-inter font-medium mb-2 md:mb-4 uppercase tracking-widest text-xs">Welcome to</p>
+          <p className="text-[#081C36] font-inter font-medium mb-4 uppercase tracking-widest text-xs md:text-sm">Welcome to</p>
           <h1 className="text-4xl sm:text-5xl md:text-[6vw] lg:text-[7vw] font-inter tracking-tighter max-w-[90vw] text-[#081C36] leading-[0.85] text-center mx-auto" style={{ fontWeight: 800 }}>
             {department.name}
           </h1>
         </motion.div>
 
-        {/* Middle Spacer for breathing room before managers */}
-        <div className="w-full flex-1 min-h-[5vh]"></div>
-
-        {/* Leaders Layout - Responsive Height that never overflows */}
-        <div className="relative w-full flex flex-row justify-between items-end h-[40vh] md:h-[45vh] min-h-[250px] max-h-[550px] max-w-[1800px] mx-auto px-0 shrink-0 mt-auto">
+        {/* Leaders Layout - Stable fixed heights, pushed to bottom */}
+        <div className="relative w-full flex flex-row justify-between items-end h-[320px] md:h-[500px] max-w-[1800px] mx-auto px-0 shrink-0 mt-auto">
 
           {/* Background Large Logo (Centered) */}
           <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[400px] md:w-[800px] opacity-[0.06] pointer-events-none z-0">

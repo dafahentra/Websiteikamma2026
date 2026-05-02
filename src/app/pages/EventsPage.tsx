@@ -4,6 +4,26 @@ import { motion } from 'framer-motion';
 import { MapPin, Clock, CalendarDays } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+const MicroShape = ({ className, delay = 0, duration = 5, size = "w-20 h-20" }: { className: string, delay?: number, duration?: number, size?: string }) => (
+  <motion.div
+    className={`absolute pointer-events-none select-none rounded-full bg-white/10 blur-[40px] ${size} ${className}`}
+    animate={{
+      y: [0, -30, 0],
+      x: [0, 15, 0],
+      opacity: [0.05, 0.15, 0.05],
+    }}
+    transition={{
+      duration,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay
+    }}
+  />
+);
+
+const DotPattern = ({ className }: { className: string }) => (
+  <div className={`absolute pointer-events-none select-none opacity-[0.03] ${className}`} style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+);
 
 import { EVENTS_PAGE_HERO, EVENTS_PAGE_ONGOING, EVENTS_PAGE_PAST } from '../../assets/photos';
 
@@ -102,15 +122,16 @@ export function EventsPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="w-full bg-[#081C36] pt-32 md:pt-40 pb-16 md:pb-24 px-6 lg:px-12 relative overflow-hidden flex flex-col items-center justify-center text-center mt-[-80px]">
-        {/* Hero Background Image */}
+      <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-[#081C36]">
+        {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src={EVENTS_PAGE_HERO} 
-            alt="Hero Background" 
-            className="w-full h-full object-cover opacity-30 grayscale"
+          <img
+            src={EVENTS_PAGE_HERO}
+            alt="Events Hero"
+            className="w-full h-full object-cover opacity-40"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#081C36]/80 via-[#081C36]/90 to-[#081C36]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#081C36]/80 via-transparent to-[#081C36]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#081C36]/50 via-transparent to-[#081C36]/50" />
         </div>
 
         <motion.div
@@ -119,8 +140,13 @@ export function EventsPage() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto relative z-10 pt-16"
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-inter font-bold mb-4 text-white tracking-tight">
-            Our Events
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <MicroShape className="-bottom-20 right-[5%]" size="w-80 h-80" delay={1} duration={12} />
+            <MicroShape className="top-10 -right-10" size="w-48 h-48" delay={0} duration={7} />
+            <DotPattern className="top-1/2 left-[10%] w-40 h-20" />
+          </div>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl mb-4 text-white tracking-tight relative z-10">
+            <span className="font-caslon-italic font-bold">Event</span> <span className="font-inter font-bold">IKAMMA</span>
           </h1>
           <p className="text-white/80 text-sm md:text-xl font-inter max-w-2xl mx-auto px-4">
             Discover upcoming events, ongoing activities, and relive past moments with IKAMMA.

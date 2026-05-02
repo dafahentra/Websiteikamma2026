@@ -184,7 +184,7 @@ export function NewsSection() {
             transition={{ duration: 0.8 }}
             className="text-white text-4xl md:text-5xl flex items-center gap-3 mb-4"
           >
-            <span className="text-[#002444]">—</span>
+            <span className="text-white">—</span>
             <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">See</span>
             <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">What's News</span>
           </motion.h2>
@@ -199,7 +199,7 @@ export function NewsSection() {
             <a href="https://www.instagram.com/ikamma_ugm/" target="_blank" rel="noopener noreferrer" className="text-white/60 text-lg font-light">
               Follow for more!
             </a>
-            <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#002444]" />
+            <div className="absolute -bottom-2 left-0 w-full h-[1px] bg-white/30" />
           </motion.div>
         </div>
 

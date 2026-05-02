@@ -114,6 +114,8 @@ const EVENT_CONTACTS = [
   },
 ];
 
+const PARTNERSHIP_CONTACTS = []; // Removed
+
 const ENQUIRY_TYPES = ['External', 'Media Partnership'];
 
 export function ContactPage() {
@@ -146,8 +148,9 @@ export function ContactPage() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-inter font-bold mb-4">
-            Contact Us
+          <h1 className="text-5xl md:text-6xl lg:text-7xl mb-4 flex items-center justify-center gap-x-4">
+            <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Contact</span>
+            <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Us</span>
           </h1>
           <p className="text-[#081C36]/50 text-lg md:text-xl font-inter max-w-2xl mx-auto">
             Any question or remarks? Just write us a message!
@@ -159,267 +162,115 @@ export function ContactPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center gap-2 mt-10"
+          className="flex justify-center mt-10"
         >
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`relative px-8 py-2.5 rounded-full text-sm font-inter font-semibold transition-all duration-300 ${
-                activeTab === tab.id
-                  ? 'bg-[#081C36] text-white shadow-lg shadow-[#081C36]/25'
-                  : 'bg-[#081C36]/[0.05] border border-[#081C36]/15 text-[#081C36]/60 hover:text-[#081C36] hover:bg-[#081C36]/10'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          <div className="flex bg-[#081C36]/[0.05] border border-[#081C36]/10 p-1.5 rounded-full relative">
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`relative px-6 md:px-10 py-2 rounded-full text-sm font-inter font-bold transition-colors duration-300 z-10 ${
+                  activeTab === tab.id ? 'text-white' : 'text-[#081C36]/50 hover:text-[#081C36]'
+                }`}
+              >
+                {activeTab === tab.id && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-[#081C36] rounded-full shadow-lg shadow-[#081C36]/20"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <span className="relative z-20">{tab.label}</span>
+              </button>
+            ))}
+          </div>
         </motion.div>
       </section>
 
       {/* Tab Content */}
       <section className="pb-24 px-4 md:px-6 lg:px-12 max-w-[1400px] mx-auto pt-10">
         <AnimatePresence mode="wait">
-          {activeTab === 'ikamma' ? (
+          {activeTab === 'ikamma' && (
             <motion.div
               key="ikamma"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.4 }}
             >
-              {/* ── Sector Seven-inspired card layout ──────────── */}
+              {/* IKAMMA Content */}
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] rounded-3xl overflow-hidden shadow-xl shadow-black/10 min-h-[600px] w-full box-border">
-
-                {/* ── Left: Dark Info Card ───────────────────────── */}
+                {/* ... (rest of ikamma layout remains same as before) ... */}
+                {/* [Note: Keeping the existing ikamma div content here] */}
                 <div className="relative bg-[#f5f7fa] p-6 sm:p-8 md:p-14 flex flex-col justify-between overflow-hidden">
-                  {/* Decorative circles - kept within bounds */}
                   <div className="absolute top-0 right-0 w-48 h-48 bg-[#081C36]/5 rounded-full blur-xl pointer-events-none translate-x-1/4 -translate-y-1/4" />
                   <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#081C36]/3 rounded-full pointer-events-none translate-x-1/3 translate-y-1/3" />
-
                   <div className="relative z-10">
-                    <h2 className="text-3xl md:text-4xl font-inter font-bold mb-4">
-                      Contact Information
-                    </h2>
-                    <p className="text-[#081C36]/60 text-base font-inter leading-relaxed mb-12 max-w-md">
-                      Should you have any question or concern, you can reach us by filling out the contact form, finding us on social networks, or you can personal email us at:
-                    </p>
-
-                    {/* Contact Details */}
+                    <h2 className="text-3xl md:text-4xl font-inter font-bold mb-4">Contact Information</h2>
+                    <p className="text-[#081C36]/60 text-base font-inter leading-relaxed mb-12 max-w-md">Should you have any question or concern, you can reach us by filling out the contact form, finding us on social networks, or you can personal email us at:</p>
                     <div className="space-y-8">
                       <div className="flex items-center gap-4 md:gap-5">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0">
-                          <Phone size={18} className="text-[#081C36] md:w-5 md:h-5" />
-                        </div>
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0"><Phone size={18} className="text-[#081C36] md:w-5 md:h-5" /></div>
                         <span className="font-inter text-base md:text-lg text-[#081C36]">+62 812-3456-7890</span>
                       </div>
-
                       <div className="flex items-center gap-4 md:gap-5">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0">
-                          <Mail size={18} className="text-[#081C36] md:w-5 md:h-5" />
-                        </div>
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0"><Mail size={18} className="text-[#081C36] md:w-5 md:h-5" /></div>
                         <span className="font-inter text-base md:text-lg text-[#081C36] break-all">ikamma@feb.ugm.ac.id</span>
                       </div>
-
                       <div className="flex items-start gap-4 md:gap-5">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0 mt-0.5">
-                          <MapPin size={18} className="text-[#081C36] md:w-5 md:h-5" />
-                        </div>
-                        <div className="font-inter text-sm md:text-base text-[#081C36]/70 leading-relaxed">
-                          Gedung FEB UGM<br />
-                          Jl. Sosio Humaniora No.1, Bulaksumur<br />
-                          Yogyakarta 55281
-                        </div>
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0 mt-0.5"><MapPin size={18} className="text-[#081C36] md:w-5 md:h-5" /></div>
+                        <div className="font-inter text-sm md:text-base text-[#081C36]/70 leading-relaxed">Gedung FEB UGM<br />Jl. Sosio Humaniora No.1, Bulaksumur<br />Yogyakarta 55281</div>
                       </div>
                     </div>
                   </div>
-
-                  {/* Social Icons at bottom */}
                   <div className="relative z-10 mt-12 pt-8 border-t border-white/[0.08]">
                     <div className="flex gap-3">
                       {SOCIAL_ICONS.map((social, i) => {
                         const Icon = social.icon;
                         return (
-                          <motion.a
-                            key={social.label}
-                            href={social.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.15, y: -3 }}
-                            className="w-10 h-10 rounded-full bg-[#081C36]/[0.04] hover:bg-[#081C36] flex items-center justify-center transition-colors duration-300"
-                            title={social.label}
-                          >
-                            <Icon size={16} />
-                          </motion.a>
+                          <motion.a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.15, y: -3 }} className="w-10 h-10 rounded-full bg-[#081C36]/[0.04] hover:bg-[#081C36] flex items-center justify-center transition-colors duration-300" title={social.label}><Icon size={16} /></motion.a>
                         );
                       })}
                     </div>
                   </div>
                 </div>
-
-                {/* ── Right: Form (light bg) ─────────────────────── */}
                 <div className="bg-white p-6 sm:p-8 md:p-14 overflow-hidden">
                   <form onSubmit={handleSubmit} className="space-y-6 h-full flex flex-col">
-
-                    {submitted && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="bg-[#081C36]/10 border border-[#081C36]/30 text-[#081C36] px-4 py-3 rounded-xl text-sm font-inter"
-                      >
-                        ✓ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.
-                      </motion.div>
-                    )}
-
+                    {submitted && <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="bg-[#081C36]/10 border border-[#081C36]/30 text-[#081C36] px-4 py-3 rounded-xl text-sm font-inter">✓ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.</motion.div>}
                     <div className="grid sm:grid-cols-2 gap-6">
-                      {/* Name */}
-                      <div>
-                        <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Name</label>
-                        <input
-                          type="text"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          required
-                          placeholder="John Doe"
-                          className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter"
-                        />
-                      </div>
-
-                      {/* Email */}
-                      <div>
-                        <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Email</label>
-                        <input
-                          type="email"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          required
-                          placeholder="johndoe@example.com"
-                          className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter"
-                        />
-                      </div>
+                      <div><label className="block text-[#081C36]/50 text-sm font-inter mb-2">Name</label><input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required placeholder="John Doe" className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter" /></div>
+                      <div><label className="block text-[#081C36]/50 text-sm font-inter mb-2">Email</label><input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required placeholder="johndoe@example.com" className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter" /></div>
                     </div>
-
                     <div className="grid sm:grid-cols-2 gap-6">
-                      {/* Phone */}
-                      <div>
-                        <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Phone Number</label>
-                        <input
-                          type="tel"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="+62"
-                          className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter"
-                        />
-                      </div>
-
-                      {/* Type of Enquiry — dropdown */}
+                      <div><label className="block text-[#081C36]/50 text-sm font-inter mb-2">Phone Number</label><input type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="+62" className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter" /></div>
                       <div className="relative">
                         <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Type of Enquiry</label>
-                        <button
-                          type="button"
-                          onClick={() => setDropdownOpen(!dropdownOpen)}
-                          className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 text-left focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter flex items-center justify-between"
-                        >
-                          <span className={formData.enquiry ? 'text-[#081C36]' : 'text-[#081C36]/30'}>
-                            {formData.enquiry || 'Select type'}
-                          </span>
-                          <ChevronDown size={16} className={`text-[#081C36]/40 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
-                        </button>
-
-                        <AnimatePresence>
-                          {dropdownOpen && (
-                            <motion.div
-                              initial={{ opacity: 0, y: -5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -5 }}
-                              transition={{ duration: 0.15 }}
-                              className="absolute top-full left-0 right-0 mt-1 z-20 rounded-xl overflow-hidden border border-[#081C36]/10 shadow-lg"
-                              style={{
-                                background: 'rgba(255, 255, 255, 0.98)',
-                                backdropFilter: 'blur(20px)',
-                              }}
-                            >
-                              {ENQUIRY_TYPES.map((type) => (
-                                <button
-                                  key={type}
-                                  type="button"
-                                  onClick={() => {
-                                    setFormData({ ...formData, enquiry: type });
-                                    setDropdownOpen(false);
-                                  }}
-                                  className={`w-full text-left px-4 py-3 text-sm font-inter transition-colors duration-150 ${
-                                    formData.enquiry === type
-                                      ? 'bg-[#081C36]/10 text-[#081C36] font-semibold'
-                                      : 'text-[#081C36]/60 hover:bg-[#081C36]/5 hover:text-[#081C36]'
-                                  }`}
-                                >
-                                  {type}
-                                </button>
-                              ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                        <button type="button" onClick={() => setDropdownOpen(!dropdownOpen)} className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 text-left focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter flex items-center justify-between"><span className={formData.enquiry ? 'text-[#081C36]' : 'text-[#081C36]/30'}>{formData.enquiry || 'Select type'}</span><ChevronDown size={16} className={`text-[#081C36]/40 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} /></button>
+                        <AnimatePresence>{dropdownOpen && (<motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.15 }} className="absolute top-full left-0 right-0 mt-1 z-20 rounded-xl overflow-hidden border border-[#081C36]/10 shadow-lg" style={{ background: 'rgba(255, 255, 255, 0.98)', backdropFilter: 'blur(20px)' }}>{ENQUIRY_TYPES.map((type) => (<button key={type} type="button" onClick={() => { setFormData({ ...formData, enquiry: type }); setDropdownOpen(false); }} className={`w-full text-left px-4 py-3 text-sm font-inter transition-colors duration-150 ${formData.enquiry === type ? 'bg-[#081C36]/10 text-[#081C36] font-semibold' : 'text-[#081C36]/60 hover:bg-[#081C36]/5 hover:text-[#081C36]'}`}>{type}</button>))}</motion.div>)}</AnimatePresence>
                       </div>
                     </div>
-
-                    {/* Subject */}
-                    <div>
-                      <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Subject</label>
-                      <input
-                        type="text"
-                        value={formData.subject}
-                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        placeholder="What's this about?"
-                        className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter"
-                      />
-                    </div>
-
-                    {/* Message */}
-                    <div className="flex-1">
-                      <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Message</label>
-                      <textarea
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        required
-                        rows={4}
-                        placeholder="Write Your Message Here..."
-                        className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors resize-none text-sm font-inter"
-                      />
-                    </div>
-
-                    {/* Submit */}
-                    <div className="flex justify-end pt-4">
-                      <motion.button
-                        type="submit"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="bg-[#081C36] hover:bg-[#0a2545] text-white px-10 py-3.5 rounded-xl transition-all duration-300 flex items-center gap-2 font-inter font-semibold shadow-lg shadow-[#081C36]/20 hover:shadow-xl hover:shadow-[#081C36]/30"
-                      >
-                        Send Message <Send size={16} />
-                      </motion.button>
-                    </div>
+                    <div><label className="block text-[#081C36]/50 text-sm font-inter mb-2">Subject</label><input type="text" value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} placeholder="What's this about?" className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter" /></div>
+                    <div className="flex-1"><label className="block text-[#081C36]/50 text-sm font-inter mb-2">Message</label><textarea value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} required rows={4} placeholder="Write Your Message Here..." className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors resize-none text-sm font-inter" /></div>
+                    <div className="flex justify-end pt-4"><motion.button type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="bg-[#081C36] hover:bg-[#0a2545] text-white px-10 py-3.5 rounded-xl transition-all duration-300 flex items-center gap-2 font-inter font-semibold shadow-lg shadow-[#081C36]/20 hover:shadow-xl hover:shadow-[#081C36]/30">Send Message <Send size={16} /></motion.button></div>
                   </form>
                 </div>
               </div>
             </motion.div>
-          ) : (
-            /* ── Event Tab ─────────────────────────────────────── */
+          )}
+
+          {activeTab === 'event' && (
             <motion.div
               key="event"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
                 {EVENT_CONTACTS.map((event, i) => (
-                  <div
-                    key={event.label}
-                    className="p-6 md:p-8 rounded-2xl bg-[#f5f7fa] border border-[#081C36]/10 hover:border-[#081C36]/20 hover:shadow-lg transition-all duration-300 group"
-                  >
+                  <div key={event.label} className="p-6 md:p-8 rounded-2xl bg-[#f5f7fa] border border-[#081C36]/10 hover:border-[#081C36]/20 hover:shadow-lg transition-all duration-300 group">
                     <h3 className="font-inter font-bold text-2xl text-[#081C36] mb-1">{event.label}</h3>
                     <p className="text-[#081C36]/50 text-sm font-inter mb-8">{event.description}</p>
-
                     <div className="space-y-4 pt-6 border-t border-[#081C36]/10">
                       {event.contacts.map((c, j) => (
                         <div key={j} className="flex items-center gap-2 md:gap-3">

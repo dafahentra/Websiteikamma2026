@@ -5,6 +5,26 @@ import { ExternalLink, Clock, CalendarDays, Filter, Search, X, ArrowRight, Chevr
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { INFO_MAHASISWA_PHOTOS, INFO_MAHASISWA_HERO } from '../../assets/photos';
+const MicroShape = ({ className, delay = 0, duration = 5, size = "w-20 h-20" }: { className: string, delay?: number, duration?: number, size?: string }) => (
+  <motion.div
+    className={`absolute pointer-events-none select-none rounded-full bg-white/10 blur-[40px] ${size} ${className}`}
+    animate={{
+      y: [0, -30, 0],
+      x: [0, 15, 0],
+      opacity: [0.05, 0.15, 0.05],
+    }}
+    transition={{
+      duration,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay
+    }}
+  />
+);
+
+const DotPattern = ({ className }: { className: string }) => (
+  <div className={`absolute pointer-events-none select-none opacity-[0.03] ${className}`} style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+);
 
 /* ── Types ─────────────────────────────────────────────────────── */
 type Category = 'Magang' | 'Lomba' | 'Beasiswa';
@@ -175,7 +195,7 @@ export function InfoMahasiswaPage() {
   const [activeStatus, setActiveStatus] = useState<typeof STATUS_FILTERS[number]>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedItem, setSelectedItem] = useState<InfoItem | null>(null);
-  
+
   const [isMobile, setIsMobile] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -258,15 +278,16 @@ export function InfoMahasiswaPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="w-full bg-[#081C36] pt-32 md:pt-40 pb-16 md:pb-24 px-6 lg:px-12 relative overflow-hidden flex flex-col items-center justify-center text-center mt-[-80px]">
-        {/* Hero Background Image */}
+      <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-[#081C36]">
+        {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src={INFO_MAHASISWA_HERO} 
-            alt="Hero Background" 
-            className="w-full h-full object-cover opacity-30 grayscale"
+          <img
+            src={INFO_MAHASISWA_HERO}
+            alt="Info Mahasiswa Hero"
+            className="w-full h-full object-cover opacity-40"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#081C36]/80 via-[#081C36]/90 to-[#081C36]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#081C36]/80 via-transparent to-[#081C36]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#081C36]/50 via-transparent to-[#081C36]/50" />
         </div>
 
         <motion.div
@@ -275,8 +296,18 @@ export function InfoMahasiswaPage() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto relative z-10 pt-16"
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-inter font-bold mb-4 text-white tracking-tight">
-            Info Mahasiswa
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {/* Ambient Blurs */}
+            <MicroShape className="-top-10 -left-10" size="w-64 h-64" delay={0} duration={8} />
+            <MicroShape className="top-1/2 -right-20" size="w-80 h-80" delay={2} duration={10} />
+            <MicroShape className="-bottom-20 left-1/3" size="w-72 h-72" delay={1} duration={9} />
+
+            {/* Micro Dots */}
+            <DotPattern className="top-20 right-20 w-32 h-32" />
+            <DotPattern className="bottom-20 left-10 w-24 h-48" />
+          </div>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl mb-4 text-white tracking-tight relative z-10">
+            <span className="font-caslon-italic font-bold">Info</span> <span className="font-inter font-bold">Manajemen</span>
           </h1>
           <p className="text-white/80 text-sm md:text-xl font-inter max-w-2xl mx-auto px-4">
             Temukan peluang magang, lomba, dan beasiswa terbaru yang relevan untuk mahasiswa Manajemen FEB UGM.
@@ -301,8 +332,8 @@ export function InfoMahasiswaPage() {
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
                   className={`px-5 py-2 text-sm font-inter font-medium transition-all duration-300 rounded-full border ${activeCategory === cat
-                      ? 'bg-[#081C36] border-[#081C36] text-white'
-                      : 'bg-transparent border-[#081C36]/15 text-[#081C36]/60 hover:border-[#081C36]/40 hover:text-[#081C36]'
+                    ? 'bg-[#081C36] border-[#081C36] text-white'
+                    : 'bg-transparent border-[#081C36]/15 text-[#081C36]/60 hover:border-[#081C36]/40 hover:text-[#081C36]'
                     }`}
                 >
                   {cat}
@@ -331,8 +362,8 @@ export function InfoMahasiswaPage() {
                 key={s}
                 onClick={() => setActiveStatus(s)}
                 className={`px-4 py-1.5 text-xs font-inter font-semibold transition-all duration-300 rounded-full border ${activeStatus === s
-                    ? 'bg-[#081C36] border-[#081C36] text-white'
-                    : 'bg-transparent border-[#081C36]/15 text-[#081C36]/50 hover:border-[#081C36]/30 hover:text-[#081C36]'
+                  ? 'bg-[#081C36] border-[#081C36] text-white'
+                  : 'bg-transparent border-[#081C36]/15 text-[#081C36]/50 hover:border-[#081C36]/30 hover:text-[#081C36]'
                   }`}
               >
                 {s}
@@ -459,11 +490,10 @@ export function InfoMahasiswaPage() {
               <button
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
-                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                  currentPage === 1 
-                    ? 'border-[#081C36]/10 text-[#081C36]/30 cursor-not-allowed' 
-                    : 'border-[#081C36]/15 text-[#081C36] hover:bg-[#081C36] hover:text-white'
-                }`}
+                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${currentPage === 1
+                  ? 'border-[#081C36]/10 text-[#081C36]/30 cursor-not-allowed'
+                  : 'border-[#081C36]/15 text-[#081C36] hover:bg-[#081C36] hover:text-white'
+                  }`}
               >
                 <ChevronLeft size={20} />
               </button>
@@ -476,11 +506,10 @@ export function InfoMahasiswaPage() {
                       setCurrentPage(i + 1);
                       scrollToGrid();
                     }}
-                    className={`rounded-full transition-all duration-300 ${
-                      currentPage === i + 1 
-                        ? 'w-2.5 h-2.5 md:w-3 md:h-3 bg-[#081C36]' 
-                        : 'w-2 h-2 md:w-2.5 md:h-2.5 bg-[#081C36]/20 hover:bg-[#081C36]/50'
-                    }`}
+                    className={`rounded-full transition-all duration-300 ${currentPage === i + 1
+                      ? 'w-2.5 h-2.5 md:w-3 md:h-3 bg-[#081C36]'
+                      : 'w-2 h-2 md:w-2.5 md:h-2.5 bg-[#081C36]/20 hover:bg-[#081C36]/50'
+                      }`}
                     aria-label={`Go to page ${i + 1}`}
                   />
                 ))}
@@ -489,16 +518,15 @@ export function InfoMahasiswaPage() {
               <button
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
-                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                  currentPage === totalPages 
-                    ? 'border-[#081C36]/10 text-[#081C36]/30 cursor-not-allowed' 
-                    : 'border-[#081C36]/15 text-[#081C36] hover:bg-[#081C36] hover:text-white'
-                }`}
+                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${currentPage === totalPages
+                  ? 'border-[#081C36]/10 text-[#081C36]/30 cursor-not-allowed'
+                  : 'border-[#081C36]/15 text-[#081C36] hover:bg-[#081C36] hover:text-white'
+                  }`}
               >
                 <ChevronRight size={20} />
               </button>
             </div>
-            
+
             <span className="text-[#081C36]/50 font-inter text-xs md:text-sm font-medium">
               Page {currentPage} of {totalPages}
             </span>

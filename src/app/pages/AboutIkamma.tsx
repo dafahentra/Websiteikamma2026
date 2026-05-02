@@ -563,28 +563,31 @@ export function AboutIkamma() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-5xl mx-auto">
             {[
-              { title: 'Kekeluargaan', desc: 'Menjunjung tinggi rasa kebersamaan, saling menghargai, dan kepedulian antaranggota.' },
-              { title: 'Profesionalitas', desc: 'Menjalankan setiap peran dan tanggung jawab secara disiplin, tepat waktu, dan bertanggung jawab.' },
-              { title: 'Integritas', desc: 'Menegakkan kejujuran, konsistensi, dan komitmen moral dalam setiap tindakan.' },
-              { title: 'Keilmuan', desc: 'Mendorong pengembangan intelektual dan pemikiran kritis sebagai landasan setiap gerak organisasi.' }
-            ].map((value, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="flex flex-col items-center text-center group p-6 rounded-2xl bg-[#081C36]/[0.02] border border-[#081C36]/10 hover:bg-[#081C36]/[0.04] hover:border-[#081C36]/15 transition-all duration-300"
-              >
-                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border border-[#081C36]/20 mb-5 flex items-center justify-center p-5 group-hover:border-[#081C36] transition-colors duration-300">
-                  <IkammaLogo className="w-full h-full text-[#081C36]/50 group-hover:text-[#081C36] transition-colors duration-300" />
-                </div>
-                <h3 className="font-inter font-bold text-lg md:text-xl mb-2 group-hover:text-[#081C36] transition-colors">{value.title}</h3>
-                <p className="font-inter text-xs md:text-sm text-[#081C36]/50 leading-relaxed">
-                  {value.desc}
-                </p>
-              </motion.div>
-            ))}
+              { title: 'Kekeluargaan', desc: 'Menjunjung tinggi rasa kebersamaan, saling menghargai, dan kepedulian antaranggota.', icon: Users },
+              { title: 'Profesionalitas', desc: 'Menjalankan setiap peran dan tanggung jawab secara disiplin, tepat waktu, dan bertanggung jawab.', icon: Briefcase },
+              { title: 'Integritas', desc: 'Menegakkan kejujuran, konsistensi, dan komitmen moral dalam setiap tindakan.', icon: ShieldCheck },
+              { title: 'Keilmuan', desc: 'Mendorong pengembangan intelektual dan pemikiran kritis sebagai landasan setiap gerak organisasi.', icon: GraduationCap }
+            ].map((value, i) => {
+              const Icon = value.icon;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  className="flex flex-col items-center text-center group p-6 rounded-2xl bg-[#081C36]/[0.02] border border-[#081C36]/10 hover:bg-[#081C36]/[0.04] hover:border-[#081C36]/15 transition-all duration-300"
+                >
+                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border border-[#081C36]/20 mb-5 flex items-center justify-center p-5 group-hover:border-[#081C36] transition-colors duration-300">
+                    <Icon className="w-full h-full text-[#081C36]/50 group-hover:text-[#081C36] transition-colors duration-300" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-inter font-bold text-lg md:text-xl mb-2 group-hover:text-[#081C36] transition-colors">{value.title}</h3>
+                  <p className="font-inter text-xs md:text-sm text-[#081C36]/50 leading-relaxed">
+                    {value.desc}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
         </section>
 

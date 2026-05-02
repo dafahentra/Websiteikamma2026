@@ -82,7 +82,7 @@ export function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-col gap-12">
         
         {/* Logo Section */}
-        <div className="flex items-center gap-6">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center gap-6 text-center lg:text-left">
           <img src={Logo} alt="IKAMMA Logo" className="w-24 md:w-32 object-contain" />
           <div className="flex flex-col gap-1">
             <h3 className="font-bold text-sm md:text-base text-[#081C36]">Ikatan Keluarga Mahasiswa Manajemen</h3>
@@ -92,12 +92,12 @@ export function Footer() {
         </div>
 
         {/* Links Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 w-full">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-y-10 gap-x-4 lg:gap-12 w-full text-center lg:text-left">
           
           {/* Navigation */}
-          <div className="col-span-1 flex flex-col gap-4">
+          <div className="col-span-1 flex flex-col items-center lg:items-start gap-4">
             <h4 className="font-inter font-bold text-base">Navigation</h4>
-            <ul className="flex flex-col gap-3 text-sm">
+            <ul className="flex flex-col items-center lg:items-start gap-3 text-sm">
               <li><Link to="/" className="hover:underline">Home</Link></li>
               <li><Link to="/about" className="hover:underline">About Us</Link></li>
               <li><Link to="/info-mahasiswa" className="hover:underline">Info Mahasiswa</Link></li>
@@ -106,9 +106,9 @@ export function Footer() {
           </div>
 
           {/* Social */}
-          <div className="col-span-1 flex flex-col gap-4">
+          <div className="col-span-1 flex flex-col items-center lg:items-start gap-4">
             <h4 className="font-inter font-bold text-base">Social</h4>
-            <ul className="flex flex-col gap-3 text-sm">
+            <ul className="flex flex-col items-center lg:items-start gap-3 text-sm">
               <li><a href="https://instagram.com/ikamma.ugm" target="_blank" rel="noopener noreferrer" className="hover:underline">Instagram</a></li>
               <li><a href="https://linkedin.com/company/ikamma" target="_blank" rel="noopener noreferrer" className="hover:underline">LinkedIn</a></li>
               <li><a href="https://youtube.com/@ikamma" target="_blank" rel="noopener noreferrer" className="hover:underline">Youtube</a></li>
@@ -118,9 +118,9 @@ export function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="col-span-2 lg:col-span-1 flex flex-col gap-4">
+          <div className="col-span-2 lg:col-span-1 flex flex-col items-center lg:items-start gap-4 mt-4 lg:mt-0">
             <h4 className="font-inter font-bold text-base">Contact</h4>
-            <ul className="flex flex-col gap-4 text-sm">
+            <ul className="flex flex-col items-center lg:items-start gap-4 text-sm">
               <li>
                 <a href="mailto:dafahentra@gmail.com" className="flex items-center gap-2 hover:underline">
                   <GmailIcon size={18} />

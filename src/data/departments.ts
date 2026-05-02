@@ -16,6 +16,9 @@ export interface DepartmentData {
   managerImg: string;
   viceManagerImg: string;
   groupImg: string;
+  logo: string;
+  meetingImg: string;
+  activityImg: string;
   programs: WorkProgram[];
 }
 
@@ -29,6 +32,9 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
+    logo: "/assets/LogoPutih.svg",
+    meetingImg: "/meeting_placeholder.jpg",
+    activityImg: "/activity_placeholder.jpg",
     programs: [
       { id: 1, title: "School Of IKAMMA", img: "/program_thumbnail_1777615687215.png" },
       { id: 2, title: "Open Recruitment", img: "/program_thumbnail_1777615687215.png" },
@@ -52,6 +58,9 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto, // Fallback for now
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
+    logo: "/assets/LogoPutih.svg",
+    meetingImg: "/meeting_placeholder.jpg",
+    activityImg: "/activity_placeholder.jpg",
     programs: [
       { id: 11, title: "Appraisal Form", img: "/program_thumbnail_1777615687215.png" },
       { id: 12, title: "IKAMMA Evaluation & Appreciation Day", img: "/program_thumbnail_1777615687215.png" },
@@ -67,6 +76,9 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
+    logo: "/assets/LogoPutih.svg",
+    meetingImg: "/meeting_placeholder.jpg",
+    activityImg: "/activity_placeholder.jpg",
     programs: [
       { id: 14, title: "School of MM", img: "/program_thumbnail_1777615687215.png" },
       { id: 15, title: "Social Media", img: "/program_thumbnail_1777615687215.png" },
@@ -83,6 +95,9 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
+    logo: "/assets/LogoPutih.svg",
+    meetingImg: "/meeting_placeholder.jpg",
+    activityImg: "/activity_placeholder.jpg",
     programs: [
       { id: 18, title: "Kesekretariatan", img: "/program_thumbnail_1777615687215.png" },
       { id: 19, title: "Kebendaharaan", img: "/program_thumbnail_1777615687215.png" },
@@ -98,6 +113,9 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
+    logo: "/assets/LogoPutih.svg",
+    meetingImg: "/meeting_placeholder.jpg",
+    activityImg: "/activity_placeholder.jpg",
     programs: [
       { id: 21, title: "SOERTI", img: "/program_thumbnail_1777615687215.png" },
       { id: 22, title: "PAAM", img: "/program_thumbnail_1777615687215.png" },
@@ -115,6 +133,9 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
+    logo: "/assets/LogoPutih.svg",
+    meetingImg: "/meeting_placeholder.jpg",
+    activityImg: "/activity_placeholder.jpg",
     programs: [
       { id: 26, title: "Partnership", img: "/program_thumbnail_1777615687215.png" },
       { id: 27, title: "Terima Kunjungan", img: "/program_thumbnail_1777615687215.png" },
@@ -133,6 +154,9 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
+    logo: "/assets/LogoPutih.svg",
+    meetingImg: "/meeting_placeholder.jpg",
+    activityImg: "/activity_placeholder.jpg",
     programs: [
       { id: 32, title: "Management Facilitator", img: "/program_thumbnail_1777615687215.png" },
       { id: 33, title: "Career Insight", img: "/program_thumbnail_1777615687215.png" },
@@ -148,6 +172,9 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
+    logo: "/assets/LogoPutih.svg",
+    meetingImg: "/meeting_placeholder.jpg",
+    activityImg: "/activity_placeholder.jpg",
     programs: [
       { id: 35, title: "YES!", img: "/program_thumbnail_1777615687215.png" },
       { id: 36, title: "E-Club", img: "/program_thumbnail_1777615687215.png" },
@@ -162,6 +189,9 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
+    logo: "/assets/LogoPutih.svg",
+    meetingImg: "/meeting_placeholder.jpg",
+    activityImg: "/activity_placeholder.jpg",
     programs: [
       { id: 37, title: "SPRITE", img: "/program_thumbnail_1777615687215.png" },
       { id: 38, title: "POSKAM", img: "/program_thumbnail_1777615687215.png" },

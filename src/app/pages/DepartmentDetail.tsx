@@ -89,8 +89,12 @@ export function DepartmentDetail() {
         <div className="relative w-full flex flex-row justify-between items-end h-[320px] md:h-[500px] max-w-[1800px] mx-auto px-0 shrink-0 mt-auto">
 
           {/* Background Large Logo (Centered) */}
-          <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[400px] md:w-[800px] opacity-[0.06] pointer-events-none z-0">
-            <IkammaLogo className="w-full h-auto text-white" />
+          <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[400px] md:w-[800px] opacity-[0.04] pointer-events-none z-0 flex items-center justify-center">
+            <img 
+              src={department.logo} 
+              alt={`${department.name} Logo`}
+              className="w-full h-auto grayscale brightness-0 invert" 
+            />
           </div>
 
           {/* Manager (Left) */}
@@ -185,27 +189,31 @@ export function DepartmentDetail() {
             <div className="relative w-full max-w-[480px] aspect-video mb-12 lg:mb-0">
               {/* Main Photo (16:9) */}
               <motion.div
-                className="absolute top-0 right-0 w-[85%] aspect-video overflow-hidden"
+                className="absolute top-0 right-0 w-[85%] aspect-video overflow-hidden rounded-xl"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.4 }}
               >
-                <img src="/about_main.png" alt="Meeting" className="w-full h-full object-cover shadow-2xl" />
+                <img src={department.meetingImg} alt="Meeting" className="w-full h-full object-cover shadow-2xl" />
               </motion.div>
               {/* Secondary Photo (4:5) */}
               <motion.div
-                className="absolute left-0 top-[30%] w-[35%] aspect-[4/5] overflow-hidden"
+                className="absolute left-0 top-[30%] w-[35%] aspect-[4/5] overflow-hidden rounded-lg"
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.4 }}
               >
-                <img src="/about_secondary.png" alt="Student Activity" className="w-full h-full object-cover shadow-2xl" />
+                <img src={department.activityImg} alt="Student Activity" className="w-full h-full object-cover shadow-2xl" />
               </motion.div>
               {/* Logo Overlay */}
               <motion.div
-                className="absolute -bottom-8 right-2 md:right-8 w-24 h-24 md:w-32 md:h-32"
+                className="absolute -bottom-8 right-2 md:right-8 w-24 h-24 md:w-32 md:h-32 flex items-center justify-center"
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
-                <IkammaLogo className="w-full h-full text-white drop-shadow-xl" />
+                <img 
+                  src={department.logo} 
+                  alt={`${department.name} Logo`}
+                  className="w-full h-auto drop-shadow-2xl brightness-0 invert" 
+                />
               </motion.div>
             </div>
           </motion.div>

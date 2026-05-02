@@ -128,27 +128,27 @@ export function Hero() {
   // Non-linear array creates an exponential deceleration curve for a cinematic landing
   const maskScale = useTransform(
     progress,
-    [0.0, 0.04, 0.07, 0.09, 0.10],
+    [0.0, 0.015, 0.025, 0.03, 0.035],
     [70, 15, 4, 1.5, 1]
   );
-  const maskOpacity = useTransform(progress, [0.0, 0.05], [0, 1]);
-  const captionOpacity = useTransform(progress, [0.0, 0.02], [1, 0]);
+  const maskOpacity = useTransform(progress, [0.0, 0.02], [0, 1]);
+  const captionOpacity = useTransform(progress, [0.0, 0.015], [1, 0]);
 
   /* === PHASE 2: Text turns white & Logo appears === */
-  // 0.10 to 0.15
-  const whiteLayerOpacity = useTransform(progress, [0.10, 0.15], [0, 1]);
-  const logoOpacity = useTransform(progress, [0.10, 0.15], [0, 1]);
-  const logoY = useTransform(progress, [0.10, 0.15], ["-24px", "0px"]);
+  // 0.04 to 0.08
+  const whiteLayerOpacity = useTransform(progress, [0.04, 0.08], [0, 1]);
+  const logoOpacity = useTransform(progress, [0.04, 0.08], [0, 1]);
+  const logoY = useTransform(progress, [0.04, 0.08], ["-24px", "0px"]);
 
   /* === PHASE 3: Hero Flies Past Camera === */
-  // 0.25 to 0.35 (User zooms into the text!)
+  // 0.15 to 0.25 (User zooms into the text!)
   // Non-linear array creates an exponential acceleration curve for realistic camera fly-through
   const heroScale = useTransform(
     progress,
-    [0.25, 0.30, 0.33, 0.35],
+    [0.15, 0.20, 0.23, 0.25],
     [1, 3, 12, 40]
   );
-  const heroOpacity = useTransform(progress, [0.30, 0.35], [1, 0]);
+  const heroOpacity = useTransform(progress, [0.20, 0.25], [1, 0]);
 
   // Reduced layout to 25 photos for better balance and performance
   const PIONIR_LAYOUT = [
@@ -191,7 +191,7 @@ export function Hero() {
 
       // Sequential appearance: strict 1-by-1 staggered timeline
       const seq = i / shuffledLayout.length;
-      const startP = 0.35 + (seq * 0.30);
+      const startP = 0.25 + (seq * 0.30);
 
       // Variable duration so some fly slightly faster/slower, adding depth
       const duration = 0.12 + Math.random() * 0.05;
@@ -211,26 +211,26 @@ export function Hero() {
   }, []);
 
   /* === PHASE 5: Background Photo === */
-  // Spawns during the scrapbook phase (0.55), hits full screen (0.75), 
+  // Spawns during the scrapbook phase (0.45), hits full screen (0.65), 
   // and then slowly 'elongates' (zooms) to 1.1 for a cinematic effect until the end.
-  const finalScale = useTransform(progress, [0.55, 0.75, 1.0], [0.15, 1, 1.15]);
+  const finalScale = useTransform(progress, [0.45, 0.65, 1.0], [0.15, 1, 1.15]);
 
   // Fades in and blurs just like the other scrapbook photos
-  const finalOpacity = useTransform(progress, [0.55, 0.60], [0, 1]);
-  const finalBlur = useTransform(progress, [0.55, 0.60], [10, 0]);
+  const finalOpacity = useTransform(progress, [0.45, 0.50], [0, 1]);
+  const finalBlur = useTransform(progress, [0.45, 0.50], [10, 0]);
   const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
 
   // Parallax effect: A subtle, gentle slow pan up.
   const parallaxY = useTransform(progress, [0.85, 1.00], ["0vh", "-10vh"]);
 
-  /* === PHASE 6: About IKAMMA Content Fades In === */
-  // 0.75 to 0.85
-  const contentOpacity = useTransform(progress, [0.75, 0.85], [0, 1]);
-  // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
-  const contentY = useTransform(progress, [0.75, 0.85, 1.0], [80, 0, -400]);
-
   // The dark overlay ONLY appears at the very end when it becomes the background
-  const overlayOpacity = useTransform(progress, [0.70, 0.80], [0, 0.50]);
+  const overlayOpacity = useTransform(progress, [0.60, 0.70], [0, 0.50]);
+
+  /* === PHASE 6: About IKAMMA Content Fades In === */
+  // 0.65 to 0.75
+  const contentOpacity = useTransform(progress, [0.65, 0.75], [0, 1]);
+  // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
+  const contentY = useTransform(progress, [0.65, 0.75, 1.0], [80, 0, -400]);
 
   return (
     <div ref={containerRef} className="relative w-full" style={{ height: SECTION_HEIGHT_PX }}>

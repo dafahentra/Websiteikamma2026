@@ -1,5 +1,6 @@
-import DondoFoto from '../assets/DondoFoto.png';
-import { departmentsData } from './departments';
+import AurelliaFoto from '../assets/DondoFoto.png';
+import ArwandaFoto from '../assets/DondoFoto.png';
+import FelitaFoto from '../assets/DondoFoto.png';
 
 export interface TeamMember {
   name: string;
@@ -9,20 +10,20 @@ export interface TeamMember {
 
 // Data Pimpinan Inti (Chairman & Vice Chairmen)
 export const CORE_LEADERS: TeamMember[] = [
-  { 
-    name: "Dondo D.D.", 
-    role: "Vice Chairman", 
-    img: departmentsData['hr-monitoring'].managerImg 
+  {
+    name: "Arwanda Darin R",
+    role: "Vice Chairman",
+    img: ArwandaFoto
   },
-  { 
-    name: "Dondo D.D.", 
-    role: "Chairman", 
-    img: departmentsData['hrbb'].managerImg 
+  {
+    name: "Aurellia Lysandra M",
+    role: "Chairman",
+    img: AurelliaFoto
   },
-  { 
-    name: "Dondo D.D.", 
-    role: "Vice Chairman", 
-    img: departmentsData['internal'].managerImg 
+  {
+    name: "Felita Sabila P",
+    role: "Vice Chairman",
+    img: FelitaFoto
   },
 ];
 

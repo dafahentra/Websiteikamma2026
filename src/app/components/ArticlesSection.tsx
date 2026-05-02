@@ -86,7 +86,7 @@ export function ArticlesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex justify-center mt-16"
+          className="flex justify-center -mt-5 md:mt-2"
         >
           <a
             href="/articles"

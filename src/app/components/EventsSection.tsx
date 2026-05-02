@@ -1,10 +1,20 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import LOGO from '../../assets/LogoPutih.svg';
+import LOGO1 from '../../assets/LogoPutih.svg';
+import LOGO2 from '../../assets/LogoPutih.svg';
+import LOGO3 from '../../assets/LogoPutih.svg';
+import LOGO4 from '../../assets/LogoPutih.svg';
 
 import { EVENT_PHOTOS, EVENTS_BG } from "../../assets/photos";
 const BACKGROUND_IMAGE = EVENTS_BG;
+
+const EVENT_ITEMS = [
+  { photo: EVENT_PHOTOS[0], logo: LOGO1 },
+  { photo: EVENT_PHOTOS[1], logo: LOGO2 },
+  { photo: EVENT_PHOTOS[2], logo: LOGO3 },
+  { photo: EVENT_PHOTOS[3], logo: LOGO4 },
+];
 
 const POSITIONS = [
   { x: 0, y: 0, rotate: 0, scale: 1, zIndex: 10, brightness: 1 },         // 0: Center (Active)
@@ -16,12 +26,12 @@ const POSITIONS = [
 interface CarouselCardProps {
   index: number;
   activeIndex: number;
-  photo: string;
+  item: { photo: string; logo: string };
   unfoldProgress: MotionValue<number>;
   onClick: () => void;
 }
 
-function CarouselCard({ index, activeIndex, photo, unfoldProgress, onClick, xFactor }: CarouselCardProps & { xFactor: number }) {
+function CarouselCard({ index, activeIndex, item, unfoldProgress, onClick, xFactor }: CarouselCardProps & { xFactor: number }) {
   const posIndex = (index - activeIndex + 4) % 4;
   const target = { ...POSITIONS[posIndex], x: POSITIONS[posIndex].x * xFactor };
 
@@ -56,30 +66,27 @@ function CarouselCard({ index, activeIndex, photo, unfoldProgress, onClick, xFac
       className="absolute w-56 h-72 md:w-72 md:h-96 overflow-hidden cursor-pointer rounded-xl bg-black"
       style={{ x, y, rotate, scale, zIndex: target.zIndex }}
       animate={{
-        boxShadow: isCenter 
-          ? "0 20px 50px rgba(0,0,0,0.4), 0 0 60px rgba(8,28,54,0.5)" 
+        boxShadow: isCenter
+          ? "0 20px 50px rgba(0,0,0,0.4), 0 0 60px rgba(8,28,54,0.5)"
           : "0 20px 50px rgba(0,0,0,0.4), 0 0 0px rgba(8,28,54,0)"
       }}
       transition={{ duration: 0.4 }}
     >
-      <motion.img 
-        src={photo} 
-        className="w-full h-full object-cover" 
+      <motion.img
+        src={item.photo}
+        className="w-full h-full object-cover"
         style={{ filter }}
       />
       {/* Overlay Logo in the center of the photo */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <img src={LOGO} alt="IKAMMA Logo" className="w-24 md:w-32 opacity-80" />
+        <img src={item.logo} alt="Event Logo" className="w-24 md:w-32 opacity-80" />
       </div>
-      {/* Inner Neon Frame matching Figma */}
-      <motion.div 
-        className="absolute top-4 bottom-4 left-4 right-4 pointer-events-none rounded-sm border-2"
-        animate={{ 
-          borderColor: isCenter ? "rgba(8,28,54,1)" : "rgba(8,28,54,0)",
-          boxShadow: isCenter 
-            ? "0 0 15px rgba(8,28,54,0.5), inset 0 0 15px rgba(8,28,54,0.5)" 
-            : "0 0 0px rgba(8,28,54,0), inset 0 0 0px rgba(8,28,54,0)",
-          opacity: isCenter ? 1 : 0
+      {/* White Inner Frame */}
+      <motion.div
+        className="absolute top-4 bottom-4 left-4 right-4 pointer-events-none rounded-sm border-2 border-white/80"
+        animate={{
+          opacity: isCenter ? 1 : 0,
+          scale: isCenter ? 1 : 0.95
         }}
         transition={{ duration: 0.4 }}
       />
@@ -98,7 +105,7 @@ export function EventsSection() {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
-  
+
   // Track scroll progress relative to this section
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -122,11 +129,11 @@ export function EventsSection() {
             <div className="absolute inset-0 bg-white/90" />
           </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full pt-[25px]">
-            
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full pt-[30px]">
+
             {/* Title */}
             <div className="flex justify-center md:justify-end mb-16 md:mb-24">
-              <motion.h2 
+              <motion.h2
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -140,13 +147,13 @@ export function EventsSection() {
             </div>
 
             {/* Stacked Interactive Carousel Visualization */}
-            <div className="relative w-full max-w-4xl mx-auto h-[400px] md:h-[450px] flex items-center justify-center mb-12 md:mb-16 perspective-[1000px]">
-              {EVENT_PHOTOS.map((photo, i) => (
+            <div className="relative w-full max-w-4xl mx-auto h-[400px] md:h-[450px] flex items-center justify-center mb-0 mt-[-50px] perspective-[1000px]">
+              {EVENT_ITEMS.map((item, i) => (
                 <CarouselCard
                   key={i}
                   index={i}
                   activeIndex={activeIndex}
-                  photo={photo}
+                  item={item}
                   unfoldProgress={unfoldProgress}
                   xFactor={xFactor}
                   onClick={() => setActiveIndex(i)}
@@ -155,12 +162,12 @@ export function EventsSection() {
             </div>
 
             {/* CTA Button */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex justify-center"
+              className="flex justify-center -mt-8 md:mt-2"
             >
               <button className="bg-[#081C36] hover:bg-[#0a2545] text-white px-8 py-3 rounded-full font-medium transition-colors inline-flex items-center gap-2 shadow-lg hover:shadow-xl">
                 <span className="w-1.5 h-1.5 bg-white rounded-full"></span>

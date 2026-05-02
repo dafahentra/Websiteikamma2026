@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import AnimatedButton from "./AnimatedButton";
 import LOGO1 from '../../assets/LogoPutih.svg';
 import LOGO2 from '../../assets/LogoPutih.svg';
 import LOGO3 from '../../assets/LogoPutih.svg';
@@ -169,11 +170,9 @@ export function EventsSection() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="flex justify-center -mt-8 md:mt-2"
             >
-              <button className="bg-[#081C36] hover:bg-[#0a2545] text-white px-8 py-3 rounded-full font-medium transition-colors inline-flex items-center gap-2 shadow-lg hover:shadow-xl">
-                <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+              <AnimatedButton href="/events">
                 See More
-                <ArrowRight size={18} />
-              </button>
+              </AnimatedButton>
             </motion.div>
 
           </div>

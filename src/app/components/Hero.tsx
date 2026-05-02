@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate, MotionValue, useSpring } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import AnimatedButton from "./AnimatedButton";
 import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
 
 import HERO_IMAGE from "../../assets/VidProf.mp4";
@@ -307,8 +308,8 @@ export function Hero() {
             pointerEvents: contentPointerEvents 
           }}
         >
-          {/* Main Content inside restricted width */}
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto">
+          {/* Main Content inside restricted width - Mobile: pt-[21px] (moved up another 50px), Desktop: pt-[101px] */}
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto pt-[21px] md:pt-[101px]">
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
               {/* Left Column */}
@@ -326,20 +327,15 @@ export function Hero() {
                     IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
                   </p>
                   <div className="pt-2 md:pt-4 flex justify-start">
-                    <a
-                      href="#about-more"
-                      className="inline-flex items-center gap-2 bg-[#081C36] hover:bg-[#0a2545] text-white px-6 py-2.5 rounded-full text-sm md:text-base font-medium transition-colors"
-                    >
-                      <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                    <AnimatedButton href="/about">
                       See More
-                      <ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />
-                    </a>
+                    </AnimatedButton>
                   </div>
                 </div>
               </div>
 
               {/* Right Column */}
-              <div className="flex flex-col text-right w-full pr-[52px] sm:pr-[60px]">
+              <div className="flex flex-col text-right w-full">
                 <h2 className="text-white text-3xl md:text-5xl flex items-center justify-end gap-2 sm:gap-3 mb-4 md:mb-8">
                   <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Company</span>
                   <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Profile</span>
@@ -369,8 +365,12 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="mt-6 md:mt-12 w-full pointer-events-auto">
-            <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-6 md:mb-10" style={{ fontFamily: "'Inter', sans-serif" }}>Our Partners</h3>
+          {/* Spacing adjusted to 80px from content above */}
+          <div className="mt-20 w-full pointer-events-auto">
+            <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-6 md:mb-10 flex items-center justify-center gap-2 md:gap-4">
+              <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
+              <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>
+            </h3>
             {/* Infinite Marquee Container */}
             <div className="w-full overflow-hidden flex whitespace-nowrap">
               <motion.div

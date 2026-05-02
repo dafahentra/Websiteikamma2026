@@ -138,7 +138,7 @@ export function EventsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto relative z-10 pt-16"
+          className="max-w-4xl mx-auto relative z-10 pt-16 text-center"
         >
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <MicroShape className="-bottom-20 right-[5%]" size="w-80 h-80" delay={1} duration={12} />

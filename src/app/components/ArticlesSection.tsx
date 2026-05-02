@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import AnimatedButton from "./AnimatedButton";
 import { ARTICLE_PHOTOS } from "../../assets/photos";
 
 const ARTICLES = [
@@ -88,14 +89,9 @@ export function ArticlesSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="flex justify-center -mt-5 md:mt-2"
         >
-          <a
-            href="/articles"
-            className="bg-[#081C36] hover:bg-[#0a2545] text-white px-8 py-3 rounded-full font-medium transition-colors inline-flex items-center gap-2 shadow-lg hover:shadow-xl font-inter"
-          >
-            <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+          <AnimatedButton href="/articles">
             See More
-            <ArrowRight size={18} />
-          </a>
+          </AnimatedButton>
         </motion.div>
 
       </div>

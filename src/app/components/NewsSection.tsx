@@ -87,7 +87,7 @@ function NewsCard({ item }: { item: NewsItem }) {
       {/* Date - outside the clip path so it shows up in the bottom right corner */}
       <div className="absolute bottom-[2%] right-[2%] pointer-events-none z-20">
         <p className="text-[12px] md:text-[14px] font-inter font-bold leading-none tracking-tight whitespace-nowrap">
-          <span className="text-white">{item.day} {item.month}</span>{' '}
+          <span className="text-[#081C36]">{item.day} {item.month}</span>{' '}
           <span className="text-[#3B82F6]">{item.year}</span>
         </p>
       </div>
@@ -146,7 +146,7 @@ export function NewsSection() {
   ];
 
   return (
-    <section ref={sectionRef} className="relative w-full py-24 text-white overflow-hidden">
+    <section ref={sectionRef} className="relative w-full py-24 bg-white text-[#081C36] overflow-hidden">
       {/* Invisible SVG for clip-path */}
       <svg width="0" height="0" className="absolute">
         <defs>
@@ -159,20 +159,6 @@ export function NewsSection() {
         </defs>
       </svg>
 
-      {/* Locomotive-scroll parallax background */}
-      <motion.div
-        className="absolute inset-0 w-full h-[130%] -top-[15%]"
-        style={{ y: bgParallaxY }}
-      >
-        <img
-          src={bgImage}
-          alt=""
-          className="w-full h-full object-cover"
-        />
-      </motion.div>
-      {/* Dark overlay — subtle enough to see the photo clearly */}
-      <div className="absolute inset-0 bg-[#081C36]/60" />
-
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
 
         {/* Header */}
@@ -182,9 +168,9 @@ export function NewsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-white text-4xl md:text-5xl flex items-center gap-3 mb-4"
+            className="text-[#081C36] text-4xl md:text-5xl flex items-center gap-3 mb-4"
           >
-            <span className="text-white">—</span>
+            <span className="text-[#081C36]">—</span>
             <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">See</span>
             <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">What's News</span>
           </motion.h2>
@@ -196,10 +182,10 @@ export function NewsSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <a href="https://www.instagram.com/ikamma_ugm/" target="_blank" rel="noopener noreferrer" className="text-white/60 text-lg font-light">
+            <a href="https://www.instagram.com/ikamma_ugm/" target="_blank" rel="noopener noreferrer" className="text-[#081C36]/60 text-lg font-light">
               Follow for more!
             </a>
-            <div className="absolute -bottom-2 left-0 w-full h-[1px] bg-white/30" />
+            <div className="absolute -bottom-2 left-0 w-full h-[1px] bg-[#081C36]/30" />
           </motion.div>
         </div>
 

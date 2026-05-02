@@ -1,6 +1,7 @@
 import { useRef, useMemo } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import AnimatedButton from "./AnimatedButton";
 import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
 
 import { SCRAPBOOK_PHOTOS, ABOUT_BACKGROUND } from '../../assets/photos';
@@ -166,14 +167,9 @@ export function AboutSection() {
                   IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
                 </p>
                 <div className="pt-4">
-                  <a
-                    href="#about-more"
-                    className="inline-flex items-center gap-2 bg-[#081C36] hover:bg-[#0a2545] text-white px-6 py-2.5 rounded-full font-medium transition-colors"
-                  >
-                    <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                  <AnimatedButton href="#about-more">
                     See More
-                    <ArrowRight size={18} />
-                  </a>
+                  </AnimatedButton>
                 </div>
               </div>
 

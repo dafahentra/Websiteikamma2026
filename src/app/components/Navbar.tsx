@@ -1,4 +1,5 @@
 import { useState, useRef, useLayoutEffect, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router';
 import { createPortal } from 'react-dom';
 import {
   motion,
@@ -43,7 +44,7 @@ type NavLink = {
 const links: NavLink[] = [
   { href: '/#home', label: 'Home', icon: Home },
   {
-    href: '/#about',
+    href: '/about',
     label: 'About Us',
     icon: Info,
     dropdown: [
@@ -279,7 +280,7 @@ function DesktopDropdown({
 }
 
 /* ── Desktop nav item ────────────────────────────────────────────── */
-function DesktopNavItem({ link, isLight }: { link: NavLink; isLight: boolean }) {
+function DesktopNavItem({ link, isLight, isActive }: { link: NavLink; isLight: boolean; isActive: boolean }) {
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const anchorRef = useRef<HTMLLIElement | null>(null);
@@ -290,14 +291,27 @@ function DesktopNavItem({ link, isLight }: { link: NavLink; isLight: boolean }) 
   return (
     <li
       ref={anchorRef}
-      className="relative flex items-center"
+      className="relative flex items-center h-full"
       onMouseEnter={link.dropdown ? show : undefined}
       onMouseLeave={link.dropdown ? hide : undefined}
     >
       <a
         href={link.href}
-        className="relative group flex items-center gap-1.5 text-white/80 hover:text-white transition-colors duration-200 py-2"
-        style={{ fontSize: '14px', fontWeight: 500 }}
+        className={`relative group flex items-center gap-1.5 transition-all duration-300 px-5 py-2 rounded-full ${
+          isActive 
+            ? 'text-white font-semibold' 
+            : (isLight ? 'text-black/70 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10')
+        }`}
+        style={{ 
+          fontSize: '14px',
+          background: isActive ? (isLight 
+            ? 'linear-gradient(135deg, rgba(8, 28, 54, 0.95), rgba(8, 28, 54, 0.85))' 
+            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))') : undefined,
+          backdropFilter: isActive ? 'blur(12px) saturate(180%)' : undefined,
+          WebkitBackdropFilter: isActive ? 'blur(12px) saturate(180%)' : undefined,
+          border: isActive ? (isLight ? '1px solid rgba(8, 28, 54, 0.2)' : '1px solid rgba(255, 255, 255, 0.3)') : '1px solid transparent',
+          boxShadow: isActive ? (isLight ? '0 4px 15px rgba(8, 28, 54, 0.2)' : '0 4px 15px rgba(0, 0, 0, 0.2)') : undefined,
+        }}
       >
         {link.label}
         {link.dropdown && (
@@ -411,7 +425,9 @@ function isLightColor(r: number, g: number, b: number) {
 
 /* ── Main Navbar ─────────────────────────────────────────────────── */
 export function Navbar() {
-  const [expanded, setExpanded] = useState(false);
+  const { pathname } = useLocation();
+  const [expanded, setExpanded] = useState(pathname !== '/');
+  const [isNavigating, setIsNavigating] = useState(false);
   const [mobileExpand, setMobileExpand] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [onLightBg, setOnLightBg] = useState(false);
@@ -422,7 +438,9 @@ export function Navbar() {
   const detectBackground = useCallback(() => {
     if (!navRef.current) return;
     const rect = navRef.current.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
+    // Sample from the left side (Logo/Burger area) instead of center
+    // This ensures consistent adaptation even when expanded
+    const cx = rect.left + 40; 
     const cy = rect.top + rect.height / 2;
 
     // Hide our navbar temporarily to sample what's behind it
@@ -469,7 +487,17 @@ export function Navbar() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
-  }, [detectBackground]);
+  }, [detectBackground, pathname, isScrolled]);
+
+  // Keep expanded if on sub-page
+  useEffect(() => {
+    setIsNavigating(true);
+    if (pathname !== '/') {
+      setExpanded(true);
+    }
+    const timer = setTimeout(() => setIsNavigating(false), 800);
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
@@ -478,13 +506,37 @@ export function Navbar() {
   const toggleExpand = (label: string) =>
     setMobileExpand((prev) => (prev === label ? null : label));
 
+  const checkActive = (link: NavLink) => {
+    // 1. Check the main link itself
+    const mainPath = link.href.split('#')[0];
+    if (mainPath && mainPath !== '/' && pathname.startsWith(mainPath)) return true;
+    if ((link.href === '/' || link.href === '/#home') && pathname === '/') return true;
+
+    // 2. Check all items in the dropdown
+    if (link.dropdown) {
+      for (const item of link.dropdown) {
+        if (item.href) {
+          const itemPath = item.href.split('#')[0];
+          if (itemPath && itemPath !== '/' && pathname.startsWith(itemPath)) return true;
+        }
+        // 3. Check sub-dropdowns
+        if (item.subDropdown) {
+          for (const sub of item.subDropdown) {
+            const subPath = sub.href.split('#')[0];
+            if (subPath && subPath !== '/' && pathname.startsWith(subPath)) return true;
+          }
+        }
+      }
+    }
+    return false;
+  };
+
   return (
     <motion.div
       ref={navRef}
       className="fixed top-6 left-1/2 z-[50] flex flex-col items-center"
-      style={{ x: "-50%" }}
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      initial={{ opacity: 0, x: "-50%" }}
+      animate={{ opacity: 1, x: "-50%" }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       {/* ── Desktop & Tablet Liquid Glass Pill ─────────────────────────────────── */}
@@ -524,18 +576,24 @@ export function Navbar() {
         </motion.div>
 
         {/* Expanded Links (Desktop) - Memanjang ke kanan */}
-        <AnimatePresence>
+        <AnimatePresence mode="wait" initial={false}>
           {expanded && (
             <motion.div
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "auto", opacity: 1 }}
-              exit={{ width: 0, opacity: 0 }}
+              key="expanded-content"
+              initial={{ width: 0, opacity: 0, x: 20 }}
+              animate={{ width: "auto", opacity: 1, x: 0 }}
+              exit={{ width: 0, opacity: 0, x: 20 }}
               transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-              className={`hidden lg:flex items-center overflow-hidden h-full transition-[filter] duration-300 ${(isScrolled || onLightBg) ? 'invert' : ''}`}
+              className="hidden lg:flex items-center overflow-hidden h-full"
             >
-              <ul className="flex items-center h-full gap-7 pl-6 pr-4 whitespace-nowrap m-0 list-none">
+              <ul className="flex items-center h-full gap-5 pl-6 pr-4 whitespace-nowrap m-0 list-none">
                 {links.map((link) => (
-                  <DesktopNavItem key={link.href} link={link} isLight={isScrolled || onLightBg} />
+                  <DesktopNavItem 
+                    key={link.href} 
+                    link={link} 
+                    isLight={isScrolled || onLightBg} 
+                    isActive={checkActive(link)}
+                  />
                 ))}
               </ul>
             </motion.div>
@@ -544,7 +602,7 @@ export function Navbar() {
       </motion.nav>
 
       {/* ── Mobile dropdown (Vertical) ────────────────────────────────── */}
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {expanded && (
           <motion.div
             variants={mobileMenuVariants}
@@ -578,6 +636,7 @@ export function Navbar() {
                 const Icon = link.icon;
                 const hasDropdown = !!link.dropdown;
                 const isExpanded = mobileExpand === link.label;
+                const isActive = checkActive(link);
 
                 return (
                   <motion.li
@@ -589,16 +648,33 @@ export function Navbar() {
                     exit="exit"
                   >
                     <div
-                      className={`group flex items-center justify-between cursor-pointer rounded-full transition-colors duration-150 ${(isScrolled || onLightBg) ? 'hover:bg-black/5' : 'hover:bg-white/10'}`}
+                      className={`group flex items-center justify-between cursor-pointer rounded-full transition-all duration-300`}
+                      style={{
+                        background: isActive ? ((isScrolled || onLightBg) 
+                          ? 'linear-gradient(135deg, rgba(8, 28, 54, 0.95), rgba(8, 28, 54, 0.85))' 
+                          : 'linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))') : undefined,
+                        backdropFilter: isActive ? 'blur(12px) saturate(180%)' : undefined,
+                        WebkitBackdropFilter: isActive ? 'blur(12px) saturate(180%)' : undefined,
+                        border: isActive ? ((isScrolled || onLightBg) ? '1px solid rgba(8, 28, 54, 0.2)' : '1px solid rgba(255, 255, 255, 0.3)') : '1px solid transparent',
+                        boxShadow: isActive ? ((isScrolled || onLightBg) ? '0 4px 15px rgba(8, 28, 54, 0.2)' : '0 4px 15px rgba(0, 0, 0, 0.2)') : undefined,
+                      }}
                       onClick={hasDropdown ? () => toggleExpand(link.label) : undefined}
                     >
                       <a
                         href={hasDropdown ? undefined : link.href}
-                        className={`flex items-center gap-4 flex-1 px-4 py-3 transition-colors duration-150 ${(isScrolled || onLightBg) ? 'text-black/80 group-hover:text-black' : 'text-white/80 group-hover:text-white'}`}
+                        className={`flex items-center gap-4 flex-1 px-4 py-3 transition-colors duration-150 ${
+                          isActive
+                            ? 'text-white font-semibold'
+                            : (isScrolled || onLightBg ? 'text-black/80 group-hover:text-black' : 'text-white/80 group-hover:text-white')
+                        }`}
                         style={{ fontSize: '15px' }}
-                        onClick={hasDropdown ? (e) => e.preventDefault() : () => setExpanded(false)}
+                        onClick={hasDropdown ? (e) => e.preventDefault() : undefined}
                       >
-                        <span className={`transition-colors ${(isScrolled || onLightBg) ? 'text-black/40 group-hover:text-black/70' : 'text-white/40 group-hover:text-white/70'}`}><Icon size={18} /></span>
+                        <span className={`transition-colors ${
+                          isActive
+                            ? 'text-white'
+                            : (isScrolled || onLightBg ? 'text-black/40 group-hover:text-black/70' : 'text-white/40 group-hover:text-white/70')
+                        }`}><Icon size={18} /></span>
                         {link.label}
                       </a>
                       {hasDropdown && (

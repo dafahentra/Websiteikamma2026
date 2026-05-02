@@ -46,8 +46,8 @@ export const departmentsData: Record<string, DepartmentData> = {
   'hr-monitoring': {
     slug: 'hr-monitoring',
     name: "HR Monitoring",
-    manager: "Manager Name",
-    viceManager: "Vice Manager Name",
+    manager: "Meila Andini",
+    viceManager: "Nisrinatsani Daffa",
     description: "Biro Human Resource (HR) Monitoring adalah **biro baru** di IKAMMA yang merupakan hasil **pemekaran dari Biro Human Resource**, dengan tugas utama **memastikan** kinerja pengurus serta pelaksanaan program kerja tetap **selaras dengan visi dan misi IKAMMA**.",
     managerImg: DondoFoto, // Fallback for now
     viceManagerImg: AbedFoto,

@@ -161,7 +161,7 @@ export function DepartmentDetail() {
       </section>
 
       {/* 2. Group Photo Section */}
-      <section ref={groupPhotoRef} className="w-full aspect-video overflow-hidden relative mt-0">
+      <section ref={groupPhotoRef} className="w-full aspect-video overflow-hidden relative mt-24 md:mt-40">
         <div className="w-full h-full relative">
           <motion.img
             style={{ y: parallaxYGroup, scale: 1.3 }}

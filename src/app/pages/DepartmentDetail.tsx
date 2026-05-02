@@ -71,7 +71,7 @@ export function DepartmentDetail() {
       <Navbar />
 
       {/* 1. Hero Section: Welcome & Leaders */}
-      <section className="relative pt-40 pb-0 px-6 lg:px-12 flex flex-col items-center min-h-[80vh] md:min-h-screen">
+      <section className="relative pt-52 pb-24 px-6 lg:px-12 flex flex-col items-center min-h-[80vh] md:min-h-screen">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -161,7 +161,7 @@ export function DepartmentDetail() {
       </section>
 
       {/* 2. Group Photo Section */}
-      <section ref={groupPhotoRef} className="w-full aspect-video overflow-hidden relative mt-24 md:mt-40">
+      <section ref={groupPhotoRef} className="w-full aspect-video overflow-hidden relative mt-0">
         <div className="w-full h-full relative">
           <motion.img
             style={{ y: parallaxYGroup, scale: 1.3 }}

@@ -234,13 +234,19 @@ export function Hero() {
   // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
   const contentY = useTransform(progress, [0.50, 0.60, 1.0], [80, 0, -400]);
 
+  // Display control for the pause indicator: completely hide it after the hero phase
+  const indicatorDisplay = useTransform(progress, (v: number) => v < 0.15 ? "flex" : "none");
+
   // Handle video pause via click - uses a native handler on the sticky container
   const handleVideoPauseClick = (e: React.MouseEvent) => {
-    // Only trigger during hero phase (progress < 0.15)
     const currentProgress = rawProgress.get();
-    if (currentProgress > 0.15) return;
     
-    // Don't intercept clicks on the navbar
+    // Logic: 
+    // - If playing: only allow pausing in the hero phase (< 0.15)
+    // - If paused: ALWAYS allow unpausing so the user doesn't get stuck
+    if (isPlaying && currentProgress > 0.15) return;
+    
+    // Don't intercept clicks on navigation or other active UI elements
     const target = e.target as HTMLElement;
     if (target.closest('nav') || target.closest('button') || target.closest('a')) return;
 
@@ -249,7 +255,7 @@ export function Hero() {
         videoRef.current.pause();
         userPaused.current = true;
       } else {
-        videoRef.current.play();
+        videoRef.current.play().catch(() => {});
         userPaused.current = false;
       }
       setIsPlaying(!isPlaying);
@@ -264,14 +270,7 @@ export function Hero() {
         onClickCapture={handleVideoPauseClick}
       >
 
-        {/* Paused indicator overlay */}
-        {!isPlaying && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/20 z-[60] pointer-events-none transition-opacity">
-            <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </div>
-        )}
+        {/* Visual indicators removed to keep the pause feature "secret" as requested */}
 
         {/* === PHASE 5 & 6: Final Background and Content === */}
         {/* Placed lowest in the DOM so it's behind flying photos */}

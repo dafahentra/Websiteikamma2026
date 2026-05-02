@@ -3,9 +3,8 @@ import { motion, useScroll, useTransform, useMotionTemplate, MotionValue, useSpr
 import { ArrowRight } from "lucide-react";
 import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
 
-const HERO_IMAGE =
-  "/src/assets/VidProf.mp4";
-const LOGO = "/src/assets/LogoPutih.svg";
+import HERO_IMAGE from "../../assets/VidProf.mp4";
+import LOGO from "../../assets/LogoPutih.svg";
 
 import { SCRAPBOOK_PHOTOS, getRandomPhotos, ALL_PHOTOS } from "../../assets/photos";
 

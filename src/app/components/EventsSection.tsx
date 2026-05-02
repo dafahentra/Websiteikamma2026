@@ -3,9 +3,10 @@ import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-
 import { ArrowRight } from "lucide-react";
 import LOGO from '../../assets/LogoPutih.svg';
 
-const BACKGROUND_IMAGE = "/src/assets/Screenshot_2026-04-27_at_23.54.12.png";
+import { getRandomPhotos, SCRAPBOOK_PHOTOS } from "../../assets/photos";
+const BACKGROUND_IMAGE = SCRAPBOOK_PHOTOS[0];
 
-import { getRandomPhotos } from "../../assets/photos";
+
 
 const EVENT_PHOTOS = getRandomPhotos(4);
 

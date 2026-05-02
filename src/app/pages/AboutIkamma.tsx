@@ -7,6 +7,11 @@ import LogoPutihRaw from '../../assets/LogoPutih.svg?raw';
 import LogoHitamRaw from '../../assets/LogoHitam.svg?raw';
 import { SCRAPBOOK_PHOTOS } from '../../assets/photos';
 import { departmentsData } from '../../data/departments';
+import BenihSvg from '../../assets/Benih.svg';
+import BatangSvg from '../../assets/Batang.svg';
+import TanganSvg from '../../assets/Tangan.svg';
+import DaunSvg from '../../assets/Daun.svg';
+import BungaSvg from '../../assets/Bunga.svg';
 
 // Extract SVG inner paths
 const svgInner = LogoHitamRaw
@@ -226,35 +231,35 @@ const PHILOSOPHY_DATA = [
     title: "Benih",
     pron: "[Be·nih]",
     desc: "Melambangkan awal mula setiap individu mahasiswa Manajemen yang menapaki langkah pertama di IKAMMA. Dari benih inilah semangat dan potensi mulai tumbuh.",
-    svg: "/src/assets/Benih.svg"
+    svg: BenihSvg
   },
   {
     id: "02",
     title: "Batang",
     pron: "[Ba·tang]",
     desc: "Menunjukkan IKAMMA sebagai penopang dan sumber kekuatan yang membantu setiap anggotanya untuk tumbuh kokoh. Batang menjadi simbol arah, panduan, dan dukungan yang saling menguatkan.",
-    svg: "/src/assets/Batang.svg"
+    svg: BatangSvg
   },
   {
     id: "03",
     title: "Tangan",
     pron: "[Ta·ngan]",
     desc: "Melambangkan kepercayaan, kebersamaan, dan kolaborasi. Tangan adalah perantara pertumbuhan karena dari kerja sama dan kepercayaan, kita mampu menumbuhkan sesuatu yang lebih besar dari diri sendiri.",
-    svg: "/src/assets/Tangan.svg"
+    svg: TanganSvg
   },
   {
     id: "04",
     title: "Daun",
     pron: "[Da·un]",
     desc: "Merepresentasikan perjalanan setiap individu yang mulai berkembang ke arah masing-masing. Setiap daun tumbuh berbeda, namun tetap bersumber dari akar dan batang yang sama.",
-    svg: "/src/assets/Daun.svg"
+    svg: DaunSvg
   },
   {
     id: "05",
     title: "Bunga",
     pron: "[Bu·nga]",
     desc: "Menjadi simbol dari puncak pertumbuhan hasil dari perjalanan panjang yang ditempuh bersama. Bunga adalah wujud tujuan, cita-cita, dan kebermanfaatan yang ingin diwujudkan IKAMMA.",
-    svg: "/src/assets/Bunga.svg"
+    svg: BungaSvg
   }
 ];
 

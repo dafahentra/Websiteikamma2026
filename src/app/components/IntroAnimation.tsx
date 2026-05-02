@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
-const HERO_IMAGE = "/src/assets/Screenshot_2026-04-27_at_23.54.12.png";
-const LOGO = "/src/assets/LogoPutih.svg";
+import { SCRAPBOOK_PHOTOS } from "../../assets/photos";
+const HERO_IMAGE = SCRAPBOOK_PHOTOS[0];
+import LOGO from "../../assets/LogoPutih.svg";
 
 export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<"intro" | "zoomout" | "done">("intro");

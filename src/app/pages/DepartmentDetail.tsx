@@ -71,7 +71,7 @@ export function DepartmentDetail() {
       <Navbar />
 
       {/* 1. Hero Section: Welcome & Leaders */}
-      <section className="relative pt-48 pb-0 px-6 lg:px-12 flex flex-col items-center h-screen overflow-hidden">
+      <section className="relative pt-40 pb-32 px-6 lg:px-12 flex flex-col items-center min-h-[80vh] md:min-h-screen">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -79,7 +79,7 @@ export function DepartmentDetail() {
           className="text-center mb-8"
         >
           <p className="text-[#081C36] font-inter font-medium mb-4 uppercase tracking-widest text-xs">Welcome to</p>
-          <h1 className="text-5xl md:text-[8vw] lg:text-[9vw] font-inter tracking-tighter max-w-[95vw] text-[#081C36] leading-[0.85] text-center" style={{ fontWeight: 800 }}>
+          <h1 className="text-4xl md:text-[6vw] lg:text-[6.5vw] font-inter tracking-tighter max-w-[90vw] text-[#081C36] leading-[0.85] text-center" style={{ fontWeight: 800 }}>
             {department.name}
           </h1>
         </motion.div>
@@ -161,7 +161,7 @@ export function DepartmentDetail() {
       </section>
 
       {/* 2. Group Photo Section */}
-      <section ref={groupPhotoRef} className="w-full aspect-video overflow-hidden relative mt-0">
+      <section ref={groupPhotoRef} className="w-full aspect-video overflow-hidden relative mt-[-32px]">
         <div className="w-full h-full relative">
           <motion.img
             style={{ y: parallaxYGroup, scale: 1.3 }}

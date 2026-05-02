@@ -145,7 +145,7 @@ export function EventsPage() {
           </span>
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8">
           {ONGOING_EVENTS.map((event, i) => (
             <motion.div
               key={event.id}
@@ -155,8 +155,8 @@ export function EventsPage() {
               transition={{ duration: 0.6, delay: i * 0.12 }}
               className="flex flex-col group cursor-pointer"
             >
-              {/* Image Container — styled like UpcomingEventsSection */}
-              <div className="relative w-full aspect-[4/3] overflow-hidden mb-6 shadow-lg group-hover:shadow-xl group-hover:shadow-[#081C36]/10 transition-shadow duration-300">
+              {/* Image Container */}
+              <div className="relative w-full aspect-[4/3] overflow-hidden mb-3 md:mb-6 shadow-lg group-hover:shadow-xl group-hover:shadow-[#081C36]/10 transition-shadow duration-300">
                 <img
                   src={event.image}
                   alt={event.title}
@@ -166,36 +166,36 @@ export function EventsPage() {
 
                 {/* Status Badge */}
                 {event.status === 'ongoing' ? (
-                  <div className="absolute top-4 left-4 flex items-center gap-2 bg-[#081C36] px-3 py-1.5 rounded-full">
-                    <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                    <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">ONGOING</span>
+                  <div className="absolute top-2 left-2 md:top-4 md:left-4 flex items-center gap-1.5 md:gap-2 bg-[#081C36] px-2 py-1 md:px-3 md:py-1.5 rounded-full">
+                    <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full animate-pulse" />
+                    <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">ONGOING</span>
                   </div>
                 ) : (
-                  <div className="absolute top-4 left-4 bg-[#081C36]/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#081C36]/15">
-                    <span className="text-white text-xs font-inter font-medium tracking-wider uppercase">Upcoming</span>
+                  <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-[#081C36]/10 backdrop-blur-md px-2 py-1 md:px-3 md:py-1.5 rounded-full border border-[#081C36]/15">
+                    <span className="text-white text-[10px] md:text-xs font-inter font-medium tracking-wider uppercase">Upcoming</span>
                   </div>
                 )}
 
                 {/* Date Badge */}
-                <div className="absolute bottom-0 left-0 bg-[#081C36]/10 backdrop-blur-md flex flex-col items-center justify-center px-6 py-3 border-t border-r border-[#081C36]/20">
-                  <span className="text-2xl font-bold text-white leading-none font-inter">{event.date}</span>
-                  <span className="text-sm font-medium text-[#081C36]/80 mt-1 font-inter">{event.monthYear}</span>
+                <div className="absolute bottom-0 left-0 bg-[#081C36]/10 backdrop-blur-md flex flex-col items-center justify-center px-3 py-1.5 md:px-6 md:py-3 border-t border-r border-[#081C36]/20">
+                  <span className="text-lg md:text-2xl font-bold text-white leading-none font-inter">{event.date}</span>
+                  <span className="text-[10px] md:text-sm font-medium text-[#081C36]/80 mt-0.5 md:mt-1 font-inter">{event.monthYear}</span>
                 </div>
               </div>
 
               {/* Content */}
-              <h3 className="text-xl md:text-2xl font-inter font-semibold mb-4 line-clamp-2 min-h-[56px] group-hover:text-[#081C36] transition-colors duration-300">
+              <h3 className="text-sm md:text-2xl font-inter font-semibold mb-2 md:mb-4 line-clamp-2 min-h-[36px] md:min-h-[56px] group-hover:text-[#081C36] transition-colors duration-300">
                 {event.title}
               </h3>
 
-              <div className="flex flex-col gap-2 mt-auto">
-                <div className="flex items-center gap-2 text-[#081C36]/50">
-                  <MapPin size={16} className="text-[#081C36]" />
-                  <span className="text-sm font-inter">{event.location}</span>
+              <div className="flex flex-col gap-1 md:gap-2 mt-auto">
+                <div className="flex items-center gap-1.5 md:gap-2 text-[#081C36]/50">
+                  <MapPin size={12} className="text-[#081C36] md:w-4 md:h-4" />
+                  <span className="text-xs md:text-sm font-inter truncate">{event.location}</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#081C36]/50">
-                  <Clock size={16} className="text-[#081C36]" />
-                  <span className="text-sm font-inter">{event.time}</span>
+                <div className="flex items-center gap-1.5 md:gap-2 text-[#081C36]/50">
+                  <Clock size={12} className="text-[#081C36] md:w-4 md:h-4" />
+                  <span className="text-xs md:text-sm font-inter truncate">{event.time}</span>
                 </div>
               </div>
             </motion.div>
@@ -218,7 +218,7 @@ export function EventsPage() {
           </span>
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8">
           {PAST_EVENTS.map((event, i) => (
             <motion.article
               key={event.id}
@@ -229,7 +229,7 @@ export function EventsPage() {
               className="group cursor-pointer flex flex-col"
             >
               {/* Image */}
-              <div className="w-full aspect-[4/3] overflow-hidden mb-5 bg-[#081C36]/[0.03] relative">
+              <div className="w-full aspect-[4/3] overflow-hidden mb-3 md:mb-5 bg-[#081C36]/[0.03] relative">
                 <img
                   src={event.image}
                   alt={event.title}
@@ -239,19 +239,19 @@ export function EventsPage() {
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-inter font-bold mb-3 group-hover:text-[#081C36] transition-colors duration-300 line-clamp-2">
+              <h3 className="text-sm md:text-xl font-inter font-bold mb-1.5 md:mb-3 group-hover:text-[#081C36] transition-colors duration-300 line-clamp-2">
                 {event.title}
               </h3>
 
               {/* Meta */}
-              <div className="mt-auto flex items-center gap-4 text-[#081C36]/40 text-sm font-inter">
-                <div className="flex items-center gap-1.5">
-                  <CalendarDays size={14} />
+              <div className="mt-auto flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-4 text-[#081C36]/40 text-xs md:text-sm font-inter">
+                <div className="flex items-center gap-1 md:gap-1.5">
+                  <CalendarDays size={12} className="md:w-3.5 md:h-3.5" />
                   <span>{event.date}</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <MapPin size={14} />
-                  <span>{event.location}</span>
+                <div className="flex items-center gap-1 md:gap-1.5">
+                  <MapPin size={12} className="md:w-3.5 md:h-3.5" />
+                  <span className="truncate">{event.location}</span>
                 </div>
               </div>
             </motion.article>

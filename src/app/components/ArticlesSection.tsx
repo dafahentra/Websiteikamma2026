@@ -31,10 +31,10 @@ export function ArticlesSection() {
   return (
     <section className="relative w-full py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
-        
+
         {/* Header */}
         <div className="flex flex-col mb-16">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -60,9 +60,9 @@ export function ArticlesSection() {
             >
               {/* Image */}
               <div className="w-full aspect-[4/3] bg-[#f0f2f5] mb-6 overflow-hidden rounded-2xl md:rounded-none relative">
-                <img 
-                  src={article.image} 
-                  alt="" 
+                <img
+                  src={article.image}
+                  alt=""
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -82,7 +82,7 @@ export function ArticlesSection() {
         </div>
 
         {/* See More Button */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

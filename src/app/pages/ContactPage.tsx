@@ -189,13 +189,13 @@ export function ContactPage() {
               transition={{ duration: 0.4 }}
             >
               {/* ── Sector Seven-inspired card layout ──────────── */}
-              <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] rounded-3xl overflow-hidden shadow-2xl shadow-black/30 min-h-[600px]">
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] rounded-3xl overflow-hidden shadow-xl shadow-black/10 min-h-[600px] w-full box-border">
 
                 {/* ── Left: Dark Info Card ───────────────────────── */}
                 <div className="relative bg-[#f5f7fa] p-6 sm:p-8 md:p-14 flex flex-col justify-between overflow-hidden">
-                  {/* Decorative circles */}
-                  <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#081C36]/5 rounded-full blur-xl pointer-events-none" />
-                  <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#081C36]/3 rounded-full pointer-events-none" />
+                  {/* Decorative circles - kept within bounds */}
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-[#081C36]/5 rounded-full blur-xl pointer-events-none translate-x-1/4 -translate-y-1/4" />
+                  <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#081C36]/3 rounded-full pointer-events-none translate-x-1/3 translate-y-1/3" />
 
                   <div className="relative z-10">
                     <h2 className="text-3xl md:text-4xl font-inter font-bold mb-4">
@@ -258,7 +258,7 @@ export function ContactPage() {
                 </div>
 
                 {/* ── Right: Form (light bg) ─────────────────────── */}
-                <div className="bg-white p-6 sm:p-8 md:p-14">
+                <div className="bg-white p-6 sm:p-8 md:p-14 overflow-hidden">
                   <form onSubmit={handleSubmit} className="space-y-6 h-full flex flex-col">
 
                     {submitted && (
@@ -411,7 +411,7 @@ export function ContactPage() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-full">
                 {EVENT_CONTACTS.map((event, i) => (
                   <div
                     key={event.label}

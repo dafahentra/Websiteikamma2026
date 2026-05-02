@@ -38,10 +38,10 @@ export function UpcomingEventsSection() {
   return (
     <section className="relative w-full py-24 bg-white text-[#081C36]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
-        
+
         {/* Header */}
         <div className="flex flex-col items-end mb-16">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -76,7 +76,7 @@ export function UpcomingEventsSection() {
                   />
                   <div className="absolute inset-0 bg-black/10 transition-colors duration-300 group-hover:bg-black/20"></div>
                 </div>
-                
+
                 {/* Date Overlay */}
                 <div className="absolute bottom-0 left-0 bg-white/20 backdrop-blur-md rounded-tr-2xl flex flex-col items-center justify-center px-6 py-3 border-t border-r border-white/30">
                   <span className="text-2xl font-bold text-white leading-none">{event.date}</span>
@@ -88,7 +88,7 @@ export function UpcomingEventsSection() {
               <h3 className="text-2xl font-semibold text-[#081C36] mb-4 line-clamp-2 min-h-[64px]">
                 {event.title}
               </h3>
-              
+
               <div className="flex flex-col gap-2 mt-auto">
                 <div className="flex items-center gap-2 text-[#081C36]/60">
                   <MapPin size={18} className="text-[#081C36]" />

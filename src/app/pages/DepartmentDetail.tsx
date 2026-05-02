@@ -216,10 +216,10 @@ export function DepartmentDetail() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl flex items-center gap-4 whitespace-nowrap mb-8">
-              <div className="w-10 h-1.5 md:w-12 md:h-2 bg-[#081C36] rounded-full" />
+            <h2 className="text-3xl md:text-4xl lg:text-5xl flex items-center gap-4 mb-8">
+              <div className="w-10 h-1.5 md:w-12 md:h-2 bg-[#081C36] rounded-full shrink-0" />
               <span>
-                <span className="font-caslon-italic font-bold">About</span> <span className="font-inter font-bold">{department.name.split(' ').slice(0, 2).join(' ')}</span>
+                <span className="font-caslon-italic font-bold">About</span> <span className="font-inter font-bold">{department.name}</span>
               </span>
             </h2>
             <p className="text-[#081C36]/70 text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl text-justify md:text-left">

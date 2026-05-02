@@ -279,8 +279,8 @@ export function AboutIkamma() {
   const itemsPerSlide = 4;
   const firstSlideItems = 3;
   const totalSlides = 1 + Math.ceil((allTeamMembers.length - firstSlideItems) / itemsPerSlide);
-  
-  const currentMembers = currentSlide === 0 
+
+  const currentMembers = currentSlide === 0
     ? allTeamMembers.slice(0, firstSlideItems)
     : allTeamMembers.slice(firstSlideItems + (currentSlide - 1) * itemsPerSlide, firstSlideItems + currentSlide * itemsPerSlide);
 
@@ -296,7 +296,7 @@ export function AboutIkamma() {
 
   const renderTeamMember = (member: { name: string; role: string; img?: string }, i: number, isSlider = false) => {
     let wrapperClass = "flex flex-col items-center text-center shrink-0 w-44 md:w-56";
-    
+
     if (isSlider && currentSlide === 0) {
       if (member.role === "Chairman") {
         wrapperClass = "flex flex-col items-center text-center shrink-0 w-full md:w-56 order-1 md:order-2";
@@ -666,8 +666,8 @@ export function AboutIkamma() {
 
           <div className="w-[100vw] self-center flex flex-col border-t border-[#081C36]/15 mt-8 relative">
             {[
-              { name: "Human Resources Monitoring", type: "Bureau", href: "/departemen/hr-monitoring" },
               { name: "Human Resources Birdept Buddy", type: "Bureau", href: "/departemen/hrbb" },
+              { name: "Human Resources Monitoring", type: "Bureau", href: "/departemen/hr-monitoring" },
               { name: "Administration & Finance", type: "Bureau", href: "/departemen/advance" },
               { name: "Marketing & Media", type: "Bureau", href: "/departemen/mm" },
               { name: "Internal", type: "Department", href: "/departemen/internal" },

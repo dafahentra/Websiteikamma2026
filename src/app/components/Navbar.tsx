@@ -50,8 +50,8 @@ const links: NavLink[] = [
       {
         label: 'Bureau',
         subDropdown: [
-          { label: 'HR Monitoring', href: '/departemen/hr-monitoring' },
           { label: 'HR Birdept Buddy', href: '/departemen/hrbb' },
+          { label: 'HR Monitoring', href: '/departemen/hr-monitoring' },
           { label: 'Marketing & Media', href: '/departemen/mm' },
           { label: 'Administration & Finance', href: '/departemen/advance' },
         ]

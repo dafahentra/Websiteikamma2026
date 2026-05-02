@@ -7,11 +7,13 @@ import LogoPutihRaw from '../../assets/LogoPutih.svg?raw';
 import LogoHitamRaw from '../../assets/LogoHitam.svg?raw';
 import { SCRAPBOOK_PHOTOS } from '../../assets/photos';
 import { departmentsData } from '../../data/departments';
+import { CORE_LEADERS, ORGANIZATION_LIST } from '../../data/team';
 import BenihSvg from '../../assets/Benih.svg';
 import BatangSvg from '../../assets/Batang.svg';
 import TanganSvg from '../../assets/Tangan.svg';
 import DaunSvg from '../../assets/Daun.svg';
 import BungaSvg from '../../assets/Bunga.svg';
+import { Users, Briefcase, ShieldCheck, GraduationCap } from 'lucide-react';
 
 // Extract SVG inner paths
 const svgInner = LogoHitamRaw
@@ -267,13 +269,11 @@ export function AboutIkamma() {
   const [activePhilo, setActivePhilo] = useState(-1);
   const [[currentSlide, direction], setPage] = useState([0, 0]);
 
-  const allTeamMembers: { name: string; role: string; img?: string }[] = [
-    { name: "Dondo D.D.", role: "Vice Chairman", img: departmentsData['hr-monitoring'].managerImg },
-    { name: "Dondo D.D.", role: "Chairman", img: departmentsData['hrbb'].managerImg },
-    { name: "Dondo D.D.", role: "Vice Chairman", img: departmentsData['internal'].managerImg },
+  const allTeamMembers = [
+    ...CORE_LEADERS,
     ...Object.values(departmentsData).flatMap((dept) => [
-      { name: dept.manager, role: `${dept.name}\nManager`, img: dept.managerImg },
-      { name: dept.viceManager, role: `${dept.name}\nVice Manager`, img: dept.viceManagerImg },
+      { name: dept.manager, role: `Manager\n${dept.name}`, img: dept.managerImg },
+      { name: dept.viceManager, role: `Vice Manager\n${dept.name}`, img: dept.viceManagerImg },
     ])
   ];
   const itemsPerSlide = 4;
@@ -665,17 +665,7 @@ export function AboutIkamma() {
           </div>
 
           <div className="w-[100vw] self-center flex flex-col border-t border-[#081C36]/15 mt-8 relative">
-            {[
-              { name: "Human Resources Birdept Buddy", type: "Bureau", href: "/departemen/hrbb" },
-              { name: "Human Resources Monitoring", type: "Bureau", href: "/departemen/hr-monitoring" },
-              { name: "Administration & Finance", type: "Bureau", href: "/departemen/advance" },
-              { name: "Marketing & Media", type: "Bureau", href: "/departemen/mm" },
-              { name: "Internal", type: "Department", href: "/departemen/internal" },
-              { name: "External", type: "Department", href: "/departemen/external" },
-              { name: "Intellectual & Development", type: "Department", href: "/departemen/indev" },
-              { name: "Entrepreneur", type: "Department", href: "/departemen/entre" },
-              { name: "Sport and Art Association", type: "Department", href: "/departemen/sparta" }
-            ].map((item, i) => (
+            {ORGANIZATION_LIST.map((item, i) => (
               <HoverImageRow key={i} item={item} index={i} photo={SCRAPBOOK_PHOTOS[i % SCRAPBOOK_PHOTOS.length]} />
             ))}
           </div>

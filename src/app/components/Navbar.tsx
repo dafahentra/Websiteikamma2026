@@ -182,11 +182,15 @@ function DesktopDropdownItem({ item, isLight }: { item: DropdownItem; isLight: b
             transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
             className="absolute left-full top-0 ml-1 min-w-[150px] rounded-2xl"
             style={{
-              background: isLight ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.05)',
-              backdropFilter: 'blur(24px) saturate(150%)',
-              WebkitBackdropFilter: 'blur(24px) saturate(150%)',
-              border: isLight ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.15)',
-              boxShadow: isLight ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.05)',
+              background: isLight 
+                ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65))' 
+                : 'linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08))',
+              backdropFilter: 'blur(32px) saturate(180%) contrast(105%)',
+              WebkitBackdropFilter: 'blur(32px) saturate(180%) contrast(105%)',
+              border: isLight ? '1px solid rgba(255, 255, 255, 0.4)' : '1px solid rgba(255, 255, 255, 0.15)',
+              boxShadow: isLight 
+                ? '0 12px 40px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.5)' 
+                : '0 12px 40px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
             }}
           >
             <ul className="m-0 list-none py-2">
@@ -251,11 +255,15 @@ function DesktopDropdown({
             top: coords.top,
             left: coords.left,
             zIndex: 9999,
-            background: isLight ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(24px) saturate(150%)',
-            WebkitBackdropFilter: 'blur(24px) saturate(150%)',
-            border: isLight ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.15)',
-            boxShadow: isLight ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.05)',
+            background: isLight 
+              ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65))' 
+              : 'linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08))',
+            backdropFilter: 'blur(40px) saturate(180%) contrast(105%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%) contrast(105%)',
+            border: isLight ? '1px solid rgba(255, 255, 255, 0.4)' : '1px solid rgba(255, 255, 255, 0.15)',
+            boxShadow: isLight 
+              ? '0 12px 40px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.5)' 
+              : '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
           }}
         >
           <ul className="m-0 list-none py-2">
@@ -480,18 +488,29 @@ export function Navbar() {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       {/* ── Desktop & Tablet Liquid Glass Pill ─────────────────────────────────── */}
-      <nav
-        className="flex items-center h-[56px] pl-4 pr-3 rounded-full pointer-events-auto transition-colors duration-300"
-        style={{
-          background: (isScrolled || onLightBg) ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.05)',
-          border: (isScrolled || onLightBg) ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.15)',
-          boxShadow: (isScrolled || onLightBg) ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.05)',
-          backdropFilter: 'blur(24px) saturate(150%)',
-          WebkitBackdropFilter: 'blur(24px) saturate(150%)',
+      <motion.nav
+        className="flex items-center h-[56px] pl-4 pr-3 rounded-full pointer-events-auto"
+        animate={{
+          background: (isScrolled || onLightBg) 
+            ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6))' 
+            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05))',
+          border: (isScrolled || onLightBg) ? '1px solid rgba(255, 255, 255, 0.4)' : '1px solid rgba(255, 255, 255, 0.15)',
+          boxShadow: (isScrolled || onLightBg) 
+            ? '0 8px 32px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.4)' 
+            : '0 8px 32px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(32px) saturate(180%) contrast(105%)',
+          WebkitBackdropFilter: 'blur(32px) saturate(180%) contrast(105%)',
         }}
+        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
       >
         {/* Always visible: Logo and Burger */}
-        <div className={`flex items-center gap-4 transition-[filter] duration-300 ${(isScrolled || onLightBg) ? 'invert' : ''}`}>
+        <motion.div 
+          className="flex items-center gap-4"
+          animate={{
+            filter: (isScrolled || onLightBg) ? 'invert(1)' : 'invert(0)',
+          }}
+          transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+        >
           <a href="/" className="flex items-center justify-center h-full">
             <IkammaLogo className="h-6 md:h-7 w-auto object-contain" />
           </a>
@@ -503,7 +522,7 @@ export function Navbar() {
           >
             <MenuIcon isOpen={expanded} />
           </button>
-        </div>
+        </motion.div>
 
         {/* Expanded Links (Desktop) - Memanjang ke kanan */}
         <AnimatePresence>
@@ -523,7 +542,7 @@ export function Navbar() {
             </motion.div>
           )}
         </AnimatePresence>
-      </nav>
+      </motion.nav>
 
       {/* ── Mobile dropdown (Vertical) ────────────────────────────────── */}
       <AnimatePresence>
@@ -533,21 +552,26 @@ export function Navbar() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            style={{
+            animate={{
               position: 'absolute',
               top: 'calc(100% + 16px)',
               left: '50%',
               width: 'calc(100vw - 48px)', // Responsive width
               maxWidth: '350px',
               transformOrigin: 'top left',
-              background: (isScrolled || onLightBg) ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.05)',
-              backdropFilter: 'blur(24px) saturate(150%)',
-              WebkitBackdropFilter: 'blur(24px) saturate(150%)',
-              border: (isScrolled || onLightBg) ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.15)',
-              boxShadow: (isScrolled || onLightBg) ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.05)',
+              background: (isScrolled || onLightBg) 
+                ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.75))' 
+                : 'linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08))',
+              backdropFilter: 'blur(32px) saturate(180%) contrast(105%)',
+              WebkitBackdropFilter: 'blur(32px) saturate(180%) contrast(105%)',
+              border: (isScrolled || onLightBg) ? '1px solid rgba(255, 255, 255, 0.4)' : '1px solid rgba(255, 255, 255, 0.15)',
+              boxShadow: (isScrolled || onLightBg) 
+                ? '0 12px 40px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.5)' 
+                : '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
               borderRadius: '24px',
               overflow: 'hidden',
             }}
+            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
             className="lg:hidden"
           >
             <ul className="p-3 flex flex-col gap-1 m-0 list-none">

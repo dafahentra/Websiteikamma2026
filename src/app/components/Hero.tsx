@@ -97,6 +97,7 @@ export function Hero() {
   const [containerTop, setContainerTop] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const userPaused = useRef(false); // Track if user manually paused
 
   useEffect(() => {
     function measure() {
@@ -126,18 +127,19 @@ export function Hero() {
   });
 
   // Auto-pause video when scrolled out of view to save performance
+  // BUT respect the user's manual pause decision
   useEffect(() => {
     const unsubscribe = progress.on("change", (latest) => {
-      if (videoRef.current) {
-        if (latest > 0.4 && isPlaying) {
+      if (videoRef.current && !userPaused.current) {
+        if (latest > 0.4) {
           videoRef.current.pause();
-        } else if (latest <= 0.4 && isPlaying) {
+        } else {
           videoRef.current.play().catch(() => {});
         }
       }
     });
     return () => unsubscribe();
-  }, [progress, isPlaying]);
+  }, [progress]);
 
   /* === PHASE 1: Hero Zoom Out === */
   // 0.00 to 0.10
@@ -232,12 +234,44 @@ export function Hero() {
   // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
   const contentY = useTransform(progress, [0.50, 0.60, 1.0], [80, 0, -400]);
 
+  // Handle video pause via click - uses a native handler on the sticky container
+  const handleVideoPauseClick = (e: React.MouseEvent) => {
+    // Only trigger during hero phase (progress < 0.15)
+    const currentProgress = rawProgress.get();
+    if (currentProgress > 0.15) return;
+    
+    // Don't intercept clicks on the navbar
+    const target = e.target as HTMLElement;
+    if (target.closest('nav') || target.closest('button') || target.closest('a')) return;
+
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        userPaused.current = true;
+      } else {
+        videoRef.current.play();
+        userPaused.current = false;
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return (
     <div ref={containerRef} className="relative w-full" style={{ height: SECTION_HEIGHT_PX }}>
       <div
         className="sticky top-0 w-full h-screen overflow-hidden bg-[#0C2340]"
         style={{ perspective: "1000px" }}
+        onClickCapture={handleVideoPauseClick}
       >
+
+        {/* Paused indicator overlay */}
+        {!isPlaying && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/20 z-[60] pointer-events-none transition-opacity">
+            <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        )}
 
         {/* === PHASE 5 & 6: Final Background and Content === */}
         {/* Placed lowest in the DOM so it's behind flying photos */}
@@ -388,27 +422,6 @@ export function Hero() {
               className="absolute inset-0 bg-white"
               style={{ opacity: whiteLayerOpacity }}
             />
-          </div>
-
-          {/* Click Overlay - Above SVG mask (z-10) so clicks work */}
-          <div 
-            className="absolute inset-0 z-20 cursor-default pointer-events-auto"
-            onClick={() => {
-              if (videoRef.current) {
-                if (isPlaying) videoRef.current.pause();
-                else videoRef.current.play();
-                setIsPlaying(!isPlaying);
-              }
-            }}
-          >
-            {/* Status indicator when paused */}
-            {!isPlaying && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity">
-                <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* SVG Mask Layer */}

@@ -5,7 +5,7 @@ import { MapPin, Clock, CalendarDays } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
-import { getRandomPhotos } from '../../assets/photos';
+import { EVENTS_PAGE_HERO, EVENTS_PAGE_ONGOING, EVENTS_PAGE_PAST } from '../../assets/photos';
 
 /* ── Sample Data ─────────────────────────────────────────────────── */
 const ONGOING_EVENTS = [
@@ -86,11 +86,9 @@ const PAST_EVENTS = [
   },
 ];
 
-// Fill with random local photos
-const randomOngoing = getRandomPhotos(3);
-ONGOING_EVENTS.forEach((ev, i) => { ev.image = randomOngoing[i]; });
-const randomPast = getRandomPhotos(6);
-PAST_EVENTS.forEach((ev, i) => { ev.image = randomPast[i]; });
+// Assign photos from the registry
+ONGOING_EVENTS.forEach((ev, i) => { ev.image = EVENTS_PAGE_ONGOING[i]; });
+PAST_EVENTS.forEach((ev, i) => { ev.image = EVENTS_PAGE_PAST[i]; });
 
 export function EventsPage() {
   const { pathname } = useLocation();
@@ -108,7 +106,7 @@ export function EventsPage() {
         {/* Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
-            src={getRandomPhotos(1)[0]} 
+            src={EVENTS_PAGE_HERO} 
             alt="Hero Background" 
             className="w-full h-full object-cover opacity-30 grayscale"
           />

@@ -5,7 +5,7 @@ import { ChevronRight, ChevronLeft, Clock, User } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
-import { getRandomPhotos } from '../../assets/photos';
+import { ARTICLES_PAGE_PHOTOS, ARTICLES_PAGE_HERO } from '../../assets/photos';
 
 /* ── Sample Data ─────────────────────────────────────────────────── */
 const CATEGORIES = ['All Topics', 'IKAMMA Insights', 'Campus Life', 'Career', 'Alumni'];
@@ -73,9 +73,8 @@ const ARTICLES = [
   },
 ];
 
-// Fill with random local photos
-const randomPhotos = getRandomPhotos(6);
-ARTICLES.forEach((art, i) => { art.image = randomPhotos[i]; });
+// Assign photos from the registry
+ARTICLES.forEach((art, i) => { art.image = ARTICLES_PAGE_PHOTOS[i]; });
 
 export function ArticlesPage() {
   const { pathname } = useLocation();
@@ -139,7 +138,7 @@ export function ArticlesPage() {
         {/* Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
-            src={getRandomPhotos(1)[0]} 
+            src={ARTICLES_PAGE_HERO} 
             alt="Hero Background" 
             className="w-full h-full object-cover opacity-30 grayscale"
           />

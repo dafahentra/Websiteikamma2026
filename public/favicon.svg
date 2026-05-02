@@ -1,7 +1,6 @@
 <svg width="749" height="538" viewBox="0 0 749 538" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
-    @keyframes colorCycle {
-      0%, 100% { fill: #FFFFFF; }
+    @keyframes colorCycle { 0%, 100% { fill: #FFFFFF; } 50% { fill: #101C2D; } }
       50% { fill: #000000; }
     }
     .animated-logo {

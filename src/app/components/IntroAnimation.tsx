@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
-import { SCRAPBOOK_PHOTOS } from "../../assets/photos";
-const HERO_IMAGE = SCRAPBOOK_PHOTOS[0];
+import { HERO_IMAGE } from "../../assets/photos";
 import LOGO from "../../assets/LogoPutih.svg";
 
 export function IntroAnimation({ onComplete }: { onComplete: () => void }) {

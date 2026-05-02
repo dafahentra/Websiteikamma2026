@@ -3,11 +3,9 @@ import { motion, useScroll, useTransform, MotionValue } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
 
-import { SCRAPBOOK_PHOTOS, getRandomPhotos, ALL_PHOTOS } from '../../assets/photos';
+import { SCRAPBOOK_PHOTOS, ABOUT_BACKGROUND } from '../../assets/photos';
 
-// You can change the index here to pick a specific photo for the background
-// For example: ALL_PHOTOS[0] or ALL_PHOTOS[ALL_PHOTOS.length - 1]
-const BACKGROUND_IMAGE = ALL_PHOTOS.find(p => p.includes('FotoInt37.jpg')) || getRandomPhotos(1)[0];
+const BACKGROUND_IMAGE = ABOUT_BACKGROUND;
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { getRandomPhotos } from "../../assets/photos";
+import { ARTICLE_PHOTOS } from "../../assets/photos";
 
 const ARTICLES = [
   {
@@ -23,9 +23,8 @@ const ARTICLES = [
   }
 ];
 
-// Fill with random local photos
-const randomPhotos = getRandomPhotos(3);
-ARTICLES.forEach((art, i) => { art.image = randomPhotos[i]; });
+// Assign photos from the registry
+ARTICLES.forEach((art, i) => { art.image = ARTICLE_PHOTOS[i]; });
 
 export function ArticlesSection() {
   return (

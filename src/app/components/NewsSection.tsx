@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { getRandomPhotos } from '../../assets/photos';
+import { NEWS_PLACEHOLDER_PHOTOS, NEWS_BG } from '../../assets/photos';
 
 // ── Types ──────────────────────────────────────────
 interface IGPost {
@@ -46,14 +46,13 @@ function igPostToNewsItem(post: IGPost): NewsItem {
   };
 }
 
-// ── Fallback placeholder data (used when API is unavailable) ──
-const randomPlaceholders = getRandomPhotos(12);
+// Fallback placeholder data (used when API is unavailable)
 const PLACEHOLDER_ITEMS: NewsItem[] = Array.from({ length: 12 }, (_, i) => ({
   id: String(i + 1),
   day: '17',
   month: 'Apr',
   year: '2026',
-  image: randomPlaceholders[i],
+  image: NEWS_PLACEHOLDER_PHOTOS[i],
   permalink: 'https://www.instagram.com/ikamma_ugm/',
 }));
 
@@ -100,7 +99,7 @@ function NewsCard({ item }: { item: NewsItem }) {
 export function NewsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [items, setItems] = useState<NewsItem[]>(PLACEHOLDER_ITEMS);
-  const [bgImage] = useState(() => getRandomPhotos(1)[0]);
+  const [bgImage] = useState(() => NEWS_BG);
 
   // Fetch IG posts from Netlify function
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { MapPin, Clock } from "lucide-react";
 
-import { getRandomPhotos } from "../../assets/photos";
+import { UPCOMING_PHOTOS } from "../../assets/photos";
 
 const UPCOMING_EVENTS = [
   {
@@ -30,9 +30,8 @@ const UPCOMING_EVENTS = [
   }
 ];
 
-// Fill with random local photos
-const randomPhotos = getRandomPhotos(3);
-UPCOMING_EVENTS.forEach((ev, i) => { ev.image = randomPhotos[i]; });
+// Assign photos from the registry
+UPCOMING_EVENTS.forEach((ev, i) => { ev.image = UPCOMING_PHOTOS[i]; });
 
 export function UpcomingEventsSection() {
   return (

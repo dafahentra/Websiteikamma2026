@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { useRef } from 'react';
 import { useInView } from 'motion/react';
 
-import { getRandomPhotos } from '../../assets/photos';
+import { PROGRAM_PHOTOS } from '../../assets/photos';
 
 const programs = [
   {
@@ -50,9 +50,8 @@ const programs = [
   },
 ];
 
-// Fill with random local photos
-const randomPhotos = getRandomPhotos(6);
-programs.forEach((p, i) => { p.image = randomPhotos[i]; });
+// Assign photos from the registry
+programs.forEach((p, i) => { p.image = PROGRAM_PHOTOS[i]; });
 
 const categoryColors: Record<string, string> = {
   Kepemimpinan: 'bg-blue-600',

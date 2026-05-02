@@ -5,6 +5,7 @@ import {
   AnimatePresence,
   useScroll,
   useMotionValueEvent,
+  Variants,
 } from 'motion/react';
 import { Home, Info, BookOpen, CalendarDays, Phone, ChevronDown, ChevronRight } from 'lucide-react';
 import LogoPutihRaw from '../../assets/LogoPutih.svg?raw';
@@ -105,16 +106,28 @@ const links: NavLink[] = [
 ];
 
 /* ── Mobile item variants ───────────────────────────────────────── */
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: -6 },
   visible: (i: number) => ({
     opacity: 1, y: 0,
-    transition: { delay: i * 0.045, duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] as const },
+    transition: { delay: i * 0.045, duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] },
   }),
   exit: (i: number) => ({
     opacity: 0, y: -4,
-    transition: { delay: i * 0.015, duration: 0.16, ease: [0.4, 0, 1, 1] as const },
+    transition: { duration: 0.16, ease: [0.4, 0, 1, 1] },
   }),
+};
+
+const mobileMenuVariants: Variants = {
+  hidden: { opacity: 0, scaleY: 0.9, y: -10, x: "-50%" },
+  visible: { 
+    opacity: 1, scaleY: 1, y: 0, x: "-50%",
+    transition: { duration: 0.32, ease: [0.32, 0.72, 0, 1] }
+  },
+  exit: { 
+    opacity: 0, scaleY: 0.9, y: -10, x: "-50%",
+    transition: { duration: 0.25, ease: [0.32, 0.72, 0, 1], when: "afterChildren" }
+  }
 };
 
 /* ── Hamburger → X ───────────────────────────────────────────────── */
@@ -135,7 +148,7 @@ function MenuIcon({ isOpen }: { isOpen: boolean }) {
 }
 
 /* ── Desktop Dropdown Item (supports nested) ───────────────────── */
-function DesktopDropdownItem({ item }: { item: DropdownItem }) {
+function DesktopDropdownItem({ item, isLight }: { item: DropdownItem; isLight: boolean }) {
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -152,7 +165,7 @@ function DesktopDropdownItem({ item }: { item: DropdownItem }) {
     >
       <a
         href={hasSub ? undefined : item.href}
-        className="flex items-center justify-between px-5 py-2.5 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-150 whitespace-nowrap"
+        className={`flex items-center justify-between px-5 py-2.5 transition-all duration-150 whitespace-nowrap ${isLight ? 'text-black/70 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
         style={{ fontSize: '13.5px', textDecoration: 'none', cursor: hasSub ? 'default' : 'pointer' }}
         onClick={hasSub ? (e) => e.preventDefault() : undefined}
       >
@@ -169,11 +182,11 @@ function DesktopDropdownItem({ item }: { item: DropdownItem }) {
             transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
             className="absolute left-full top-0 ml-1 min-w-[150px] rounded-2xl"
             style={{
-              background: 'rgba(12, 35, 64, 0.85)',
-              backdropFilter: 'blur(30px) saturate(150%)',
-              WebkitBackdropFilter: 'blur(30px) saturate(150%)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+              background: isLight ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(24px) saturate(150%)',
+              WebkitBackdropFilter: 'blur(24px) saturate(150%)',
+              border: isLight ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.15)',
+              boxShadow: isLight ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.05)',
             }}
           >
             <ul className="m-0 list-none py-2">
@@ -181,7 +194,7 @@ function DesktopDropdownItem({ item }: { item: DropdownItem }) {
                 <li key={sub.href}>
                   <a
                     href={sub.href}
-                    className="block px-5 py-2.5 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-150 whitespace-nowrap"
+                    className={`block px-5 py-2.5 transition-all duration-150 whitespace-nowrap ${isLight ? 'text-black/70 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
                     style={{ fontSize: '13.5px', textDecoration: 'none' }}
                   >
                     {sub.label}
@@ -203,12 +216,14 @@ function DesktopDropdown({
   anchorRef,
   onMouseEnter,
   onMouseLeave,
+  isLight,
 }: {
   open: boolean;
   items: DropdownItem[];
-  anchorRef: React.RefObject<HTMLLIElement>;
+  anchorRef: React.RefObject<HTMLLIElement | null>;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
+  isLight: boolean;
 }) {
   const [coords, setCoords] = useState({ top: 0, left: 0 });
 
@@ -236,16 +251,16 @@ function DesktopDropdown({
             top: coords.top,
             left: coords.left,
             zIndex: 9999,
-            background: 'rgba(12, 35, 64, 0.85)',
-            backdropFilter: 'blur(30px) saturate(150%)',
-            WebkitBackdropFilter: 'blur(30px) saturate(150%)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+            background: isLight ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.05)',
+            backdropFilter: 'blur(24px) saturate(150%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(150%)',
+            border: isLight ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.15)',
+            boxShadow: isLight ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.05)',
           }}
         >
           <ul className="m-0 list-none py-2">
             {items.map((item, idx) => (
-              <DesktopDropdownItem key={idx} item={item} />
+              <DesktopDropdownItem key={idx} item={item} isLight={isLight} />
             ))}
           </ul>
         </motion.div>
@@ -256,10 +271,10 @@ function DesktopDropdown({
 }
 
 /* ── Desktop nav item ────────────────────────────────────────────── */
-function DesktopNavItem({ link }: { link: NavLink }) {
+function DesktopNavItem({ link, isLight }: { link: NavLink; isLight: boolean }) {
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const anchorRef = useRef<HTMLLIElement>(null);
+  const anchorRef = useRef<HTMLLIElement | null>(null);
 
   const show = () => { if (closeTimer.current) clearTimeout(closeTimer.current); setOpen(true); };
   const hide = () => { closeTimer.current = setTimeout(() => setOpen(false), 120); };
@@ -295,6 +310,7 @@ function DesktopNavItem({ link }: { link: NavLink }) {
           anchorRef={anchorRef}
           onMouseEnter={show}
           onMouseLeave={hide}
+          isLight={isLight}
         />
       )}
     </li>
@@ -302,20 +318,20 @@ function DesktopNavItem({ link }: { link: NavLink }) {
 }
 
 /* ── Mobile Accordion Item (supports nested) ───────────────────── */
-function MobileAccordionItem({ item, onClose }: { item: DropdownItem; onClose: () => void }) {
+function MobileAccordionItem({ item, onClose, isLight }: { item: DropdownItem; onClose: () => void; isLight: boolean }) {
   const [open, setOpen] = useState(false);
   const hasSub = !!item.subDropdown;
 
   return (
     <li className="flex flex-col">
       <div
-        className="group flex items-center justify-between pr-2 cursor-pointer rounded-full hover:bg-white/5 transition-all duration-150"
+        className={`group flex items-center justify-between pr-2 cursor-pointer rounded-full transition-all duration-150 ${isLight ? 'hover:bg-black/5' : 'hover:bg-white/5'}`}
         onClick={hasSub ? () => setOpen(!open) : undefined}
       >
         <a
           href={hasSub ? undefined : item.href}
           onClick={hasSub ? (e) => { e.preventDefault(); } : onClose}
-          className="flex-1 flex items-center gap-3 pl-12 py-[10px] text-white/50 group-hover:text-white/90 transition-all duration-150"
+          className={`flex-1 flex items-center gap-3 pl-12 py-[10px] transition-all duration-150 ${isLight ? 'text-black/60 group-hover:text-black' : 'text-white/50 group-hover:text-white/90'}`}
           style={{ fontSize: '13.5px' }}
         >
           {item.label}
@@ -323,7 +339,7 @@ function MobileAccordionItem({ item, onClose }: { item: DropdownItem; onClose: (
         {hasSub && (
           <button
             onClick={(e) => { e.stopPropagation(); setOpen(!open); }}
-            className="p-2 text-white/50 group-hover:text-white/90 transition-colors focus:outline-none"
+            className={`p-2 transition-colors focus:outline-none ${isLight ? 'text-black/50 group-hover:text-black' : 'text-white/50 group-hover:text-white/90'}`}
             aria-label="Toggle submenu"
           >
             <motion.span animate={{ rotate: open ? 180 : 0 }} className="inline-flex">
@@ -347,7 +363,7 @@ function MobileAccordionItem({ item, onClose }: { item: DropdownItem; onClose: (
                 <a
                   href={sub.href}
                   onClick={onClose}
-                  className="block pl-16 pr-4 py-2 text-white/40 hover:text-white/80 hover:bg-white/5 transition-all duration-150 rounded-full"
+                  className={`block pl-16 pr-4 py-2 transition-all duration-150 rounded-full ${isLight ? 'text-black/50 hover:text-black/90 hover:bg-black/5' : 'text-white/40 hover:text-white/80 hover:bg-white/5'}`}
                   style={{ fontSize: '12.5px' }}
                 >
                   {sub.label}
@@ -362,7 +378,7 @@ function MobileAccordionItem({ item, onClose }: { item: DropdownItem; onClose: (
 }
 
 /* ── Mobile accordion sub-items ──────────────────────────────────── */
-function MobileAccordion({ items, onClose }: { items: DropdownItem[]; onClose: () => void }) {
+function MobileAccordion({ items, onClose, isLight }: { items: DropdownItem[]; onClose: () => void; isLight: boolean }) {
   return (
     <motion.ul
       initial={{ opacity: 0, height: 0 }}
@@ -372,7 +388,7 @@ function MobileAccordion({ items, onClose }: { items: DropdownItem[]; onClose: (
       className="overflow-hidden m-0 list-none"
     >
       {items.map((item, idx) => (
-        <MobileAccordionItem key={idx} item={item} onClose={onClose} />
+        <MobileAccordionItem key={idx} item={item} onClose={onClose} isLight={isLight} />
       ))}
     </motion.ul>
   );
@@ -475,7 +491,7 @@ export function Navbar() {
         }}
       >
         {/* Always visible: Logo and Burger */}
-        <div className={`flex items-center gap-4 transition-all duration-300 ${(isScrolled || onLightBg) ? 'invert' : ''}`}>
+        <div className={`flex items-center gap-4 transition-[filter] duration-300 ${(isScrolled || onLightBg) ? 'invert' : ''}`}>
           <a href="/" className="flex items-center justify-center h-full">
             <IkammaLogo className="h-6 md:h-7 w-auto object-contain" />
           </a>
@@ -497,11 +513,11 @@ export function Navbar() {
               animate={{ width: "auto", opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-              className={`hidden lg:flex items-center overflow-hidden h-full transition-all duration-300 ${(isScrolled || onLightBg) ? 'invert' : ''}`}
+              className={`hidden lg:flex items-center overflow-hidden h-full transition-[filter] duration-300 ${(isScrolled || onLightBg) ? 'invert' : ''}`}
             >
               <ul className="flex items-center h-full gap-7 pl-6 pr-4 whitespace-nowrap m-0 list-none">
                 {links.map((link) => (
-                  <DesktopNavItem key={link.href} link={link} />
+                  <DesktopNavItem key={link.href} link={link} isLight={isScrolled || onLightBg} />
                 ))}
               </ul>
             </motion.div>
@@ -513,10 +529,10 @@ export function Navbar() {
       <AnimatePresence>
         {expanded && (
           <motion.div
-            initial={{ opacity: 0, scaleY: 0.9, y: -10, x: "-50%" }}
-            animate={{ opacity: 1, scaleY: 1, y: 0, x: "-50%" }}
-            exit={{ opacity: 0, scaleY: 0.9, y: -10, x: "-50%" }}
-            transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
+            variants={mobileMenuVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             style={{
               position: 'absolute',
               top: 'calc(100% + 16px)',
@@ -524,11 +540,11 @@ export function Navbar() {
               width: 'calc(100vw - 48px)', // Responsive width
               maxWidth: '350px',
               transformOrigin: 'top left',
-              background: 'rgba(12, 35, 64, 0.95)',
-              backdropFilter: 'blur(30px) saturate(150%)',
-              WebkitBackdropFilter: 'blur(30px) saturate(150%)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              boxShadow: '0 12px 48px rgba(0, 0, 0, 0.2)',
+              background: (isScrolled || onLightBg) ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(24px) saturate(150%)',
+              WebkitBackdropFilter: 'blur(24px) saturate(150%)',
+              border: (isScrolled || onLightBg) ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.15)',
+              boxShadow: (isScrolled || onLightBg) ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.05)',
               borderRadius: '24px',
               overflow: 'hidden',
             }}
@@ -550,21 +566,21 @@ export function Navbar() {
                     exit="exit"
                   >
                     <div
-                      className="group flex items-center justify-between cursor-pointer rounded-full hover:bg-white/10 transition-all duration-150"
+                      className={`group flex items-center justify-between cursor-pointer rounded-full transition-colors duration-150 ${(isScrolled || onLightBg) ? 'hover:bg-black/5' : 'hover:bg-white/10'}`}
                       onClick={hasDropdown ? () => toggleExpand(link.label) : undefined}
                     >
                       <a
                         href={hasDropdown ? undefined : link.href}
-                        className="flex items-center gap-4 flex-1 px-4 py-3 text-white/80 group-hover:text-white transition-all duration-150"
+                        className={`flex items-center gap-4 flex-1 px-4 py-3 transition-colors duration-150 ${(isScrolled || onLightBg) ? 'text-black/80 group-hover:text-black' : 'text-white/80 group-hover:text-white'}`}
                         style={{ fontSize: '15px' }}
                         onClick={hasDropdown ? (e) => e.preventDefault() : () => setExpanded(false)}
                       >
-                        <span className="text-white/40 group-hover:text-white/70 transition-colors"><Icon size={18} /></span>
+                        <span className={`transition-colors ${(isScrolled || onLightBg) ? 'text-black/40 group-hover:text-black/70' : 'text-white/40 group-hover:text-white/70'}`}><Icon size={18} /></span>
                         {link.label}
                       </a>
                       {hasDropdown && (
                         <button
-                          className="pr-4 pl-2 py-3 text-white/50 group-hover:text-white transition-colors focus:outline-none"
+                          className={`pr-4 pl-2 py-3 transition-colors focus:outline-none ${(isScrolled || onLightBg) ? 'text-black/50 group-hover:text-black' : 'text-white/50 group-hover:text-white'}`}
                           onClick={(e) => { e.stopPropagation(); toggleExpand(link.label); }}
                           aria-label="toggle"
                         >
@@ -581,7 +597,7 @@ export function Navbar() {
 
                     <AnimatePresence>
                       {hasDropdown && isExpanded && (
-                        <MobileAccordion items={link.dropdown!} onClose={() => setExpanded(false)} />
+                        <MobileAccordion items={link.dropdown!} onClose={() => setExpanded(false)} isLight={isScrolled || onLightBg} />
                       )}
                     </AnimatePresence>
                   </motion.li>

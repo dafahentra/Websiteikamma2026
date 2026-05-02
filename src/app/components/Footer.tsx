@@ -92,11 +92,11 @@ export function Footer() {
         </div>
 
         {/* Links Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 w-full lg:pl-[120px]">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 w-full">
           
           {/* Navigation */}
           <div className="col-span-1 flex flex-col gap-4">
-            <h4 className="font-bold text-base">Navigation</h4>
+            <h4 className="font-inter font-bold text-base">Navigation</h4>
             <ul className="flex flex-col gap-3 text-sm">
               <li><Link to="/" className="hover:underline">Home</Link></li>
               <li><Link to="/about" className="hover:underline">About Us</Link></li>
@@ -107,7 +107,7 @@ export function Footer() {
 
           {/* Social */}
           <div className="col-span-1 flex flex-col gap-4">
-            <h4 className="font-bold text-base">Social</h4>
+            <h4 className="font-inter font-bold text-base">Social</h4>
             <ul className="flex flex-col gap-3 text-sm">
               <li><a href="https://instagram.com/ikamma.ugm" target="_blank" rel="noopener noreferrer" className="hover:underline">Instagram</a></li>
               <li><a href="https://linkedin.com/company/ikamma" target="_blank" rel="noopener noreferrer" className="hover:underline">LinkedIn</a></li>
@@ -119,12 +119,12 @@ export function Footer() {
 
           {/* Contact */}
           <div className="col-span-2 lg:col-span-1 flex flex-col gap-4">
-            <h4 className="font-bold text-base">Contact</h4>
+            <h4 className="font-inter font-bold text-base">Contact</h4>
             <ul className="flex flex-col gap-4 text-sm">
               <li>
                 <a href="mailto:dafahentra@gmail.com" className="flex items-center gap-2 hover:underline">
                   <GmailIcon size={18} />
-                  <span>dafahentra@gmail.com</span>
+                  <span className="break-all">dafahentra@gmail.com</span>
                 </a>
               </li>
               <li>
@@ -137,8 +137,8 @@ export function Footer() {
           </div>
 
           {/* Find Us At Maps */}
-          <div className="col-span-2 lg:col-span-2 hidden md:flex flex-col gap-4 pr-0 lg:pr-8">
-            <h4 className="font-bold text-base">Find Us At Maps</h4>
+          <div className="col-span-2 lg:col-span-2 hidden md:flex flex-col gap-4">
+            <h4 className="font-inter font-bold text-base">Find Us At Maps</h4>
             <div className="w-full h-32 md:h-40 bg-gray-100 rounded-lg overflow-hidden border border-gray-200 shadow-sm relative">
               <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4905.445452541879!2d110.37635327591678!3d-7.770554077082666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a59b4c17e62a5%3A0xa7b0a99cf63441a6!2sFakultas%20Ekonomika%20dan%20Bisnis%20UGM!5e1!3m2!1sid!2sid!4v1777633924284!5m2!1sid!2sid" 

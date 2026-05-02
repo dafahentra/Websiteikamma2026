@@ -5,7 +5,7 @@ import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
 import { Images } from 'lucide-react';
 
-import { getRandomPhotos } from "../../assets/photos";
+import { GALLERY_PHOTOS } from "../../assets/photos";
 
 const galleryImages = [
   {
@@ -40,9 +40,8 @@ const galleryImages = [
   },
 ];
 
-// Fill with random local photos
-const randomPhotos = getRandomPhotos(6);
-galleryImages.forEach((img, i) => { img.src = randomPhotos[i]; });
+// Assign photos from the registry
+galleryImages.forEach((img, i) => { img.src = GALLERY_PHOTOS[i]; });
 
 export function GallerySection() {
   const ref = useRef<HTMLElement>(null);

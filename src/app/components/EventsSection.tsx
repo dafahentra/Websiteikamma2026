@@ -3,12 +3,8 @@ import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-
 import { ArrowRight } from "lucide-react";
 import LOGO from '../../assets/LogoPutih.svg';
 
-import { getRandomPhotos, SCRAPBOOK_PHOTOS } from "../../assets/photos";
-const BACKGROUND_IMAGE = SCRAPBOOK_PHOTOS[0];
-
-
-
-const EVENT_PHOTOS = getRandomPhotos(4);
+import { EVENT_PHOTOS, EVENTS_BG } from "../../assets/photos";
+const BACKGROUND_IMAGE = EVENTS_BG;
 
 const POSITIONS = [
   { x: 0, y: 0, rotate: 0, scale: 1, zIndex: 10, brightness: 1 },         // 0: Center (Active)

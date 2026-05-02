@@ -6,11 +6,9 @@ import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
 import HERO_IMAGE from "../../assets/VidProf.mp4";
 import LOGO from "../../assets/LogoPutih.svg";
 
-import { SCRAPBOOK_PHOTOS, getRandomPhotos, ALL_PHOTOS } from "../../assets/photos";
+import { SCRAPBOOK_PHOTOS, HERO_BG } from "../../assets/photos";
 
-// You can change the index here to pick a specific photo for the background
-// For example: ALL_PHOTOS[0] or ALL_PHOTOS[ALL_PHOTOS.length - 1]
-const BACKGROUND_IMAGE = ALL_PHOTOS.find(p => p.includes('FotoHRBB2.jpg')) || getRandomPhotos(1)[0];
+const BACKGROUND_IMAGE = HERO_BG;
 
 // A massive scrolling area to accommodate the grand unified sequence
 const SECTION_HEIGHT_PX = 8000;

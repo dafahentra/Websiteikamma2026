@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Clock, CalendarDays, Filter, Search, X, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { getRandomPhotos } from '../../assets/photos';
+import { INFO_MAHASISWA_PHOTOS, INFO_MAHASISWA_HERO } from '../../assets/photos';
 
 /* ── Types ─────────────────────────────────────────────────────── */
 type Category = 'Magang' | 'Lomba' | 'Beasiswa';
@@ -155,9 +155,8 @@ const INFO_ITEMS: InfoItem[] = [
   },
 ];
 
-// Fill with random local photos
-const randomPhotos = getRandomPhotos(9);
-INFO_ITEMS.forEach((item, i) => { item.poster = randomPhotos[i]; });
+// Assign photos from the registry
+INFO_ITEMS.forEach((item, i) => { item.poster = INFO_MAHASISWA_PHOTOS[i]; });
 
 const CATEGORIES: ('All' | Category)[] = ['All', 'Magang', 'Lomba', 'Beasiswa'];
 const STATUS_FILTERS = ['All', 'Open Now', 'Closed'] as const;
@@ -263,7 +262,7 @@ export function InfoMahasiswaPage() {
         {/* Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
-            src={getRandomPhotos(1)[0]} 
+            src={INFO_MAHASISWA_HERO} 
             alt="Hero Background" 
             className="w-full h-full object-cover opacity-30 grayscale"
           />

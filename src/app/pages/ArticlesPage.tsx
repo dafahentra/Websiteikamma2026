@@ -136,8 +136,15 @@ export function ArticlesPage() {
 
       {/* Hero */}
       <section className="w-full bg-[#081C36] pt-32 md:pt-40 pb-16 md:pb-24 px-6 lg:px-12 relative overflow-hidden flex flex-col items-center justify-center text-center mt-[-80px]">
-        {/* Subtle background pattern/gradient */}
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0%,transparent_100%)]"></div>
+        {/* Hero Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={getRandomPhotos(1)[0]} 
+            alt="Hero Background" 
+            className="w-full h-full object-cover opacity-30 grayscale"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#081C36]/80 via-[#081C36]/90 to-[#081C36]"></div>
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

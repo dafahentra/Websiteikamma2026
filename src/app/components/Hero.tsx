@@ -229,7 +229,8 @@ export function Hero() {
   /* === PHASE 6: About IKAMMA Content Fades In === */
   // 0.75 to 0.85
   const contentOpacity = useTransform(progress, [0.75, 0.85], [0, 1]);
-  const contentY = useTransform(progress, [0.75, 0.85], [80, 0]);
+  // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
+  const contentY = useTransform(progress, [0.75, 0.85, 1.0], [80, 0, -400]);
 
   // The dark overlay ONLY appears at the very end when it becomes the background
   const overlayOpacity = useTransform(progress, [0.70, 0.80], [0, 0.50]);
@@ -269,40 +270,48 @@ export function Hero() {
 
         {/* === PHASE 6: Content === */}
         <motion.div
-          className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-center w-full pt-[10vh] md:pt-20 pb-[6vh] md:pb-[8vh] text-center md:text-left"
+          className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-start md:justify-center w-full pt-[140px] md:pt-[180px] lg:pt-[200px] pb-[4vh] md:pb-[6vh] text-left"
           style={{ opacity: contentOpacity, y: contentY }}
         >
           {/* Main Content inside restricted width */}
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col gap-4 md:gap-10 pointer-events-auto items-center md:items-start">
-            <h2 className="text-white text-3xl md:text-5xl flex items-center justify-center md:justify-start gap-3">
-              <span className="text-[#081C36] md:inline">—</span>
-              <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">What is</span>
-              <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">IKAMMA</span>
-            </h2>
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto">
 
-            {/* Changed from items-start to items-center to make the Company Profile vertically centered! */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 lg:gap-16 items-center">
-              <div className="text-white/90 space-y-3 md:space-y-6">
-                <p className="text-sm md:text-lg leading-relaxed text-center md:text-justify">
-                  <span className="font-bold italic">Ikatan Keluarga Mahasiswa Manajemen (IKAMMA)</span> merupakan sebuah organisasi himpunan mahasiswa Program Studi Manajemen di Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
-                </p>
-                <p className="text-sm md:text-lg leading-relaxed text-justify hidden sm:block">
-                  IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
-                </p>
-                <div className="pt-2 md:pt-4 flex justify-center md:justify-start">
-                  <a
-                    href="#about-more"
-                    className="inline-flex items-center gap-2 bg-[#081C36] hover:bg-[#0a2545] text-white px-6 py-2.5 rounded-full text-sm md:text-base font-medium transition-colors"
-                  >
-                    <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
-                    See More
-                    <ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />
-                  </a>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
+              {/* Left Column */}
+              <div className="flex flex-col text-left">
+                <h2 className="text-white text-3xl md:text-5xl flex items-center justify-start gap-3 mb-4 md:mb-8">
+                  <span className="text-white">—</span>
+                  <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">What is</span>
+                  <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">IKAMMA</span>
+                </h2>
+                <div className="text-white/90 space-y-3 md:space-y-6">
+                  <p className="text-sm md:text-lg leading-relaxed">
+                    <span className="font-bold italic">Ikatan Keluarga Mahasiswa Manajemen (IKAMMA)</span> merupakan sebuah organisasi himpunan mahasiswa Program Studi Manajemen di Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
+                  </p>
+                  <p className="text-sm md:text-lg leading-relaxed hidden sm:block">
+                    IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
+                  </p>
+                  <div className="pt-2 md:pt-4 flex justify-start">
+                    <a
+                      href="#about-more"
+                      className="inline-flex items-center gap-2 bg-[#081C36] hover:bg-[#0a2545] text-white px-6 py-2.5 rounded-full text-sm md:text-base font-medium transition-colors"
+                    >
+                      <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                      See More
+                      <ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />
+                    </a>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex flex-col items-center md:items-end w-full">
-                <div className="w-full max-w-md md:ml-auto">
+              {/* Right Column */}
+              <div className="flex flex-col text-right w-full pr-[52px] sm:pr-[60px]">
+                <h2 className="text-white text-3xl md:text-5xl flex items-center justify-end gap-2 sm:gap-3 mb-4 md:mb-8">
+                  <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Company</span>
+                  <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Profile</span>
+                  <span className="text-white">—</span>
+                </h2>
+                <div className="w-full max-w-md ml-auto">
                   {/* Embedded YouTube Player */}
                   <div className="w-full aspect-video bg-[#D9D9D9] rounded-2xl md:rounded-[2rem] shadow-lg mb-2 md:mb-4 relative overflow-hidden">
                     <iframe
@@ -326,9 +335,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Our Partners outside container wrapper to bleed edge-to-edge! */}
           <div className="mt-6 md:mt-12 w-full pointer-events-auto">
-            <h3 className="text-white text-sm md:text-3xl font-bold text-center mb-4 md:mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>Our Partners</h3>
+            <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-6 md:mb-10" style={{ fontFamily: "'Inter', sans-serif" }}>Our Partners</h3>
             {/* Infinite Marquee Container */}
             <div className="w-full overflow-hidden flex whitespace-nowrap">
               <motion.div

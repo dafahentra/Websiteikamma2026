@@ -104,23 +104,34 @@ export function EventsPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-40 pb-16 px-6 lg:px-12 max-w-[1400px] mx-auto">
+      <section className="w-full bg-[#081C36] pt-32 md:pt-40 pb-16 md:pb-24 px-6 lg:px-12 relative overflow-hidden flex flex-col items-center justify-center text-center mt-[-80px]">
+        {/* Hero Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={getRandomPhotos(1)[0]} 
+            alt="Hero Background" 
+            className="w-full h-full object-cover opacity-30 grayscale"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#081C36]/80 via-[#081C36]/90 to-[#081C36]"></div>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto relative z-10 pt-16"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-inter font-bold mb-4">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-inter font-bold mb-4 text-white tracking-tight">
             Our Events
           </h1>
-          <p className="text-[#081C36]/50 text-lg md:text-xl font-inter max-w-2xl">
+          <p className="text-white/80 text-sm md:text-xl font-inter max-w-2xl mx-auto px-4">
             Discover upcoming events, ongoing activities, and relive past moments with IKAMMA.
           </p>
         </motion.div>
       </section>
 
       {/* ── Ongoing / Upcoming Events ────────────────────────────── */}
-      <section className="pb-24 px-6 lg:px-12 max-w-[1400px] mx-auto">
+      <section className="pb-24 px-6 lg:px-12 max-w-[1400px] mx-auto mt-12 md:mt-20">
         <motion.h2
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -134,7 +145,7 @@ export function EventsPage() {
           </span>
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {ONGOING_EVENTS.map((event, i) => (
             <motion.div
               key={event.id}
@@ -207,7 +218,7 @@ export function EventsPage() {
           </span>
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {PAST_EVENTS.map((event, i) => (
             <motion.article
               key={event.id}

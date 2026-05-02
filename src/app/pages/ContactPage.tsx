@@ -135,11 +135,11 @@ export function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#081C36]">
+    <div className="min-h-screen bg-white text-[#081C36] overflow-x-hidden">
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-40 pb-8 px-6 lg:px-12 max-w-[1400px] mx-auto">
+      <section className="pt-40 pb-8 px-4 md:px-6 lg:px-12 max-w-[1400px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -178,7 +178,7 @@ export function ContactPage() {
       </section>
 
       {/* Tab Content */}
-      <section className="pb-24 px-6 lg:px-12 max-w-[1400px] mx-auto pt-10">
+      <section className="pb-24 px-4 md:px-6 lg:px-12 max-w-[1400px] mx-auto pt-10">
         <AnimatePresence mode="wait">
           {activeTab === 'ikamma' ? (
             <motion.div
@@ -192,7 +192,7 @@ export function ContactPage() {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] rounded-3xl overflow-hidden shadow-2xl shadow-black/30 min-h-[600px]">
 
                 {/* ── Left: Dark Info Card ───────────────────────── */}
-                <div className="relative bg-[#f5f7fa] p-10 md:p-14 flex flex-col justify-between overflow-hidden">
+                <div className="relative bg-[#f5f7fa] p-6 sm:p-8 md:p-14 flex flex-col justify-between overflow-hidden">
                   {/* Decorative circles */}
                   <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#081C36]/5 rounded-full blur-xl pointer-events-none" />
                   <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#081C36]/3 rounded-full pointer-events-none" />
@@ -207,25 +207,25 @@ export function ContactPage() {
 
                     {/* Contact Details */}
                     <div className="space-y-8">
-                      <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0">
-                          <Phone size={20} className="text-[#081C36]" />
+                      <div className="flex items-center gap-4 md:gap-5">
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0">
+                          <Phone size={18} className="text-[#081C36] md:w-5 md:h-5" />
                         </div>
-                        <span className="font-inter text-lg text-[#081C36]">+62 812-3456-7890</span>
+                        <span className="font-inter text-base md:text-lg text-[#081C36]">+62 812-3456-7890</span>
                       </div>
 
-                      <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0">
-                          <Mail size={20} className="text-[#081C36]" />
+                      <div className="flex items-center gap-4 md:gap-5">
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0">
+                          <Mail size={18} className="text-[#081C36] md:w-5 md:h-5" />
                         </div>
-                        <span className="font-inter text-lg text-[#081C36]">ikamma@feb.ugm.ac.id</span>
+                        <span className="font-inter text-base md:text-lg text-[#081C36] break-all">ikamma@feb.ugm.ac.id</span>
                       </div>
 
-                      <div className="flex items-start gap-5">
-                        <div className="w-12 h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0 mt-0.5">
-                          <MapPin size={20} className="text-[#081C36]" />
+                      <div className="flex items-start gap-4 md:gap-5">
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0 mt-0.5">
+                          <MapPin size={18} className="text-[#081C36] md:w-5 md:h-5" />
                         </div>
-                        <div className="font-inter text-base text-[#081C36]/70 leading-relaxed">
+                        <div className="font-inter text-sm md:text-base text-[#081C36]/70 leading-relaxed">
                           Gedung FEB UGM<br />
                           Jl. Sosio Humaniora No.1, Bulaksumur<br />
                           Yogyakarta 55281
@@ -258,7 +258,7 @@ export function ContactPage() {
                 </div>
 
                 {/* ── Right: Form (light bg) ─────────────────────── */}
-                <div className="bg-white p-10 md:p-14">
+                <div className="bg-white p-6 sm:p-8 md:p-14">
                   <form onSubmit={handleSubmit} className="space-y-6 h-full flex flex-col">
 
                     {submitted && (
@@ -415,16 +415,16 @@ export function ContactPage() {
                 {EVENT_CONTACTS.map((event, i) => (
                   <div
                     key={event.label}
-                    className="p-8 rounded-2xl bg-[#f5f7fa] border border-[#081C36]/10 hover:border-[#081C36]/20 hover:shadow-lg transition-all duration-300 group"
+                    className="p-6 md:p-8 rounded-2xl bg-[#f5f7fa] border border-[#081C36]/10 hover:border-[#081C36]/20 hover:shadow-lg transition-all duration-300 group"
                   >
                     <h3 className="font-inter font-bold text-2xl text-[#081C36] mb-1">{event.label}</h3>
                     <p className="text-[#081C36]/50 text-sm font-inter mb-8">{event.description}</p>
 
                     <div className="space-y-4 pt-6 border-t border-[#081C36]/10">
                       {event.contacts.map((c, j) => (
-                        <div key={j} className="flex items-center gap-3">
-                          <span className="text-[#081C36] text-xs font-inter font-bold min-w-[80px] uppercase tracking-wider">{c.type}</span>
-                          <span className="text-[#081C36]/60 text-sm font-inter">{c.value}</span>
+                        <div key={j} className="flex items-center gap-2 md:gap-3">
+                          <span className="text-[#081C36] text-xs font-inter font-bold min-w-[70px] md:min-w-[80px] uppercase tracking-wider">{c.type}</span>
+                          <span className="text-[#081C36]/60 text-xs sm:text-sm font-inter break-all">{c.value}</span>
                         </div>
                       ))}
                     </div>

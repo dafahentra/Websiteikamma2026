@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useLayoutEffect, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import {
   motion,
@@ -308,20 +308,22 @@ function MobileAccordionItem({ item, onClose }: { item: DropdownItem; onClose: (
 
   return (
     <li className="flex flex-col">
-      <div className="flex items-center justify-between pr-2">
+      <div
+        className="group flex items-center justify-between pr-2 cursor-pointer rounded-full hover:bg-white/5 transition-all duration-150"
+        onClick={hasSub ? () => setOpen(!open) : undefined}
+      >
         <a
           href={hasSub ? undefined : item.href}
-          onClick={hasSub ? (e) => { e.preventDefault(); setOpen(!open); } : onClose}
-          className="flex-1 flex items-center gap-3 pl-12 py-[10px] text-white/50 hover:text-white/90 hover:bg-white/5 transition-all duration-150 rounded-full"
+          onClick={hasSub ? (e) => { e.preventDefault(); } : onClose}
+          className="flex-1 flex items-center gap-3 pl-12 py-[10px] text-white/50 group-hover:text-white/90 transition-all duration-150"
           style={{ fontSize: '13.5px' }}
         >
-          <span className="w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
           {item.label}
         </a>
         {hasSub && (
           <button
-            onClick={() => setOpen(!open)}
-            className="p-2 text-white/50 hover:text-white focus:outline-none"
+            onClick={(e) => { e.stopPropagation(); setOpen(!open); }}
+            className="p-2 text-white/50 group-hover:text-white/90 transition-colors focus:outline-none"
             aria-label="Toggle submenu"
           >
             <motion.span animate={{ rotate: open ? 180 : 0 }} className="inline-flex">
@@ -376,29 +378,77 @@ function MobileAccordion({ items, onClose }: { items: DropdownItem[]; onClose: (
   );
 }
 
+/* ── Helper: check if a color is "light" ─────────────────────────── */
+function isLightColor(r: number, g: number, b: number) {
+  // Perceived luminance (sRGB)
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.6;
+}
+
 /* ── Main Navbar ─────────────────────────────────────────────────── */
 export function Navbar() {
   const [expanded, setExpanded] = useState(false);
   const [mobileExpand, setMobileExpand] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const lastScrollY = useRef(0);
+  const [onLightBg, setOnLightBg] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
+
+  /* Detect background brightness behind the navbar */
+  const detectBackground = useCallback(() => {
+    if (!navRef.current) return;
+    const rect = navRef.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    // Hide our navbar temporarily to sample what's behind it
+    navRef.current.style.visibility = 'hidden';
+    const el = document.elementFromPoint(cx, cy);
+    navRef.current.style.visibility = '';
+
+    if (!el) return;
+
+    // Helper: check if a bg string is opaque (not transparent)
+    const getOpaqueBg = (node: Element | null): { r: number; g: number; b: number } | null => {
+      let current = node;
+      while (current) {
+        const bg = window.getComputedStyle(current).backgroundColor;
+        // Match both rgb() and rgba() — extract r, g, b, and optionally alpha
+        const m = bg.match(/rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\s*\)/);
+        if (m) {
+          const alpha = m[4] !== undefined ? parseFloat(m[4]) : 1;
+          if (alpha > 0.1) {
+            return { r: +m[1], g: +m[2], b: +m[3] };
+          }
+        }
+        current = current.parentElement;
+      }
+      return null;
+    };
+
+    const bg = getOpaqueBg(el);
+    if (bg) {
+      setOnLightBg(isLightColor(bg.r, bg.g, bg.b));
+    } else {
+      // Fallback: assume white bg (browser default)
+      setOnLightBg(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    detectBackground();
+    // Re-check on scroll & resize
+    const onScroll = () => detectBackground();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [detectBackground]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
-    
-    // Hide on scroll down, show on scroll up
-    if (latest > 100) {
-      if (latest > lastScrollY.current) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-    } else {
-      setIsVisible(true);
-    }
-    lastScrollY.current = latest;
   });
 
   const toggleExpand = (label: string) =>
@@ -406,25 +456,26 @@ export function Navbar() {
 
   return (
     <motion.div
+      ref={navRef}
       className="fixed top-6 left-1/2 z-[50] flex flex-col items-center"
       style={{ x: "-50%" }}
-      initial={{ y: 0 }}
-      animate={{ y: isVisible ? 0 : -120 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
       {/* ── Desktop & Tablet Liquid Glass Pill ─────────────────────────────────── */}
       <nav
         className="flex items-center h-[56px] pl-4 pr-3 rounded-full pointer-events-auto transition-colors duration-300"
         style={{
-          background: isScrolled ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.05)',
-          border: isScrolled ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.15)',
-          boxShadow: isScrolled ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.05)',
+          background: (isScrolled || onLightBg) ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.05)',
+          border: (isScrolled || onLightBg) ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.15)',
+          boxShadow: (isScrolled || onLightBg) ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.05)',
           backdropFilter: 'blur(24px) saturate(150%)',
           WebkitBackdropFilter: 'blur(24px) saturate(150%)',
         }}
       >
         {/* Always visible: Logo and Burger */}
-        <div className={`flex items-center gap-4 transition-all duration-300 ${isScrolled ? 'invert' : ''}`}>
+        <div className={`flex items-center gap-4 transition-all duration-300 ${(isScrolled || onLightBg) ? 'invert' : ''}`}>
           <a href="/" className="flex items-center justify-center h-full">
             <IkammaLogo className="h-6 md:h-7 w-auto object-contain" />
           </a>
@@ -446,7 +497,7 @@ export function Navbar() {
               animate={{ width: "auto", opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-              className={`hidden lg:flex items-center overflow-hidden h-full transition-all duration-300 ${isScrolled ? 'invert' : ''}`}
+              className={`hidden lg:flex items-center overflow-hidden h-full transition-all duration-300 ${(isScrolled || onLightBg) ? 'invert' : ''}`}
             >
               <ul className="flex items-center h-full gap-7 pl-6 pr-4 whitespace-nowrap m-0 list-none">
                 {links.map((link) => (
@@ -499,21 +550,21 @@ export function Navbar() {
                     exit="exit"
                   >
                     <div
-                      className="flex items-center justify-between cursor-pointer"
+                      className="group flex items-center justify-between cursor-pointer rounded-full hover:bg-white/10 transition-all duration-150"
                       onClick={hasDropdown ? () => toggleExpand(link.label) : undefined}
                     >
                       <a
                         href={hasDropdown ? undefined : link.href}
-                        className="flex items-center gap-4 flex-1 px-4 py-3 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-all duration-150"
+                        className="flex items-center gap-4 flex-1 px-4 py-3 text-white/80 group-hover:text-white transition-all duration-150"
                         style={{ fontSize: '15px' }}
                         onClick={hasDropdown ? (e) => e.preventDefault() : () => setExpanded(false)}
                       >
-                        <span className="text-white/40"><Icon size={18} /></span>
+                        <span className="text-white/40 group-hover:text-white/70 transition-colors"><Icon size={18} /></span>
                         {link.label}
                       </a>
                       {hasDropdown && (
                         <button
-                          className="pr-4 pl-2 py-3 text-white/50 hover:text-white transition-colors focus:outline-none"
+                          className="pr-4 pl-2 py-3 text-white/50 group-hover:text-white transition-colors focus:outline-none"
                           onClick={(e) => { e.stopPropagation(); toggleExpand(link.label); }}
                           aria-label="toggle"
                         >

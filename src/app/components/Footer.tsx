@@ -149,8 +149,8 @@ export function Footer() {
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>
-            <div className="flex items-start gap-2 text-[11px] leading-tight text-[#081C36]">
-              <MapPin size={16} className="shrink-0" />
+            <div className="flex items-start gap-2 text-base leading-snug text-[#081C36]">
+              <MapPin size={20} className="shrink-0 mt-0.5" />
               <p>
                 Jl. Sosio Humaniora, Karang Malang,<br/>
                 Caturtunggal, Depok, Sleman,<br/>

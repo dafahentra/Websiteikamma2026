@@ -259,25 +259,34 @@ export function InfoMahasiswaPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-40 pb-16 px-6 lg:px-12 max-w-[1400px] mx-auto">
+      <section className="w-full bg-[#081C36] pt-32 md:pt-40 pb-16 md:pb-24 px-6 lg:px-12 relative overflow-hidden flex flex-col items-center justify-center text-center mt-[-80px]">
+        {/* Hero Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={getRandomPhotos(1)[0]} 
+            alt="Hero Background" 
+            className="w-full h-full object-cover opacity-30 grayscale"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#081C36]/80 via-[#081C36]/90 to-[#081C36]"></div>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto relative z-10 pt-16"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl mb-4 text-[#081C36] flex items-center gap-4">
-            <span className="text-[#002444]">—</span>
-            <span className="font-caslon-italic font-bold" style={{ fontFamily: "'Libre Caslon Text', serif" }}>Info</span>{' '}
-            <span className="font-inter font-bold" style={{ fontFamily: "'Inter', sans-serif" }}>Mahasiswa</span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-inter font-bold mb-4 text-white tracking-tight">
+            Info Mahasiswa
           </h1>
-          <p className="text-[#081C36]/50 text-lg md:text-xl font-inter max-w-2xl">
+          <p className="text-white/80 text-sm md:text-xl font-inter max-w-2xl mx-auto px-4">
             Temukan peluang magang, lomba, dan beasiswa terbaru yang relevan untuk mahasiswa Manajemen FEB UGM.
           </p>
         </motion.div>
       </section>
 
       {/* Filters & Search */}
-      <section className="px-6 lg:px-12 max-w-[1400px] mx-auto mb-8">
+      <section className="px-6 lg:px-12 max-w-[1400px] mx-auto mb-8 mt-12 md:mt-20">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

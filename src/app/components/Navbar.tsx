@@ -426,7 +426,10 @@ function isLightColor(r: number, g: number, b: number) {
 /* ── Main Navbar ─────────────────────────────────────────────────── */
 export function Navbar() {
   const { pathname } = useLocation();
-  const [expanded, setExpanded] = useState(pathname !== '/');
+  const [expanded, setExpanded] = useState(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return false;
+    return pathname !== '/';
+  });
   const [isNavigating, setIsNavigating] = useState(false);
   const [mobileExpand, setMobileExpand] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -489,11 +492,17 @@ export function Navbar() {
     };
   }, [detectBackground, pathname, isScrolled]);
 
-  // Keep expanded if on sub-page
+  // Keep expanded if on sub-page (Desktop only), fold on mobile
   useEffect(() => {
     setIsNavigating(true);
     if (pathname !== '/') {
-      setExpanded(true);
+      if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+        setExpanded(true);
+      } else {
+        setExpanded(false);
+      }
+    } else {
+      setExpanded(false);
     }
     const timer = setTimeout(() => setIsNavigating(false), 800);
     return () => clearTimeout(timer);

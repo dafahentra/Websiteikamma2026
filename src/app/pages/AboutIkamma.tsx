@@ -4,10 +4,12 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePres
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import LogoPutihRaw from '../../assets/LogoPutih.svg?raw';
+import LogoHitamRaw from '../../assets/LogoHitam.svg?raw';
 import { SCRAPBOOK_PHOTOS } from '../../assets/photos';
+import { departmentsData } from '../../data/departments';
 
 // Extract SVG inner paths
-const svgInner = LogoPutihRaw
+const svgInner = LogoHitamRaw
   .replace(/<\?xml[^>]*\?>/g, '')
   .replace(/<svg[^>]*>/g, '')
   .replace(/<\/svg>/g, '')
@@ -28,7 +30,7 @@ function IkammaLogo({ className }: { className?: string }) {
 
 function AboutHero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -39,10 +41,10 @@ function AboutHero() {
   // Photo shrinking animations
   const photoWidth = useTransform(progress, [0, 0.4], ["100vw", "60vw"]);
   const photoHeight = useTransform(progress, [0, 0.4], ["100vh", "45vh"]);
-  
+
   // Keep photo perfectly centered vertically
   const photoY = useTransform(progress, [0.4, 0.6], ["0vh", "0vh"]);
-  const photoRadius = useTransform(progress, [0, 0.2], ["0px", "0px"]); 
+  const photoRadius = useTransform(progress, [0, 0.2], ["0px", "0px"]);
 
   // Overlay fade in (tambalan warna putih) - happens simultaneously with scale
   const overlayOpacity = useTransform(progress, [0, 0.4], [0, 0.35]);
@@ -70,9 +72,9 @@ function AboutHero() {
   return (
     <div ref={containerRef} className="relative w-full h-[250vh] bg-white">
       <div className="sticky top-0 w-full h-screen bg-white overflow-hidden">
-        
+
         {/* Background Marquee Text - 2 Sliders */}
-        <motion.div 
+        <motion.div
           className="absolute z-0 w-full top-1/2 -translate-y-1/2 flex flex-col gap-2 md:gap-4 overflow-hidden"
           style={{ opacity: bgOpacity }}
         >
@@ -99,22 +101,22 @@ function AboutHero() {
 
         {/* The Photo */}
         <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-          <motion.div 
+          <motion.div
             className="relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-auto origin-center"
-            style={{ 
-              width: photoWidth, 
-              height: photoHeight, 
+            style={{
+              width: photoWidth,
+              height: photoHeight,
               y: photoY,
               borderRadius: photoRadius
             }}
           >
-            <img 
-              src={SCRAPBOOK_PHOTOS[8]} 
-              className="w-full h-full object-cover" 
-              alt="FEB UGM" 
+            <img
+              src={SCRAPBOOK_PHOTOS[8]}
+              className="w-full h-full object-cover"
+              alt="FEB UGM"
             />
             {/* White overlay tint */}
-            <motion.div 
+            <motion.div
               className="absolute inset-0 bg-white"
               style={{ opacity: overlayOpacity }}
             />
@@ -130,7 +132,7 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
   const [isHovered, setIsHovered] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
+
   const springConfig = { damping: 25, stiffness: 300, mass: 0.5 };
   const imageX = useSpring(mouseX, springConfig);
   const imageY = useSpring(mouseY, springConfig);
@@ -155,7 +157,7 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
   );
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
@@ -194,8 +196,8 @@ const PART_POSITIONS = [
   { left: '35.9%', top: '73.0%', width: '28.2%', height: '19.8%' },   // Benih (bottom seed)
   { left: '31.9%', top: '31.3%', width: '35.8%', height: '51.3%' },   // Batang (central stem)
   { left: '34.5%', top: '43.5%', width: '30.8%', height: '10.3%' },   // Tangan (hands/ears)
-  { left: '4.7%',  top: '21.8%', width: '90.7%', height: '47.0%' },   // Daun (leaves, spans wide)
-  { left: '24.4%', top: '8.3%',  width: '51.3%', height: '28.6%' },   // Bunga (flower/crown top)
+  { left: '4.7%', top: '21.8%', width: '90.7%', height: '47.0%' },   // Daun (leaves, spans wide)
+  { left: '24.4%', top: '8.3%', width: '51.3%', height: '28.6%' },   // Bunga (flower/crown top)
 ];
 
 // Coordinate-based hover detection zones (percentage of logo container)
@@ -259,15 +261,23 @@ const PHILOSOPHY_DATA = [
 export function AboutIkamma() {
   const [activePhilo, setActivePhilo] = useState(-1);
   const [[currentSlide, direction], setPage] = useState([0, 0]);
-  
-  const mockupRoles = ["HRM\nManager", "HRM\nVice Manager", "HRBB\nManager", "HRRB\nVice Manager"];
-  const allManagers = Array.from({ length: 18 }).map((_, i) => ({
-    name: "Dondo D.D.",
-    role: i < 4 ? mockupRoles[i] : "Manager"
-  }));
+
+  const allTeamMembers: { name: string; role: string; img?: string }[] = [
+    { name: "Dondo D.D.", role: "Vice Chairman", img: departmentsData['hr-monitoring'].managerImg },
+    { name: "Dondo D.D.", role: "Chairman", img: departmentsData['hrbb'].managerImg },
+    { name: "Dondo D.D.", role: "Vice Chairman", img: departmentsData['internal'].managerImg },
+    ...Object.values(departmentsData).flatMap((dept) => [
+      { name: dept.manager, role: `${dept.name}\nManager`, img: dept.managerImg },
+      { name: dept.viceManager, role: `${dept.name}\nVice Manager`, img: dept.viceManagerImg },
+    ])
+  ];
   const itemsPerSlide = 4;
-  const totalSlides = Math.ceil(allManagers.length / itemsPerSlide);
-  const currentManagers = allManagers.slice(currentSlide * itemsPerSlide, (currentSlide + 1) * itemsPerSlide);
+  const firstSlideItems = 3;
+  const totalSlides = 1 + Math.ceil((allTeamMembers.length - firstSlideItems) / itemsPerSlide);
+  
+  const currentMembers = currentSlide === 0 
+    ? allTeamMembers.slice(0, firstSlideItems)
+    : allTeamMembers.slice(firstSlideItems + (currentSlide - 1) * itemsPerSlide, firstSlideItems + currentSlide * itemsPerSlide);
 
   const paginate = (newDirection: number) => {
     let nextSlide = (currentSlide + newDirection) % totalSlides;
@@ -279,7 +289,7 @@ export function AboutIkamma() {
     setPage([index, index > currentSlide ? 1 : -1]);
   };
 
-  const renderTeamMember = (member: { name: string; role: string }, i: number, isSlider = false) => {
+  const renderTeamMember = (member: { name: string; role: string; img?: string }, i: number, isSlider = false) => {
     const wrapperClass = "flex flex-col items-center text-center shrink-0 w-44 md:w-56";
     const innerContent = (
       <>
@@ -287,7 +297,7 @@ export function AboutIkamma() {
           {/* Crescent glow at the bottom */}
           <div className="absolute inset-[-3px] rounded-full bg-gradient-to-b from-transparent via-transparent to-white/50 blur-[2px] opacity-80"></div>
           <div className="absolute inset-0 rounded-full overflow-hidden bg-[#1A365D]">
-            <img src={SCRAPBOOK_PHOTOS[8]} alt={member.name} className="w-full h-full object-cover object-center" />
+            <img src={member.img || SCRAPBOOK_PHOTOS[8]} alt={member.name} className="w-full h-full object-cover object-top" />
           </div>
         </div>
         <h3 className="font-inter font-bold text-xl md:text-2xl text-[#081C36] mb-2">{member.name}</h3>
@@ -306,7 +316,7 @@ export function AboutIkamma() {
     }
 
     return (
-      <motion.div 
+      <motion.div
         key={`${member.name}-${i}`}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -326,9 +336,9 @@ export function AboutIkamma() {
       <AboutHero />
 
       <main className="flex-grow relative z-10 max-w-[1400px] mx-auto w-full px-6 md:px-12 bg-white">
-        
+
         {/* Info Block */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "0px 0px -100px 0px" }}
@@ -348,11 +358,11 @@ export function AboutIkamma() {
         {/* Section: Kabinet & Filosofi Logo */}
         <section className="mb-32 pt-16 relative">
           <div className="flex flex-col items-end justify-end mb-16 w-full">
-             <div className="flex flex-wrap items-center justify-end gap-3 md:gap-5 text-4xl md:text-6xl lg:text-7xl text-right">
-                <span className="text-[#081C36]/50 font-inter font-light">—</span>
-                <span className="font-inter font-bold">Kabinet</span>
-                <span className="font-caslon-italic text-[#081C36]">Arsanafafifu</span>
-             </div>
+            <div className="flex flex-wrap items-center justify-end gap-3 md:gap-5 text-4xl md:text-6xl lg:text-7xl text-right">
+              <span className="text-[#081C36]/50 font-inter font-light">—</span>
+              <span className="font-inter font-bold">Kabinet</span>
+              <span className="font-caslon-italic text-[#081C36]">Arsanafafifu</span>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start min-h-[500px] lg:min-h-[600px]">
@@ -409,7 +419,7 @@ export function AboutIkamma() {
 
             {/* Right side - Interactive Logo (Hover-based, coordinate detection) */}
             <div className="w-full flex flex-col items-center justify-center gap-8">
-              <div 
+              <div
                 className="relative w-full max-w-[350px] md:max-w-[420px] lg:max-w-[480px] aspect-square cursor-pointer"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -444,10 +454,10 @@ export function AboutIkamma() {
                         style={{
                           transition: 'filter 0.4s ease, opacity 0.4s ease',
                           opacity: isIdle ? 1 : (isActive ? 1 : 0.2),
-                          filter: isIdle 
-                            ? 'grayscale(0)' 
-                            : (isActive 
-                              ? 'grayscale(0) drop-shadow(0 0 12px rgba(12,166,120,0.5))' 
+                          filter: isIdle
+                            ? 'grayscale(0)'
+                            : (isActive
+                              ? 'grayscale(0) drop-shadow(0 0 12px rgba(12,166,120,0.5))'
                               : 'grayscale(1)'),
                         }}
                       />
@@ -459,7 +469,7 @@ export function AboutIkamma() {
               {/* Dots Navigation */}
               <div className="flex items-center gap-3" onMouseLeave={() => setActivePhilo(-1)}>
                 {PHILOSOPHY_DATA.map((_, i) => (
-                  <button 
+                  <button
                     key={i}
                     onMouseEnter={() => setActivePhilo(i)}
                     className={`rounded-full transition-all duration-300 focus:outline-none cursor-pointer ${activePhilo === i ? 'w-3 h-3 bg-[#081C36]' : 'w-2 h-2 bg-[#081C36]/30 hover:bg-[#081C36]/60'}`}
@@ -479,8 +489,8 @@ export function AboutIkamma() {
               <span className="font-caslon-italic">Our</span> <span className="font-inter font-bold">Vision</span>
             </h2>
           </div>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -543,7 +553,7 @@ export function AboutIkamma() {
               { title: 'Integritas', desc: 'Menegakkan kejujuran, konsistensi, dan komitmen moral dalam setiap tindakan.' },
               { title: 'Keilmuan', desc: 'Mendorong pengembangan intelektual dan pemikiran kritis sebagai landasan setiap gerak organisasi.' }
             ].map((value, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -572,76 +582,65 @@ export function AboutIkamma() {
               <span className="font-caslon-italic">Our</span> <span className="font-inter font-bold">Team</span>
             </h2>
           </div>
-          
-          <div className="w-full flex flex-col items-center justify-center gap-16 md:gap-24">
-             {/* Chairmans (3 items) */}
-             <div className="flex flex-wrap justify-center gap-12 md:gap-20">
-                {[
-                  { name: "Dondo D.D.", role: "Vice Chairman" },
-                  { name: "Dondo D.D.", role: "Chairman" },
-                  { name: "Dondo D.D.", role: "Vice Chairman" }
-                ].map((m, i) => renderTeamMember(m, i, false))}
-             </div>
-             
-             {/* Managers Pagination Slider */}
-             <div className="w-full flex flex-col items-center">
-                <div className="min-h-[350px] relative flex items-center justify-center w-full overflow-hidden">
-                  <AnimatePresence initial={false} custom={direction}>
-                    <motion.div 
-                      key={currentSlide}
-                      custom={direction}
-                      variants={{
-                        enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%' }),
-                        center: { x: 0 },
-                        exit: (dir: number) => ({ x: dir < 0 ? '100%' : '-100%' }),
-                      }}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-                      className="absolute w-full flex flex-wrap justify-center gap-8 md:gap-12 will-change-transform"
-                    >
-                      {currentManagers.map((manager, i) => renderTeamMember(manager, i, true))}
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-                
-                {/* Slider Controls (Arrows + Small Dots) */}
-                <div className="flex items-center gap-6 mt-8 md:mt-12 z-10 relative">
-                   {/* Prev Arrow */}
-                   <button 
-                     onClick={() => paginate(-1)} 
-                     className="w-10 h-10 rounded-full border border-[#081C36]/15 flex items-center justify-center text-[#081C36] hover:bg-[#081C36]/10 hover:border-[#081C36]/40 transition-all focus:outline-none"
-                   >
-                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-                   </button>
-                   
-                   {/* Small Dots */}
-                   <div className="flex items-center gap-3">
-                     {Array.from({ length: totalSlides }).map((_, i) => (
-                       <button 
-                         key={i}
-                         onClick={() => jumpToSlide(i)}
-                         className={`rounded-full transition-all duration-300 focus:outline-none ${currentSlide === i ? 'w-3 h-3 bg-[#081C36]' : 'w-2 h-2 bg-[#081C36]/30 hover:bg-[#081C36]/60'}`}
-                         aria-label={`Go to slide ${i + 1}`}
-                       />
-                     ))}
-                   </div>
 
-                   {/* Next Arrow */}
-                   <button 
-                     onClick={() => paginate(1)} 
-                     className="w-10 h-10 rounded-full border border-[#081C36]/15 flex items-center justify-center text-[#081C36] hover:bg-[#081C36]/10 hover:border-[#081C36]/40 transition-all focus:outline-none"
-                   >
-                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                   </button>
-                </div>
-             </div>
+          <div className="w-full flex flex-col items-center">
+            {/* Unified Team Slider */}
+            <div className="min-h-[650px] md:min-h-[400px] relative flex items-center justify-center w-full overflow-hidden">
+              <AnimatePresence mode="wait" initial={false} custom={direction}>
+                <motion.div
+                  key={currentSlide}
+                  custom={direction}
+                  variants={{
+                    enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
+                    center: { x: 0, opacity: 1 },
+                    exit: (dir: number) => ({ x: dir < 0 ? '100%' : '-100%', opacity: 0 }),
+                  }}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+                  className="absolute w-full flex flex-wrap justify-center gap-8 md:gap-12 will-change-transform"
+                >
+                  {currentMembers.map((member, i) => renderTeamMember(member, i, true))}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Slider Controls (Arrows + Small Dots) */}
+            <div className="flex items-center gap-6 mt-8 md:mt-12 z-10 relative">
+              {/* Prev Arrow */}
+              <button
+                onClick={() => paginate(-1)}
+                className="w-10 h-10 rounded-full border border-[#081C36]/15 flex items-center justify-center text-[#081C36] hover:bg-[#081C36]/10 hover:border-[#081C36]/40 transition-all focus:outline-none"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+              </button>
+
+              {/* Small Dots */}
+              <div className="flex items-center gap-3">
+                {Array.from({ length: totalSlides }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => jumpToSlide(i)}
+                    className={`rounded-full transition-all duration-300 focus:outline-none ${currentSlide === i ? 'w-3 h-3 bg-[#081C36]' : 'w-2 h-2 bg-[#081C36]/30 hover:bg-[#081C36]/60'}`}
+                    aria-label={`Go to slide ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Next Arrow */}
+              <button
+                onClick={() => paginate(1)}
+                className="w-10 h-10 rounded-full border border-[#081C36]/15 flex items-center justify-center text-[#081C36] hover:bg-[#081C36]/10 hover:border-[#081C36]/40 transition-all focus:outline-none"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              </button>
+            </div>
           </div>
         </section>
 
         {/* Section: Our Bureau/Department */}
-        <section className="mb-32 w-full flex flex-col">
+        <section className="w-full flex flex-col">
           <div className="mb-12 flex items-center justify-end gap-3 w-full">
             <span className="text-[#081C36] font-inter text-xl md:text-2xl">06</span>
             <span className="text-[#081C36]/50 text-xl">—</span>

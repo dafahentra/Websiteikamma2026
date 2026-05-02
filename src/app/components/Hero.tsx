@@ -13,7 +13,7 @@ import { SCRAPBOOK_PHOTOS, getRandomPhotos, ALL_PHOTOS } from "../../assets/phot
 const BACKGROUND_IMAGE = ALL_PHOTOS.find(p => p.includes('FotoHRBB2.jpg')) || getRandomPhotos(1)[0];
 
 // A massive scrolling area to accommodate the grand unified sequence
-const SECTION_HEIGHT_PX = 16000;
+const SECTION_HEIGHT_PX = 8000;
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
@@ -120,8 +120,8 @@ export function Hero() {
 
   // Apply a smooth spring physics wrapper to eliminate rigid mouse-wheel tick stiffness
   const progress = useSpring(rawProgress, {
-    stiffness: 150,
-    damping: 35,
+    stiffness: 100,
+    damping: 30,
     restDelta: 0.001
   });
 

@@ -61,8 +61,8 @@ export const departmentsData: Record<string, DepartmentData> = {
   'mm': {
     slug: 'mm',
     name: "Marketing Media",
-    manager: "Manager Name",
-    viceManager: "Vice Manager Name",
+    manager: "Winonazwetta",
+    viceManager: "Keisha Naila",
     description: "Biro Marketing Media merupakan biro yang berfungsi untuk **membangun citra dan wajah IKAMMA** serta memperkenalkannya kepada publik dengan **penyampaian informasi** dan **digitalisasi** melalui berbagai media.",
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
@@ -92,8 +92,8 @@ export const departmentsData: Record<string, DepartmentData> = {
   'internal': {
     slug: 'internal',
     name: "Internal",
-    manager: "Manager Name",
-    viceManager: "Vice Manager Name",
+    manager: "Bachtiar Rizki",
+    viceManager: "Darrel Raditya",
     description: "Internal adalah departemen yang bertugas membangun **rasa saling memiliki**, menumbuhkan **nilai kekeluargaan**, serta **meningkatkan solidaritas** di antara mahasiswa Manajemen FEB UGM. Melalui berbagai program dan kegiatan, Internal berperan dalam menciptakan **lingkungan yang inklusif**, **suportif**, dan **nyaman** sebagai wadah pengembangan relasi serta kebersamaan antar mahasiswa.",
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
@@ -109,8 +109,8 @@ export const departmentsData: Record<string, DepartmentData> = {
   'external': {
     slug: 'external',
     name: "External",
-    manager: "Manager Name",
-    viceManager: "Vice Manager Name",
+    manager: "Glorio Gracias",
+    viceManager: "Made Raditya",
     description: "Departemen External adalah salah satu departemen IKAMMA FEB UGM yang bertujuan untuk **menjadi lini terdepan** dan **representasi organisasi** dalam **menjalin serta mengelola hubungan eksternal.** Departemen ini berfokus pada diplomasi dan profesionalisme dalam membangun kolaborasi strategis dengan perusahaan, organisasi eksternal, serta alumni Manajemen FEB UGM dengan upaya **menciptakan networking yang luas** dan **membuka career pathways bagi mahasiswa Manajemen FEB UGM.**",
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
@@ -127,8 +127,8 @@ export const departmentsData: Record<string, DepartmentData> = {
   'indev': {
     slug: 'indev',
     name: "Intellectual & Development",
-    manager: "Manager Name",
-    viceManager: "Vice Manager Name",
+    manager: "Dionisia Clarisa",
+    viceManager: "Timoti Pasaribu",
     description: "Departemen Intellectual and Development (Indev) merupakan departemen yang menjadi **wadah pengembangan kapasitas anggota** serta **mendukung seluruh mahasiswa Manajemen FEB UGM** untuk **memaksimalkan potensi diri** dalam bidang akademik, nonakademik, dan persiapan karier jangka panjang melalui berbagai program dan fasilitas. Departemen ini berperan sebagai **fasilitator pengembangan** yang sesuai dengan kebutuhan mahasiswa serta menghadirkan kebermanfaatan nyata IKAMMA bagi mahasiswa Manajemen.",
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,

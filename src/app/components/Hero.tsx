@@ -95,6 +95,8 @@ function FlyingPhoto({
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerTop, setContainerTop] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     function measure() {
@@ -123,6 +125,20 @@ export function Hero() {
     restDelta: 0.001
   });
 
+  // Auto-pause video when scrolled out of view to save performance
+  useEffect(() => {
+    const unsubscribe = progress.on("change", (latest) => {
+      if (videoRef.current) {
+        if (latest > 0.4 && isPlaying) {
+          videoRef.current.pause();
+        } else if (latest <= 0.4 && isPlaying) {
+          videoRef.current.play().catch(() => {});
+        }
+      }
+    });
+    return () => unsubscribe();
+  }, [progress, isPlaying]);
+
   /* === PHASE 1: Hero Zoom Out === */
   // 0.00 to 0.10
   // Non-linear array creates an exponential deceleration curve for a cinematic landing
@@ -135,49 +151,30 @@ export function Hero() {
   const captionOpacity = useTransform(progress, [0.0, 0.015], [1, 0]);
 
   /* === PHASE 2: Text turns white & Logo appears === */
-  // 0.04 to 0.08
-  const whiteLayerOpacity = useTransform(progress, [0.04, 0.08], [0, 1]);
-  const logoOpacity = useTransform(progress, [0.04, 0.08], [0, 1]);
-  const logoY = useTransform(progress, [0.04, 0.08], ["-24px", "0px"]);
+  // 0.04 to 0.07
+  const whiteLayerOpacity = useTransform(progress, [0.04, 0.07], [0, 1]);
+  const logoOpacity = useTransform(progress, [0.04, 0.07], [0, 1]);
+  const logoY = useTransform(progress, [0.04, 0.07], ["-24px", "0px"]);
 
   /* === PHASE 3: Hero Flies Past Camera === */
-  // 0.15 to 0.25 (User zooms into the text!)
+  // 0.08 to 0.15 (User zooms into the text!)
   // Non-linear array creates an exponential acceleration curve for realistic camera fly-through
   const heroScale = useTransform(
     progress,
-    [0.15, 0.20, 0.23, 0.25],
+    [0.08, 0.11, 0.13, 0.15],
     [1, 3, 12, 40]
   );
-  const heroOpacity = useTransform(progress, [0.20, 0.25], [1, 0]);
+  const heroOpacity = useTransform(progress, [0.11, 0.15], [1, 0]);
 
-  // Reduced layout to 25 photos for better balance and performance
+  // Disable clicks on hero video once we fly past it
+  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.15 ? "auto" : "none");
+
+  // Reduced to 12 photos for extreme performance optimization
   const PIONIR_LAYOUT = [
-    { x: -28, y: -18, w: 16 }, // Main top left
-    { x: 32, y: 22, w: 18 },   // Main bottom right
-    { x: -12, y: 28, w: 20 },  // Main bottom left
-    { x: 25, y: -25, w: 14 },  // Secondary top right
-    { x: 2, y: -36, w: 12 },   // Small top center
-    { x: -42, y: 8, w: 13 },   // Small far left
-    { x: 44, y: -2, w: 12 },   // Small far right
-    { x: 12, y: 38, w: 16 },   // Secondary bottom center
-    { x: -34, y: 36, w: 12 },  // Small bottom far left
-    { x: 36, y: -38, w: 13 },  // Small top far right
-    { x: -6, y: 6, w: 18 },    // Center left
-    { x: 18, y: 8, w: 14 },    // Center right
-
-    { x: -45, y: -30, w: 11 }, // Far Top Left
-    { x: 45, y: -25, w: 14 },  // Far Top Right
-    { x: -20, y: -38, w: 15 }, // Mid-Top Left
-    { x: 15, y: -42, w: 13 },  // Mid-Top Right
-    { x: -46, y: 25, w: 16 },  // Far Bottom Left
-    { x: 42, y: 38, w: 12 },   // Far Bottom Right
-    { x: -25, y: 12, w: 14 },  // Inner Mid Left
-    { x: 22, y: -5, w: 17 },   // Inner Mid Right
-    { x: -5, y: -15, w: 19 },  // Inner Top Center
-    { x: 5, y: 25, w: 15 },    // Inner Bottom Center
-
-    { x: -52, y: -15, w: 10 }, // Extreme Left
-    { x: 52, y: 10, w: 11 },   // Extreme Right
+    { x: -28, y: -18, w: 16 }, { x: 32, y: 22, w: 18 }, { x: -12, y: 28, w: 20 },
+    { x: 25, y: -25, w: 14 }, { x: 2, y: -36, w: 12 }, { x: -42, y: 8, w: 13 },
+    { x: 44, y: -2, w: 12 }, { x: 12, y: 38, w: 16 }, { x: -34, y: 36, w: 12 },
+    { x: 36, y: -38, w: 13 }, { x: -6, y: 6, w: 18 }, { x: 18, y: 8, w: 14 }
   ];
 
   const photoConfigs = useMemo(() => {
@@ -191,7 +188,7 @@ export function Hero() {
 
       // Sequential appearance: strict 1-by-1 staggered timeline
       const seq = i / shuffledLayout.length;
-      const startP = 0.25 + (seq * 0.30);
+      const startP = 0.15 + (seq * 0.15);
 
       // Variable duration so some fly slightly faster/slower, adding depth
       const duration = 0.12 + Math.random() * 0.05;
@@ -211,26 +208,29 @@ export function Hero() {
   }, []);
 
   /* === PHASE 5: Background Photo === */
-  // Spawns during the scrapbook phase (0.45), hits full screen (0.65), 
-  // and then slowly 'elongates' (zooms) to 1.1 for a cinematic effect until the end.
-  const finalScale = useTransform(progress, [0.45, 0.65, 1.0], [0.15, 1, 1.15]);
+  // Spawns after all scrapbook photos have at least started appearing (0.30)
+  // Hits full screen (0.50), and then slowly 'elongates' (zooms) to 1.15
+  const finalScale = useTransform(progress, [0.30, 0.50, 1.0], [0.15, 1, 1.15]);
 
   // Fades in and blurs just like the other scrapbook photos
-  const finalOpacity = useTransform(progress, [0.45, 0.50], [0, 1]);
-  const finalBlur = useTransform(progress, [0.45, 0.50], [10, 0]);
+  const finalOpacity = useTransform(progress, [0.30, 0.35], [0, 1]);
+  const finalBlur = useTransform(progress, [0.30, 0.35], [10, 0]);
   const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
 
   // Parallax effect: A subtle, gentle slow pan up.
-  const parallaxY = useTransform(progress, [0.85, 1.00], ["0vh", "-10vh"]);
+  const parallaxY = useTransform(progress, [0.75, 1.00], ["0vh", "-10vh"]);
 
   // The dark overlay ONLY appears at the very end when it becomes the background
-  const overlayOpacity = useTransform(progress, [0.60, 0.70], [0, 0.50]);
+  const overlayOpacity = useTransform(progress, [0.45, 0.55], [0, 0.50]);
+
+  // Pointer events control: only allow clicks on content when it's visible
+  const contentPointerEvents = useTransform(progress, (v: number) => v > 0.40 ? "auto" : "none");
 
   /* === PHASE 6: About IKAMMA Content Fades In === */
-  // 0.65 to 0.75
-  const contentOpacity = useTransform(progress, [0.65, 0.75], [0, 1]);
+  // 0.50 to 0.60
+  const contentOpacity = useTransform(progress, [0.50, 0.60], [0, 1]);
   // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
-  const contentY = useTransform(progress, [0.65, 0.75, 1.0], [80, 0, -400]);
+  const contentY = useTransform(progress, [0.50, 0.60, 1.0], [80, 0, -400]);
 
   return (
     <div ref={containerRef} className="relative w-full" style={{ height: SECTION_HEIGHT_PX }}>
@@ -267,8 +267,12 @@ export function Hero() {
 
         {/* === PHASE 6: Content === */}
         <motion.div
-          className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-start md:justify-center w-full pt-[140px] md:pt-[180px] lg:pt-[200px] pb-[4vh] md:pb-[6vh] text-left"
-          style={{ opacity: contentOpacity, y: contentY }}
+          className="absolute inset-0 z-50 flex flex-col justify-start md:justify-center w-full pt-[140px] md:pt-[180px] lg:pt-[200px] pb-[4vh] md:pb-[6vh] text-left"
+          style={{ 
+            opacity: contentOpacity, 
+            y: contentY,
+            pointerEvents: contentPointerEvents 
+          }}
         >
           {/* Main Content inside restricted width */}
           <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto">
@@ -362,16 +366,49 @@ export function Hero() {
 
         {/* === PHASE 1, 2 & 3: Hero Initial State === */}
         <motion.div
-          className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
-          style={{ scale: heroScale, opacity: heroOpacity }}
+          className="absolute inset-0 z-40 flex items-center justify-center"
+          style={{ 
+            scale: heroScale, 
+            opacity: heroOpacity,
+            pointerEvents: heroPointerEvents 
+          }}
         >
-          {/* Photo behind the mask */}
+          {/* Video Layer */}
           <div className="absolute inset-0 z-0">
-            <img src={HERO_IMAGE} alt="Graduation" className="w-full h-full object-cover" />
+            <video
+              ref={videoRef}
+              src={HERO_IMAGE}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            />
             <motion.div
               className="absolute inset-0 bg-white"
               style={{ opacity: whiteLayerOpacity }}
             />
+          </div>
+
+          {/* Click Overlay - Above SVG mask (z-10) so clicks work */}
+          <div 
+            className="absolute inset-0 z-20 cursor-default pointer-events-auto"
+            onClick={() => {
+              if (videoRef.current) {
+                if (isPlaying) videoRef.current.pause();
+                else videoRef.current.play();
+                setIsPlaying(!isPlaying);
+              }
+            }}
+          >
+            {/* Status indicator when paused */}
+            {!isPlaying && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity">
+                <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* SVG Mask Layer */}

@@ -77,8 +77,8 @@ export const departmentsData: Record<string, DepartmentData> = {
   'advance': {
     slug: 'advance',
     name: "Administration & Finance",
-    manager: "Manager Name",
-    viceManager: "Vice Manager Name",
+    manager: "Belat Puspa",
+    viceManager: "Fikri Akbar",
     description: "Biro Administration and Finance (Advance) adalah biro yang berperan untuk **mengelola administrasi dan keuangan** di IKAMMA serta memastikan semua kegiatan organisasi berjalan dengan **tertib**, **efisien**, dan **transparan**. Advance bertanggung jawab terhadap seluruh proses administrasi, pengelolaan keuangan, serta inventarisasi aset organisasi yang berguna untuk **mendukung kelancaran program kerja di IKAMMA**.",
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,

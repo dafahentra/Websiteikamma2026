@@ -25,7 +25,7 @@ export const departmentsData: Record<string, DepartmentData> = {
     name: "Human Resources Birdept Buddy",
     manager: "Dondo D.D.",
     viceManager: "Abednego S.",
-    description: "Human Resources Birdept Buddy (HRBB) merupakan biro yang berperan dalam pengembangan sumber daya manusia yang ada pada kepengurusan IKAMMA, khususnya pada pendampingan program kerja, pengembangan kompetensi, serta apresiasi kinerja. Biro HR Birdept Buddy akan memastikan setiap biro/departemen merasa didukung dan didengar, sehingga kesejahteraan dan produktivitas di IKAMMA tetap terjaga.",
+    description: "Human Resources Birdept Buddy (HRBB) merupakan biro yang berperan dalam **pengembangan sumber daya manusia** yang ada pada kepengurusan IKAMMA, khususnya pada pendampingan program kerja, pengembangan kompetensi, serta apresiasi kinerja. Biro HR Birdept Buddy akan memastikan setiap biro/departemen merasa didukung dan didengar, sehingga kesejahteraan dan produktivitas di IKAMMA tetap terjaga.",
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",

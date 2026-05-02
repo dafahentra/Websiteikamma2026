@@ -142,8 +142,8 @@ export const departmentsData: Record<string, DepartmentData> = {
   'entre': {
     slug: 'entre',
     name: "Entrepreneurship",
-    manager: "Manager Name",
-    viceManager: "Vice Manager Name",
+    manager: "Rafif Imtiyaaz",
+    viceManager: "Ivan Tanzil",
     description: "Departemen Entrepreneurship merupakan departemen yang berfokus pada **membangun jiwa kewirausahaan** di lingkungan manajemen FEB UGM. Departemen Entrepreneurship juga **mengembangkan potensi serta minat** mahasiswa Manajemen FEB UGM terhadap **bidang kewirausahaan**.",
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,

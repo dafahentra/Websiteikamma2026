@@ -114,11 +114,11 @@ export function EventsSection() {
   });
 
   // Calculate 0 to 1 unfold progression based on scroll
-  const unfoldProgress = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
+  const unfoldProgress = useTransform(scrollYProgress, [0.05, 0.70], [0, 1]);
 
   return (
     <>
-      <section ref={sectionRef} id="events" className="relative w-full h-[200vh] bg-[#f8f9fa]">
+      <section ref={sectionRef} id="events" className="relative w-full h-[120vh] bg-[#f8f9fa]">
         <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
           {/* Background with Heavy White Overlay */}
           <div className="absolute inset-0 z-0">

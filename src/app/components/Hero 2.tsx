@@ -11,8 +11,8 @@ import { SCRAPBOOK_PHOTOS, HERO_BG } from "../../assets/photos";
 
 const BACKGROUND_IMAGE = HERO_BG;
 
-// A massive scrolling area to accommodate the grand unified sequence
-const SECTION_HEIGHT_PX = 5000;
+// A massive scrolling area - shortened further to 6000 to make it more compact
+const SECTION_HEIGHT_PX = 6000;
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
@@ -135,7 +135,7 @@ export function Hero() {
         if (latest > 0.4) {
           videoRef.current.pause();
         } else {
-          videoRef.current.play().catch(() => { });
+          videoRef.current.play().catch(() => {});
         }
       }
     });
@@ -222,7 +222,7 @@ export function Hero() {
 
   // Parallax effect: A subtle, gentle slow pan up.
   // Parallax effect: A much faster, dramatic upward scroll for the background photo
-  const parallaxY = useTransform(progress, [0.40, 1.00], ["0vh", "-10vh"]);
+  const parallaxY = useTransform(progress, [0.40, 1.00], ["0vh", "-50vh"]);
 
   // The dark overlay ONLY appears at the very end when it becomes the background
   const overlayOpacity = useTransform(progress, [0.35, 0.45], [0, 0.50]);
@@ -234,7 +234,7 @@ export function Hero() {
   // 0.40 to 0.48
   const contentOpacity = useTransform(progress, [0.40, 0.48], [0, 1]);
   // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
-  const contentY = useTransform(progress, [0.40, 0.55, 0.85], [80, 0, -80]);
+  const contentY = useTransform(progress, [0.40, 0.48, 0.80], [80, 0, -400]);
 
   // Display control for the pause indicator: completely hide it after the hero phase
   const indicatorDisplay = useTransform(progress, (v: number) => v < 0.12 ? "flex" : "none");
@@ -242,12 +242,12 @@ export function Hero() {
   // Handle video pause via click - uses a native handler on the sticky container
   const handleVideoPauseClick = (e: React.MouseEvent) => {
     const currentProgress = rawProgress.get();
-
+    
     // Logic: 
     // - If playing: only allow pausing in the hero phase (< 0.12)
     // - If paused: ALWAYS allow unpausing so the user doesn't get stuck
     if (isPlaying && currentProgress > 0.12) return;
-
+    
     // Don't intercept clicks on navigation or other active UI elements
     const target = e.target as HTMLElement;
     if (target.closest('nav') || target.closest('button') || target.closest('a')) return;
@@ -257,7 +257,7 @@ export function Hero() {
         videoRef.current.pause();
         userPaused.current = true;
       } else {
-        videoRef.current.play().catch(() => { });
+        videoRef.current.play().catch(() => {});
         userPaused.current = false;
       }
       setIsPlaying(!isPlaying);
@@ -302,32 +302,30 @@ export function Hero() {
 
         {/* === PHASE 6: Content === */}
         <motion.div
-          className="absolute inset-0 z-50 flex flex-col justify-start md:justify-center w-full pt-[80px] md:pt-[110px] lg:pt-[130px] pb-[4vh] md:pb-[6vh] text-left"
-          style={{
-            opacity: contentOpacity,
+          className="absolute inset-0 z-50 flex flex-col justify-start md:justify-center w-full pt-[20px] md:pt-[40px] lg:pt-[60px] pb-0 text-left"
+          style={{ 
+            opacity: contentOpacity, 
             y: contentY,
-            pointerEvents: contentPointerEvents
+            pointerEvents: contentPointerEvents 
           }}
         >
-          {/* Main Content inside restricted width - Mobile: pt-[21px] (moved up another 50px), Desktop: pt-[101px] */}
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto pt-[0px] md:pt-[51px]">
-
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
-              {/* Left Column */}
+              {/* Left Column: What is IKAMMA */}
               <div className="flex flex-col text-left">
-                <h2 className="text-white text-3xl md:text-5xl flex items-center justify-start gap-3 mb-4 md:mb-8">
+                <h2 className="text-white text-3xl md:text-5xl flex items-center justify-start gap-3 mb-4 md:mb-6">
                   <span className="text-white">—</span>
                   <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">What is</span>
                   <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">IKAMMA</span>
                 </h2>
-                <div className="text-white/90 space-y-3 md:space-y-6">
+                <div className="text-white/90 space-y-3 md:space-y-4">
                   <p className="text-sm md:text-lg leading-relaxed">
-                    <span className="font-bold italic">Ikatan Keluarga Mahasiswa Manajemen (IKAMMA)</span> merupakan sebuah organisasi himpunan mahasiswa Program Studi Manajemen di Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
+                    <span className="font-bold italic">Ikatan Keluarga Mahasiswa Manajemen (IKAMMA)</span> merupakan wadah aspirasi dan pengembangan bagi seluruh mahasiswa Manajemen FEB UGM. Kami berfokus pada kolaborasi, inovasi, dan nilai kekeluargaan.
                   </p>
                   <p className="text-sm md:text-lg leading-relaxed hidden sm:block">
-                    IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
+                    IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri melalui empat basis nilai: kekeluargaan, profesionalisme, integritas, dan keilmuan.
                   </p>
-                  <div className="pt-2 md:pt-4 flex justify-start">
+                  <div className="pt-2 flex justify-start">
                     <AnimatedButton href="/about">
                       See More
                     </AnimatedButton>
@@ -335,30 +333,27 @@ export function Hero() {
                 </div>
               </div>
 
-              {/* Right Column */}
+              {/* Right Column: Company Profile */}
               <div className="flex flex-col text-right w-full">
-                <h2 className="text-white text-3xl md:text-5xl flex items-center justify-end gap-2 sm:gap-3 mb-4 md:mb-8">
+                <h2 className="text-white text-3xl md:text-5xl flex items-center justify-end gap-2 sm:gap-3 mb-4 md:mb-6">
                   <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Company</span>
                   <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Profile</span>
                   <span className="text-white">—</span>
                 </h2>
                 <div className="w-full max-w-md ml-auto">
-                  {/* Embedded YouTube Player */}
-                  <div className="w-full aspect-video bg-[#D9D9D9] rounded-2xl md:rounded-[2rem] shadow-lg mb-2 md:mb-4 relative overflow-hidden">
+                  <div className="w-full aspect-video bg-[#D9D9D9] rounded-2xl md:rounded-[2rem] shadow-lg mb-2 md:mb-4 relative overflow-hidden pointer-events-auto">
                     <iframe
                       className="w-full h-full"
                       src="https://www.youtube.com/embed/8VO2f7XQ7Tw?rel=0"
                       title="YouTube video player"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
                       allowFullScreen
                     ></iframe>
                   </div>
-
                   <div className="text-right">
-                    <a href="#video" className="text-white hover:text-[#081C36] transition-colors inline-flex items-center gap-2 text-xs md:text-sm underline underline-offset-4">
-                      Click to See Full Video <ArrowRight size={12} className="md:w-[14px] md:h-[14px]" />
+                    <a href="#video" className="text-white hover:text-white/60 transition-colors inline-flex items-center gap-2 text-xs md:text-sm underline underline-offset-4">
+                      Click to See Full Video <ArrowRight size={12} />
                     </a>
                   </div>
                 </div>
@@ -366,20 +361,18 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Spacing adjusted to 40px (mt-10) from content above */}
-          <div className="mt-10 w-full pointer-events-auto">
-            <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-6 md:mb-10 flex items-center justify-center gap-2 md:gap-4">
+          {/* Spacing reduced to mt-4 to bring logos higher */}
+          <div className="mt-4 w-full pointer-events-auto">
+            <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-4 md:mb-8 flex items-center justify-center gap-2 md:gap-4">
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>
             </h3>
-            {/* Infinite Marquee Container */}
             <div className="w-full overflow-hidden flex whitespace-nowrap">
               <motion.div
                 className="flex gap-8 md:gap-16 items-center min-w-fit pr-8 md:pr-16"
                 animate={{ x: ["0%", "-50%"] }}
                 transition={{ ease: "linear", duration: 30, repeat: Infinity }}
               >
-                {/* We render 12 logos twice (24 total) to create a perfect, seamless endless loop! */}
                 {[...Array(24)].map((_, i) => (
                   <IkammaLogo key={i} className="w-20 h-20 md:w-32 md:h-32 object-contain opacity-80 hover:opacity-100 transition-opacity flex-shrink-0" />
                 ))}
@@ -401,10 +394,10 @@ export function Hero() {
         {/* === PHASE 1, 2 & 3: Hero Initial State === */}
         <motion.div
           className="absolute inset-0 z-40 flex items-center justify-center"
-          style={{
-            scale: heroScale,
+          style={{ 
+            scale: heroScale, 
             opacity: heroOpacity,
-            pointerEvents: heroPointerEvents
+            pointerEvents: heroPointerEvents 
           }}
         >
           {/* Video Layer */}

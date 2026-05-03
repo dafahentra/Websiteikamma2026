@@ -260,8 +260,12 @@ export function Hero() {
   /* === PHASE 6: About IKAMMA Content Fades In === */
   // 0.82 to 0.85 - SNAPPY FADE
   const contentOpacity = useTransform(progress, [0.82, 0.85], [0, 1]);
-  // Locomotive scroll effect: Stops at 0 on mobile so it doesn't move up further
-  const contentY = useTransform(progress, [0.82, 0.88, 1.0], isMobile ? [60, 0, 0] : [60, 0, -200]);
+  // Locomotive scroll effect: Locks at 0 (centered) at 0.90 progress for a seamless transition buffer
+  const contentY = useTransform(
+    progress,
+    [0.82, 0.88, 0.90, 1.0],
+    [60, 0, 0, 0]
+  );
 
   return (
     <div ref={containerRef} className="relative w-full" style={{ height: sectionHeight }}>
@@ -304,8 +308,8 @@ export function Hero() {
             pointerEvents: contentPointerEvents
           }}
         >
-          {/* Main Content inside restricted width - Mobile: pt-[21px] (moved up another 50px), Desktop: pt-[101px] */}
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto pt-[0px] md:pt-[51px]">
+          {/* Main Content inside restricted width - Mobile: pt-[21px], Desktop: pt-[26px] (moved up 25px) */}
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto pt-[0px] md:pt-[26px]">
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 lg:gap-16 items-start">
               {/* Left Column */}
@@ -363,7 +367,7 @@ export function Hero() {
 
           {/* Spacing adjusted for better mobile breathing room (mt-5 = 20px) */}
           <div className="mt-5 md:mt-8 w-full pointer-events-auto">
-            <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-3 md:mb-10 flex items-center justify-center gap-2 md:gap-4">
+            <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-3 md:mb-4 flex items-center justify-center gap-2 md:gap-4">
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>
             </h3>

@@ -2,10 +2,10 @@ import { useRef, useEffect, useState, useMemo } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate, MotionValue, useSpring } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
-import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
+import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 
 import HERO_IMAGE from "../../assets/VidProf.mp4";
-import LOGO from "../../assets/LogoPutih.svg";
+import LOGO from "../../assets/LogoIKAMMA/LogoPutih.svg";
 
 import { SCRAPBOOK_PHOTOS, HERO_BG } from "../../assets/photos";
 

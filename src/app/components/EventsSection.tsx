@@ -2,10 +2,10 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
-import LOGO1 from '../../assets/LogoPutih.svg';
-import LOGO2 from '../../assets/LogoPutih.svg';
-import LOGO3 from '../../assets/LogoPutih.svg';
-import LOGO4 from '../../assets/LogoPutih.svg';
+import LOGO1 from '../../assets/LogoIKAMMA/LogoPutih.svg';
+import LOGO2 from '../../assets/LogoIKAMMA/LogoPutih.svg';
+import LOGO3 from '../../assets/LogoIKAMMA/LogoPutih.svg';
+import LOGO4 from '../../assets/LogoIKAMMA/LogoPutih.svg';
 
 import { EVENT_PHOTOS, EVENTS_BG } from "../../assets/photos";
 const BACKGROUND_IMAGE = EVENTS_BG;

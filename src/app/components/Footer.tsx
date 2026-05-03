@@ -1,6 +1,6 @@
 import { Mail, Phone } from 'lucide-react';
 import { Link } from 'react-router';
-import Logo from '../../assets/Logo.svg';
+import Logo from '../../assets/LogoIKAMMA/LogoHitam.svg';
 import { supabase } from '../../lib/supabase';
 import { useEffect, useState } from 'react';
 

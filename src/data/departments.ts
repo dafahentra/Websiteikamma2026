@@ -1,5 +1,5 @@
-import DondoFoto from '../assets/DondoFoto.png';
-import AbedFoto from '../assets/AbedFoto.png';
+import DondoFoto from '../assets/FotoPengurus/DondoFoto.png';
+import AbedFoto from '../assets/FotoPengurus/AbedFoto.png';
 import LogoHRM from '../assets/LogoBirDept/HRM.svg';
 import LogoHRBB from '../assets/LogoBirDept/HRBB.svg';
 import LogoAdvance from '../assets/LogoBirDept/ADVANCE.svg';

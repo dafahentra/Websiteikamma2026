@@ -2,10 +2,10 @@ import { useRef, useEffect, useState, useMemo } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate, MotionValue, useSpring } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
-import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
+import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 
-import HERO_IMAGE from "../../assets/VidProf.mp4";
-import LOGO from "../../assets/LogoPutih.svg";
+import HERO_IMAGE from "../../assets/Background/VidProf.mp4";
+import LOGO from "../../assets/LogoIKAMMA/LogoPutih.svg";
 import { supabase } from "../../lib/supabase";
 
 import { SCRAPBOOK_PHOTOS, HERO_BG } from "../../assets/photos";
@@ -102,6 +102,7 @@ export function Hero() {
   const userPaused = useRef(false); // Track if user manually paused
   const [sectionHeight, setSectionHeight] = useState(3000);
   const [videoUrl, setVideoUrl] = useState("https://www.youtube.com/watch?v=8VO2f7XQ7Tw");
+  const [isCompanyVideoPlaying, setIsCompanyVideoPlaying] = useState(false);
 
   // Helper to convert YouTube URL to Embed URL
   const getEmbedUrl = (url: string) => {
@@ -261,43 +262,12 @@ export function Hero() {
   // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
   const contentY = useTransform(progress, [0.40, 0.55, 0.85], [80, 0, -80]);
 
-  // Display control for the pause indicator: completely hide it after the hero phase
-  const indicatorDisplay = useTransform(progress, (v: number) => v < 0.12 ? "flex" : "none");
-
-  // Handle video pause via click - uses a native handler on the sticky container
-  const handleVideoPauseClick = (e: React.MouseEvent) => {
-    const currentProgress = rawProgress.get();
-
-    // Logic: 
-    // - If playing: only allow pausing in the hero phase (< 0.12)
-    // - If paused: ALWAYS allow unpausing so the user doesn't get stuck
-    if (isPlaying && currentProgress > 0.12) return;
-
-    // Don't intercept clicks on navigation or other active UI elements
-    const target = e.target as HTMLElement;
-    if (target.closest('nav') || target.closest('button') || target.closest('a')) return;
-
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-        userPaused.current = true;
-      } else {
-        videoRef.current.play().catch(() => { });
-        userPaused.current = false;
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
   return (
     <div ref={containerRef} className="relative w-full" style={{ height: sectionHeight }}>
       <div
         className="sticky top-0 w-full h-screen overflow-hidden bg-[#0C2340]"
         style={{ perspective: "1000px" }}
-        onClickCapture={handleVideoPauseClick}
       >
-
-        {/* Visual indicators removed to keep the pause feature "secret" as requested */}
 
         {/* === PHASE 5 & 6: Final Background and Content === */}
         {/* Placed lowest in the DOM so it's behind flying photos */}

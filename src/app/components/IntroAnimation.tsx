@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
 import { HERO_IMAGE } from "../../assets/photos";
-import LOGO from "../../assets/LogoPutih.svg";
+import LOGO from "../../assets/LogoIKAMMA/LogoPutih.svg";
 
 export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<"intro" | "zoomout" | "done">("intro");

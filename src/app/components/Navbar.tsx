@@ -9,7 +9,7 @@ import {
   Variants,
 } from 'motion/react';
 import { Home, Info, BookOpen, CalendarDays, Phone, ChevronDown, ChevronRight } from 'lucide-react';
-import LogoPutihRaw from '../../assets/LogoPutih.svg?raw';
+import LogoPutihRaw from '../../assets/LogoIKAMMA/LogoPutih.svg?raw';
 
 /* ── Ekstrak isi SVG (path, dll) dari raw string ─────────────────── */
 const svgInner = LogoPutihRaw

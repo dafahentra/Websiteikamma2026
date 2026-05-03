@@ -5,8 +5,8 @@
   import "./styles/index.css";
   
   // Import logos for animated favicon
-  import LogoHitam from "./assets/LogoHitam.svg";
-  import LogoPutih from "./assets/LogoPutih.svg";
+  import LogoHitam from "./assets/LogoIKAMMA/LogoHitam.svg";
+  import LogoPutih from "./assets/LogoIKAMMA/LogoPutih.svg";
 
   // Animated Favicon logic
   const favicons = [LogoHitam, LogoPutih];

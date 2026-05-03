@@ -32,7 +32,6 @@ import scrapbook9 from './Compressed/Int/FotoInt9.jpg';
 import scrapbook10 from './Compressed/Int/FotoInt10.jpg';
 import scrapbook11 from './Compressed/Ext/FotoExt1.jpg';
 import scrapbook12 from './Compressed/Ext/FotoExt2.jpg';
-import scrapbook12 from './Compressed/Ext/FotoExt2.jpg';
 
 // ── Events Section (carousel cards + background) ────────────────────
 import eventCard1 from './Compressed/Ext/FotoExt13.jpg';

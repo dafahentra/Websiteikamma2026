@@ -1,8 +1,8 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
-import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
+import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 
 import { SCRAPBOOK_PHOTOS, ABOUT_BACKGROUND } from '../../assets/photos';
 import { supabase } from "../../lib/supabase";

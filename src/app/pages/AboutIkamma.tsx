@@ -3,16 +3,16 @@ import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import LogoPutihRaw from '../../assets/LogoPutih.svg?raw';
-import LogoHitamRaw from '../../assets/LogoHitam.svg?raw';
+import LogoPutihRaw from '../../assets/LogoIKAMMA/LogoPutih.svg?raw';
+import LogoHitamRaw from '../../assets/LogoIKAMMA/LogoHitam.svg?raw';
 import { SCRAPBOOK_PHOTOS, DEPT_PHOTOS } from '../../assets/photos';
 import { departmentsData } from '../../data/departments';
 import { CORE_LEADERS, ORGANIZATION_LIST } from '../../data/team';
-import BenihSvg from '../../assets/Benih.svg';
-import BatangSvg from '../../assets/Batang.svg';
-import TanganSvg from '../../assets/Tangan.svg';
-import DaunSvg from '../../assets/Daun.svg';
-import BungaSvg from '../../assets/Bunga.svg';
+import BenihSvg from '../../assets/LogoKabinet/Benih.svg';
+import BatangSvg from '../../assets/LogoKabinet/Batang.svg';
+import TanganSvg from '../../assets/LogoKabinet/Tangan.svg';
+import DaunSvg from '../../assets/LogoKabinet/Daun.svg';
+import BungaSvg from '../../assets/LogoKabinet/Bunga.svg';
 import { Users, Briefcase, ShieldCheck, GraduationCap } from 'lucide-react';
 
 // Extract SVG inner paths

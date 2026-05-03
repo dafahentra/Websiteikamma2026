@@ -1,6 +1,6 @@
-import AurelliaFoto from '../assets/DondoFoto.png';
-import ArwandaFoto from '../assets/DondoFoto.png';
-import FelitaFoto from '../assets/DondoFoto.png';
+import AurelliaFoto from '../assets/FotoPengurus/DondoFoto.png';
+import ArwandaFoto from '../assets/FotoPengurus/DondoFoto.png';
+import FelitaFoto from '../assets/FotoPengurus/DondoFoto.png';
 
 export interface TeamMember {
   name: string;

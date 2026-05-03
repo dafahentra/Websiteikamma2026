@@ -3,7 +3,7 @@ import { useParams, useLocation } from 'react-router';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import LogoPutihRaw from '../../assets/LogoPutih.svg?raw';
+import LogoPutihRaw from '../../assets/LogoIKAMMA/LogoPutih.svg?raw';
 import { departmentsData } from '../../data/departments';
 
 // Extract SVG inner paths for the background logo
@@ -93,7 +93,7 @@ export function DepartmentDetail() {
             <img 
               src={department.logo} 
               alt={`${department.name} Logo`}
-              className="w-full h-auto opacity-10 mix-blend-multiply" 
+              className="w-full h-auto opacity-15 mix-blend-multiply" 
             />
           </div>
 

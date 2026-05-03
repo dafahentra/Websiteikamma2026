@@ -9,6 +9,68 @@ import LogoExternal from '../assets/LogoBirDept/EXTERNAL.svg';
 import LogoIndev from '../assets/LogoBirDept/INDEV.svg';
 import LogoEntre from '../assets/LogoBirDept/ENTRE.svg';
 import LogoSparta from '../assets/LogoBirDept/SPARTA.svg';
+import GroupHRM from '../assets/LogoBirDept/SPARTA.svg';
+import MeetingHRM from '../assets/LogoBirDept/SPARTA.svg';
+import ActivityHRM from '../assets/LogoBirDept/SPARTA.svg';
+import GroupHRBB from '../assets/LogoBirDept/SPARTA.svg';
+import MeetingHRBB from '../assets/LogoBirDept/SPARTA.svg';
+import ActivityHRBB from '../assets/LogoBirDept/SPARTA.svg';
+import GroupInternal from '../assets/LogoBirDept/SPARTA.svg';
+import MeetingInternal from '../assets/LogoBirDept/SPARTA.svg';
+import ActivityInternal from '../assets/LogoBirDept/SPARTA.svg';
+import GroupExternal from '../assets/LogoBirDept/SPARTA.svg';
+import MeetingExternal from '../assets/LogoBirDept/SPARTA.svg';
+import ActivityExternal from '../assets/LogoBirDept/SPARTA.svg';
+import GroupIndev from '../assets/LogoBirDept/SPARTA.svg';
+import MeetingIndev from '../assets/LogoBirDept/SPARTA.svg';
+import ActivityIndev from '../assets/LogoBirDept/SPARTA.svg';
+import GroupEntre from '../assets/LogoBirDept/SPARTA.svg';
+import MeetingEntre from '../assets/LogoBirDept/SPARTA.svg';
+import ActivityEntre from '../assets/LogoBirDept/SPARTA.svg';
+import GroupSparta from '../assets/LogoBirDept/SPARTA.svg';
+import MeetingSparta from '../assets/LogoBirDept/SPARTA.svg';
+import ActivitySparta from '../assets/LogoBirDept/SPARTA.svg';
+import Proker1 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker2 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker3 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker4 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker5 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker6 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker7 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker8 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker9 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker10 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker11 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker12 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker13 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker14 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker15 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker16 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker17 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker18 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker19 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker20 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker21 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker22 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker23 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker24 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker25 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker26 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker27 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker28 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker29 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker30 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker31 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker32 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker33 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker34 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker35 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker36 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker37 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker38 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker39 from '../assets/LogoBirDept/SPARTA.svg';
+import Proker40 from '../assets/LogoBirDept/SPARTA.svg';
+
 
 export interface WorkProgram {
   id: number;
@@ -205,7 +267,7 @@ export const departmentsData: Record<string, DepartmentData> = {
       { id: 37, title: "SPRITE", img: "/program_thumbnail_1777615687215.png" },
       { id: 38, title: "POSKAM", img: "/program_thumbnail_1777615687215.png" },
       { id: 39, title: "Management's Festival", img: "/program_thumbnail_1777615687215.png" },
-      { id: 32, title: "Gadjah Mada Super Cup", img: "/program_thumbnail_1777615687215.png" },
+      { id: 40, title: "Gadjah Mada Super Cup", img: "/program_thumbnail_1777615687215.png" },
     ]
   }
 };

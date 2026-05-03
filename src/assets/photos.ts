@@ -44,6 +44,17 @@ import PotoIndev from './Compressed/indev/FotoIndev16.jpg';
 import PotoEntre from './Compressed/Entre/FotoEntre3.jpg';
 import PotoSparta from './Compressed/Sparta/FotoSparta11.jpg';
 
+// ── Logo BirDep ─
+import LogoHRM from '../assets/LogoBirDept/HRM.svg';
+import LogoHRBB from '../assets/LogoBirDept/HRBB.svg';
+import LogoAdvance from '../assets/LogoBirDept/ADVANCE.svg';
+import LogoMM from '../assets/LogoBirDept/MM.svg';
+import LogoInternal from '../assets/LogoBirDept/INTERNAL.svg';
+import LogoExternal from '../assets/LogoBirDept/EXTERNAL.svg';
+import LogoIndev from '../assets/LogoBirDept/INDEV.svg';
+import LogoEntre from '../assets/LogoBirDept/ENTRE.svg';
+import LogoSparta from '../assets/LogoBirDept/SPARTA.svg';
+
 // ── Events Section (carousel cards + background) ────────────────────
 import eventCard1 from './Compressed/Ext/FotoExt13.jpg';
 import eventCard2 from './Compressed/Ext/FotoExt14.jpg';
@@ -144,6 +155,11 @@ export const SCRAPBOOK_PHOTOS: string[] = [
   scrapbook1, scrapbook2, scrapbook3, scrapbook4, scrapbook5,
   scrapbook6, scrapbook7, scrapbook8, scrapbook9, scrapbook10,
   scrapbook11, scrapbook12,
+];
+
+/** About Section — 50 flying scrapbook photos for parallax */
+export const LOGO_BIRDEP: string[] = [
+  LogoAdvance, LogoEntre, LogoExternal, LogoHRBB, LogoHRM, LogoIndev, LogoInternal, LogoMM, LogoSparta
 ];
 
 /** Events Section — 4 carousel card photos */

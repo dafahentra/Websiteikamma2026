@@ -176,32 +176,32 @@ export function Hero() {
   }, [progress]);
 
   /* === PHASE 1: Hero Zoom Out === */
-  // 0.00 to 0.05 - ULTRA Fast mask zoom
+  // 0.00 to 0.15 - Slower mask zoom
   const maskScale = useTransform(
     progress,
-    [0.0, 0.01, 0.02, 0.03, 0.05],
+    [0.0, 0.03, 0.08, 0.12, 0.15],
     [70, 15, 4, 1.5, 1]
   );
-  const maskOpacity = useTransform(progress, [0.0, 0.03], [0, 1]);
-  const captionOpacity = useTransform(progress, [0.0, 0.02], [1, 0]);
+  const maskOpacity = useTransform(progress, [0.0, 0.05], [0, 1]);
+  const captionOpacity = useTransform(progress, [0.0, 0.05], [1, 0]);
 
   /* === PHASE 2: Text turns white & Logo appears === */
-  // 0.04 to 0.08
-  const whiteLayerOpacity = useTransform(progress, [0.04, 0.08], [0, 1]);
-  const logoOpacity = useTransform(progress, [0.04, 0.08], [0, 1]);
-  const logoY = useTransform(progress, [0.04, 0.08], ["-24px", "0px"]);
+  // 0.10 to 0.20
+  const whiteLayerOpacity = useTransform(progress, [0.10, 0.20], [0, 1]);
+  const logoOpacity = useTransform(progress, [0.10, 0.20], [0, 1]);
+  const logoY = useTransform(progress, [0.10, 0.20], ["-24px", "0px"]);
 
   /* === PHASE 3: Hero Flies Past Camera === */
-  // 0.08 to 0.20 - ULTRA Fast camera fly-through
+  // 0.20 to 0.45 - Slower camera fly-through
   const heroScale = useTransform(
     progress,
-    [0.08, 0.15, 0.18, 0.20],
+    [0.20, 0.30, 0.38, 0.45],
     [1, 3, 12, 40]
   );
-  const heroOpacity = useTransform(progress, [0.15, 0.20], [1, 0]);
+  const heroOpacity = useTransform(progress, [0.35, 0.45], [1, 0]);
 
   // Disable clicks on hero video once we fly past it
-  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.20 ? "auto" : "none");
+  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.45 ? "auto" : "none");
 
   // Reduced to 12 photos for extreme performance optimization
   const PIONIR_LAYOUT = [
@@ -222,7 +222,7 @@ export function Hero() {
 
       // Sequential appearance: strict 1-by-1 staggered timeline
       const seq = i / shuffledLayout.length;
-      const startP = 0.20 + (seq * 0.15); // Starts after hero fly-through
+      const startP = 0.45 + (seq * 0.15); // Starts after hero fly-through
 
       // Variable duration so some fly slightly faster/slower, adding depth
       const duration = 0.10 + Math.random() * 0.05;
@@ -242,13 +242,13 @@ export function Hero() {
   }, []);
 
   /* === PHASE 5: Background Photo === */
-  // Spawns after all scrapbook photos have at least started appearing (0.35)
-  // Hits full screen (0.55) to ensure no blue space is visible before text appears
-  const finalScale = useTransform(progress, [0.35, 0.55, 0.95], [0.15, 1, 1.05]);
+  // Spawns after all scrapbook photos have at least started appearing (0.60)
+  // Hits full screen (0.80) to ensure no blue space is visible before text appears
+  const finalScale = useTransform(progress, [0.60, 0.80, 0.95], [0.15, 1, 1.05]);
 
   // Fades in and blurs just like the other scrapbook photos
-  const finalOpacity = useTransform(progress, [0.35, 0.50], [0, 1]);
-  const finalBlur = useTransform(progress, [0.35, 0.50], [10, 0]);
+  const finalOpacity = useTransform(progress, [0.60, 0.70], [0, 1]);
+  const finalBlur = useTransform(progress, [0.60, 0.70], [10, 0]);
   const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
 
   // The dark overlay ONLY appears at the very end when it becomes the background
@@ -258,8 +258,8 @@ export function Hero() {
   const contentPointerEvents = useTransform(progress, (v: number) => v > 0.85 ? "auto" : "none");
 
   /* === PHASE 6: About IKAMMA Content Fades In === */
-  // 0.82 to 0.83 - INSTANT SNAPPY FADE
-  const contentOpacity = useTransform(progress, [0.82, 0.83], [0, 1]);
+  // 0.82 to 0.85 - SNAPPY FADE
+  const contentOpacity = useTransform(progress, [0.82, 0.85], [0, 1]);
   // Locomotive scroll effect: Locks at 0 (centered) at 0.90 progress for a seamless transition buffer
   const contentY = useTransform(
     progress,

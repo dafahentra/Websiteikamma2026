@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { motion } from 'framer-motion';
 import { MapPin, Clock, CalendarDays } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 const MicroShape = ({ className, delay = 0, duration = 5, size = "w-20 h-20" }: { className: string, delay?: number, duration?: number, size?: string }) => (
@@ -28,90 +29,27 @@ const DotPattern = ({ className }: { className: string }) => (
 import { EVENTS_PAGE_HERO, EVENTS_PAGE_ONGOING, EVENTS_PAGE_PAST } from '../../assets/photos';
 
 /* ── Sample Data ─────────────────────────────────────────────────── */
-const ONGOING_EVENTS = [
-  {
-    id: 1,
-    title: 'IDEAS 2026',
-    location: 'FEB UGM',
-    time: '09:00 - 17:00 WIB',
-    date: '11',
-    monthYear: 'Mei 26',
-    status: 'ongoing' as const,
-    image: '',
-  },
-  {
-    id: 2,
-    title: 'Gadjah Mada Business Case Competition',
-    location: 'FEB UGM',
-    time: 'TBA',
-    date: '11',
-    monthYear: 'Mei 26',
-    status: 'upcoming' as const,
-    image: '',
-  },
-  {
-    id: 3,
-    title: 'Exposure: Management Week',
-    location: 'FEB UGM',
-    time: 'TBA',
-    date: '11 - 15',
-    monthYear: 'Mei 26',
-    status: 'upcoming' as const,
-    image: '',
-  },
-];
-
-const PAST_EVENTS = [
-  {
-    id: 4,
-    title: 'Malam Keakraban IKAMMA 2026',
-    location: 'Jogja National Museum',
-    date: 'Mar 15, 2026',
-    image: '',
-  },
-  {
-    id: 5,
-    title: 'Workshop Financial Modeling',
-    location: 'Auditorium FEB UGM',
-    date: 'Feb 20, 2026',
-    image: '',
-  },
-  {
-    id: 6,
-    title: 'Seminar Nasional Ekonomi Digital',
-    location: 'Grha Sabha Pramana UGM',
-    date: 'Jan 28, 2026',
-    image: '',
-  },
-  {
-    id: 7,
-    title: 'IKAMMA Career Fair 2025',
-    location: 'FEB UGM',
-    date: 'Dec 10, 2025',
-    image: '',
-  },
-  {
-    id: 8,
-    title: 'Musyawarah Besar IKAMMA',
-    location: 'Ruang Sidang FEB UGM',
-    date: 'Nov 5, 2025',
-    image: '',
-  },
-  {
-    id: 9,
-    title: 'Inauguration Ceremony 2025',
-    location: 'Auditorium FEB UGM',
-    date: 'Oct 15, 2025',
-    image: '',
-  },
-];
-
-// Assign photos from the registry
-ONGOING_EVENTS.forEach((ev, i) => { ev.image = EVENTS_PAGE_ONGOING[i]; });
-PAST_EVENTS.forEach((ev, i) => { ev.image = EVENTS_PAGE_PAST[i]; });
-
 export function EventsPage() {
   const { pathname } = useLocation();
+  const [ongoingEvents, setOngoingEvents] = useState<any[]>([]);
+  const [pastEvents, setPastEvents] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const { data: upcomingData } = await supabase
+        .from('events')
+        .select('*')
+        .eq('type', 'upcoming');
+      setOngoingEvents(upcomingData || []);
+
+      const { data: pastData } = await supabase
+        .from('events')
+        .select('*')
+        .eq('type', 'past');
+      setPastEvents(pastData || []);
+    };
+    fetchEvents();
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -170,7 +108,7 @@ export function EventsPage() {
         </motion.h2>
 
         <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8">
-          {ONGOING_EVENTS.map((event, i) => (
+          {ongoingEvents.map((event, i) => (
             <motion.div
               key={event.id}
               initial={{ opacity: 0, y: 30 }}
@@ -182,7 +120,7 @@ export function EventsPage() {
               {/* Image Container */}
               <div className="relative w-full aspect-[4/3] overflow-hidden mb-3 md:mb-6 shadow-lg group-hover:shadow-xl group-hover:shadow-[#081C36]/10 transition-shadow duration-300">
                 <img
-                  src={event.image}
+                  src={event.image_url || EVENTS_PAGE_ONGOING[i % EVENTS_PAGE_ONGOING.length]}
                   alt={event.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -202,8 +140,8 @@ export function EventsPage() {
 
                 {/* Date Badge */}
                 <div className="absolute bottom-0 left-0 bg-[#081C36]/10 backdrop-blur-md flex flex-col items-center justify-center px-3 py-1.5 md:px-6 md:py-3 border-t border-r border-[#081C36]/20">
-                  <span className="text-lg md:text-2xl font-bold text-white leading-none font-inter">{event.date}</span>
-                  <span className="text-[10px] md:text-sm font-medium text-[#081C36]/80 mt-0.5 md:mt-1 font-inter">{event.monthYear}</span>
+                  <span className="text-lg md:text-2xl font-bold text-white leading-none font-inter">{event.event_date}</span>
+                  <span className="text-[10px] md:text-sm font-medium text-[#081C36]/80 mt-0.5 md:mt-1 font-inter">{event.month_year}</span>
                 </div>
               </div>
 
@@ -243,7 +181,7 @@ export function EventsPage() {
         </motion.h2>
 
         <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8">
-          {PAST_EVENTS.map((event, i) => (
+          {pastEvents.map((event, i) => (
             <motion.article
               key={event.id}
               initial={{ opacity: 0, y: 30 }}
@@ -255,7 +193,7 @@ export function EventsPage() {
               {/* Image */}
               <div className="w-full aspect-[4/3] overflow-hidden mb-3 md:mb-5 bg-[#081C36]/[0.03] relative">
                 <img
-                  src={event.image}
+                  src={event.image_url || EVENTS_PAGE_PAST[i % EVENTS_PAGE_PAST.length]}
                   alt={event.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0 transition-all"
                 />
@@ -271,7 +209,7 @@ export function EventsPage() {
               <div className="mt-auto flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-4 text-[#081C36]/40 text-xs md:text-sm font-inter">
                 <div className="flex items-center gap-1 md:gap-1.5">
                   <CalendarDays size={12} className="md:w-3.5 md:h-3.5" />
-                  <span>{event.date}</span>
+                  <span>{event.full_date}</span>
                 </div>
                 <div className="flex items-center gap-1 md:gap-1.5">
                   <MapPin size={12} className="md:w-3.5 md:h-3.5" />

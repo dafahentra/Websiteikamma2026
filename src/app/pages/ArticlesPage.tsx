@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { motion } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Clock, User } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 const MicroShape = ({ className, delay = 0, duration = 5, size = "w-20 h-20" }: { className: string, delay?: number, duration?: number, size?: string }) => (
@@ -30,77 +31,23 @@ import { ARTICLES_PAGE_PHOTOS, ARTICLES_PAGE_HERO } from '../../assets/photos';
 /* ── Sample Data ─────────────────────────────────────────────────── */
 const CATEGORIES = ['All Topics', 'IKAMMA Insights', 'Campus Life', 'Career', 'Alumni'];
 
-const ARTICLES = [
-  {
-    id: 1,
-    category: 'IKAMMA Insights',
-    title: 'Membangun Solidaritas Melalui Program Kerja IKAMMA 2026',
-    description: 'Mengenal lebih dalam bagaimana program kerja IKAMMA membentuk karakter dan solidaritas antar mahasiswa manajemen FEB UGM.',
-    author: 'Tim Redaksi',
-    date: 'Apr 28, 2026',
-    readTime: '5 min read',
-    image: '',
-  },
-  {
-    id: 2,
-    category: 'Campus Life',
-    title: 'Tips Sukses Menghadapi UTS Semester Genap',
-    description: 'Strategi belajar efektif yang bisa kamu terapkan untuk menghadapi Ujian Tengah Semester dengan percaya diri.',
-    author: 'Dept. Indev',
-    date: 'Apr 22, 2026',
-    readTime: '4 min read',
-    image: '',
-  },
-  {
-    id: 3,
-    category: 'Career',
-    title: 'Internship 101: Panduan Lengkap Magang untuk Mahasiswa Manajemen',
-    description: 'Dari persiapan CV hingga menghadapi interview — semua yang perlu kamu ketahui sebelum mendaftar magang.',
-    author: 'Dept. External',
-    date: 'Apr 15, 2026',
-    readTime: '6 min read',
-    image: '',
-  },
-  {
-    id: 4,
-    category: 'IKAMMA Insights',
-    title: 'Rekapitulasi Kegiatan IKAMMA Semester Ganjil 2025/2026',
-    description: 'Menilik kembali pencapaian dan kegiatan yang telah dilaksanakan IKAMMA pada semester ganjil tahun ini.',
-    author: 'Biro HRM',
-    date: 'Apr 10, 2026',
-    readTime: '7 min read',
-    image: '',
-  },
-  {
-    id: 5,
-    category: 'Alumni',
-    title: 'Kisah Sukses Alumni Manajemen UGM di Dunia Startup',
-    description: 'Tiga alumni manajemen UGM berbagi pengalaman mereka membangun startup dari nol hingga meraih pendanaan.',
-    author: 'Tim Redaksi',
-    date: 'Apr 5, 2026',
-    readTime: '8 min read',
-    image: '',
-  },
-  {
-    id: 6,
-    category: 'Campus Life',
-    title: 'Mengenal Lebih Dekat Organisasi Mahasiswa di FEB UGM',
-    description: 'Panduan lengkap tentang berbagai organisasi mahasiswa yang ada di Fakultas Ekonomika dan Bisnis UGM.',
-    author: 'Dept. Internal',
-    date: 'Mar 30, 2026',
-    readTime: '5 min read',
-    image: '',
-  },
-];
-
-// Assign photos from the registry
-ARTICLES.forEach((art, i) => { art.image = ARTICLES_PAGE_PHOTOS[i]; });
-
 export function ArticlesPage() {
   const { pathname } = useLocation();
   const [activeCategory, setActiveCategory] = useState('All Topics');
   const [isMobile, setIsMobile] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [articles, setArticles] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const { data } = await supabase
+        .from('articles')
+        .select('*')
+        .order('date', { ascending: false });
+      setArticles(data || []);
+    };
+    fetchArticles();
+  }, []);
 
   // Track window size for responsive itemsPerPage
   useEffect(() => {
@@ -120,8 +67,8 @@ export function ArticlesPage() {
   }, [pathname]);
 
   const filtered = activeCategory === 'All Topics'
-    ? ARTICLES
-    : ARTICLES.filter(a => a.category === activeCategory);
+    ? articles
+    : articles.filter(a => a.category === activeCategory);
 
   const itemsPerPage = isMobile ? 4 : 6;
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
@@ -223,7 +170,7 @@ export function ArticlesPage() {
               {/* Image */}
               <div className="w-full aspect-[4/3] md:aspect-[4/3] bg-[#081C36]/[0.03] overflow-hidden relative">
                 <img
-                  src={article.image}
+                  src={article.image_url || ARTICLES_PAGE_PHOTOS[i % ARTICLES_PAGE_PHOTOS.length]}
                   alt={article.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -253,7 +200,7 @@ export function ArticlesPage() {
                   </div>
                   <div className="flex items-center gap-1">
                     <Clock size={10} className="md:w-3 md:h-3" />
-                    <span>{article.readTime}</span>
+                    <span>{article.read_time}</span>
                   </div>
                 </div>
 

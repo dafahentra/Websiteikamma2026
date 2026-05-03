@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Clock, CalendarDays, Filter, Search, X, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { INFO_MAHASISWA_PHOTOS, INFO_MAHASISWA_HERO } from '../../assets/photos';
@@ -46,147 +47,6 @@ interface InfoItem {
 }
 
 /* ── Sample Data ───────────────────────────────────────────────── */
-const INFO_ITEMS: InfoItem[] = [
-  {
-    id: 1,
-    title: 'Internship at Bank Indonesia',
-    category: 'Magang',
-    postedDate: '25 Apr 2026',
-    description: 'Program magang di Bank Indonesia untuk mahasiswa S1 semester 5-7 jurusan Ekonomi/Manajemen.',
-    fullDescription: 'Program magang di Bank Indonesia untuk mahasiswa S1 semester 5-7 jurusan Ekonomi/Manajemen. Pengalaman langsung di institusi moneter nasional. Peserta akan ditempatkan di berbagai divisi seperti Departemen Kebijakan Makroprudensial, Departemen Pengelolaan Moneter, atau Departemen Komunikasi. Program berlangsung selama 3 bulan dengan tunjangan transport dan makan.',
-    poster: '',
-    periodStart: '1 Mei 2026',
-    periodEnd: '30 Juni 2026',
-    status: 'open',
-    link: '#',
-    organizer: 'Bank Indonesia',
-  },
-  {
-    id: 2,
-    title: 'Garuda Indonesia Management Trainee',
-    category: 'Magang',
-    postedDate: '20 Apr 2026',
-    description: 'Garuda Indonesia membuka program Management Trainee untuk lulusan baru S1 Manajemen.',
-    fullDescription: 'Garuda Indonesia membuka program Management Trainee untuk lulusan baru S1 Manajemen. Peluang karir di industri penerbangan nasional. Program ini mencakup pelatihan intensif selama 6 bulan, rotasi di berbagai departemen, dan mentoring dari senior management. Lulusan program akan ditempatkan sebagai supervisor di berbagai unit bisnis.',
-    poster: '',
-    periodStart: '15 Apr 2026',
-    periodEnd: '15 Mei 2026',
-    status: 'open',
-    link: '#',
-    organizer: 'Garuda Indonesia',
-  },
-  {
-    id: 3,
-    title: 'National Business Case Competition 2026',
-    category: 'Lomba',
-    postedDate: '18 Apr 2026',
-    description: 'Kompetisi studi kasus bisnis tingkat nasional. Peserta akan menganalisis dan mempresentasikan solusi bisnis.',
-    fullDescription: 'Kompetisi studi kasus bisnis tingkat nasional. Peserta akan menganalisis dan mempresentasikan solusi untuk masalah bisnis aktual. Terbuka untuk mahasiswa S1 aktif dari seluruh Indonesia. Format: tim 3 orang. Tahapan: seleksi proposal, babak penyisihan, semifinal, dan grand final di Jakarta. Total hadiah Rp 50.000.000.',
-    poster: '',
-    periodStart: '1 Jun 2026',
-    periodEnd: '15 Jul 2026',
-    status: 'open',
-    link: '#',
-    organizer: 'Kompetisi Nasional',
-  },
-  {
-    id: 4,
-    title: 'Beasiswa LPDP 2026',
-    category: 'Beasiswa',
-    postedDate: '10 Jan 2026',
-    description: 'LPDP membuka pendaftaran beasiswa S2 dalam dan luar negeri untuk periode tahun 2026.',
-    fullDescription: 'Lembaga Pengelola Dana Pendidikan membuka pendaftaran beasiswa S2 dalam dan luar negeri untuk periode tahun 2026. Beasiswa ini mencakup biaya kuliah penuh, biaya hidup, tiket pesawat PP, asuransi kesehatan, dan tunjangan buku. Terbuka untuk WNI berusia maksimal 35 tahun dengan IPK minimal 3.00.',
-    poster: '',
-    periodStart: '1 Jan 2026',
-    periodEnd: '28 Feb 2026',
-    status: 'closed',
-    link: '#',
-    organizer: 'LPDP',
-  },
-  {
-    id: 5,
-    title: 'McKinsey Next Gen Women Leaders',
-    category: 'Lomba',
-    postedDate: '1 May 2026',
-    description: 'Program pengembangan kepemimpinan perempuan oleh McKinsey & Company.',
-    fullDescription: 'Program pengembangan kepemimpinan perempuan oleh McKinsey & Company untuk mahasiswa S1 and S2 tingkat akhir. Peserta akan mendapat kesempatan networking dengan konsultan senior, workshop design thinking, dan case interview preparation. Finalis berkesempatan mendapatkan fast-track interview untuk posisi Business Analyst.',
-    poster: '',
-    periodStart: '10 Mei 2026',
-    periodEnd: '20 Jun 2026',
-    status: 'open',
-    link: '#',
-    organizer: 'McKinsey & Company',
-  },
-  {
-    id: 6,
-    title: 'Tokopedia Product & Tech Internship',
-    category: 'Magang',
-    postedDate: '1 Mar 2026',
-    description: 'Program magang di divisi Product & Technology Tokopedia untuk mahasiswa semester 6-7.',
-    fullDescription: 'Program magang di divisi Product & Technology Tokopedia. Terbuka untuk mahasiswa semester 6-7 jurusan terkait. Peserta akan bekerja langsung pada produk nyata dengan mentoring dari product manager dan engineer senior. Durasi 3-6 bulan dengan stipend kompetitif dan benefit makan siang.',
-    poster: '',
-    periodStart: '1 Mar 2026',
-    periodEnd: '30 Apr 2026',
-    status: 'closed',
-    link: '#',
-    organizer: 'Tokopedia',
-  },
-  {
-    id: 7,
-    title: 'Beasiswa Bank Indonesia 2026',
-    category: 'Beasiswa',
-    postedDate: '10 Apr 2026',
-    description: 'Bank Indonesia membuka program beasiswa untuk mahasiswa berprestasi Ekonomi & Manajemen.',
-    fullDescription: 'Bank Indonesia membuka program beasiswa untuk mahasiswa berprestasi dari program studi Ekonomi, Manajemen, dan Akuntansi. Mencakup biaya pendidikan, biaya hidup, pelatihan softskill, dan kesempatan magang di BI. Syarat: IPK minimal 3.25, aktif berorganisasi, dan memiliki prestasi akademik/non-akademik.',
-    poster: '',
-    periodStart: '15 Apr 2026',
-    periodEnd: '31 Mei 2026',
-    status: 'open',
-    link: '#',
-    organizer: 'Bank Indonesia',
-  },
-  {
-    id: 8,
-    title: 'Unilever Future Leaders Program',
-    category: 'Magang',
-    postedDate: '5 May 2026',
-    description: 'Program pengembangan talenta Unilever untuk lulusan baru dengan rotasi di berbagai divisi.',
-    fullDescription: 'Program pengembangan talenta Unilever untuk lulusan baru. Rotasi di berbagai divisi selama 3 tahun termasuk Marketing, Finance, Supply Chain, dan HR. Program ini menawarkan gaji kompetitif, overseas assignment, dan career acceleration menuju posisi manajerial dalam 3-5 tahun.',
-    poster: '',
-    periodStart: '20 Mei 2026',
-    periodEnd: '30 Jun 2026',
-    status: 'open',
-    link: '#',
-    organizer: 'Unilever',
-  },
-  {
-    id: 9,
-    title: 'CFA Institute Research Challenge',
-    category: 'Lomba',
-    postedDate: '15 Apr 2026',
-    description: 'Kompetisi analisis ekuitas global oleh CFA Institute. Tim mahasiswa menganalisis perusahaan publik.',
-    fullDescription: 'Kompetisi analisis ekuitas global yang diselenggarakan oleh CFA Institute. Tim mahasiswa menganalisis perusahaan publik dan mempresentasikan investment recommendation. Terbuka untuk tim 3-5 mahasiswa S1/S2. Pemenang level nasional akan mewakili Indonesia di level Asia Pacific dan Global Final.',
-    poster: '',
-    periodStart: '1 Sep 2026',
-    periodEnd: '30 Nov 2026',
-    status: 'open',
-    link: '#',
-    organizer: 'CFA Institute',
-  },
-];
-
-// Assign photos from the registry
-INFO_ITEMS.forEach((item, i) => { item.poster = INFO_MAHASISWA_PHOTOS[i]; });
-
-const CATEGORIES: ('All' | Category)[] = ['All', 'Magang', 'Lomba', 'Beasiswa'];
-const STATUS_FILTERS = ['All', 'Open Now', 'Closed'] as const;
-
-const CATEGORY_COLORS: Record<Category, string> = {
-  Magang: 'bg-blue-600',
-  Lomba: 'bg-amber-500',
-  Beasiswa: 'bg-indigo-600',
-};
-
 /* ── Component ─────────────────────────────────────────────────── */
 export function InfoMahasiswaPage() {
   const { pathname } = useLocation();
@@ -196,8 +56,46 @@ export function InfoMahasiswaPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedItem, setSelectedItem] = useState<InfoItem | null>(null);
 
+  const [infoItems, setInfoItems] = useState<InfoItem[]>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      const { data } = await supabase
+        .from('info_mahasiswa')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (data) {
+        const mappedData: InfoItem[] = data.map((item: any, index: number) => ({
+          id: item.id,
+          title: item.title,
+          category: item.category,
+          postedDate: item.posted_date,
+          description: item.description,
+          fullDescription: item.full_description,
+          poster: item.poster_url || INFO_MAHASISWA_PHOTOS[index % INFO_MAHASISWA_PHOTOS.length],
+          periodStart: item.period_start,
+          periodEnd: item.period_end,
+          status: item.status,
+          link: item.link,
+          organizer: item.organizer,
+        }));
+        setInfoItems(mappedData);
+      }
+    };
+    fetchInfo();
+  }, []);
+
+const CATEGORIES: ('All' | Category)[] = ['All', 'Magang', 'Lomba', 'Beasiswa'];
+const STATUS_FILTERS = ['All', 'Open Now', 'Closed'] as const;
+
+const CATEGORY_COLORS: Record<Category, string> = {
+  Magang: 'bg-blue-600',
+  Lomba: 'bg-amber-500',
+  Beasiswa: 'bg-indigo-600',
+};
 
   // Track window size for responsive itemsPerPage
   useEffect(() => {
@@ -234,7 +132,7 @@ export function InfoMahasiswaPage() {
     return () => { document.body.style.overflow = ''; };
   }, [selectedItem]);
 
-  const filtered = INFO_ITEMS.filter((item) => {
+  const filtered = infoItems.filter((item) => {
     const matchCategory = activeCategory === 'All' || item.category === activeCategory;
     const matchStatus =
       activeStatus === 'All' ||

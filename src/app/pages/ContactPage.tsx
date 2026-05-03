@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Phone, MapPin, ChevronDown, Mail } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { supabase } from '../../lib/supabase';
 
 /* ── Sleek Brand SVG Icons ────────────────────────────────────────── */
 function InstagramIcon({ size = 20 }: { size?: number }) {
@@ -65,57 +66,6 @@ const TABS = [
 
 type TabId = typeof TABS[number]['id'];
 
-/* ── Social Icons ─────────────────────────────────────────────────── */
-const SOCIAL_ICONS = [
-  { icon: InstagramIcon, label: 'Instagram', href: 'https://instagram.com/ikamma.ugm' },
-  { icon: MailIcon, label: 'Email', href: 'mailto:ikamma@feb.ugm.ac.id' },
-  { icon: LinkedInIcon, label: 'LinkedIn', href: 'https://linkedin.com/company/ikamma' },
-  { icon: YouTubeIcon, label: 'YouTube', href: 'https://youtube.com/@ikamma' },
-  { icon: XIcon, label: 'X', href: 'https://x.com/ikamma_ugm' },
-  { icon: TikTokIcon, label: 'TikTok', href: 'https://tiktok.com/@ikamma.ugm' },
-];
-
-/* ── Event Contacts ───────────────────────────────────────────────── */
-const EVENT_CONTACTS = [
-  {
-    label: 'IDEAS 2026',
-    description: 'Pertanyaan seputar IDEAS 2026',
-    contacts: [
-      { type: 'Instagram', value: '@ideas.ugm' },
-      { type: 'Email', value: 'ideas@feb.ugm.ac.id' },
-      { type: 'WhatsApp', value: '+62 812-3456-7890' },
-    ],
-  },
-  {
-    label: 'GMBCC 2026',
-    description: 'Gadjah Mada Business Case Competition',
-    contacts: [
-      { type: 'Instagram', value: '@gmbcc.ugm' },
-      { type: 'Email', value: 'gmbcc@feb.ugm.ac.id' },
-      { type: 'WhatsApp', value: '+62 856-9876-5432' },
-    ],
-  },
-  {
-    label: 'Exposure 2026',
-    description: 'Management Week — Exposure',
-    contacts: [
-      { type: 'Instagram', value: '@exposure.ugm' },
-      { type: 'Email', value: 'exposure@feb.ugm.ac.id' },
-    ],
-  },
-  {
-    label: 'IKAMMA Cup 2026',
-    description: 'Sport & Art Tournament',
-    contacts: [
-      { type: 'Instagram', value: '@ikammacup.ugm' },
-      { type: 'Email', value: 'ikammacup@feb.ugm.ac.id' },
-      { type: 'WhatsApp', value: '+62 813-5678-1234' },
-    ],
-  },
-];
-
-const PARTNERSHIP_CONTACTS = []; // Removed
-
 const ENQUIRY_TYPES = ['External', 'Media Partnership'];
 
 export function ContactPage() {
@@ -124,10 +74,43 @@ export function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', enquiry: '', subject: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  
+  const [settings, setSettings] = useState<any>(null);
+  const [eventContacts, setEventContacts] = useState<any[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchData = async () => {
+      const [settingsRes, contactsRes] = await Promise.all([
+        supabase.from('site_settings').select('*').eq('id', 1).single(),
+        supabase.from('event_contacts').select('*').order('id', { ascending: true })
+      ]);
+
+      if (settingsRes.data) setSettings(settingsRes.data);
+      if (contactsRes.data) {
+        const formatted = contactsRes.data.map((c: any) => ({
+          label: c.name,
+          description: c.description,
+          contacts: [
+            c.instagram && { type: 'Instagram', value: c.instagram },
+            c.email && { type: 'Email', value: c.email },
+            c.whatsapp && { type: 'WhatsApp', value: c.whatsapp },
+          ].filter(Boolean)
+        }));
+        setEventContacts(formatted);
+      }
+    };
+    fetchData();
   }, [pathname]);
+
+  const SOCIAL_ICONS = [
+    { icon: InstagramIcon, label: 'Instagram', href: settings?.instagram_url || 'https://instagram.com/ikamma.ugm' },
+    { icon: MailIcon, label: 'Email', href: `mailto:${settings?.email_contact || 'ikamma@feb.ugm.ac.id'}` },
+    { icon: LinkedInIcon, label: 'LinkedIn', href: settings?.linkedin_url || 'https://linkedin.com/company/ikamma' },
+    { icon: YouTubeIcon, label: 'YouTube', href: settings?.youtube_url || 'https://youtube.com/@ikamma' },
+    { icon: XIcon, label: 'X', href: settings?.x_url || 'https://x.com/ikamma_ugm' },
+    { icon: TikTokIcon, label: 'TikTok', href: settings?.tiktok_url || 'https://tiktok.com/@ikamma.ugm' },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -198,10 +181,7 @@ export function ContactPage() {
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.4 }}
             >
-              {/* IKAMMA Content */}
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] rounded-3xl overflow-hidden shadow-xl shadow-black/10 min-h-[600px] w-full box-border">
-                {/* ... (rest of ikamma layout remains same as before) ... */}
-                {/* [Note: Keeping the existing ikamma div content here] */}
                 <div className="relative bg-[#f5f7fa] p-6 sm:p-8 md:p-14 flex flex-col justify-between overflow-hidden">
                   <div className="absolute top-0 right-0 w-48 h-48 bg-[#081C36]/5 rounded-full blur-xl pointer-events-none translate-x-1/4 -translate-y-1/4" />
                   <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#081C36]/3 rounded-full pointer-events-none translate-x-1/3 translate-y-1/3" />
@@ -211,11 +191,11 @@ export function ContactPage() {
                     <div className="space-y-8">
                       <div className="flex items-center gap-4 md:gap-5">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0"><Phone size={18} className="text-[#081C36] md:w-5 md:h-5" /></div>
-                        <span className="font-inter text-base md:text-lg text-[#081C36]">+62 812-3456-7890</span>
+                        <span className="font-inter text-base md:text-lg text-[#081C36]">{settings?.phone_contact || '+62 812-3456-7890'}</span>
                       </div>
                       <div className="flex items-center gap-4 md:gap-5">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0"><Mail size={18} className="text-[#081C36] md:w-5 md:h-5" /></div>
-                        <span className="font-inter text-base md:text-lg text-[#081C36] break-all">ikamma@feb.ugm.ac.id</span>
+                        <span className="font-inter text-base md:text-lg text-[#081C36] break-all">{settings?.email_contact || 'ikamma@feb.ugm.ac.id'}</span>
                       </div>
                       <div className="flex items-start gap-4 md:gap-5">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0 mt-0.5"><MapPin size={18} className="text-[#081C36] md:w-5 md:h-5" /></div>
@@ -225,7 +205,7 @@ export function ContactPage() {
                   </div>
                   <div className="relative z-10 mt-12 pt-8 border-t border-white/[0.08]">
                     <div className="flex gap-3">
-                      {SOCIAL_ICONS.map((social, i) => {
+                      {SOCIAL_ICONS.map((social) => {
                         const Icon = social.icon;
                         return (
                            <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#081C36]/[0.04] flex items-center justify-center transition-colors duration-300" title={social.label}><Icon size={16} /></a>
@@ -267,12 +247,12 @@ export function ContactPage() {
               transition={{ duration: 0.4 }}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
-                {EVENT_CONTACTS.map((event, i) => (
-                  <div key={event.label} className="p-6 md:p-8 rounded-2xl bg-[#f5f7fa] border border-[#081C36]/10 hover:border-[#081C36]/20 hover:shadow-lg transition-all duration-300 group">
+                {eventContacts.map((event, i) => (
+                  <div key={i} className="p-6 md:p-8 rounded-2xl bg-[#f5f7fa] border border-[#081C36]/10 hover:border-[#081C36]/20 hover:shadow-lg transition-all duration-300 group">
                     <h3 className="font-inter font-bold text-2xl text-[#081C36] mb-1">{event.label}</h3>
                     <p className="text-[#081C36]/50 text-sm font-inter mb-8">{event.description}</p>
                     <div className="space-y-4 pt-6 border-t border-[#081C36]/10">
-                      {event.contacts.map((c, j) => (
+                      {event.contacts.map((c: any, j: number) => (
                         <div key={j} className="flex items-center gap-2 md:gap-3">
                           <span className="text-[#081C36] text-xs font-inter font-bold min-w-[70px] md:min-w-[80px] uppercase tracking-wider">{c.type}</span>
                           <span className="text-[#081C36]/60 text-xs sm:text-sm font-inter break-all">{c.value}</span>

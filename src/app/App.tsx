@@ -16,8 +16,10 @@ import { AdminArticlesList } from '../admin/articles/AdminArticlesList';
 import { AdminArticleForm } from '../admin/articles/AdminArticleForm';
 import { AdminEventsList } from '../admin/events/AdminEventsList';
 import { AdminEventForm } from '../admin/events/AdminEventForm';
+import { AdminEventContacts } from '../admin/events/AdminEventContacts';
 import { AdminInfoList } from '../admin/info-mahasiswa/AdminInfoList';
 import { AdminInfoForm } from '../admin/info-mahasiswa/AdminInfoForm';
+import { AdminSettings } from '../admin/AdminSettings';
 
 export default function App() {
   return (
@@ -35,6 +37,7 @@ export default function App() {
       <Route path="/admin/login" element={<AdminLoginPage />} />
       <Route path="/admin" element={<AdminLayout />}>
         <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="settings" element={<AdminSettings />} />
         
         <Route path="articles" element={<AdminArticlesList />} />
         <Route path="articles/new" element={<AdminArticleForm />} />
@@ -43,6 +46,7 @@ export default function App() {
         <Route path="events" element={<AdminEventsList />} />
         <Route path="events/new" element={<AdminEventForm />} />
         <Route path="events/edit/:id" element={<AdminEventForm />} />
+        <Route path="event-contacts" element={<AdminEventContacts />} />
         
         <Route path="info-mahasiswa" element={<AdminInfoList />} />
         <Route path="info-mahasiswa/new" element={<AdminInfoForm />} />

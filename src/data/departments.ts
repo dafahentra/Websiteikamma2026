@@ -1,5 +1,14 @@
 import DondoFoto from '../assets/DondoFoto.png';
 import AbedFoto from '../assets/AbedFoto.png';
+import LogoHRM from '../assets/LogoBirDept/HRM.svg';
+import LogoHRBB from '../assets/LogoBirDept/HRBB.svg';
+import LogoAdvance from '../assets/LogoBirDept/ADVANCE.svg';
+import LogoMM from '../assets/LogoBirDept/MM.svg';
+import LogoInternal from '../assets/LogoBirDept/INTERNAL.svg';
+import LogoExternal from '../assets/LogoBirDept/EXTERNAL.svg';
+import LogoIndev from '../assets/LogoBirDept/INDEV.svg';
+import LogoEntre from '../assets/LogoBirDept/ENTRE.svg';
+import LogoSparta from '../assets/LogoBirDept/SPARTA.svg';
 
 export interface WorkProgram {
   id: number;
@@ -32,7 +41,7 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    logo: "/assets/LogoPutih.svg",
+    logo: LogoHRBB,
     meetingImg: "/meeting_placeholder.jpg",
     activityImg: "/activity_placeholder.jpg",
     programs: [
@@ -58,7 +67,7 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto, // Fallback for now
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    logo: "/assets/LogoPutih.svg",
+    logo: LogoHRM,
     meetingImg: "/meeting_placeholder.jpg",
     activityImg: "/activity_placeholder.jpg",
     programs: [
@@ -76,7 +85,7 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    logo: "/assets/LogoPutih.svg",
+    logo: LogoMM,
     meetingImg: "/meeting_placeholder.jpg",
     activityImg: "/activity_placeholder.jpg",
     programs: [
@@ -95,7 +104,7 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    logo: "/assets/LogoPutih.svg",
+    logo: LogoAdvance,
     meetingImg: "/meeting_placeholder.jpg",
     activityImg: "/activity_placeholder.jpg",
     programs: [
@@ -113,7 +122,7 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    logo: "/assets/LogoPutih.svg",
+    logo: LogoInternal,
     meetingImg: "/meeting_placeholder.jpg",
     activityImg: "/activity_placeholder.jpg",
     programs: [
@@ -133,7 +142,7 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    logo: "/assets/LogoPutih.svg",
+    logo: LogoExternal,
     meetingImg: "/meeting_placeholder.jpg",
     activityImg: "/activity_placeholder.jpg",
     programs: [
@@ -154,7 +163,7 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    logo: "/assets/LogoPutih.svg",
+    logo: LogoIndev,
     meetingImg: "/meeting_placeholder.jpg",
     activityImg: "/activity_placeholder.jpg",
     programs: [
@@ -172,7 +181,7 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    logo: "/assets/LogoPutih.svg",
+    logo: LogoEntre,
     meetingImg: "/meeting_placeholder.jpg",
     activityImg: "/activity_placeholder.jpg",
     programs: [
@@ -189,7 +198,7 @@ export const departmentsData: Record<string, DepartmentData> = {
     managerImg: DondoFoto,
     viceManagerImg: AbedFoto,
     groupImg: "/team_group_photo_1777615655077.png",
-    logo: "/assets/LogoPutih.svg",
+    logo: LogoSparta,
     meetingImg: "/meeting_placeholder.jpg",
     activityImg: "/activity_placeholder.jpg",
     programs: [

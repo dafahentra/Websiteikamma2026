@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, Navigate, Link, useLocation, useNavigate } from 'react-router';
 import { supabase } from '../lib/supabase';
-import { LayoutDashboard, FileText, Calendar, GraduationCap, LogOut, Loader2 } from 'lucide-react';
+import { LayoutDashboard, FileText, Calendar, GraduationCap, LogOut, Loader2, Phone } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
 
 export const AdminLayout = () => {
@@ -49,8 +49,10 @@ export const AdminLayout = () => {
   const navLinks = [
     { name: 'Dashboard', path: '/admin/dashboard', icon: <LayoutDashboard size={20} /> },
     { name: 'Artikel', path: '/admin/articles', icon: <FileText size={20} /> },
-    { name: 'Event', path: '/admin/events', icon: <Calendar size={20} /> },
+    { name: 'Agenda Event', path: '/admin/events', icon: <Calendar size={20} /> },
+    { name: 'Kontak Event Besar', path: '/admin/event-contacts', icon: <Phone size={20} /> },
     { name: 'Info Mahasiswa', path: '/admin/info-mahasiswa', icon: <GraduationCap size={20} /> },
+    { name: 'Pengaturan', path: '/admin/settings', icon: <LayoutDashboard size={20} /> },
   ];
 
   return (

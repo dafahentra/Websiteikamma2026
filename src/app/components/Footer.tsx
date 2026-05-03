@@ -1,6 +1,8 @@
-import { MapPin, Mail, Phone, ArrowRight } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import { Link } from 'react-router';
 import Logo from '../../assets/Logo.svg';
+import { supabase } from '../../lib/supabase';
+import { useEffect, useState } from 'react';
 
 /* ── Sleek Brand SVG Icons ────────────────────────────────────────── */
 function InstagramIcon({ size = 18 }: { size?: number }) {
@@ -61,112 +63,103 @@ function WhatsAppIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'About Us', href: '/about' },
-  { label: 'Info Mahasiswa', href: '/info-mahasiswa' },
-  { label: 'Our Events', href: '/events' },
-];
-
-const socialLinks = [
-  { label: 'Instagram', href: 'https://instagram.com/ikamma.ugm' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/company/ikamma' },
-  { label: 'Youtube', href: 'https://youtube.com/@ikamma' },
-  { label: 'Tiktok', href: 'https://tiktok.com/@ikamma.ugm' },
-  { label: 'X', href: 'https://x.com/ikamma_ugm' },
-];
-
 export function Footer() {
+  const [settings, setSettings] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const { data } = await supabase.from('site_settings').select('*').eq('id', 1).single();
+      if (data) setSettings(data);
+    };
+    fetchSettings();
+  }, []);
+
+  const socialLinks = [
+    { label: 'Instagram', href: settings?.instagram_url || 'https://instagram.com/ikamma.ugm' },
+    { label: 'LinkedIn', href: settings?.linkedin_url || 'https://linkedin.com/company/ikamma' },
+    { label: 'Youtube', href: settings?.youtube_url || 'https://youtube.com/@ikamma' },
+    { label: 'Tiktok', href: settings?.tiktok_url || 'https://tiktok.com/@ikamma.ugm' },
+    { label: 'X', href: settings?.x_url || 'https://x.com/ikamma_ugm' },
+  ];
+
   return (
-    <footer className="bg-white border-t border-gray-200 text-[#081C36] py-12 px-8 md:px-12 lg:px-24 font-inter">
-      <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-col gap-12">
-        
-        {/* Logo Section */}
-        <div className="flex flex-col lg:flex-row items-center lg:items-center gap-6 text-center lg:text-left">
-          <img src={Logo} alt="IKAMMA Logo" className="w-24 md:w-32 object-contain" />
-          <div className="flex flex-col gap-1">
-            <h3 className="font-bold text-sm md:text-base text-[#081C36]">Ikatan Keluarga Mahasiswa Manajemen</h3>
-            <p className="text-sm text-[#081C36]">Fakultas Ekonomika dan Bisnis</p>
-            <p className="text-sm text-[#081C36]">Universitas Gadjah Mada</p>
-          </div>
-        </div>
-
-        {/* Links Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-y-10 gap-x-4 lg:gap-12 w-full text-center lg:text-left">
+    <footer className="bg-white text-[#081C36] font-inter">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
           
-          {/* Navigation */}
-          <div className="col-span-1 flex flex-col items-center lg:items-start gap-4">
-            <h4 className="font-inter font-bold text-base">Navigation</h4>
-            <ul className="flex flex-col items-center lg:items-start gap-3 text-sm">
-              <li><Link to="/" className="hover:underline">Home</Link></li>
-              <li><Link to="/about" className="hover:underline">About Us</Link></li>
-              <li><Link to="/info-mahasiswa" className="hover:underline">Info Mahasiswa</Link></li>
-              <li><Link to="/events" className="hover:underline">Our Events</Link></li>
-            </ul>
-          </div>
-
-          {/* Social */}
-          <div className="col-span-1 flex flex-col items-center lg:items-start gap-4">
-            <h4 className="font-inter font-bold text-base">Social</h4>
-            <ul className="flex flex-col items-center lg:items-start gap-3 text-sm">
-              <li><a href="https://instagram.com/ikamma.ugm" target="_blank" rel="noopener noreferrer" className="hover:underline">Instagram</a></li>
-              <li><a href="https://linkedin.com/company/ikamma" target="_blank" rel="noopener noreferrer" className="hover:underline">LinkedIn</a></li>
-              <li><a href="https://youtube.com/@ikamma" target="_blank" rel="noopener noreferrer" className="hover:underline">Youtube</a></li>
-              <li><a href="https://tiktok.com/@ikamma.ugm" target="_blank" rel="noopener noreferrer" className="hover:underline">Tiktok</a></li>
-              <li><a href="https://x.com/ikamma_ugm" target="_blank" rel="noopener noreferrer" className="hover:underline">X</a></li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div className="col-span-2 lg:col-span-1 flex flex-col items-center lg:items-start gap-4 mt-4 lg:mt-0">
-            <h4 className="font-inter font-bold text-base">Contact</h4>
-            <ul className="flex flex-col items-center lg:items-start gap-4 text-sm">
-              <li>
-                <a href="mailto:dafahentra@gmail.com" className="flex items-center gap-2 hover:underline">
-                  <GmailIcon size={18} />
-                  <span className="break-all">dafahentra@gmail.com</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://wa.me/6281256720013" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline">
-                  <WhatsAppIcon size={18} />
-                  <span>+6281256720013</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Find Us At Maps */}
-          <div className="col-span-2 lg:col-span-2 hidden md:flex flex-col gap-4">
-            <h4 className="font-inter font-bold text-base">Find Us At Maps</h4>
-            <div className="w-full h-32 md:h-40 bg-gray-100 rounded-lg overflow-hidden border border-gray-200 shadow-sm relative">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4905.445452541879!2d110.37635327591678!3d-7.770554077082666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a59b4c17e62a5%3A0xa7b0a99cf63441a6!2sFakultas%20Ekonomika%20dan%20Bisnis%20UGM!5e1!3m2!1sid!2sid!4v1777633924284!5m2!1sid!2sid" 
-                className="absolute inset-0 w-full h-full"
-                style={{ border: 0 }} 
-                allowFullScreen={true} 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-            <div className="flex items-start gap-2 text-base leading-snug text-[#081C36]">
-              <MapPin size={20} className="shrink-0 mt-0.5" />
-              <p>
-                Jl. Sosio Humaniora, Karang Malang,<br/>
-                Caturtunggal, Depok, Sleman,<br/>
-                Daerah Istimewa Yogyakarta
+          {/* Column 1: Brand Identity */}
+          <div className="lg:col-span-5 flex items-center gap-6">
+            <img src={Logo} alt="IKAMMA Logo" className="w-20 md:w-24 lg:w-28 object-contain" />
+            <div className="flex flex-col gap-0.5">
+              <h3 className="font-bold text-base md:text-lg text-[#081C36] leading-tight">
+                Ikatan Keluarga Mahasiswa Manajemen
+              </h3>
+              <p className="text-sm md:text-base text-[#081C36]/70">
+                Fakultas Ekonomika dan Bisnis
+              </p>
+              <p className="text-sm md:text-base text-[#081C36]/70">
+                Universitas Gadjah Mada
               </p>
             </div>
           </div>
 
-        </div>
-      </div>
+          {/* Column 2: Navigation */}
+          <div className="lg:col-span-2 flex flex-col gap-6 lg:pl-4">
+            <h4 className="font-bold text-base md:text-lg uppercase tracking-wider">Navigation</h4>
+            <ul className="flex flex-col gap-3 text-sm md:text-base font-medium">
+              <li><Link to="/" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">Home</Link></li>
+              <li><Link to="/about" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">About Us</Link></li>
+              <li><Link to="/info-mahasiswa" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">Info Mahasiswa</Link></li>
+              <li><Link to="/events" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">Our Events</Link></li>
+            </ul>
+          </div>
 
-      {/* Copyright */}
-      <div className="max-w-6xl mx-auto text-center border-t border-gray-200 pt-6 mt-12">
-        <p className="text-sm text-[#081C36]/70">
-          © 2026 IKAMMA FEB UGM, All Rights Reserved
-        </p>
+          {/* Column 3: Social */}
+          <div className="lg:col-span-2 flex flex-col gap-6">
+            <h4 className="font-bold text-base md:text-lg uppercase tracking-wider">Social</h4>
+            <ul className="flex flex-col gap-3 text-sm md:text-base font-medium">
+              {socialLinks.map((social) => (
+                <li key={social.label}>
+                  <a href={social.href} target="_blank" rel="noopener noreferrer" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">
+                    {social.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4: Contact */}
+          <div className="lg:col-span-3 flex flex-col gap-6">
+            <h4 className="font-bold text-base md:text-lg uppercase tracking-wider">Contact</h4>
+            <ul className="flex flex-col gap-4 text-sm md:text-base font-medium">
+              <li>
+                <a href={`mailto:${settings?.email_contact || 'dafahentra@gmail.com'}`} className="group flex items-center gap-3 text-[#081C36]/60 hover:text-[#081C36] transition-colors">
+                  <div className="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[#081C36]/5 transition-colors">
+                    <GmailIcon size={18} />
+                  </div>
+                  <span className="break-all">{settings?.email_contact || 'dafahentra@gmail.com'}</span>
+                </a>
+              </li>
+              <li>
+                <a href={`https://wa.me/${(settings?.phone_contact || '+6281256720013').replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 text-[#081C36]/60 hover:text-[#081C36] transition-colors">
+                  <div className="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-green-50/50 transition-colors">
+                    <WhatsAppIcon size={18} />
+                  </div>
+                  <span>{settings?.phone_contact || '+6281256720013'}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        {/* Divider Line */}
+        <div className="w-full h-px bg-gray-100 mt-16 mb-8" />
+
+        {/* Bottom Bar: Copyright */}
+        <div className="flex justify-center items-center text-[#081C36]/40 text-xs md:text-sm">
+          <p>© 2026 IKAMMA FEB UGM. All Rights Reserved.</p>
+        </div>
       </div>
     </footer>
   );

@@ -22,9 +22,9 @@ export const AdminEventForm = () => {
     month_year: '',
     full_date: '',
     status: 'upcoming',
-    location_type: 'offline', // New: online/offline
-    description: '',         // New: for detail view
-    registration_link: '',   // New: for detail view
+    location_type: 'offline',
+    description: '',
+    registration_link: '',
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -67,12 +67,10 @@ export const AdminEventForm = () => {
     }
   };
 
-  // Helper to format date for display/storage
   const formatEventDate = (dateStr: string, endDateStr?: string) => {
     if (!dateStr) return { day: '', monthYear: '', full: '' };
     const start = new Date(dateStr);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-    const monthFull = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
     
     const day = start.getDate().toString();
     const monthYear = `${months[start.getMonth()]} ${start.getFullYear().toString().substring(2)}`;
@@ -135,7 +133,6 @@ export const AdminEventForm = () => {
       image_url,
     };
 
-    // Remove temp field before saving
     delete (payload as any).event_end_date;
 
     if (isEdit) {
@@ -270,7 +267,7 @@ export const AdminEventForm = () => {
             <label className="block text-sm font-medium mb-1">Tanggal Mulai *</label>
             <input 
               type="date" 
-              value={formData.event_date.includes('-') ? formData.event_date : ''} 
+              value={formData.event_date} 
               onChange={(e) => setFormData({...formData, event_date: e.target.value})}
               className="w-full p-2 border rounded"
               required 

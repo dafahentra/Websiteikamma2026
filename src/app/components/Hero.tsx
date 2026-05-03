@@ -6,6 +6,7 @@ import LogoPutihRaw from "../../assets/LogoPutih.svg?raw";
 
 import HERO_IMAGE from "../../assets/VidProf.mp4";
 import LOGO from "../../assets/LogoPutih.svg";
+import { supabase } from "../../lib/supabase";
 
 import { SCRAPBOOK_PHOTOS, HERO_BG } from "../../assets/photos";
 
@@ -100,6 +101,28 @@ export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const userPaused = useRef(false); // Track if user manually paused
   const [sectionHeight, setSectionHeight] = useState(3000);
+  const [videoUrl, setVideoUrl] = useState("https://www.youtube.com/watch?v=8VO2f7XQ7Tw");
+
+  // Helper to convert YouTube URL to Embed URL
+  const getEmbedUrl = (url: string) => {
+    let videoId = "";
+    if (url.includes("v=")) {
+      videoId = url.split("v=")[1]?.split("&")[0];
+    } else if (url.includes("youtu.be/")) {
+      videoId = url.split("youtu.be/")[1]?.split("?")[0];
+    } else if (url.includes("embed/")) {
+      videoId = url.split("embed/")[1]?.split("?")[0];
+    }
+    return videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : url;
+  };
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const { data } = await supabase.from('site_settings').select('company_profile_video_url').eq('id', 1).single();
+      if (data?.company_profile_video_url) setVideoUrl(data.company_profile_video_url);
+    };
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
@@ -348,7 +371,7 @@ export function Hero() {
                   <div className="w-full aspect-video bg-[#D9D9D9] rounded-2xl md:rounded-[2rem] shadow-lg mb-2 md:mb-4 relative overflow-hidden">
                     <iframe
                       className="w-full h-full"
-                      src="https://www.youtube.com/embed/8VO2f7XQ7Tw?rel=0"
+                      src={getEmbedUrl(videoUrl)}
                       title="YouTube video player"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -358,7 +381,7 @@ export function Hero() {
                   </div>
 
                   <div className="text-right">
-                    <a href="#video" className="text-white hover:text-[#081C36] transition-colors inline-flex items-center gap-2 text-xs md:text-sm underline underline-offset-4">
+                    <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#081C36] transition-colors inline-flex items-center gap-2 text-xs md:text-sm underline underline-offset-4">
                       Click to See Full Video <ArrowRight size={12} className="md:w-[14px] md:h-[14px]" />
                     </a>
                   </div>

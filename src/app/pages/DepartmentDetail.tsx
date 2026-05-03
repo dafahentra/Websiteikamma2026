@@ -93,7 +93,7 @@ export function DepartmentDetail() {
             <img 
               src={department.logo} 
               alt={`${department.name} Logo`}
-              className="w-full h-auto grayscale brightness-0 invert" 
+              className="w-full h-auto opacity-10 mix-blend-multiply" 
             />
           </div>
 
@@ -212,7 +212,7 @@ export function DepartmentDetail() {
                 <img 
                   src={department.logo} 
                   alt={`${department.name} Logo`}
-                  className="w-full h-auto drop-shadow-2xl brightness-0 invert" 
+                  className="max-w-full max-h-full object-contain mix-blend-multiply drop-shadow-xl" 
                 />
               </motion.div>
             </div>

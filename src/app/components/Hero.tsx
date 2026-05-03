@@ -328,7 +328,7 @@ export function Hero() {
                   <p className="text-sm md:text-lg leading-relaxed hidden sm:block">
                     IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
                   </p>
-                  <div className="pt-2 md:pt-4 flex justify-start">
+                  <div className="pt-2 md:-mt-[25px] flex justify-start">
                     <AnimatedButton href="/about">
                       See More
                     </AnimatedButton>

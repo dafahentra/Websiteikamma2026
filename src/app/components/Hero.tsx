@@ -222,7 +222,7 @@ export function Hero() {
 
   // Parallax effect: A subtle, gentle slow pan up.
   // Parallax effect: A much faster, dramatic upward scroll for the background photo
-  const parallaxY = useTransform(progress, [0.40, 1.00], ["0vh", "-70vh"]);
+  const parallaxY = useTransform(progress, [0.40, 1.00], ["0vh", "-25vh"]);
 
   // The dark overlay ONLY appears at the very end when it becomes the background
   const overlayOpacity = useTransform(progress, [0.35, 0.45], [0, 0.50]);

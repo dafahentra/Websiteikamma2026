@@ -12,7 +12,7 @@ import { SCRAPBOOK_PHOTOS, HERO_BG } from "../../assets/photos";
 const BACKGROUND_IMAGE = HERO_BG;
 
 // A massive scrolling area to accommodate the grand unified sequence
-const SECTION_HEIGHT_PX = 8000;
+const SECTION_HEIGHT_PX = 3200;
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
@@ -135,7 +135,7 @@ export function Hero() {
         if (latest > 0.4) {
           videoRef.current.pause();
         } else {
-          videoRef.current.play().catch(() => {});
+          videoRef.current.play().catch(() => { });
         }
       }
     });
@@ -222,7 +222,7 @@ export function Hero() {
 
   // Parallax effect: A subtle, gentle slow pan up.
   // Parallax effect: A much faster, dramatic upward scroll for the background photo
-  const parallaxY = useTransform(progress, [0.40, 1.00], ["0vh", "-50vh"]);
+  const parallaxY = useTransform(progress, [0.40, 1.00], ["0vh", "-10vh"]);
 
   // The dark overlay ONLY appears at the very end when it becomes the background
   const overlayOpacity = useTransform(progress, [0.35, 0.45], [0, 0.50]);
@@ -234,7 +234,7 @@ export function Hero() {
   // 0.40 to 0.48
   const contentOpacity = useTransform(progress, [0.40, 0.48], [0, 1]);
   // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
-  const contentY = useTransform(progress, [0.40, 0.48, 0.80], [80, 0, -400]);
+  const contentY = useTransform(progress, [0.40, 0.55, 0.85], [80, 0, -120]);
 
   // Display control for the pause indicator: completely hide it after the hero phase
   const indicatorDisplay = useTransform(progress, (v: number) => v < 0.12 ? "flex" : "none");
@@ -242,12 +242,12 @@ export function Hero() {
   // Handle video pause via click - uses a native handler on the sticky container
   const handleVideoPauseClick = (e: React.MouseEvent) => {
     const currentProgress = rawProgress.get();
-    
+
     // Logic: 
     // - If playing: only allow pausing in the hero phase (< 0.12)
     // - If paused: ALWAYS allow unpausing so the user doesn't get stuck
     if (isPlaying && currentProgress > 0.12) return;
-    
+
     // Don't intercept clicks on navigation or other active UI elements
     const target = e.target as HTMLElement;
     if (target.closest('nav') || target.closest('button') || target.closest('a')) return;
@@ -257,7 +257,7 @@ export function Hero() {
         videoRef.current.pause();
         userPaused.current = true;
       } else {
-        videoRef.current.play().catch(() => {});
+        videoRef.current.play().catch(() => { });
         userPaused.current = false;
       }
       setIsPlaying(!isPlaying);
@@ -303,10 +303,10 @@ export function Hero() {
         {/* === PHASE 6: Content === */}
         <motion.div
           className="absolute inset-0 z-50 flex flex-col justify-start md:justify-center w-full pt-[80px] md:pt-[110px] lg:pt-[130px] pb-[4vh] md:pb-[6vh] text-left"
-          style={{ 
-            opacity: contentOpacity, 
+          style={{
+            opacity: contentOpacity,
             y: contentY,
-            pointerEvents: contentPointerEvents 
+            pointerEvents: contentPointerEvents
           }}
         >
           {/* Main Content inside restricted width - Mobile: pt-[21px] (moved up another 50px), Desktop: pt-[101px] */}
@@ -401,10 +401,10 @@ export function Hero() {
         {/* === PHASE 1, 2 & 3: Hero Initial State === */}
         <motion.div
           className="absolute inset-0 z-40 flex items-center justify-center"
-          style={{ 
-            scale: heroScale, 
+          style={{
+            scale: heroScale,
             opacity: heroOpacity,
-            pointerEvents: heroPointerEvents 
+            pointerEvents: heroPointerEvents
           }}
         >
           {/* Video Layer */}

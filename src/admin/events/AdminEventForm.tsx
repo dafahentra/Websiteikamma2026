@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase';
 import { useNavigate, useParams } from 'react-router';
 import toast from 'react-hot-toast';
 import { NovelEditor } from '../articles/NovelEditor';
+import { convertToWebP } from '../../lib/imageOptimization';
 
 export const AdminEventForm = () => {
   const { id } = useParams();
@@ -98,25 +99,34 @@ export const AdminEventForm = () => {
     let image_url = previewUrl;
 
     if (imageFile) {
-      const fileExt = imageFile.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `${fileName}`;
+      setSaving(true);
+      try {
+        const webpBlob = await convertToWebP(imageFile);
+        const fileName = `${Math.random()}.webp`;
+        const filePath = `${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from('event-images')
-        .upload(filePath, imageFile);
+        const { error: uploadError } = await supabase.storage
+          .from('event-images')
+          .upload(filePath, webpBlob, {
+            contentType: 'image/webp'
+          });
 
-      if (uploadError) {
-        toast.error(`Gagal mengupload gambar: ${uploadError.message}`);
+        if (uploadError) {
+          toast.error(`Gagal mengupload gambar: ${uploadError.message}`);
+          setSaving(false);
+          return;
+        }
+
+        const { data: publicUrlData } = supabase.storage
+          .from('event-images')
+          .getPublicUrl(filePath);
+
+        image_url = publicUrlData.publicUrl;
+      } catch (err) {
+        toast.error('Gagal mengoptimasi gambar');
         setSaving(false);
         return;
       }
-
-      const { data: publicUrlData } = supabase.storage
-        .from('event-images')
-        .getPublicUrl(filePath);
-
-      image_url = publicUrlData.publicUrl;
     }
 
     const dateInfo = formatEventDate(formData.event_date, (formData as any).event_end_date);

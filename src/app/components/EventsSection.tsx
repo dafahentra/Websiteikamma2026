@@ -2,10 +2,10 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
-import LOGO1 from '../../assets/LogoIKAMMA/LogoPutih.svg';
-import LOGO2 from '../../assets/LogoIKAMMA/LogoPutih.svg';
-import LOGO3 from '../../assets/LogoIKAMMA/LogoPutih.svg';
-import LOGO4 from '../../assets/LogoIKAMMA/LogoPutih.svg';
+import LOGO1 from '../../assets/LogoEvent/ManagementEvent.png';
+import LOGO2 from '../../assets/LogoEvent/CareerInsight.png';
+import LOGO3 from '../../assets/LogoEvent/Menefest.png';
+import LOGO4 from '../../assets/LogoEvent/Yes!.png';
 
 import { EVENT_PHOTOS, EVENTS_BG } from "../../assets/photos";
 const BACKGROUND_IMAGE = EVENTS_BG;
@@ -77,10 +77,11 @@ function CarouselCard({ index, activeIndex, item, unfoldProgress, onClick, xFact
         src={item.photo}
         className="w-full h-full object-cover"
         style={{ filter }}
+        loading="lazy"
       />
       {/* Overlay Logo in the center of the photo */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <img src={item.logo} alt="Event Logo" className="w-24 md:w-32 opacity-80" />
+        <img src={item.logo} alt="Event Logo" className="w-24 md:w-32 opacity-80" loading="lazy" />
       </div>
       {/* White Inner Frame */}
       <motion.div
@@ -126,6 +127,7 @@ export function EventsSection() {
               src={BACKGROUND_IMAGE}
               alt="Background"
               className="w-full h-full object-cover"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-white/90" />
           </div>

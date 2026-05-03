@@ -120,13 +120,23 @@ export function NewsSection() {
     fetchPosts();
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
   });
 
   // Columns 2 & 4 move up as you scroll (parallax)
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -250]);
+  // Slower on mobile (80px) vs desktop (250px)
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -80 : -250]);
 
   // Locomotive-style background parallax (moves slower than content)
   const bgParallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
@@ -151,9 +161,9 @@ export function NewsSection() {
       <svg width="0" height="0" className="absolute">
         <defs>
           <clipPath id="news-clip-path" clipPathUnits="objectBoundingBox">
-            <path 
+            <path
               transform="scale(0.002777777777777778, 0.002777777777777778)"
-              d="M0 27C0 12.0883 12.0883 0 27 0H101H330C346.569 0 360 13.4315 360 30V291C360 307.569 346.569 321 330 321H238.205C230.38 321 222.864 324.057 217.262 329.52L194.738 351.48C189.136 356.943 181.62 360 173.795 360H30C13.4315 360 0 346.569 0 330V27Z" 
+              d="M0 27C0 12.0883 12.0883 0 27 0H101H330C346.569 0 360 13.4315 360 30V291C360 307.569 346.569 321 330 321H238.205C230.38 321 222.864 324.057 217.262 329.52L194.738 351.48C189.136 356.943 181.62 360 173.795 360H30C13.4315 360 0 346.569 0 330V27Z"
             />
           </clipPath>
         </defs>

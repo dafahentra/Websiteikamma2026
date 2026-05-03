@@ -184,26 +184,25 @@ export function Hero() {
     return 70 * Math.pow(1 / 70, t); // smooth exponential zoom
   });
   const maskOpacity = useTransform(progress, [0.0, 0.05], [0, 1]);
+  const logoOpacity = useTransform(progress, [0.0, 0.05], [0, 1]); // Logo appears together with the mask
   const captionOpacity = useTransform(progress, [0.0, 0.05], [1, 0]);
 
-  /* === PHASE 2: Text turns white & Logo appears === */
-  // 0.10 to 0.20
-  const whiteLayerOpacity = useTransform(progress, [0.10, 0.20], [0, 1]);
-  const logoOpacity = useTransform(progress, [0.10, 0.20], [0, 1]);
-  const logoY = useTransform(progress, [0.10, 0.20], ["-24px", "0px"]);
+  /* === PHASE 2: Text turns white === */
+  // 0.10 to 0.15 (Faster to cut down scroll time, fades directly at final position)
+  const whiteLayerOpacity = useTransform(progress, [0.10, 0.15], [0, 1]);
 
   /* === PHASE 3: Hero Flies Past Camera === */
-  // 0.20 to 0.45 - Slower camera fly-through (Smooth exponential zoom)
+  // 0.15 to 0.40 - Slower camera fly-through (Smooth exponential zoom)
   const heroScale = useTransform(progress, (p) => {
-    if (p <= 0.20) return 1;
-    if (p >= 0.45) return 40;
-    const t = (p - 0.20) / 0.25; // normalize to 0..1
+    if (p <= 0.15) return 1;
+    if (p >= 0.40) return 40;
+    const t = (p - 0.15) / 0.25; // normalize to 0..1
     return Math.pow(40, t); // smooth exponential zoom
   });
-  const heroOpacity = useTransform(progress, [0.35, 0.45], [1, 0]);
+  const heroOpacity = useTransform(progress, [0.30, 0.40], [1, 0]);
 
   // Disable clicks on hero video once we fly past it
-  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.45 ? "auto" : "none");
+  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.40 ? "auto" : "none");
 
   // Reduced to 12 photos for extreme performance optimization
   const PIONIR_LAYOUT = [
@@ -224,7 +223,7 @@ export function Hero() {
 
       // Sequential appearance: strict 1-by-1 staggered timeline
       const seq = i / shuffledLayout.length;
-      const startP = 0.45 + (seq * 0.15); // Starts after hero fly-through
+      const startP = 0.40 + (seq * 0.15); // Starts after hero fly-through
 
       // Variable duration so some fly slightly faster/slower, adding depth
       const duration = 0.10 + Math.random() * 0.05;
@@ -244,28 +243,28 @@ export function Hero() {
   }, []);
 
   /* === PHASE 5: Background Photo === */
-  // Spawns after all scrapbook photos have at least started appearing (0.60)
-  // Hits full screen (0.80) to ensure no blue space is visible before text appears
-  const finalScale = useTransform(progress, [0.60, 0.80, 0.95], [0.15, 1, 1.05]);
+  // Spawns after all scrapbook photos have at least started appearing (0.55)
+  // Hits full screen (0.75) to ensure no blue space is visible before text appears
+  const finalScale = useTransform(progress, [0.55, 0.75, 0.90], [0.15, 1, 1.05]);
 
   // Fades in and blurs just like the other scrapbook photos
-  const finalOpacity = useTransform(progress, [0.60, 0.70], [0, 1]);
-  const finalBlur = useTransform(progress, [0.60, 0.70], [10, 0]);
+  const finalOpacity = useTransform(progress, [0.55, 0.65], [0, 1]);
+  const finalBlur = useTransform(progress, [0.55, 0.65], [10, 0]);
   const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
 
   // The dark overlay ONLY appears at the very end when it becomes the background
-  const overlayOpacity = useTransform(progress, [0.78, 0.85], [0, 0.70]);
+  const overlayOpacity = useTransform(progress, [0.73, 0.80], [0, 0.70]);
 
   // Pointer events control: only allow clicks on content when it's visible
-  const contentPointerEvents = useTransform(progress, (v: number) => v > 0.85 ? "auto" : "none");
+  const contentPointerEvents = useTransform(progress, (v: number) => v > 0.80 ? "auto" : "none");
 
   /* === PHASE 6: About IKAMMA Content Fades In === */
-  // 0.82 to 0.85 - SNAPPY FADE
-  const contentOpacity = useTransform(progress, [0.82, 0.85], [0, 1]);
-  // Locomotive scroll effect: Locks at 0 (centered) at 0.90 progress for a seamless transition buffer
+  // 0.77 to 0.80 - SNAPPY FADE
+  const contentOpacity = useTransform(progress, [0.77, 0.80], [0, 1]);
+  // Locomotive scroll effect: Locks at 0 (centered) at 0.85 progress for a seamless transition buffer
   const contentY = useTransform(
     progress,
-    [0.82, 0.88, 0.90, 1.0],
+    [0.77, 0.83, 0.85, 1.0],
     [60, 0, 0, 0]
   );
 
@@ -458,14 +457,21 @@ export function Hero() {
 
           {/* Logo above text */}
           <motion.div
-            className="absolute z-30 w-full flex justify-center pointer-events-none"
+            className="absolute z-30 inset-0 pointer-events-none"
             style={{
               opacity: logoOpacity,
-              y: logoY,
-              bottom: "calc(50% + clamp(1rem, 4vw, 3.5rem) + 50px)"
+              scale: maskScale, // Logo scales together with the text mask
+              transformOrigin: "center center"
             }}
           >
-            <img src={LOGO} alt="IKAMMA Logo" className="w-28 md:w-40 object-contain" />
+            <div className="absolute w-full h-full flex justify-center">
+              <img 
+                src={LOGO} 
+                alt="IKAMMA Logo" 
+                className="absolute w-28 md:w-40 object-contain" 
+                style={{ bottom: "calc(50% + clamp(1rem, 4vw, 3.5rem) + 50px)" }} 
+              />
+            </div>
           </motion.div>
 
         </motion.div>

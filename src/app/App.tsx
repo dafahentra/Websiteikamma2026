@@ -3,6 +3,7 @@ import { Home } from './pages/Home';
 import { AboutIkamma } from './pages/AboutIkamma';
 import { DepartmentDetail } from './pages/DepartmentDetail';
 import { ArticlesPage } from './pages/ArticlesPage';
+import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { EventsPage } from './pages/EventsPage';
 import { ContactPage } from './pages/ContactPage';
 import { InfoMahasiswaPage } from './pages/InfoMahasiswaPage';
@@ -25,6 +26,7 @@ export default function App() {
       <Route path="/about" element={<AboutIkamma />} />
       <Route path="/departemen/:slug" element={<DepartmentDetail />} />
       <Route path="/articles" element={<ArticlesPage />} />
+      <Route path="/articles/:id" element={<ArticleDetailPage />} />
       <Route path="/events" element={<EventsPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/info-mahasiswa" element={<InfoMahasiswaPage />} />

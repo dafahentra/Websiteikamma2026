@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useNavigate, useParams } from 'react-router';
 import toast from 'react-hot-toast';
+import { NovelEditor } from '../articles/NovelEditor';
 
 export const AdminInfoForm = () => {
   const { id } = useParams();
@@ -22,6 +23,7 @@ export const AdminInfoForm = () => {
     period_end: '',
     status: 'open',
     link: '',
+    work_type: 'offline', // New field: hybrid/online/offline
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -43,6 +45,7 @@ export const AdminInfoForm = () => {
             period_end: data.period_end,
             status: data.status,
             link: data.link,
+            work_type: data.work_type || 'offline',
           });
           setPreviewUrl(data.poster_url || '');
         } else if (error) {
@@ -116,16 +119,16 @@ export const AdminInfoForm = () => {
   if (loading) return <div>Memuat data...</div>;
 
   return (
-    <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+    <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-200">
       <h1 className="text-2xl font-bold mb-6">{isEdit ? 'Edit Info Mahasiswa' : 'Tambah Info Mahasiswa'}</h1>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium mb-1">Kategori *</label>
             <select 
               value={formData.category} 
-              onChange={(e) => setFormData({...formData, category: e.target.value})}
+              onChange={(e) => setFormData({...formData, category: e.target.value as any})}
               className="w-full p-2 border rounded"
               required
             >
@@ -138,7 +141,7 @@ export const AdminInfoForm = () => {
             <label className="block text-sm font-medium mb-1">Status *</label>
             <select 
               value={formData.status} 
-              onChange={(e) => setFormData({...formData, status: e.target.value})}
+              onChange={(e) => setFormData({...formData, status: e.target.value as any})}
               className="w-full p-2 border rounded"
               required
             >
@@ -158,6 +161,24 @@ export const AdminInfoForm = () => {
             required 
           />
         </div>
+        
+        {formData.category === 'Magang' && (
+          <div>
+            <label className="block text-sm font-medium mb-1">Tipe Kerja (Khusus Magang) *</label>
+            <div className="flex gap-4 mb-4">
+              {['offline', 'online', 'hybrid'].map((type) => (
+                <label key={type} className="flex items-center gap-2 capitalize">
+                  <input 
+                    type="radio" 
+                    checked={formData.work_type === type} 
+                    onChange={() => setFormData({...formData, work_type: type})} 
+                  />
+                  {type}
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div>
           <label className="block text-sm font-medium mb-1">Penyelenggara * (contoh: "Bank Indonesia")</label>
@@ -171,23 +192,20 @@ export const AdminInfoForm = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Deskripsi Singkat * (maks ~200 karakter)</label>
-          <textarea 
-            value={formData.description} 
-            onChange={(e) => setFormData({...formData, description: e.target.value})}
-            className="w-full p-2 border rounded h-20"
-            maxLength={200}
-            required 
+          <label className="block text-sm font-medium mb-2">Deskripsi Singkat * (Muncul di Card)</label>
+          <NovelEditor 
+            content={formData.description} 
+            onChange={(content) => setFormData({...formData, description: content})} 
+            minHeight="150px"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Deskripsi Lengkap * (untuk modal detail)</label>
-          <textarea 
-            value={formData.full_description} 
-            onChange={(e) => setFormData({...formData, full_description: e.target.value})}
-            className="w-full p-2 border rounded h-40"
-            required 
+          <label className="block text-sm font-medium mb-2">Deskripsi Lengkap * (Muncul di Modal)</label>
+          <NovelEditor 
+            content={formData.full_description} 
+            onChange={(content) => setFormData({...formData, full_description: content})} 
+            minHeight="400px"
           />
         </div>
 

@@ -305,16 +305,15 @@ const CATEGORY_COLORS: Record<Category, string> = {
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  {/* Status Badge */}
                   <div className="absolute top-2 left-2 md:top-3 md:left-3">
                     {item.status === 'open' ? (
-                      <div className="flex items-center gap-1.5 bg-[#081C36]/90 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1.5 rounded-full">
+                      <div className="flex items-center gap-1.5 bg-[#081C36]/90 backdrop-blur-sm px-3 h-7 md:px-4 md:h-10 rounded-full">
                         <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse" />
-                        <span className="text-white text-[9px] md:text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
+                        <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
                       </div>
                     ) : (
-                      <div className="bg-red-500/90 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1.5 rounded-full">
-                        <span className="text-white text-[9px] md:text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
+                      <div className="flex items-center bg-red-500/90 backdrop-blur-sm px-3 h-7 md:px-4 md:h-10 rounded-full">
+                        <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
                       </div>
                     )}
                   </div>
@@ -324,7 +323,7 @@ const CATEGORY_COLORS: Record<Category, string> = {
                 <div className="p-3 md:p-5 flex flex-col flex-grow">
                   {/* Header Meta: Category & Date */}
                   <div className="flex flex-wrap items-center justify-between gap-1 mb-2 md:mb-3">
-                    <span className={`inline-block px-2 py-0.5 md:px-3 md:py-1 rounded-md text-white text-[9px] md:text-xs font-inter font-semibold ${CATEGORY_COLORS[item.category]}`}>
+                    <span className={`flex items-center px-3 h-7 md:px-4 md:h-10 rounded-full text-white text-[10px] md:text-xs font-inter font-bold uppercase tracking-wider ${CATEGORY_COLORS[item.category]}`}>
                       {item.category}
                     </span>
                     <span className="text-[#081C36]/50 text-[9px] md:text-xs font-inter">
@@ -349,9 +348,10 @@ const CATEGORY_COLORS: Record<Category, string> = {
                   </div>
 
                   {/* Description */}
-                  <p className="text-[#081C36]/60 text-[11px] md:text-base font-inter leading-relaxed mb-3 md:mb-4 line-clamp-2 md:line-clamp-3">
-                    {item.description}
-                  </p>
+                  <div 
+                    className="text-[#081C36]/60 text-[11px] md:text-base font-inter leading-relaxed mb-3 md:mb-4 line-clamp-2 md:line-clamp-3 prose-p:my-0"
+                    dangerouslySetInnerHTML={{ __html: item.description }}
+                  />
 
                   {/* CTA */}
                   <div className="mt-auto flex justify-end">
@@ -475,16 +475,16 @@ const CATEGORY_COLORS: Record<Category, string> = {
                 {/* Badges on poster */}
                 <div className="absolute bottom-4 left-6 flex items-center gap-3">
                   {selectedItem.status === 'open' ? (
-                    <div className="flex items-center gap-2 bg-[#081C36] px-4 py-2 rounded-full">
+                    <div className="flex items-center gap-2 bg-[#081C36] px-4 h-10 rounded-full">
                       <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
                       <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
                     </div>
                   ) : (
-                    <div className="bg-red-500/90 px-4 py-2 rounded-full">
+                    <div className="flex items-center bg-red-500/90 px-4 h-10 rounded-full">
                       <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
                     </div>
                   )}
-                  <div className={`${CATEGORY_COLORS[selectedItem.category]} px-4 py-2 rounded-full`}>
+                  <div className={`flex items-center ${CATEGORY_COLORS[selectedItem.category]} px-4 h-10 rounded-full`}>
                     <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">{selectedItem.category}</span>
                   </div>
                 </div>
@@ -530,9 +530,10 @@ const CATEGORY_COLORS: Record<Category, string> = {
                 {/* Description */}
                 <div className="mb-8">
                   <h3 className="text-lg font-inter font-bold text-[#081C36] mb-3">Deskripsi</h3>
-                  <p className="text-[#081C36]/60 text-base font-inter leading-relaxed">
-                    {selectedItem.fullDescription}
-                  </p>
+                  <div 
+                    className="prose prose-slate max-w-none text-[#081C36]/60 text-base font-inter leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: selectedItem.fullDescription }}
+                  />
                 </div>
 
                 {/* CTA */}

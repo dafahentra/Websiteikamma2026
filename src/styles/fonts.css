@@ -19,13 +19,16 @@ h6,
   font-weight: 400;
 }
 
-/* ─── Pengganti Bold: Libre Caslon Text Italic ────────────────────
-   Digunakan sebagai penekanan/emphasis sebagai ganti font-weight   */
+/* ─── Libre Caslon Text Bold ────────────────────────────────────── */
 strong,
 b,
-.font-caslon-italic,
-.font-caslon-bold,
-.font-bold-caslon {
+.font-caslon-bold {
+  font-family: 'Libre Caslon Text', serif !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+}
+
+.font-caslon-italic {
   font-family: 'Libre Caslon Text', serif !important;
   font-style: italic !important;
   font-weight: 400 !important;

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useNavigate, useParams } from 'react-router';
 import toast from 'react-hot-toast';
+import { NovelEditor } from './NovelEditor';
+
+// Registering custom fonts or sizes if needed, but for now we'll use standard ones
+// and ensure the toolbar is comprehensive.
 
 export const AdminArticleForm = () => {
   const { id } = useParams();
@@ -14,10 +18,10 @@ export const AdminArticleForm = () => {
   const [formData, setFormData] = useState({
     category: 'IKAMMA Insights',
     title: '',
-    description: '',
     author: '',
     date: '',
     read_time: '',
+    content: '',
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -31,10 +35,10 @@ export const AdminArticleForm = () => {
           setFormData({
             category: data.category,
             title: data.title,
-            description: data.description,
             author: data.author,
             date: data.date,
             read_time: data.read_time,
+            content: data.content || '',
           });
           setPreviewUrl(data.image_url || '');
         } else if (error) {
@@ -82,8 +86,15 @@ export const AdminArticleForm = () => {
       image_url = publicUrlData.publicUrl;
     }
 
+    // Generate snippet from content by removing HTML tags
+    const plainTextContent = formData.content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ');
+    const autoDescription = plainTextContent.length > 200 
+      ? plainTextContent.substring(0, 200) + '...' 
+      : plainTextContent;
+
     const payload = {
       ...formData,
+      description: autoDescription,
       image_url,
     };
 
@@ -138,14 +149,14 @@ export const AdminArticleForm = () => {
           />
         </div>
 
+
+
         <div>
-          <label className="block text-sm font-medium mb-1">Deskripsi Singkat * (maks ~300 karakter)</label>
-          <textarea 
-            value={formData.description} 
-            onChange={(e) => setFormData({...formData, description: e.target.value})}
-            className="w-full p-2 border rounded h-24"
-            maxLength={300}
-            required 
+          <label className="block text-sm font-medium mb-1">Konten Lengkap Artikel *</label>
+          <NovelEditor 
+            content={formData.content} 
+            onChange={(value: string) => setFormData({...formData, content: value})}
+            minHeight="600px"
           />
         </div>
 
@@ -161,7 +172,7 @@ export const AdminArticleForm = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Tanggal *</label>
+            <label className="block text-sm font-medium mb-1">Tanggal Diposting *</label>
             <input 
               type="date" 
               value={formData.date} 
@@ -173,14 +184,18 @@ export const AdminArticleForm = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Estimasi Waktu Baca * (contoh: "5 min read")</label>
-          <input 
-            type="text" 
+          <label className="block text-sm font-medium mb-1">Estimasi Waktu Baca *</label>
+          <select 
             value={formData.read_time} 
             onChange={(e) => setFormData({...formData, read_time: e.target.value})}
             className="w-full p-2 border rounded"
-            required 
-          />
+            required
+          >
+            <option value="">Pilih waktu baca</option>
+            {[...Array(15)].map((_, i) => (
+              <option key={i+1} value={`${i+1} min read`}>{i+1} min read</option>
+            ))}
+          </select>
         </div>
 
         <div>

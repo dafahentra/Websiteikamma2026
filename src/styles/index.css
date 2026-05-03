@@ -1,3 +1,16 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+/* Fix React Quill Styles inside Tailwind */
+.ql-editor b, .ql-editor strong {
+  font-weight: bold;
+}
+.ql-editor i, .ql-editor em {
+  font-style: italic;
+}
+.ql-editor h1 { font-size: 2em; font-weight: bold; }
+.ql-editor h2 { font-size: 1.5em; font-weight: bold; }
+.ql-editor h3 { font-size: 1.17em; font-weight: bold; }
+.ql-editor ol { list-style-type: decimal; padding-left: 1.5em; }
+.ql-editor ul { list-style-type: disc; padding-left: 1.5em; }

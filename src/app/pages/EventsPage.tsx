@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, CalendarDays } from 'lucide-react';
+import { MapPin, Clock, CalendarDays, X, ExternalLink, ArrowRight } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
@@ -33,6 +34,17 @@ export function EventsPage() {
   const { pathname } = useLocation();
   const [ongoingEvents, setOngoingEvents] = useState<any[]>([]);
   const [pastEvents, setPastEvents] = useState<any[]>([]);
+  const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (selectedEvent) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [selectedEvent]);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -107,7 +119,7 @@ export function EventsPage() {
           </span>
         </motion.h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {ongoingEvents.map((event, i) => (
             <motion.div
               key={event.id}
@@ -115,6 +127,7 @@ export function EventsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.12 }}
+              onClick={() => setSelectedEvent(event)}
               className="flex flex-col group cursor-pointer"
             >
               {/* Image Container */}
@@ -126,27 +139,35 @@ export function EventsPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                {/* Status Badge */}
-                {event.status === 'ongoing' ? (
-                  <div className="absolute top-2 left-2 md:top-4 md:left-4 flex items-center gap-1.5 md:gap-2 bg-[#081C36] px-2 py-1 md:px-3 md:py-1.5 rounded-full">
-                    <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full animate-pulse" />
-                    <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">ONGOING</span>
+                  <div className="absolute top-2 left-2 md:top-4 md:left-4 flex items-center gap-1.5 md:gap-2">
+                    {event.status === 'ongoing' ? (
+                      <div className="flex items-center gap-1.5 bg-[#081C36] px-2 py-0.5 md:px-3 md:h-8 rounded-full">
+                      <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-white rounded-full animate-pulse" />
+                      <span className="text-white text-[9px] md:text-[10px] font-inter font-bold tracking-wider uppercase">ONGOING</span>
+                    </div>
+                    ) : (
+                      <div className="flex items-center bg-[#081C36]/20 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/20">
+                      <span className="text-white text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Upcoming</span>
+                    </div>
+                    )}
+                    
+                    {/* Event Type / Category */}
+                    {event.category && (
+                      <div className="flex items-center bg-amber-500 px-2 py-0.5 md:px-3 md:h-8 rounded-full shadow-lg">
+                        <span className="text-white text-[9px] md:text-[10px] font-inter font-bold tracking-wider uppercase">{event.category}</span>
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-[#081C36]/10 backdrop-blur-md px-2 py-1 md:px-3 md:py-1.5 rounded-full border border-[#081C36]/15">
-                    <span className="text-white text-[10px] md:text-xs font-inter font-medium tracking-wider uppercase">Upcoming</span>
-                  </div>
-                )}
 
                 {/* Date Badge */}
-                <div className="absolute bottom-0 left-0 bg-[#081C36]/10 backdrop-blur-md flex flex-col items-center justify-center px-3 py-1.5 md:px-6 md:py-3 border-t border-r border-[#081C36]/20">
-                  <span className="text-lg md:text-2xl font-bold text-white leading-none font-inter">{event.event_date}</span>
-                  <span className="text-[10px] md:text-sm font-medium text-[#081C36]/80 mt-0.5 md:mt-1 font-inter">{event.month_year}</span>
+                <div className="absolute bottom-0 left-0 bg-[#081C36]/10 backdrop-blur-md flex flex-col items-center justify-center px-2 py-1 md:px-4 md:py-2 border-t border-r border-[#081C36]/20">
+                  <span className="text-base md:text-xl font-bold text-white leading-none font-inter">{event.event_date}</span>
+                  <span className="text-[9px] md:text-xs font-medium text-[#081C36]/80 mt-0.5 font-inter">{event.month_year}</span>
                 </div>
               </div>
 
               {/* Content */}
-              <h3 className="text-sm md:text-2xl font-inter font-semibold mb-2 md:mb-4 line-clamp-2 min-h-[36px] md:min-h-[56px] group-hover:text-[#081C36] transition-colors duration-300">
+              <h3 className="text-base md:text-xl font-inter font-bold mb-2 md:mb-3 line-clamp-2 min-h-[48px] md:min-h-[56px] group-hover:text-[#081C36] transition-colors duration-300">
                 {event.title}
               </h3>
 
@@ -159,6 +180,13 @@ export function EventsPage() {
                   <Clock size={12} className="text-[#081C36] md:w-4 md:h-4" />
                   <span className="text-xs md:text-sm font-inter truncate">{event.time}</span>
                 </div>
+              </div>
+
+              {/* Read More */}
+              <div className="mt-4 flex justify-end">
+                <span className="text-[#081C36] text-[10px] md:text-sm font-bold flex items-center gap-1 group-hover:underline">
+                  Lihat Detail <ArrowRight size={14} className="md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
               </div>
             </motion.div>
           ))}
@@ -180,7 +208,7 @@ export function EventsPage() {
           </span>
         </motion.h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {pastEvents.map((event, i) => (
             <motion.article
               key={event.id}
@@ -188,6 +216,7 @@ export function EventsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
+              onClick={() => setSelectedEvent(event)}
               className="group cursor-pointer flex flex-col"
             >
               {/* Image */}
@@ -216,10 +245,150 @@ export function EventsPage() {
                   <span className="truncate">{event.location}</span>
                 </div>
               </div>
+
+              {/* Read More */}
+              <div className="mt-3 flex justify-end">
+                <span className="text-[#081C36] text-[10px] md:text-sm font-bold flex items-center gap-1 group-hover:underline">
+                  Lihat Detail <ArrowRight size={14} className="md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </div>
             </motion.article>
           ))}
         </div>
       </section>
+
+      {/* ── Detail Modal ──────────────────────────────────────── */}
+      <AnimatePresence>
+        {selectedEvent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center px-4 py-8"
+            onClick={() => setSelectedEvent(null)}
+          >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+
+            {/* Modal Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 30, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 30, scale: 0.97 }}
+              transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative bg-white w-full max-w-3xl max-h-[90vh] overflow-y-auto z-10 shadow-2xl rounded-2xl"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedEvent(null)}
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center text-[#081C36] hover:bg-[#081C36] hover:text-white transition-all duration-200 shadow-md"
+              >
+                <X size={18} />
+              </button>
+
+              {/* Poster */}
+              <div className="relative w-full aspect-[16/9] overflow-hidden">
+                <img
+                  src={selectedEvent.image_url || (selectedEvent.type === 'upcoming' ? EVENTS_PAGE_ONGOING[0] : EVENTS_PAGE_PAST[0])}
+                  alt={selectedEvent.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+
+                {/* Status Badges */}
+                <div className="absolute bottom-4 left-6 flex items-center gap-3">
+                  {selectedEvent.type === 'upcoming' ? (
+                    <div className="flex items-center gap-2 bg-[#081C36] px-4 h-10 rounded-full">
+                      <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">UPCOMING</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center bg-gray-500/90 px-4 h-10 rounded-full">
+                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">PAST EVENT</span>
+                    </div>
+                  )}
+
+                  {/* Event Category Badge */}
+                  {selectedEvent.category && (
+                    <div className="flex items-center bg-amber-500 px-4 h-10 rounded-full shadow-lg">
+                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">{selectedEvent.category}</span>
+                    </div>
+                  )}
+
+                  {/* Location Type Badge */}
+                  {selectedEvent.location_type && (
+                    <div className="flex items-center bg-blue-600 px-4 h-10 rounded-full">
+                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">{selectedEvent.location_type}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Body */}
+              <div className="p-8 md:p-10">
+                {/* Title */}
+                <h2 className="text-3xl md:text-4xl font-inter font-bold text-[#081C36] mb-6">
+                  {selectedEvent.title}
+                </h2>
+
+                {/* Info Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 p-5 bg-[#081C36]/[0.03] rounded-xl border border-[#081C36]/10">
+                  <div className="flex items-start gap-3">
+                    <CalendarDays size={18} className="text-[#081C36] mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs font-inter text-[#081C36]/40 uppercase tracking-wider mb-1">Tanggal</p>
+                      <p className="text-sm font-inter font-semibold text-[#081C36]">
+                        {selectedEvent.full_date || `${selectedEvent.event_date} ${selectedEvent.month_year}`}
+                      </p>
+                    </div>
+                  </div>
+                  {selectedEvent.time && (
+                    <div className="flex items-start gap-3">
+                      <Clock size={18} className="text-[#081C36] mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs font-inter text-[#081C36]/40 uppercase tracking-wider mb-1">Waktu</p>
+                        <p className="text-sm font-inter font-semibold text-[#081C36]">{selectedEvent.time}</p>
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex items-start gap-3">
+                    <MapPin size={18} className="text-[#081C36] mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs font-inter text-[#081C36]/40 uppercase tracking-wider mb-1">Lokasi</p>
+                      <p className="text-sm font-inter font-semibold text-[#081C36]">{selectedEvent.location}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Description */}
+                {selectedEvent.description && (
+                  <div className="mb-8">
+                    <h3 className="text-lg font-inter font-bold text-[#081C36] mb-3">Deskripsi</h3>
+                    <div 
+                      className="prose prose-slate max-w-none text-[#081C36]/60 text-base font-inter leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: selectedEvent.description }}
+                    />
+                  </div>
+                )}
+
+                {/* CTA */}
+                {selectedEvent.type === 'upcoming' && selectedEvent.registration_link && (
+                  <a
+                    href={selectedEvent.registration_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-4 bg-[#081C36] text-white font-inter font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 hover:bg-[#0a2545] transition-colors duration-300 rounded-xl"
+                  >
+                    DAFTAR SEKARANG <ExternalLink size={16} />
+                  </a>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>

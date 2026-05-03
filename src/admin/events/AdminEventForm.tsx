@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useNavigate, useParams } from 'react-router';
 import toast from 'react-hot-toast';
+import { NovelEditor } from '../articles/NovelEditor';
 
 export const AdminEventForm = () => {
   const { id } = useParams();
@@ -13,6 +14,7 @@ export const AdminEventForm = () => {
   
   const [formData, setFormData] = useState({
     type: 'upcoming',
+    category: 'Seminar',
     title: '',
     location: '',
     time: '',
@@ -20,6 +22,9 @@ export const AdminEventForm = () => {
     month_year: '',
     full_date: '',
     status: 'upcoming',
+    location_type: 'offline', // New: online/offline
+    description: '',         // New: for detail view
+    registration_link: '',   // New: for detail view
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -32,6 +37,7 @@ export const AdminEventForm = () => {
         if (data) {
           setFormData({
             type: data.type,
+            category: data.category || 'Seminar',
             title: data.title,
             location: data.location,
             time: data.time || '',
@@ -39,6 +45,9 @@ export const AdminEventForm = () => {
             month_year: data.month_year || '',
             full_date: data.full_date || '',
             status: data.status || 'upcoming',
+            location_type: data.location_type || 'offline',
+            description: data.description || '',
+            registration_link: data.registration_link || '',
           });
           setPreviewUrl(data.image_url || '');
         } else if (error) {
@@ -117,21 +126,38 @@ export const AdminEventForm = () => {
   if (loading) return <div>Memuat data...</div>;
 
   return (
-    <div className="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+    <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-200">
       <h1 className="text-2xl font-bold mb-6">{isEdit ? 'Edit Event' : 'Tambah Event'}</h1>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">Tipe Event *</label>
-          <div className="flex gap-4">
-            <label className="flex items-center gap-2">
-              <input type="radio" checked={formData.type === 'upcoming'} onChange={() => setFormData({...formData, type: 'upcoming'})} />
-              Upcoming Event
-            </label>
-            <label className="flex items-center gap-2">
-              <input type="radio" checked={formData.type === 'past'} onChange={() => setFormData({...formData, type: 'past'})} />
-              Past Event
-            </label>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium mb-2">Tipe Event *</label>
+            <div className="flex gap-4">
+              <label className="flex items-center gap-2">
+                <input type="radio" checked={formData.type === 'upcoming'} onChange={() => setFormData({...formData, type: 'upcoming'})} />
+                Upcoming Event
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" checked={formData.type === 'past'} onChange={() => setFormData({...formData, type: 'past'})} />
+                Past Event
+              </label>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Jenis Event *</label>
+            <select 
+              value={formData.category} 
+              onChange={(e) => setFormData({...formData, category: e.target.value})}
+              className="w-full p-2 border rounded"
+              required
+            >
+              <option value="Seminar">Seminar</option>
+              <option value="Lomba">Lomba</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Webinar">Webinar</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
           </div>
         </div>
 
@@ -154,6 +180,41 @@ export const AdminEventForm = () => {
             onChange={(e) => setFormData({...formData, location: e.target.value})}
             className="w-full p-2 border rounded"
             required 
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Tipe Lokasi *</label>
+          <div className="flex gap-4">
+            {['offline', 'online'].map((type) => (
+              <label key={type} className="flex items-center gap-2 capitalize">
+                <input 
+                  type="radio" 
+                  checked={formData.location_type === type} 
+                  onChange={() => setFormData({...formData, location_type: type})} 
+                />
+                {type}
+              </label>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-2">Deskripsi Event *</label>
+          <NovelEditor 
+            content={formData.description} 
+            onChange={(content) => setFormData({...formData, description: content})} 
+            minHeight="350px"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Link Pendaftaran (Opsional)</label>
+          <input 
+            type="url" 
+            value={formData.registration_link} 
+            onChange={(e) => setFormData({...formData, registration_link: e.target.value})}
+            className="w-full p-2 border rounded"
+            placeholder="https://..."
           />
         </div>
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, Link } from 'react-router';
 import { motion } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Clock, User } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
@@ -156,67 +156,71 @@ export function ArticlesPage() {
           ))}
         </motion.div>
 
-        {/* Articles Grid (2 columns on mobile, 3 on desktop) */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
           {visible.map((article, i) => (
-            <motion.article
-              key={article.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-              className="group cursor-pointer flex flex-col bg-white rounded-xl md:rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            <Link 
+              key={article.id} 
+              to={`/articles/${article.id}`}
+              className="contents"
             >
-              {/* Image */}
-              <div className="w-full aspect-[4/3] md:aspect-[4/3] bg-[#081C36]/[0.03] overflow-hidden relative">
-                <img
-                  src={article.image_url || ARTICLES_PAGE_PHOTOS[i % ARTICLES_PAGE_PHOTOS.length]}
-                  alt={article.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-
-              <div className="p-3 md:p-5 flex flex-col flex-grow">
-                {/* Header Meta: Category & Date */}
-                <div className="flex flex-wrap items-center justify-between gap-1 mb-2 md:mb-3">
-                  <span className="inline-block px-2 py-0.5 md:px-3 md:py-1 rounded-md bg-[#081C36]/[0.06] text-[#081C36] text-[9px] md:text-xs font-inter font-semibold">
-                    {article.category}
-                  </span>
-                  <span className="text-[#081C36]/50 text-[9px] md:text-xs font-inter">
-                    {article.date}
-                  </span>
+              <motion.article
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
+                className="group cursor-pointer flex flex-col bg-white rounded-xl md:rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              >
+                {/* Image */}
+                <div className="w-full aspect-[4/3] md:aspect-[4/3] bg-[#081C36]/[0.03] overflow-hidden relative">
+                  <img
+                    src={article.image_url || ARTICLES_PAGE_PHOTOS[i % ARTICLES_PAGE_PHOTOS.length]}
+                    alt={article.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
                 </div>
 
-                {/* Title */}
-                <h3 className="text-sm md:text-2xl font-inter font-bold mb-1 group-hover:text-[#081C36]/70 transition-colors duration-300 line-clamp-2 leading-snug">
-                  {article.title}
-                </h3>
-
-                {/* Footer Meta: Author & Read Time */}
-                <div className="flex items-center gap-3 text-[#081C36]/50 text-[9px] md:text-xs font-inter mb-3 md:mb-4">
-                  <div className="flex items-center gap-1">
-                    <User size={10} className="md:w-3 md:h-3" />
-                    <span>{article.author}</span>
+                <div className="p-3 md:p-5 flex flex-col flex-grow">
+                  {/* Header Meta: Category & Date */}
+                  <div className="flex flex-wrap items-center justify-between gap-1 mb-2 md:mb-3">
+                    <span className="inline-block px-2 py-0.5 md:px-3 md:py-1 rounded-md bg-[#081C36]/[0.06] text-[#081C36] text-[9px] md:text-xs font-inter font-semibold">
+                      {article.category}
+                    </span>
+                    <span className="text-[#081C36]/50 text-[9px] md:text-xs font-inter">
+                      {article.date}
+                    </span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Clock size={10} className="md:w-3 md:h-3" />
-                    <span>{article.read_time}</span>
+
+                  {/* Title */}
+                  <h3 className="text-sm md:text-2xl font-inter font-bold mb-1 group-hover:text-[#081C36]/70 transition-colors duration-300 line-clamp-2 leading-snug">
+                    {article.title}
+                  </h3>
+
+                  {/* Footer Meta: Author & Read Time */}
+                  <div className="flex items-center gap-3 text-[#081C36]/50 text-[9px] md:text-xs font-inter mb-3 md:mb-4">
+                    <div className="flex items-center gap-1">
+                      <User size={10} className="md:w-3 md:h-3" />
+                      <span>{article.author}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Clock size={10} className="md:w-3 md:h-3" />
+                      <span>{article.read_time}</span>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-[#081C36]/60 text-[11px] md:text-base font-inter leading-relaxed mb-3 md:mb-4 line-clamp-2 md:line-clamp-3">
+                    {article.description}
+                  </p>
+
+                  {/* Read More */}
+                  <div className="mt-auto flex justify-end">
+                    <span className="text-[#081C36] text-[10px] md:text-sm font-bold flex items-center gap-1 group-hover:underline">
+                      Read More <ChevronRight size={14} className="md:w-4 md:h-4" />
+                    </span>
                   </div>
                 </div>
-
-                {/* Description */}
-                <p className="text-[#081C36]/60 text-[11px] md:text-base font-inter leading-relaxed mb-3 md:mb-4 line-clamp-2 md:line-clamp-3">
-                  {article.description}
-                </p>
-
-                {/* Read More */}
-                <div className="mt-auto flex justify-end">
-                  <span className="text-[#081C36] text-[10px] md:text-sm font-bold flex items-center gap-1 group-hover:underline">
-                    Read More <ChevronRight size={14} className="md:w-4 md:h-4" />
-                  </span>
-                </div>
-              </div>
-            </motion.article>
+              </motion.article>
+            </Link>
           ))}
         </div>
 

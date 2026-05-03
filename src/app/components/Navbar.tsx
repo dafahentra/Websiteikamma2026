@@ -184,8 +184,8 @@ function DesktopDropdownItem({ item, isLight }: { item: DropdownItem; isLight: b
             className="absolute left-full top-0 ml-1 min-w-[150px] rounded-2xl"
             style={{
               background: (isLight 
-                ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.75))' 
-                : 'linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))') as any,
+                ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85))' 
+                : 'linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))') as any,
               backdropFilter: 'blur(32px) saturate(180%) contrast(105%)',
               WebkitBackdropFilter: 'blur(32px) saturate(180%) contrast(105%)',
               border: (isLight ? '1px solid rgba(255, 255, 255, 0.4)' : '1px solid rgba(255, 255, 255, 0.15)') as any,
@@ -257,8 +257,8 @@ function DesktopDropdown({
             left: coords.left,
             zIndex: 9999,
             background: (isLight 
-              ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65))' 
-              : 'linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08))') as any,
+              ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85))' 
+              : 'linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))') as any,
             backdropFilter: 'blur(40px) saturate(180%) contrast(105%)',
             WebkitBackdropFilter: 'blur(40px) saturate(180%) contrast(105%)',
             border: (isLight ? '1px solid rgba(255, 255, 255, 0.4)' : '1px solid rgba(255, 255, 255, 0.15)') as any,
@@ -553,8 +553,8 @@ export function Navbar() {
         className="flex items-center h-[56px] pl-4 pr-3 rounded-full pointer-events-auto"
         animate={{
           background: ((isScrolled || onLightBg) 
-            ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.75))' 
-            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))') as any,
+            ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85))' 
+            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))') as any,
           border: ((isScrolled || onLightBg) ? '1px solid rgba(255, 255, 255, 0.4)' : '1px solid rgba(255, 255, 255, 0.15)') as any,
           boxShadow: ((isScrolled || onLightBg) 
             ? '0 12px 40px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.5)' 

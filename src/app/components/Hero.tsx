@@ -176,12 +176,13 @@ export function Hero() {
   }, [progress]);
 
   /* === PHASE 1: Hero Zoom Out === */
-  // 0.00 to 0.15 - Slower mask zoom
-  const maskScale = useTransform(
-    progress,
-    [0.0, 0.03, 0.08, 0.12, 0.15],
-    [70, 15, 4, 1.5, 1]
-  );
+  // 0.00 to 0.15 - Smooth single-motion mask zoom using exponential decay
+  const maskScale = useTransform(progress, (p) => {
+    if (p <= 0) return 70;
+    if (p >= 0.15) return 1;
+    const t = p / 0.15; // normalize to 0..1
+    return 70 * Math.pow(1 / 70, t); // smooth exponential zoom
+  });
   const maskOpacity = useTransform(progress, [0.0, 0.05], [0, 1]);
   const captionOpacity = useTransform(progress, [0.0, 0.05], [1, 0]);
 
@@ -192,12 +193,13 @@ export function Hero() {
   const logoY = useTransform(progress, [0.10, 0.20], ["-24px", "0px"]);
 
   /* === PHASE 3: Hero Flies Past Camera === */
-  // 0.20 to 0.45 - Slower camera fly-through
-  const heroScale = useTransform(
-    progress,
-    [0.20, 0.30, 0.38, 0.45],
-    [1, 3, 12, 40]
-  );
+  // 0.20 to 0.45 - Slower camera fly-through (Smooth exponential zoom)
+  const heroScale = useTransform(progress, (p) => {
+    if (p <= 0.20) return 1;
+    if (p >= 0.45) return 40;
+    const t = (p - 0.20) / 0.25; // normalize to 0..1
+    return Math.pow(40, t); // smooth exponential zoom
+  });
   const heroOpacity = useTransform(progress, [0.35, 0.45], [1, 0]);
 
   // Disable clicks on hero video once we fly past it

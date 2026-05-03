@@ -308,8 +308,8 @@ export function Hero() {
             pointerEvents: contentPointerEvents
           }}
         >
-          {/* Main Content inside restricted width - Mobile: pt-[21px], Desktop: pt-[26px] (moved up 25px) */}
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto pt-[0px] md:pt-[26px]">
+          {/* Main Content inside restricted width - Mobile: pt-[35px], Desktop: pt-[26px] (moved up 25px) */}
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto pt-[35px] md:pt-[26px]">
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 lg:gap-16 items-start">
               {/* Left Column */}
@@ -326,7 +326,7 @@ export function Hero() {
                   <p className="text-sm md:text-lg leading-relaxed hidden sm:block">
                     IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
                   </p>
-                  <div className="pt-2 md:-mt-[25px] hidden md:flex justify-start">
+                  <div className="pt-1 md:-mt-[25px] flex justify-start">
                     <AnimatedButton href="/about">
                       See More
                     </AnimatedButton>
@@ -335,7 +335,7 @@ export function Hero() {
               </div>
 
               {/* Right Column */}
-              <div className="flex flex-col text-right w-full -mt-4 md:mt-0">
+              <div className="flex flex-col text-right w-full mt-0 md:mt-0">
                 <h2 className="text-white text-3xl md:text-5xl flex items-center justify-end gap-2 sm:gap-3 mb-2 md:mb-8">
                   <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Company</span>
                   <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Profile</span>
@@ -365,8 +365,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Spacing adjusted for better mobile breathing room (mt-5 = 20px) */}
-          <div className="mt-5 md:mt-8 w-full pointer-events-auto">
+          {/* Spacing adjusted for better mobile breathing room (mt-9 = 36px) */}
+          <div className="mt-9 md:mt-8 w-full pointer-events-auto">
             <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-3 md:mb-4 flex items-center justify-center gap-2 md:gap-4">
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>

@@ -164,13 +164,13 @@ export function Hero() {
   // Non-linear array creates an exponential acceleration curve for realistic camera fly-through
   const heroScale = useTransform(
     progress,
-    [0.08, 0.11, 0.13, 0.15],
+    [0.08, 0.10, 0.11, 0.12],
     [1, 3, 12, 40]
   );
-  const heroOpacity = useTransform(progress, [0.11, 0.15], [1, 0]);
+  const heroOpacity = useTransform(progress, [0.10, 0.12], [1, 0]);
 
   // Disable clicks on hero video once we fly past it
-  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.15 ? "auto" : "none");
+  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.12 ? "auto" : "none");
 
   // Reduced to 12 photos for extreme performance optimization
   const PIONIR_LAYOUT = [
@@ -191,10 +191,10 @@ export function Hero() {
 
       // Sequential appearance: strict 1-by-1 staggered timeline
       const seq = i / shuffledLayout.length;
-      const startP = 0.15 + (seq * 0.15);
+      const startP = 0.12 + (seq * 0.10);
 
       // Variable duration so some fly slightly faster/slower, adding depth
-      const duration = 0.12 + Math.random() * 0.05;
+      const duration = 0.08 + Math.random() * 0.04;
       const exitP = startP + duration;
 
       configs.push({
@@ -211,41 +211,41 @@ export function Hero() {
   }, []);
 
   /* === PHASE 5: Background Photo === */
-  // Spawns after all scrapbook photos have at least started appearing (0.30)
-  // Hits full screen (0.50), and then slowly 'elongates' (zooms) to 1.15
-  const finalScale = useTransform(progress, [0.30, 0.50, 1.0], [0.15, 1, 1.15]);
+  // Spawns after all scrapbook photos have at least started appearing (0.22)
+  // Hits full screen (0.40), and then slowly 'elongates' (zooms) to 1.15
+  const finalScale = useTransform(progress, [0.22, 0.40, 1.0], [0.15, 1, 1.15]);
 
   // Fades in and blurs just like the other scrapbook photos
-  const finalOpacity = useTransform(progress, [0.30, 0.35], [0, 1]);
-  const finalBlur = useTransform(progress, [0.30, 0.35], [10, 0]);
+  const finalOpacity = useTransform(progress, [0.22, 0.27], [0, 1]);
+  const finalBlur = useTransform(progress, [0.22, 0.27], [10, 0]);
   const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
 
   // Parallax effect: A subtle, gentle slow pan up.
   const parallaxY = useTransform(progress, [0.75, 1.00], ["0vh", "-10vh"]);
 
   // The dark overlay ONLY appears at the very end when it becomes the background
-  const overlayOpacity = useTransform(progress, [0.45, 0.55], [0, 0.50]);
+  const overlayOpacity = useTransform(progress, [0.35, 0.45], [0, 0.50]);
 
   // Pointer events control: only allow clicks on content when it's visible
   const contentPointerEvents = useTransform(progress, (v: number) => v > 0.40 ? "auto" : "none");
 
   /* === PHASE 6: About IKAMMA Content Fades In === */
-  // 0.50 to 0.60
-  const contentOpacity = useTransform(progress, [0.50, 0.60], [0, 1]);
+  // 0.40 to 0.48
+  const contentOpacity = useTransform(progress, [0.40, 0.48], [0, 1]);
   // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
-  const contentY = useTransform(progress, [0.50, 0.60, 1.0], [80, 0, -400]);
+  const contentY = useTransform(progress, [0.40, 0.48, 0.80], [80, 0, -400]);
 
   // Display control for the pause indicator: completely hide it after the hero phase
-  const indicatorDisplay = useTransform(progress, (v: number) => v < 0.15 ? "flex" : "none");
+  const indicatorDisplay = useTransform(progress, (v: number) => v < 0.12 ? "flex" : "none");
 
   // Handle video pause via click - uses a native handler on the sticky container
   const handleVideoPauseClick = (e: React.MouseEvent) => {
     const currentProgress = rawProgress.get();
     
     // Logic: 
-    // - If playing: only allow pausing in the hero phase (< 0.15)
+    // - If playing: only allow pausing in the hero phase (< 0.12)
     // - If paused: ALWAYS allow unpausing so the user doesn't get stuck
-    if (isPlaying && currentProgress > 0.15) return;
+    if (isPlaying && currentProgress > 0.12) return;
     
     // Don't intercept clicks on navigation or other active UI elements
     const target = e.target as HTMLElement;

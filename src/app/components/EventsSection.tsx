@@ -114,7 +114,7 @@ export function EventsSection() {
   });
 
   // Calculate 0 to 1 unfold progression based on scroll
-  const unfoldProgress = useTransform(scrollYProgress, [0.2, 0.8], [0, 1]);
+  const unfoldProgress = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
 
   return (
     <>

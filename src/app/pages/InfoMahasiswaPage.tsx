@@ -42,6 +42,7 @@ interface InfoItem {
   periodStart: string;
   periodEnd: string;
   status: Status;
+  deadlineDate?: string;
   link: string;
   organizer: string;
 }
@@ -79,6 +80,7 @@ export function InfoMahasiswaPage() {
           periodStart: item.period_start,
           periodEnd: item.period_end,
           status: item.status,
+          deadlineDate: item.deadline_date,
           link: item.link,
           organizer: item.organizer,
         }));
@@ -306,16 +308,21 @@ const CATEGORY_COLORS: Record<Category, string> = {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute top-2 left-2 md:top-3 md:left-3">
-                    {item.status === 'open' ? (
-                      <div className="flex items-center gap-1.5 bg-[#081C36]/90 backdrop-blur-sm px-3 h-7 md:px-4 md:h-10 rounded-full">
-                        <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse" />
-                        <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center bg-red-500/90 backdrop-blur-sm px-3 h-7 md:px-4 md:h-10 rounded-full">
-                        <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
-                      </div>
-                    )}
+                    {(() => {
+                      const isClosed = item.deadlineDate && new Date() > new Date(item.deadlineDate + 'T23:59:59');
+                      const displayStatus = isClosed ? 'closed' : item.status;
+                      
+                      return displayStatus === 'open' ? (
+                        <div className="flex items-center gap-1.5 bg-[#081C36]/90 backdrop-blur-sm px-3 h-7 md:px-4 md:h-10 rounded-full">
+                          <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse" />
+                          <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center bg-red-500/90 backdrop-blur-sm px-3 h-7 md:px-4 md:h-10 rounded-full">
+                          <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
 
@@ -474,16 +481,21 @@ const CATEGORY_COLORS: Record<Category, string> = {
 
                 {/* Badges on poster */}
                 <div className="absolute bottom-4 left-6 flex items-center gap-3">
-                  {selectedItem.status === 'open' ? (
-                    <div className="flex items-center gap-2 bg-[#081C36] px-4 h-10 rounded-full">
-                      <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center bg-red-500/90 px-4 h-10 rounded-full">
-                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
-                    </div>
-                  )}
+                  {(() => {
+                    const isClosed = selectedItem.deadlineDate && new Date() > new Date(selectedItem.deadlineDate + 'T23:59:59');
+                    const displayStatus = isClosed ? 'closed' : selectedItem.status;
+
+                    return displayStatus === 'open' ? (
+                      <div className="flex items-center gap-2 bg-[#081C36] px-4 h-10 rounded-full">
+                        <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                        <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center bg-red-500/90 px-4 h-10 rounded-full">
+                        <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
+                      </div>
+                    );
+                  })()}
                   <div className={`flex items-center ${CATEGORY_COLORS[selectedItem.category]} px-4 h-10 rounded-full`}>
                     <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">{selectedItem.category}</span>
                   </div>

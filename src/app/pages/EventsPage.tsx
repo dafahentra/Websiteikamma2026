@@ -32,9 +32,30 @@ import { EVENTS_PAGE_HERO, EVENTS_PAGE_ONGOING, EVENTS_PAGE_PAST } from '../../a
 /* ── Sample Data ─────────────────────────────────────────────────── */
 export function EventsPage() {
   const { pathname } = useLocation();
-  const [ongoingEvents, setOngoingEvents] = useState<any[]>([]);
-  const [pastEvents, setPastEvents] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
+
+  const ongoingEvents = events.filter(e => {
+    if (e.type === 'past') return false;
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const end = e.end_date ? new Date(e.end_date) : null;
+    if (end) end.setHours(0, 0, 0, 0);
+    
+    // If no end date, or end date is today/future, it's ongoing
+    return !end || now <= end;
+  });
+
+  const pastEvents = events.filter(e => {
+    if (e.type === 'past') return true;
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const end = e.end_date ? new Date(e.end_date) : null;
+    if (end) end.setHours(0, 0, 0, 0);
+    
+    // If end date exists and is in the past, it's a past event
+    return end && now > end;
+  });
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -48,17 +69,11 @@ export function EventsPage() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const { data: upcomingData } = await supabase
+      const { data } = await supabase
         .from('events')
         .select('*')
-        .eq('type', 'upcoming');
-      setOngoingEvents(upcomingData || []);
-
-      const { data: pastData } = await supabase
-        .from('events')
-        .select('*')
-        .eq('type', 'past');
-      setPastEvents(pastData || []);
+        .order('start_date', { ascending: false });
+      setEvents(data || []);
     };
     fetchEvents();
   }, []);
@@ -140,16 +155,44 @@ export function EventsPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
                   <div className="absolute top-2 left-2 md:top-4 md:left-4 flex items-center gap-1.5 md:gap-2">
-                    {event.status === 'ongoing' ? (
-                      <div className="flex items-center gap-1.5 bg-[#081C36] px-2 py-0.5 md:px-3 md:h-8 rounded-full">
-                      <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-white rounded-full animate-pulse" />
-                      <span className="text-white text-[9px] md:text-[10px] font-inter font-bold tracking-wider uppercase">ONGOING</span>
-                    </div>
-                    ) : (
-                      <div className="flex items-center bg-[#081C36]/20 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/20">
-                      <span className="text-white text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Upcoming</span>
-                    </div>
-                    )}
+                    {(() => {
+                      const now = new Date();
+                      now.setHours(0, 0, 0, 0);
+                      const start = event.start_date ? new Date(event.start_date) : null;
+                      const end = event.end_date ? new Date(event.end_date) : null;
+                      
+                      if (start) start.setHours(0, 0, 0, 0);
+                      if (end) end.setHours(0, 0, 0, 0);
+
+                      let displayType = 'upcoming';
+                      if (start && now >= start) {
+                        displayType = 'ongoing';
+                      }
+                      if (end && now > end) {
+                        displayType = 'past';
+                      }
+
+                      if (displayType === 'ongoing') {
+                        return (
+                          <div className="flex items-center gap-1.5 bg-[#081C36] px-2 py-0.5 md:px-3 md:h-8 rounded-full">
+                            <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-white rounded-full animate-pulse" />
+                            <span className="text-white text-[9px] md:text-[10px] font-inter font-bold tracking-wider uppercase">ONGOING</span>
+                          </div>
+                        );
+                      } else if (displayType === 'past') {
+                         return (
+                          <div className="flex items-center bg-gray-500/90 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/20">
+                            <span className="text-white text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Past Event</span>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div className="flex items-center bg-[#081C36]/20 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/20">
+                            <span className="text-white text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Upcoming</span>
+                          </div>
+                        );
+                      }
+                    })()}
                     
                     {/* Event Type / Category */}
                     {event.category && (
@@ -297,18 +340,44 @@ export function EventsPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-                {/* Status Badges */}
                 <div className="absolute bottom-4 left-6 flex items-center gap-3">
-                  {selectedEvent.type === 'upcoming' ? (
-                    <div className="flex items-center gap-2 bg-[#081C36] px-4 h-10 rounded-full">
-                      <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">UPCOMING</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center bg-gray-500/90 px-4 h-10 rounded-full">
-                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">PAST EVENT</span>
-                    </div>
-                  )}
+                  {(() => {
+                    const now = new Date();
+                    now.setHours(0, 0, 0, 0);
+                    const start = selectedEvent.start_date ? new Date(selectedEvent.start_date) : null;
+                    const end = selectedEvent.end_date ? new Date(selectedEvent.end_date) : null;
+                    
+                    if (start) start.setHours(0, 0, 0, 0);
+                    if (end) end.setHours(0, 0, 0, 0);
+
+                    let displayType = selectedEvent.type === 'past' ? 'past' : 'upcoming';
+                    if (selectedEvent.type !== 'past') {
+                      if (start && now >= start) displayType = 'ongoing';
+                      if (end && now > end) displayType = 'past';
+                    }
+
+                    if (displayType === 'ongoing') {
+                      return (
+                        <div className="flex items-center gap-2 bg-[#081C36] px-4 h-10 rounded-full">
+                          <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                          <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">ONGOING</span>
+                        </div>
+                      );
+                    } else if (displayType === 'past') {
+                      return (
+                        <div className="flex items-center bg-gray-500/90 px-4 h-10 rounded-full">
+                          <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">PAST EVENT</span>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div className="flex items-center bg-[#081C36] px-4 h-10 rounded-full">
+                          <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                          <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">UPCOMING</span>
+                        </div>
+                      );
+                    }
+                  })()}
 
                   {/* Event Category Badge */}
                   {selectedEvent.category && (

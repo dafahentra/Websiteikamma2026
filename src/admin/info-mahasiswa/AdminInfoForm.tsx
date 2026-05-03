@@ -65,6 +65,24 @@ export const AdminInfoForm = () => {
     }
   };
 
+  const formatDateForInput = (dateStr: string) => {
+    if (!dateStr) return '';
+    if (dateStr.includes('-') && dateStr.split('-').length === 3) return dateStr;
+    const parts = dateStr.split(' ');
+    if (parts.length !== 3) return '';
+    const day = parts[0].padStart(2, '0');
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    const month = (months.indexOf(parts[1]) + 1).toString().padStart(2, '0');
+    return `${parts[2]}-${month}-${day}`;
+  };
+
+  const formatDateForStorage = (dateStr: string) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -95,6 +113,10 @@ export const AdminInfoForm = () => {
 
     const payload = {
       ...formData,
+      posted_date: formatDateForStorage(formData.posted_date),
+      period_start: formatDateForStorage(formData.period_start),
+      period_end: formatDateForStorage(formData.period_end),
+      deadline_date: formData.period_end, // Save raw date for auto-status
       poster_url,
     };
 
@@ -213,33 +235,30 @@ export const AdminInfoForm = () => {
           <div>
             <label className="block text-sm font-medium mb-1">Tanggal Diposting *</label>
             <input 
-              type="text" 
-              value={formData.posted_date} 
+              type="date" 
+              value={formatDateForInput(formData.posted_date)} 
               onChange={(e) => setFormData({...formData, posted_date: e.target.value})}
               className="w-full p-2 border rounded"
-              placeholder="25 Apr 2026"
               required 
             />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Periode Mulai *</label>
             <input 
-              type="text" 
-              value={formData.period_start} 
+              type="date" 
+              value={formatDateForInput(formData.period_start)} 
               onChange={(e) => setFormData({...formData, period_start: e.target.value})}
               className="w-full p-2 border rounded"
-              placeholder="1 Mei 2026"
               required 
             />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Periode Selesai *</label>
             <input 
-              type="text" 
-              value={formData.period_end} 
+              type="date" 
+              value={formatDateForInput(formData.period_end)} 
               onChange={(e) => setFormData({...formData, period_end: e.target.value})}
               className="w-full p-2 border rounded"
-              placeholder="30 Juni 2026"
               required 
             />
           </div>

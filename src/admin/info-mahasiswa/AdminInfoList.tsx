@@ -111,9 +111,21 @@ export const AdminInfoList = () => {
                       <td className="p-4 text-sm text-gray-600">{item.organizer}</td>
                       <td className="p-4 text-sm text-gray-600">{item.period_start} - {item.period_end}</td>
                       <td className="p-4 text-sm">
-                        <span className={`px-2 py-1 rounded text-xs ${item.status === 'open' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                          {item.status.toUpperCase()}
-                        </span>
+                        {(() => {
+                          const now = new Date();
+                          now.setHours(0, 0, 0, 0);
+                          const deadline = item.deadline_date ? new Date(item.deadline_date) : null;
+                          if (deadline) deadline.setHours(0, 0, 0, 0);
+
+                          const isPast = deadline && now > deadline;
+                          const displayStatus = isPast ? 'closed' : item.status;
+
+                          return (
+                            <span className={`px-2 py-1 rounded text-xs ${displayStatus === 'open' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                              {displayStatus.toUpperCase()}
+                            </span>
+                          );
+                        })()}
                       </td>
                       <td className="p-4 flex gap-2">
                         <Link to={`/admin/info-mahasiswa/edit/${item.id}`} className="p-2 text-gray-600 hover:text-blue-600 bg-gray-100 hover:bg-blue-50 rounded transition-colors">

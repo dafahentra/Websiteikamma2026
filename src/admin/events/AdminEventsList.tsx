@@ -14,13 +14,23 @@ export const AdminEventsList = () => {
     const { data, error } = await supabase
       .from('events')
       .select('*')
-      .eq('type', activeTab)
-      .order('created_at', { ascending: false });
+      .order('start_date', { ascending: false });
       
     if (error) {
       toast.error('Gagal memuat event');
     } else {
-      setEvents(data || []);
+      const now = new Date();
+      now.setHours(0, 0, 0, 0);
+
+      const filtered = (data || []).filter(evt => {
+        const end = evt.end_date ? new Date(evt.end_date) : null;
+        if (end) end.setHours(0, 0, 0, 0);
+        const isPast = (evt.type === 'past') || (end && now > end);
+        
+        return activeTab === 'past' ? isPast : !isPast;
+      });
+
+      setEvents(filtered);
     }
     setLoading(false);
   };
@@ -109,9 +119,40 @@ export const AdminEventsList = () => {
                       </td>
                       {activeTab === 'upcoming' && (
                         <td className="p-4 text-sm">
-                          <span className={`px-2 py-1 rounded text-xs ${evt.status === 'ongoing' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
-                            {evt.status}
-                          </span>
+                          {(() => {
+                            const now = new Date();
+                            now.setHours(0, 0, 0, 0);
+                            const start = evt.start_date ? new Date(evt.start_date) : null;
+                            const end = evt.end_date ? new Date(evt.end_date) : null;
+                            
+                            if (start) start.setHours(0, 0, 0, 0);
+                            if (end) end.setHours(0, 0, 0, 0);
+
+                            const isPast = end && now > end;
+                            const isOngoing = start && now >= start && (!end || now <= end);
+
+                            if (isPast) {
+                              return (
+                                <span className="px-2 py-1 rounded text-xs bg-red-100 text-red-700">
+                                  past
+                                </span>
+                              );
+                            }
+
+                            if (isOngoing) {
+                              return (
+                                <span className="px-2 py-1 rounded text-xs bg-green-100 text-green-700">
+                                  ongoing
+                                </span>
+                              );
+                            }
+
+                            return (
+                              <span className={`px-2 py-1 rounded text-xs ${evt.status === 'ongoing' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
+                                {evt.status}
+                              </span>
+                            );
+                          })()}
                         </td>
                       )}
                       <td className="p-4 flex gap-2">

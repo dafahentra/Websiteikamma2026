@@ -67,6 +67,29 @@ export const AdminEventForm = () => {
     }
   };
 
+  // Helper to format date for display/storage
+  const formatEventDate = (dateStr: string, endDateStr?: string) => {
+    if (!dateStr) return { day: '', monthYear: '', full: '' };
+    const start = new Date(dateStr);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    const monthFull = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    
+    const day = start.getDate().toString();
+    const monthYear = `${months[start.getMonth()]} ${start.getFullYear().toString().substring(2)}`;
+    const full = `${months[start.getMonth()]} ${start.getDate()}, ${start.getFullYear()}`;
+
+    if (endDateStr) {
+      const end = new Date(endDateStr);
+      return {
+        day: `${day} - ${end.getDate()}`,
+        monthYear,
+        full: `${months[start.getMonth()]} ${start.getDate()} - ${end.getDate()}, ${start.getFullYear()}`
+      };
+    }
+
+    return { day, monthYear, full };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -95,15 +118,22 @@ export const AdminEventForm = () => {
       image_url = publicUrlData.publicUrl;
     }
 
+    const dateInfo = formatEventDate(formData.event_date, (formData as any).event_end_date);
+
     const payload = {
       ...formData,
       time: formData.type === 'upcoming' ? formData.time : null,
-      event_date: formData.type === 'upcoming' ? formData.event_date : '',
-      month_year: formData.type === 'upcoming' ? formData.month_year : null,
-      full_date: formData.type === 'past' ? formData.full_date : null,
+      event_date: dateInfo.day,
+      month_year: dateInfo.monthYear,
+      full_date: dateInfo.full,
+      start_date: formData.event_date,
+      end_date: (formData as any).event_end_date || formData.event_date,
       status: formData.type === 'upcoming' ? formData.status : null,
       image_url,
     };
+
+    // Remove temp field before saving
+    delete (payload as any).event_end_date;
 
     if (isEdit) {
       const { error } = await supabase.from('events').update(payload).eq('id', id);
@@ -172,32 +202,34 @@ export const AdminEventForm = () => {
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-1">Lokasi *</label>
-          <input 
-            type="text" 
-            value={formData.location} 
-            onChange={(e) => setFormData({...formData, location: e.target.value})}
-            className="w-full p-2 border rounded"
-            required 
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Tipe Lokasi *</label>
-          <div className="flex gap-4">
-            {['offline', 'online'].map((type) => (
-              <label key={type} className="flex items-center gap-2 capitalize">
-                <input 
-                  type="radio" 
-                  checked={formData.location_type === type} 
-                  onChange={() => setFormData({...formData, location_type: type})} 
-                />
-                {type}
-              </label>
-            ))}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Lokasi *</label>
+            <input 
+              type="text" 
+              value={formData.location} 
+              onChange={(e) => setFormData({...formData, location: e.target.value})}
+              className="w-full p-2 border rounded"
+              required 
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Tipe Lokasi *</label>
+            <div className="flex gap-4 h-10 items-center">
+              {['offline', 'online'].map((type) => (
+                <label key={type} className="flex items-center gap-2 capitalize">
+                  <input 
+                    type="radio" 
+                    checked={formData.location_type === type} 
+                    onChange={() => setFormData({...formData, location_type: type})} 
+                  />
+                  {type}
+                </label>
+              ))}
+            </div>
           </div>
         </div>
+
         <div>
           <label className="block text-sm font-medium mb-2">Deskripsi Event *</label>
           <NovelEditor 
@@ -207,76 +239,63 @@ export const AdminEventForm = () => {
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-1">Link Pendaftaran (Opsional)</label>
-          <input 
-            type="url" 
-            value={formData.registration_link} 
-            onChange={(e) => setFormData({...formData, registration_link: e.target.value})}
-            className="w-full p-2 border rounded"
-            placeholder="https://..."
-          />
-        </div>
-
-        {formData.type === 'upcoming' ? (
-          <>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Waktu * (contoh: "09:00 - 17:00 WIB")</label>
-                <input 
-                  type="text" 
-                  value={formData.time} 
-                  onChange={(e) => setFormData({...formData, time: e.target.value})}
-                  className="w-full p-2 border rounded"
-                  required 
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Tanggal * (contoh: "11" atau "11 - 15")</label>
-                <input 
-                  type="text" 
-                  value={formData.event_date} 
-                  onChange={(e) => setFormData({...formData, event_date: e.target.value})}
-                  className="w-full p-2 border rounded"
-                  required 
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Bulan & Tahun * (contoh: "Mei 26")</label>
-                <input 
-                  type="text" 
-                  value={formData.month_year} 
-                  onChange={(e) => setFormData({...formData, month_year: e.target.value})}
-                  className="w-full p-2 border rounded"
-                  required 
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Status *</label>
-                <select 
-                  value={formData.status} 
-                  onChange={(e) => setFormData({...formData, status: e.target.value})}
-                  className="w-full p-2 border rounded"
-                  required
-                >
-                  <option value="upcoming">Upcoming</option>
-                  <option value="ongoing">Ongoing</option>
-                </select>
-              </div>
-            </div>
-          </>
-        ) : (
+        <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Tanggal Lengkap * (contoh: "Mar 15, 2026")</label>
+            <label className="block text-sm font-medium mb-1">Link Pendaftaran (Opsional)</label>
+            <input 
+              type="url" 
+              value={formData.registration_link} 
+              onChange={(e) => setFormData({...formData, registration_link: e.target.value})}
+              className="w-full p-2 border rounded"
+              placeholder="https://..."
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Waktu * (contoh: "09:00 - 17:00 WIB")</label>
             <input 
               type="text" 
-              value={formData.full_date} 
-              onChange={(e) => setFormData({...formData, full_date: e.target.value})}
+              value={formData.time} 
+              onChange={(e) => setFormData({...formData, time: e.target.value})}
               className="w-full p-2 border rounded"
-              required={formData.type === 'past'}
+              required={formData.type === 'upcoming'}
             />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Tanggal Mulai *</label>
+            <input 
+              type="date" 
+              value={formData.event_date.includes('-') ? formData.event_date : ''} 
+              onChange={(e) => setFormData({...formData, event_date: e.target.value})}
+              className="w-full p-2 border rounded"
+              required 
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Tanggal Selesai (Opsional - Jika Range)</label>
+            <input 
+              type="date" 
+              value={(formData as any).event_end_date || ''} 
+              onChange={(e) => setFormData({...formData, event_end_date: e.target.value} as any)}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+        </div>
+
+        {formData.type === 'upcoming' && (
+          <div>
+            <label className="block text-sm font-medium mb-1">Status Pendaftaran *</label>
+            <select 
+              value={formData.status} 
+              onChange={(e) => setFormData({...formData, status: e.target.value})}
+              className="w-full p-2 border rounded"
+              required
+            >
+              <option value="upcoming">Segera Hadir</option>
+              <option value="ongoing">Sedang Berlangsung</option>
+            </select>
           </div>
         )}
 

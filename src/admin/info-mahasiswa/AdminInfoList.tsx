@@ -11,7 +11,10 @@ export const AdminInfoList = () => {
 
   const fetchInfo = async () => {
     setLoading(true);
-    let query = supabase.from('info_mahasiswa').select('*').order('created_at', { ascending: false });
+    let query = supabase
+      .from('info_mahasiswa')
+      .select('id, title, category, posted_date, description, full_description, poster_url, period_start, period_end, status, link, organizer, work_type')
+      .order('created_at', { ascending: false });
     
     if (activeTab !== 'Semua') {
       query = query.eq('category', activeTab);
@@ -109,12 +112,28 @@ export const AdminInfoList = () => {
                         <span className="px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs">{item.category}</span>
                       </td>
                       <td className="p-4 text-sm text-gray-600">{item.organizer}</td>
-                      <td className="p-4 text-sm text-gray-600">{item.period_start} - {item.period_end}</td>
+                      <td className="p-4 text-sm text-gray-600">
+                        {item.period_start === item.period_end ? item.period_start : `${item.period_start} - ${item.period_end}`}
+                      </td>
                       <td className="p-4 text-sm">
                         {(() => {
                           const now = new Date();
                           now.setHours(0, 0, 0, 0);
-                          const deadline = item.deadline_date ? new Date(item.deadline_date) : null;
+
+                          // Helper to parse "2 Mei 2026" format
+                          const parseIKAMMADate = (str: string) => {
+                            if (!str) return null;
+                            const parts = str.split(' ');
+                            if (parts.length !== 3) return null;
+                            const day = parseInt(parts[0]);
+                            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                            const month = months.indexOf(parts[1]);
+                            const year = parseInt(parts[2]);
+                            if (month === -1) return null;
+                            return new Date(year, month, day);
+                          };
+
+                          const deadline = (item as any).deadline_date ? new Date((item as any).deadline_date) : parseIKAMMADate(item.period_end);
                           if (deadline) deadline.setHours(0, 0, 0, 0);
 
                           const isPast = deadline && now > deadline;

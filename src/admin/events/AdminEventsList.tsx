@@ -14,7 +14,7 @@ export const AdminEventsList = () => {
     const { data, error } = await supabase
       .from('events')
       .select('*')
-      .order('start_date', { ascending: false });
+      .order('created_at', { ascending: false });
       
     if (error) {
       toast.error('Gagal memuat event');

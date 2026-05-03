@@ -228,7 +228,7 @@ export function ContactPage() {
                       {SOCIAL_ICONS.map((social, i) => {
                         const Icon = social.icon;
                         return (
-                          <motion.a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.15, y: -3 }} className="w-10 h-10 rounded-full bg-[#081C36]/[0.04] hover:bg-[#081C36] flex items-center justify-center transition-colors duration-300" title={social.label}><Icon size={16} /></motion.a>
+                           <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#081C36]/[0.04] flex items-center justify-center transition-colors duration-300" title={social.label}><Icon size={16} /></a>
                         );
                       })}
                     </div>

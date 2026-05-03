@@ -570,22 +570,18 @@ export function AboutIkamma() {
             ].map((value, i) => {
               const Icon = value.icon;
               return (
-                <motion.div
+                <div
                   key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="flex flex-col items-center text-center group p-6 rounded-2xl bg-[#081C36]/[0.02] border border-[#081C36]/10 hover:bg-[#081C36]/[0.04] hover:border-[#081C36]/15 transition-all duration-300"
+                  className="flex flex-col items-center text-center"
                 >
-                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border border-[#081C36]/20 mb-5 flex items-center justify-center p-5 group-hover:border-[#081C36] transition-colors duration-300">
-                    <Icon className="w-full h-full text-[#081C36]/50 group-hover:text-[#081C36] transition-colors duration-300" strokeWidth={1.5} />
+                  <div className="w-20 h-20 md:w-28 md:h-28 mb-4 flex items-center justify-center">
+                    <Icon className="w-full h-full text-[#081C36]" strokeWidth={1.5} />
                   </div>
-                  <h3 className="font-inter font-bold text-lg md:text-xl mb-2 group-hover:text-[#081C36] transition-colors">{value.title}</h3>
-                  <p className="font-inter text-xs md:text-sm text-[#081C36]/50 leading-relaxed">
+                  <h3 className="font-inter font-bold text-lg md:text-xl mb-2 text-[#081C36]">{value.title}</h3>
+                  <p className="font-inter text-xs md:text-sm text-[#081C36]/60 leading-relaxed">
                     {value.desc}
                   </p>
-                </motion.div>
+                </div>
               );
             })}
           </div>

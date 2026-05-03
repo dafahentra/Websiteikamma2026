@@ -80,6 +80,9 @@ export const AdminEventForm = () => {
 
     if (endDateStr) {
       const end = new Date(endDateStr);
+      if (start.getTime() === end.getTime()) {
+        return { day, monthYear, full };
+      }
       return {
         day: `${day} - ${end.getDate()}`,
         monthYear,
@@ -300,20 +303,59 @@ export const AdminEventForm = () => {
         )}
 
         <div>
-          <label className="block text-sm font-medium mb-1">Gambar Banner</label>
-          <input 
-            type="file" 
-            accept="image/*" 
-            onChange={handleFileChange}
-            className="w-full p-2 border rounded"
-            required={!isEdit}
-          />
-          {previewUrl && (
-            <div className="mt-4">
-              <p className="text-sm text-gray-500 mb-2">Preview:</p>
-              <img src={previewUrl} alt="Preview" className="w-full max-h-64 object-cover rounded-lg" />
+          <label className="block text-sm font-medium mb-2">Gambar Banner</label>
+          <div className="space-y-4">
+            <div className="relative">
+              <input 
+                type="file" 
+                id="banner-upload"
+                accept="image/*" 
+                onChange={handleFileChange}
+                className="hidden"
+                required={!isEdit && !previewUrl}
+              />
+              <div className="flex items-center gap-3">
+                <label 
+                  htmlFor="banner-upload"
+                  className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 hover:border-blue-400 transition-all shadow-sm group"
+                >
+                  <svg className="w-5 h-5 text-gray-400 group-hover:text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span className="text-sm font-medium text-gray-700">
+                    {imageFile ? imageFile.name : (previewUrl ? 'Ganti Banner' : 'Pilih Gambar')}
+                  </span>
+                </label>
+
+                {(imageFile || previewUrl) && (
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      setImageFile(null);
+                      setPreviewUrl('');
+                      const input = document.getElementById('banner-upload') as HTMLInputElement;
+                      if (input) input.value = '';
+                    }}
+                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    title="Hapus gambar"
+                  >
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                )}
+              </div>
             </div>
-          )}
+            
+            {previewUrl && (
+              <div className="relative inline-block group w-full max-w-md">
+                <img src={previewUrl} alt="Preview" className="w-full h-48 object-cover rounded-xl border-2 border-gray-100 shadow-md transition-transform group-hover:scale-[1.01]" />
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center pointer-events-none">
+                  <span className="text-white text-xs font-medium px-2 py-1 bg-black/40 backdrop-blur-sm rounded-full">Preview Banner</span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="flex justify-end gap-3 pt-4 border-t">

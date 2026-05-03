@@ -65,7 +65,7 @@ export function InfoMahasiswaPage() {
     const fetchInfo = async () => {
       const { data } = await supabase
         .from('info_mahasiswa')
-        .select('*')
+        .select('id, title, category, posted_date, description, full_description, poster_url, period_start, period_end, status, link, organizer, work_type')
         .order('created_at', { ascending: false });
       
       if (data) {
@@ -136,14 +136,38 @@ const CATEGORY_COLORS: Record<Category, string> = {
 
   const filtered = infoItems.filter((item) => {
     const matchCategory = activeCategory === 'All' || item.category === activeCategory;
+    
+    // Smart Status Detection Fallback
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+
+    const parseIKAMMADate = (str: string) => {
+      if (!str) return null;
+      const parts = str.split(' ');
+      if (parts.length !== 3) return null;
+      const day = parseInt(parts[0]);
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      const month = months.indexOf(parts[1]);
+      const year = parseInt(parts[2]);
+      if (month === -1) return null;
+      return new Date(year, month, day);
+    };
+
+    const deadline = item.deadlineDate ? new Date(item.deadlineDate) : parseIKAMMADate(item.periodEnd);
+    if (deadline) deadline.setHours(0, 0, 0, 0);
+
+    const isActuallyClosed = (deadline && now > deadline) || item.status === 'closed';
+
     const matchStatus =
       activeStatus === 'All' ||
-      (activeStatus === 'Open Now' && item.status === 'open') ||
-      (activeStatus === 'Closed' && item.status === 'closed');
+      (activeStatus === 'Open Now' && !isActuallyClosed) ||
+      (activeStatus === 'Closed' && isActuallyClosed);
+    
     const matchSearch =
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.organizer.toLowerCase().includes(searchQuery.toLowerCase());
+
     return matchCategory && matchStatus && matchSearch;
   });
 
@@ -309,8 +333,26 @@ const CATEGORY_COLORS: Record<Category, string> = {
                   />
                   <div className="absolute top-2 left-2 md:top-3 md:left-3">
                     {(() => {
-                      const isClosed = item.deadlineDate && new Date() > new Date(item.deadlineDate + 'T23:59:59');
-                      const displayStatus = isClosed ? 'closed' : item.status;
+                      const now = new Date();
+                      now.setHours(0, 0, 0, 0);
+
+                      const parseIKAMMADate = (str: string) => {
+                        if (!str) return null;
+                        const parts = str.split(' ');
+                        if (parts.length !== 3) return null;
+                        const day = parseInt(parts[0]);
+                        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                        const month = months.indexOf(parts[1]);
+                        const year = parseInt(parts[2]);
+                        if (month === -1) return null;
+                        return new Date(year, month, day);
+                      };
+
+                      const deadline = item.deadlineDate ? new Date(item.deadlineDate) : parseIKAMMADate(item.periodEnd);
+                      if (deadline) deadline.setHours(0, 0, 0, 0);
+
+                      const isActuallyClosed = (deadline && now > deadline) || item.status === 'closed';
+                      const displayStatus = isActuallyClosed ? 'closed' : item.status;
                       
                       return displayStatus === 'open' ? (
                         <div className="flex items-center gap-1.5 bg-[#081C36]/90 backdrop-blur-sm px-3 h-7 md:px-4 md:h-10 rounded-full">
@@ -333,8 +375,8 @@ const CATEGORY_COLORS: Record<Category, string> = {
                     <span className={`flex items-center px-3 h-7 md:px-4 md:h-10 rounded-full text-white text-[10px] md:text-xs font-inter font-bold uppercase tracking-wider ${CATEGORY_COLORS[item.category]}`}>
                       {item.category}
                     </span>
-                    <span className="text-[#081C36]/50 text-[9px] md:text-xs font-inter">
-                      {item.postedDate}
+                    <span className="text-[#081C36]/50 text-xs sm:text-sm font-inter">
+                      {item.periodStart === item.periodEnd ? item.periodStart : `${item.periodStart} - ${item.periodEnd}`}
                     </span>
                   </div>
 
@@ -350,7 +392,7 @@ const CATEGORY_COLORS: Record<Category, string> = {
                     </div>
                     <div className="flex items-center gap-1">
                       <CalendarDays size={10} className="md:w-3 md:h-3" />
-                      <span className="line-clamp-1">{item.periodStart} — {item.periodEnd}</span>
+                      <span className="line-clamp-1">{item.periodStart === item.periodEnd ? item.periodStart : `${item.periodStart} — ${item.periodEnd}`}</span>
                     </div>
                   </div>
 

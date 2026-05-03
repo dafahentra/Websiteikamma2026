@@ -72,7 +72,7 @@ export function EventsPage() {
       const { data } = await supabase
         .from('events')
         .select('*')
-        .order('start_date', { ascending: false });
+        .order('created_at', { ascending: false });
       setEvents(data || []);
     };
     fetchEvents();

@@ -12,7 +12,7 @@ import { SCRAPBOOK_PHOTOS, HERO_BG } from "../../assets/photos";
 const BACKGROUND_IMAGE = HERO_BG;
 
 // A massive scrolling area to accommodate the grand unified sequence
-const SECTION_HEIGHT_PX = 5000;
+const SECTION_HEIGHT_PX = 3000;
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
@@ -220,10 +220,6 @@ export function Hero() {
   const finalBlur = useTransform(progress, [0.22, 0.27], [10, 0]);
   const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
 
-  // Parallax effect: A subtle, gentle slow pan up.
-  // Parallax effect: A much faster, dramatic upward scroll for the background photo
-  const parallaxY = useTransform(progress, [0.40, 1.00], ["0vh", "-65vh"]);
-
   // The dark overlay ONLY appears at the very end when it becomes the background
   const overlayOpacity = useTransform(progress, [0.35, 0.45], [0, 0.70]);
 
@@ -288,10 +284,9 @@ export function Hero() {
           <motion.img
             src={BACKGROUND_IMAGE}
             alt="Background"
-            className="w-full h-[160vh] object-cover"
+            className="w-full h-[100vh] object-cover"
             style={{
-              filter: finalFilter,
-              y: parallaxY
+              filter: finalFilter
             }}
           />
           <motion.div

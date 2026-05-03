@@ -33,6 +33,17 @@ import scrapbook10 from './Compressed/Int/FotoInt10.jpg';
 import scrapbook11 from './Compressed/Ext/FotoExt1.jpg';
 import scrapbook12 from './Compressed/Ext/FotoExt2.jpg';
 
+// ── Foto Departemen untuk /about ─
+import PotoHRBB from './Compressed/HRBB/FotoHRBB14.jpg';
+import PotoHRM from './Compressed/HRBB/FotoHRBB6.jpg';
+import PotoAdvance from './Compressed/Advance/FotoAdvance1.jpg';
+import PotoMM from './Compressed/MM/FotoMM4.jpg';
+import PotoInternal from './Compressed/Int/FotoInt30.jpg';
+import PotoExternal from './Compressed/Ext/FotoExt3.jpg';
+import PotoIndev from './Compressed/indev/FotoIndev16.jpg';
+import PotoEntre from './Compressed/Entre/FotoEntre3.jpg';
+import PotoSparta from './Compressed/Sparta/FotoSparta11.jpg';
+
 // ── Events Section (carousel cards + background) ────────────────────
 import eventCard1 from './Compressed/Ext/FotoExt13.jpg';
 import eventCard2 from './Compressed/Ext/FotoExt14.jpg';
@@ -152,7 +163,7 @@ export const PROGRAM_PHOTOS: string[] = [program1, program2, program3, program4,
 
 /** Department Section — Photos for each bureau/department */
 export const DEPT_PHOTOS: string[] = [
-  scrapbook1, scrapbook3, scrapbook5, scrapbook7, scrapbook9, scrapbook11, scrapbook2, scrapbook4
+  PotoHRBB, PotoHRM, PotoAdvance, PotoMM, PotoInternal, PotoExternal, PotoIndev, PotoEntre, PotoSparta
 ];
 
 /** Upcoming Events Section — 3 event card images */

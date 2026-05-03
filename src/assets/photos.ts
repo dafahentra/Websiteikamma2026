@@ -32,44 +32,7 @@ import scrapbook9 from './Compressed/Int/FotoInt9.jpg';
 import scrapbook10 from './Compressed/Int/FotoInt10.jpg';
 import scrapbook11 from './Compressed/Ext/FotoExt1.jpg';
 import scrapbook12 from './Compressed/Ext/FotoExt2.jpg';
-import scrapbook13 from './Compressed/Ext/FotoExt3.jpg';
-import scrapbook14 from './Compressed/Ext/FotoExt4.jpg';
-import scrapbook15 from './Compressed/Ext/FotoExt5.jpg';
-import scrapbook16 from './Compressed/Ext/FotoExt6.jpg';
-import scrapbook17 from './Compressed/Ext/FotoExt7.jpg';
-import scrapbook18 from './Compressed/Ext/FotoExt8.jpg';
-import scrapbook19 from './Compressed/Ext/FotoExt9.jpg';
-import scrapbook20 from './Compressed/Ext/FotoExt10.jpg';
-import scrapbook21 from './Compressed/HRBB/FotoHRBB1.jpg';
-import scrapbook22 from './Compressed/HRBB/FotoHRBB2.jpg';
-import scrapbook23 from './Compressed/HRBB/FotoHRBB3.jpg';
-import scrapbook24 from './Compressed/HRBB/FotoHRBB4.jpg';
-import scrapbook25 from './Compressed/HRBB/FotoHRBB5.jpg';
-import scrapbook26 from './Compressed/Indev/FotoIndev1.jpg';
-import scrapbook27 from './Compressed/Indev/FotoIndev2.jpg';
-import scrapbook28 from './Compressed/Indev/FotoIndev3.jpg';
-import scrapbook29 from './Compressed/Indev/FotoIndev4.jpg';
-import scrapbook30 from './Compressed/Indev/FotoIndev5.jpg';
-import scrapbook31 from './Compressed/MM/FotoMM1.jpg';
-import scrapbook32 from './Compressed/MM/FotoMM2.jpg';
-import scrapbook33 from './Compressed/MM/FotoMM3.jpg';
-import scrapbook34 from './Compressed/MM/FotoMM4.jpg';
-import scrapbook35 from './Compressed/MM/FotoMM5.jpg';
-import scrapbook36 from './Compressed/Sparta/FotoSparta1.jpg';
-import scrapbook37 from './Compressed/Sparta/FotoSparta2.jpg';
-import scrapbook38 from './Compressed/Sparta/FotoSparta3.jpg';
-import scrapbook39 from './Compressed/Sparta/FotoSparta4.jpg';
-import scrapbook40 from './Compressed/Sparta/FotoSparta5.jpg';
-import scrapbook41 from './Compressed/Entre/FotoEntre1.jpg';
-import scrapbook42 from './Compressed/Entre/FotoEntre2.jpg';
-import scrapbook43 from './Compressed/Entre/FotoEntre3.jpg';
-import scrapbook44 from './Compressed/Entre/FotoEntre4.jpg';
-import scrapbook45 from './Compressed/Entre/FotoEntre5.jpg';
-import scrapbook46 from './Compressed/Int/FotoInt11.jpg';
-import scrapbook47 from './Compressed/Int/FotoInt12.jpg';
-import scrapbook48 from './Compressed/Ext/FotoExt11.jpg';
-import scrapbook49 from './Compressed/Ext/FotoExt12.jpg';
-import scrapbook50 from './Compressed/HRBB/FotoHRBB6.jpg';
+import scrapbook12 from './Compressed/Ext/FotoExt2.jpg';
 
 // ── Events Section (carousel cards + background) ────────────────────
 import eventCard1 from './Compressed/Ext/FotoExt13.jpg';
@@ -170,14 +133,7 @@ export const HERO_BG = heroSectionBg;
 export const SCRAPBOOK_PHOTOS: string[] = [
   scrapbook1, scrapbook2, scrapbook3, scrapbook4, scrapbook5,
   scrapbook6, scrapbook7, scrapbook8, scrapbook9, scrapbook10,
-  scrapbook11, scrapbook12, scrapbook13, scrapbook14, scrapbook15,
-  scrapbook16, scrapbook17, scrapbook18, scrapbook19, scrapbook20,
-  scrapbook21, scrapbook22, scrapbook23, scrapbook24, scrapbook25,
-  scrapbook26, scrapbook27, scrapbook28, scrapbook29, scrapbook30,
-  scrapbook31, scrapbook32, scrapbook33, scrapbook34, scrapbook35,
-  scrapbook36, scrapbook37, scrapbook38, scrapbook39, scrapbook40,
-  scrapbook41, scrapbook42, scrapbook43, scrapbook44, scrapbook45,
-  scrapbook46, scrapbook47, scrapbook48, scrapbook49, scrapbook50,
+  scrapbook11, scrapbook12,
 ];
 
 /** Events Section — 4 carousel card photos */
@@ -194,6 +150,11 @@ export const GALLERY_PHOTOS: string[] = [gallery1, gallery2, gallery3, gallery4,
 
 /** Programs Section — 6 program card images */
 export const PROGRAM_PHOTOS: string[] = [program1, program2, program3, program4, program5, program6];
+
+/** Department Section — Photos for each bureau/department */
+export const DEPT_PHOTOS: string[] = [
+  scrapbook1, scrapbook3, scrapbook5, scrapbook7, scrapbook9, scrapbook11, scrapbook2, scrapbook4
+];
 
 /** Upcoming Events Section — 3 event card images */
 export const UPCOMING_PHOTOS: string[] = [upcoming1, upcoming2, upcoming3];

@@ -69,10 +69,10 @@ export function AboutSection() {
     offset: ["start start", "end end"]
   });
 
-  // Generate 50 mathematically precise photos for the Parallax scatter
+  // Generate 12 mathematically precise photos for the Parallax scatter
   const photoConfigs = useMemo(() => {
     const configs = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 12; i++) {
       // Spread them widely across the view
       const xStart = (Math.random() - 0.5) * 80; // -40vw to 40vw
       const yStart = (Math.random() - 0.5) * 60; // -30vh to 30vh

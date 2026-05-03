@@ -5,7 +5,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import LogoPutihRaw from '../../assets/LogoPutih.svg?raw';
 import LogoHitamRaw from '../../assets/LogoHitam.svg?raw';
-import { SCRAPBOOK_PHOTOS } from '../../assets/photos';
+import { SCRAPBOOK_PHOTOS, DEPT_PHOTOS } from '../../assets/photos';
 import { departmentsData } from '../../data/departments';
 import { CORE_LEADERS, ORGANIZATION_LIST } from '../../data/team';
 import BenihSvg from '../../assets/Benih.svg';
@@ -182,7 +182,7 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
 
       {/* Floating Image Portal/Overlay */}
       <motion.div
-        className="fixed top-0 left-0 w-[240px] md:w-[320px] aspect-video overflow-hidden pointer-events-none z-50 shadow-2xl"
+        className="fixed top-0 left-0 w-[260px] md:w-[400px] aspect-video overflow-hidden pointer-events-none z-50 rounded-2xl md:rounded-[2rem] border-4 border-white shadow-2xl"
         style={{
           x: imageX,
           y: imageY,
@@ -190,9 +190,15 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
           translateX: "-50%",
           translateY: "-50%"
         }}
-        transition={{ opacity: { duration: 0.2 } }}
+        transition={{ 
+          opacity: { duration: 0.2 }
+        }}
       >
-        <img src={photo} alt={item.name} className="w-full h-full object-cover" />
+        <img 
+          src={photo} 
+          alt={item.name} 
+          className="w-full h-full object-cover"
+        />
       </motion.div>
     </motion.div>
   );
@@ -665,7 +671,7 @@ export function AboutIkamma() {
 
           <div className="w-[100vw] self-center flex flex-col border-t border-[#081C36]/15 mt-8 relative">
             {ORGANIZATION_LIST.map((item, i) => (
-              <HoverImageRow key={i} item={item} index={i} photo={SCRAPBOOK_PHOTOS[i % SCRAPBOOK_PHOTOS.length]} />
+              <HoverImageRow key={i} item={item} index={i} photo={DEPT_PHOTOS[i % DEPT_PHOTOS.length]} />
             ))}
           </div>
         </section>

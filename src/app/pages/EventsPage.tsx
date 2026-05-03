@@ -203,9 +203,9 @@ export function EventsPage() {
                   </div>
 
                 {/* Date Badge */}
-                <div className="absolute bottom-0 left-0 bg-[#081C36]/10 backdrop-blur-md flex flex-col items-center justify-center px-2 py-1 md:px-4 md:py-2 border-t border-r border-[#081C36]/20">
-                  <span className="text-base md:text-xl font-bold text-white leading-none font-inter">{event.event_date}</span>
-                  <span className="text-[9px] md:text-xs font-medium text-[#081C36]/80 mt-0.5 font-inter">{event.month_year}</span>
+                <div className="absolute bottom-0 left-0 bg-white/20 backdrop-blur-md rounded-tr-2xl flex flex-col items-center justify-center px-4 py-2 md:px-6 md:py-3 border-t border-r border-white/30">
+                  <span className="text-lg md:text-2xl font-bold text-white leading-none font-inter">{event.event_date}</span>
+                  <span className="text-[10px] md:text-sm font-medium text-white/90 mt-0.5 md:mt-1 font-inter">{event.month_year}</span>
                 </div>
               </div>
 

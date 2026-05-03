@@ -88,7 +88,7 @@ export function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
           
           {/* Column 1: Brand Identity */}
-          <div className="lg:col-span-5 flex items-center gap-6">
+          <div className="lg:col-span-4 flex items-center gap-6">
             <img src={Logo} alt="IKAMMA Logo" className="w-20 md:w-24 lg:w-28 object-contain" />
             <div className="flex flex-col gap-0.5">
               <h3 className="font-bold text-base md:text-lg text-[#081C36] leading-tight">
@@ -104,8 +104,8 @@ export function Footer() {
           </div>
 
           {/* Column 2: Navigation */}
-          <div className="lg:col-span-2 flex flex-col gap-6 lg:pl-4">
-            <h4 className="font-bold text-base md:text-lg uppercase tracking-wider">Navigation</h4>
+          <div className="lg:col-span-2 flex flex-col gap-6 lg:pl-12">
+            <h4 className="font-bold text-xs md:text-sm uppercase tracking-[0.2em] text-[#081C36]/40">Navigation</h4>
             <ul className="flex flex-col gap-3 text-sm md:text-base font-medium">
               <li><Link to="/" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">Home</Link></li>
               <li><Link to="/about" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">About Us</Link></li>
@@ -115,8 +115,8 @@ export function Footer() {
           </div>
 
           {/* Column 3: Social */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <h4 className="font-bold text-base md:text-lg uppercase tracking-wider">Social</h4>
+          <div className="lg:col-span-3 flex flex-col gap-6 lg:pl-12">
+            <h4 className="font-bold text-xs md:text-sm uppercase tracking-[0.2em] text-[#081C36]/40">Social</h4>
             <ul className="flex flex-col gap-3 text-sm md:text-base font-medium">
               {socialLinks.map((social) => (
                 <li key={social.label}>
@@ -130,20 +130,20 @@ export function Footer() {
 
           {/* Column 4: Contact */}
           <div className="lg:col-span-3 flex flex-col gap-6">
-            <h4 className="font-bold text-base md:text-lg uppercase tracking-wider">Contact</h4>
+            <h4 className="font-bold text-xs md:text-sm uppercase tracking-[0.2em] text-[#081C36]/40">Contact</h4>
             <ul className="flex flex-col gap-4 text-sm md:text-base font-medium">
               <li>
-                <a href={`mailto:${settings?.email_contact || 'dafahentra@gmail.com'}`} className="group flex items-center gap-3 text-[#081C36]/60 hover:text-[#081C36] transition-colors">
-                  <div className="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[#081C36]/5 transition-colors">
-                    <GmailIcon size={18} />
+                <a href={`mailto:${settings?.email_contact || 'dafahentra@gmail.com'}`} className="group flex items-center gap-2 text-[#081C36]/60 hover:text-[#081C36] transition-all">
+                  <div className="flex items-center justify-center w-5 h-5 group-hover:scale-110 transition-transform">
+                    <GmailIcon size={14} />
                   </div>
                   <span className="break-all">{settings?.email_contact || 'dafahentra@gmail.com'}</span>
                 </a>
               </li>
               <li>
-                <a href={`https://wa.me/${(settings?.phone_contact || '+6281256720013').replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 text-[#081C36]/60 hover:text-[#081C36] transition-colors">
-                  <div className="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-green-50/50 transition-colors">
-                    <WhatsAppIcon size={18} />
+                <a href={`https://wa.me/${(settings?.phone_contact || '+6281256720013').replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-[#081C36]/60 hover:text-[#081C36] transition-all">
+                  <div className="flex items-center justify-center w-5 h-5 group-hover:scale-110 transition-transform">
+                    <WhatsAppIcon size={14} />
                   </div>
                   <span>{settings?.phone_contact || '+6281256720013'}</span>
                 </a>

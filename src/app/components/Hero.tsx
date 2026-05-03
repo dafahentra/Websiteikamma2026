@@ -221,7 +221,8 @@ export function Hero() {
   const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
 
   // Parallax effect: A subtle, gentle slow pan up.
-  const parallaxY = useTransform(progress, [0.75, 1.00], ["0vh", "-10vh"]);
+  // Parallax effect: A much faster, dramatic upward scroll for the background photo
+  const parallaxY = useTransform(progress, [0.40, 1.00], ["0vh", "-50vh"]);
 
   // The dark overlay ONLY appears at the very end when it becomes the background
   const overlayOpacity = useTransform(progress, [0.35, 0.45], [0, 0.50]);
@@ -287,7 +288,7 @@ export function Hero() {
           <motion.img
             src={BACKGROUND_IMAGE}
             alt="Background"
-            className="w-full h-[130vh] object-cover"
+            className="w-full h-[160vh] object-cover"
             style={{
               filter: finalFilter,
               y: parallaxY
@@ -301,7 +302,7 @@ export function Hero() {
 
         {/* === PHASE 6: Content === */}
         <motion.div
-          className="absolute inset-0 z-50 flex flex-col justify-start md:justify-center w-full pt-[140px] md:pt-[180px] lg:pt-[200px] pb-[4vh] md:pb-[6vh] text-left"
+          className="absolute inset-0 z-50 flex flex-col justify-start md:justify-center w-full pt-[80px] md:pt-[110px] lg:pt-[130px] pb-[4vh] md:pb-[6vh] text-left"
           style={{ 
             opacity: contentOpacity, 
             y: contentY,
@@ -309,7 +310,7 @@ export function Hero() {
           }}
         >
           {/* Main Content inside restricted width - Mobile: pt-[21px] (moved up another 50px), Desktop: pt-[101px] */}
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto pt-[21px] md:pt-[101px]">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto pt-[0px] md:pt-[51px]">
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
               {/* Left Column */}
@@ -365,8 +366,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Spacing adjusted to 80px from content above */}
-          <div className="mt-20 w-full pointer-events-auto">
+          {/* Spacing adjusted to 40px (mt-10) from content above */}
+          <div className="mt-10 w-full pointer-events-auto">
             <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-6 md:mb-10 flex items-center justify-center gap-2 md:gap-4">
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>

@@ -103,7 +103,7 @@ export function Hero() {
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
-    setSectionHeight(isMobile ? 2800 : 2500);
+    setSectionHeight(isMobile ? 2800 : 2800); //yang pertama itu mobile, yang kedua itu desktop
   }, []);
 
   useEffect(() => {

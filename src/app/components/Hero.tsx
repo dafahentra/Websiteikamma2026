@@ -125,9 +125,12 @@ export function Hero() {
     fetchSettings();
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    setSectionHeight(isMobile ? 6000 : 6000); //yang pertama itu mobile, yang kedua itu desktop
+    const mobile = window.innerWidth < 768;
+    setIsMobile(mobile);
+    setSectionHeight(mobile ? 6000 : 6000); //yang pertama itu mobile, yang kedua itu desktop
   }, []);
 
   useEffect(() => {
@@ -173,34 +176,32 @@ export function Hero() {
   }, [progress]);
 
   /* === PHASE 1: Hero Zoom Out === */
-  // 0.00 to 0.10
-  // Non-linear array creates an exponential deceleration curve for a cinematic landing
+  // 0.00 to 0.15 - Slower mask zoom
   const maskScale = useTransform(
     progress,
-    [0.0, 0.015, 0.025, 0.03, 0.035],
+    [0.0, 0.03, 0.08, 0.12, 0.15],
     [70, 15, 4, 1.5, 1]
   );
-  const maskOpacity = useTransform(progress, [0.0, 0.02], [0, 1]);
-  const captionOpacity = useTransform(progress, [0.0, 0.015], [1, 0]);
+  const maskOpacity = useTransform(progress, [0.0, 0.05], [0, 1]);
+  const captionOpacity = useTransform(progress, [0.0, 0.05], [1, 0]);
 
   /* === PHASE 2: Text turns white & Logo appears === */
-  // 0.04 to 0.07
-  const whiteLayerOpacity = useTransform(progress, [0.04, 0.07], [0, 1]);
-  const logoOpacity = useTransform(progress, [0.04, 0.07], [0, 1]);
-  const logoY = useTransform(progress, [0.04, 0.07], ["-24px", "0px"]);
+  // 0.10 to 0.20
+  const whiteLayerOpacity = useTransform(progress, [0.10, 0.20], [0, 1]);
+  const logoOpacity = useTransform(progress, [0.10, 0.20], [0, 1]);
+  const logoY = useTransform(progress, [0.10, 0.20], ["-24px", "0px"]);
 
   /* === PHASE 3: Hero Flies Past Camera === */
-  // 0.08 to 0.15 (User zooms into the text!)
-  // Non-linear array creates an exponential acceleration curve for realistic camera fly-through
+  // 0.20 to 0.45 - Slower camera fly-through
   const heroScale = useTransform(
     progress,
-    [0.08, 0.10, 0.11, 0.12],
+    [0.20, 0.30, 0.38, 0.45],
     [1, 3, 12, 40]
   );
-  const heroOpacity = useTransform(progress, [0.10, 0.12], [1, 0]);
+  const heroOpacity = useTransform(progress, [0.35, 0.45], [1, 0]);
 
   // Disable clicks on hero video once we fly past it
-  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.12 ? "auto" : "none");
+  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.45 ? "auto" : "none");
 
   // Reduced to 12 photos for extreme performance optimization
   const PIONIR_LAYOUT = [
@@ -221,10 +222,10 @@ export function Hero() {
 
       // Sequential appearance: strict 1-by-1 staggered timeline
       const seq = i / shuffledLayout.length;
-      const startP = 0.12 + (seq * 0.10);
+      const startP = 0.45 + (seq * 0.15); // Starts after hero fly-through
 
       // Variable duration so some fly slightly faster/slower, adding depth
-      const duration = 0.08 + Math.random() * 0.04;
+      const duration = 0.10 + Math.random() * 0.05;
       const exitP = startP + duration;
 
       configs.push({
@@ -241,26 +242,26 @@ export function Hero() {
   }, []);
 
   /* === PHASE 5: Background Photo === */
-  // Spawns after all scrapbook photos have at least started appearing (0.22)
-  // Hits full screen (0.40), and then slowly 'elongates' (zooms) to 1.15
-  const finalScale = useTransform(progress, [0.22, 0.40, 1.0], [0.15, 1, 1.15]);
+  // Spawns after all scrapbook photos have at least started appearing (0.60)
+  // Hits full screen (0.80) to ensure no blue space is visible before text appears
+  const finalScale = useTransform(progress, [0.60, 0.80, 0.95], [0.15, 1, 1.05]);
 
   // Fades in and blurs just like the other scrapbook photos
-  const finalOpacity = useTransform(progress, [0.22, 0.27], [0, 1]);
-  const finalBlur = useTransform(progress, [0.22, 0.27], [10, 0]);
+  const finalOpacity = useTransform(progress, [0.60, 0.70], [0, 1]);
+  const finalBlur = useTransform(progress, [0.60, 0.70], [10, 0]);
   const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
 
   // The dark overlay ONLY appears at the very end when it becomes the background
-  const overlayOpacity = useTransform(progress, [0.35, 0.45], [0, 0.70]);
+  const overlayOpacity = useTransform(progress, [0.78, 0.85], [0, 0.70]);
 
   // Pointer events control: only allow clicks on content when it's visible
-  const contentPointerEvents = useTransform(progress, (v: number) => v > 0.40 ? "auto" : "none");
+  const contentPointerEvents = useTransform(progress, (v: number) => v > 0.85 ? "auto" : "none");
 
   /* === PHASE 6: About IKAMMA Content Fades In === */
-  // 0.40 to 0.48
-  const contentOpacity = useTransform(progress, [0.40, 0.48], [0, 1]);
-  // Locomotive scroll effect: starts from 80, settles at 0, then slowly scrolls up to -400px to reveal cut-off content
-  const contentY = useTransform(progress, [0.40, 0.55, 0.85], [80, 0, -80]);
+  // 0.82 to 0.85 - SNAPPY FADE
+  const contentOpacity = useTransform(progress, [0.82, 0.85], [0, 1]);
+  // Locomotive scroll effect: Stops at 0 on mobile so it doesn't move up further
+  const contentY = useTransform(progress, [0.82, 0.88, 1.0], isMobile ? [60, 0, 0] : [60, 0, -200]);
 
   return (
     <div ref={containerRef} className="relative w-full" style={{ height: sectionHeight }}>
@@ -306,7 +307,7 @@ export function Hero() {
           {/* Main Content inside restricted width - Mobile: pt-[21px] (moved up another 50px), Desktop: pt-[101px] */}
           <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto pt-[0px] md:pt-[51px]">
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 lg:gap-16 items-start">
               {/* Left Column */}
               <div className="flex flex-col text-left">
                 <h2 className="text-white text-3xl md:text-5xl flex items-center justify-start gap-3 mb-4 md:mb-8">
@@ -321,7 +322,7 @@ export function Hero() {
                   <p className="text-sm md:text-lg leading-relaxed hidden sm:block">
                     IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
                   </p>
-                  <div className="pt-2 md:-mt-[25px] flex justify-start">
+                  <div className="pt-2 md:-mt-[25px] hidden md:flex justify-start">
                     <AnimatedButton href="/about">
                       See More
                     </AnimatedButton>
@@ -330,15 +331,15 @@ export function Hero() {
               </div>
 
               {/* Right Column */}
-              <div className="flex flex-col text-right w-full">
-                <h2 className="text-white text-3xl md:text-5xl flex items-center justify-end gap-2 sm:gap-3 mb-4 md:mb-8">
+              <div className="flex flex-col text-right w-full -mt-4 md:mt-0">
+                <h2 className="text-white text-3xl md:text-5xl flex items-center justify-end gap-2 sm:gap-3 mb-2 md:mb-8">
                   <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Company</span>
                   <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Profile</span>
                   <span className="text-white">—</span>
                 </h2>
                 <div className="w-full max-w-md ml-auto">
                   {/* Embedded YouTube Player */}
-                  <div className="w-full aspect-video bg-[#D9D9D9] rounded-2xl md:rounded-[2rem] shadow-lg mb-2 md:mb-4 relative overflow-hidden">
+                  <div className="w-full aspect-video bg-[#D9D9D9] rounded-2xl md:rounded-[2rem] shadow-lg mb-0 md:mb-4 relative overflow-hidden">
                     <iframe
                       className="w-full h-full"
                       src={getEmbedUrl(videoUrl)}
@@ -350,7 +351,7 @@ export function Hero() {
                     ></iframe>
                   </div>
 
-                  <div className="text-right">
+                  <div className="text-right hidden md:block">
                     <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#081C36] transition-colors inline-flex items-center gap-2 text-xs md:text-sm underline underline-offset-4">
                       Click to See Full Video <ArrowRight size={12} className="md:w-[14px] md:h-[14px]" />
                     </a>
@@ -360,9 +361,9 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Spacing adjusted to 40px (mt-10) from content above */}
-          <div className="mt-10 w-full pointer-events-auto">
-            <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-6 md:mb-10 flex items-center justify-center gap-2 md:gap-4">
+          {/* Spacing adjusted for better mobile breathing room (mt-5 = 20px) */}
+          <div className="mt-5 md:mt-8 w-full pointer-events-auto">
+            <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-3 md:mb-10 flex items-center justify-center gap-2 md:gap-4">
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>
             </h3>
@@ -375,7 +376,7 @@ export function Hero() {
               >
                 {/* We render 12 logos twice (24 total) to create a perfect, seamless endless loop! */}
                 {[...Array(24)].map((_, i) => (
-                  <IkammaLogo key={i} className="w-20 h-20 md:w-32 md:h-32 object-contain opacity-80 hover:opacity-100 transition-opacity flex-shrink-0" />
+                  <IkammaLogo key={i} className="w-16 h-16 md:w-24 md:h-24 object-contain opacity-80 hover:opacity-100 transition-opacity flex-shrink-0" />
                 ))}
               </motion.div>
             </div>

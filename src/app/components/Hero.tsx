@@ -12,7 +12,7 @@ import { SCRAPBOOK_PHOTOS, HERO_BG } from "../../assets/photos";
 const BACKGROUND_IMAGE = HERO_BG;
 
 // A massive scrolling area to accommodate the grand unified sequence
-const SECTION_HEIGHT_PX = 3000;
+// SECTION_HEIGHT_PX removed in favor of dynamic state inside Hero component
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
@@ -99,6 +99,12 @@ export function Hero() {
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const userPaused = useRef(false); // Track if user manually paused
+  const [sectionHeight, setSectionHeight] = useState(3000);
+
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    setSectionHeight(isMobile ? 2800 : 2500);
+  }, []);
 
   useEffect(() => {
     function measure() {
@@ -115,7 +121,7 @@ export function Hero() {
 
   const rawProgress = useTransform(
     scrollY,
-    [containerTop, containerTop + SECTION_HEIGHT_PX],
+    [containerTop, containerTop + sectionHeight],
     [0, 1],
     { clamp: true }
   );
@@ -261,7 +267,7 @@ export function Hero() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full" style={{ height: SECTION_HEIGHT_PX }}>
+    <div ref={containerRef} className="relative w-full" style={{ height: sectionHeight }}>
       <div
         className="sticky top-0 w-full h-screen overflow-hidden bg-[#0C2340]"
         style={{ perspective: "1000px" }}

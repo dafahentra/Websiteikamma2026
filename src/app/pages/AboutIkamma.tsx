@@ -180,9 +180,9 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
         </Link>
       ) : RowContent}
 
-      {/* Floating Image Portal/Overlay */}
+      {/* Floating Image Portal/Overlay - Desktop Only */}
       <motion.div
-        className="fixed top-0 left-0 w-[260px] md:w-[400px] aspect-video overflow-hidden pointer-events-none z-50 rounded-2xl md:rounded-[2rem] border-4 border-white shadow-2xl"
+        className="fixed top-0 left-0 w-[260px] md:w-[400px] aspect-video overflow-hidden pointer-events-none z-50 rounded-2xl md:rounded-[2rem] border-4 border-white shadow-2xl hidden md:block"
         style={{
           x: imageX,
           y: imageY,

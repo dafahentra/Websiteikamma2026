@@ -85,10 +85,10 @@ export function Footer() {
   return (
     <footer className="bg-white text-[#081C36] font-inter">
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
           
           {/* Column 1: Brand Identity */}
-          <div className="lg:col-span-4 flex items-center gap-6">
+          <div className="col-span-2 lg:col-span-4 flex flex-col md:flex-row items-start md:items-center text-left gap-6 w-fit mx-auto lg:mx-0">
             <img src={Logo} alt="IKAMMA Logo" className="w-20 md:w-24 lg:w-28 object-contain" />
             <div className="flex flex-col gap-0.5">
               <h3 className="font-bold text-base md:text-lg text-[#081C36] leading-tight">
@@ -104,9 +104,9 @@ export function Footer() {
           </div>
 
           {/* Column 2: Navigation */}
-          <div className="lg:col-span-2 flex flex-col gap-6 lg:pl-12">
+          <div className="col-span-1 lg:col-span-2 flex flex-col items-start text-left gap-6 w-fit mx-auto lg:mx-0 lg:pl-12">
             <h4 className="font-bold text-xs md:text-sm uppercase tracking-[0.2em] text-[#081C36]/40">Navigation</h4>
-            <ul className="flex flex-col gap-3 text-sm md:text-base font-medium">
+            <ul className="flex flex-col items-start gap-3 text-sm md:text-base font-medium">
               <li><Link to="/" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">Home</Link></li>
               <li><Link to="/about" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">About Us</Link></li>
               <li><Link to="/info-mahasiswa" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">Info Mahasiswa</Link></li>
@@ -115,9 +115,9 @@ export function Footer() {
           </div>
 
           {/* Column 3: Social */}
-          <div className="lg:col-span-3 flex flex-col gap-6 lg:pl-12">
+          <div className="col-span-1 lg:col-span-3 flex flex-col items-start text-left gap-6 w-fit mx-auto lg:mx-0 lg:pl-12">
             <h4 className="font-bold text-xs md:text-sm uppercase tracking-[0.2em] text-[#081C36]/40">Social</h4>
-            <ul className="flex flex-col gap-3 text-sm md:text-base font-medium">
+            <ul className="flex flex-col items-start gap-3 text-sm md:text-base font-medium">
               {socialLinks.map((social) => (
                 <li key={social.label}>
                   <a href={social.href} target="_blank" rel="noopener noreferrer" className="text-[#081C36]/60 hover:text-[#081C36] transition-all hover:translate-x-1 inline-block">
@@ -129,9 +129,9 @@ export function Footer() {
           </div>
 
           {/* Column 4: Contact */}
-          <div className="lg:col-span-3 flex flex-col gap-6">
+          <div className="col-span-2 lg:col-span-3 flex flex-col items-start text-left gap-6 w-fit mx-auto lg:mx-0">
             <h4 className="font-bold text-xs md:text-sm uppercase tracking-[0.2em] text-[#081C36]/40">Contact</h4>
-            <ul className="flex flex-col gap-4 text-sm md:text-base font-medium">
+            <ul className="flex flex-col items-start gap-4 text-sm md:text-base font-medium">
               <li>
                 <a href={`mailto:${settings?.email_contact || 'dafahentra@gmail.com'}`} className="group flex items-center gap-2 text-[#081C36]/60 hover:text-[#081C36] transition-all">
                   <div className="flex items-center justify-center w-5 h-5 group-hover:scale-110 transition-transform">

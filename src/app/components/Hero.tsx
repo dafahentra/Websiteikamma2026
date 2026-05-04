@@ -129,13 +129,13 @@ export function Hero() {
   const tP3End = isMobile ? 0.24 : 0.35;    // Fly-through finishes MUCH sooner
   // Photos start during the fly-through to create a seamless transition
   const tP4Start = tP3End - (isMobile ? 0.04 : 0.08);
-  
+
   // Increased spread for a clear "one-by-one" staggered effect
-  const tP4Spread = isMobile ? 0.28 : 0.22; 
+  const tP4Spread = isMobile ? 0.28 : 0.22;
   const tP4End = tP4Start + tP4Spread;
 
   // Background photo starts earlier to overlap, but settles EXACTLY after the last photo exits
-  const tP5Start = tP4Start + (tP4Spread * 0.5); 
+  const tP5Start = tP4Start + (tP4Spread * 0.5);
   const tP5EndOpacity = tP5Start + 0.10;
   const tP5EndScale = tP4End + 0.05; // Settles right after flyover photos are gone
 
@@ -221,9 +221,16 @@ export function Hero() {
   const maskOpacity = useTransform(progress, [0.0, 0.05], [0, 1]);
   const captionOpacity = useTransform(progress, [0.0, 0.05], [1, 0]);
 
+  // Slide-up exit: after zoom-in finishes, mask slides up and out of view
+  const maskY = useTransform(progress, [tP1End, tP3End], ["0vh", "-60vh"]);
+
   /* === PHASE 2: Text turns white === */
   // Accelerated cut to white
-  const whiteLayerOpacity = useTransform(progress, [tP2Start, tP1End], [0, 1]);
+  const flyThroughDuration = tP3End - tP1End;
+  const tP3FadeEnd = tP1End + (flyThroughDuration * 0.8);
+  const tP3FadeStart = Math.max(tP1End, tP3FadeEnd - 0.10);
+
+  const whiteLayerOpacity = useTransform(progress, [tP2Start, tP1End, tP3FadeStart, tP3FadeEnd], [0, 1, 1, 0]);
 
   /* === PHASE 3: Hero Flies Past Camera === */
   // Slower camera fly-through (Smooth exponential zoom)
@@ -233,7 +240,8 @@ export function Hero() {
     const t = (p - tP1End) / (tP3End - tP1End); // normalize to 0..1
     return Math.pow(40, t); // smooth exponential zoom
   });
-  const heroOpacity = useTransform(progress, [tP3End - 0.10, tP3End], [1, 0]);
+  const heroOpacity = useTransform(progress, [tP3FadeStart, tP3FadeEnd], [1, 0]);
+  const heroDisplay = useTransform(progress, (v: number) => v >= tP3FadeEnd ? "none" : "flex");
 
   // Disable clicks on hero video once it turns white and pauses
   const heroPointerEvents = useTransform(progress, (v: number) => v < tP1End ? "auto" : "none");
@@ -247,13 +255,13 @@ export function Hero() {
   ];
 
   const photoConfigs = useMemo(() => {
-    // Use fewer photos on mobile for a clearer "one-by-one" experience
-    const layout = isMobile ? PIONIR_LAYOUT.slice(0, 8) : PIONIR_LAYOUT;
+    // Use 12 photos on both mobile and desktop for consistent experience
+    const layout = PIONIR_LAYOUT;
     const shuffledLayout = [...layout].sort((a, b) => (a.x * a.y) % 3 - 1);
 
     const configs = [];
     const total = shuffledLayout.length;
-    
+
     for (let i = 0; i < total; i++) {
       const { x: xStart, y: yStart, w: widthVW } = shuffledLayout[i];
 
@@ -301,13 +309,15 @@ export function Hero() {
   );
 
   return (
-    <div ref={containerRef} className="relative w-full" style={{ height: sectionHeight }}>
+    <div ref={containerRef} className="relative w-full z-10" style={{ height: sectionHeight }}>
       <div
-        className="sticky top-0 w-full h-screen overflow-hidden bg-[#0C2340]"
+        className="sticky top-0 w-full h-screen overflow-hidden bg-[#081C36]"
         style={{ perspective: "1000px" }}
       >
 
         {/* === PHASE 5 & 6: Final Background and Content === */}
+        {/* Navy backdrop: always visible so no grey shows behind scaling photo */}
+        <div className="absolute z-0 inset-0 bg-[#081C36]" />
         {/* Placed lowest in the DOM so it's behind flying photos */}
         <motion.div
           className="absolute z-0 flex items-start justify-center overflow-hidden shadow-2xl"
@@ -435,6 +445,7 @@ export function Hero() {
           style={{
             scale: heroScale,
             opacity: heroOpacity,
+            display: heroDisplay,
             pointerEvents: heroPointerEvents
           }}
           onPointerDown={togglePlayPause}
@@ -459,7 +470,7 @@ export function Hero() {
           {/* SVG Mask Layer */}
           <motion.div
             className="absolute inset-0 z-10 pointer-events-none"
-            style={{ scale: maskScale, opacity: maskOpacity }}
+            style={{ scale: maskScale, opacity: maskOpacity, y: maskY }}
           >
             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <defs>

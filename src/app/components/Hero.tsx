@@ -102,7 +102,7 @@ export function Hero() {
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const userPaused = useRef(false); // Track if user manually paused
-  const [sectionHeight, setSectionHeight] = useState(3000);
+  const [sectionHeight, setSectionHeight] = useState(2000);
   const [videoUrl, setVideoUrl] = useState("https://www.youtube.com/watch?v=8VO2f7XQ7Tw");
   const [isCompanyVideoPlaying, setIsCompanyVideoPlaying] = useState(false);
 
@@ -135,13 +135,15 @@ export function Hero() {
     setSectionHeight(3000); // Maintain cinematic total scroll height
   }, []);
 
-  // Responsive Timings (Adjusted to be 50% slower for WeShareToInspire & Photos)
-  const tP1End = isMobile ? 0.12 : 0.15;
-  const tP2Start = isMobile ? 0.09 : 0.12;
-  const tP3End = isMobile ? 0.30 : 0.39;
+  // Responsive Timings (Adjusted to be 50% SLOWER for WeShareToInspire & Photos)
+  const tP1End = isMobile ? 0.18 : 0.22;
+  const tP2Start = isMobile ? 0.14 : 0.18;
+  const tP3End = isMobile ? 0.45 : 0.58;
 
   const tP4Start = tP3End;
-  const tP4Spread = isMobile ? 0.37 : 0.30; // Photos stretch to fill space elegantly
+  // We compress the spread so the photos spawn closer together, 
+  // preventing the timeline from exceeding the 1.0 max progress limit.
+  const tP4Spread = isMobile ? 0.20 : 0.15; 
   const tP4End = tP4Start + tP4Spread;
 
   // Accelerate the background photo appearance so it settles before text
@@ -258,8 +260,8 @@ export function Hero() {
       const seq = i / shuffledLayout.length;
       const startP = tP4Start + (seq * tP4Spread); // Starts after hero fly-through
 
-      // Variable duration so some fly slightly faster/slower, adding depth
-      const duration = (0.08 + Math.random() * 0.04) * (isMobile ? 1.2 : 1);
+      // Flyover Photo speed reduced by 50% (takes 50% more progress to fly across)
+      const duration = (0.12 + Math.random() * 0.06) * (isMobile ? 1.2 : 1);
       const exitP = startP + duration;
 
       configs.push({
@@ -294,12 +296,12 @@ export function Hero() {
   /* === PHASE 6: About IKAMMA Content Fades In === */
   const contentOpacity = useTransform(progress, [tP6Start - 0.03, tP6Start], [0, 1]);
 
-  // Locomotive scroll effect: upward drift (-60px) during the remaining pinned scroll,
-  // then completely stops so it doesn't move when the Curved Divider appears.
+  // Locomotive scroll effect: fast entrance (250 to 0), then subtle upward drift to -50px
+  // stops completely when Curved Divider appears.
   const contentY = useTransform(
     progress,
     [tP6Start - 0.03, tP6Start + 0.03, tP6Start + 0.05, 1.0],
-    [60, 0, 0, -50]
+    [50, 0, 0, -50] // Start at 250px so it flies in much faster!
   );
 
   return (
@@ -401,7 +403,7 @@ export function Hero() {
           </div>
 
           {/* Spacing adjusted to push the logo closer to the bottom curved divider */}
-          <div className="mt-14 md:mt-30 w-full">
+          <div className="mt-14 md:mt-[120px] w-full">
             <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-3 md:mb-4 flex items-center justify-center gap-2 md:gap-4">
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>

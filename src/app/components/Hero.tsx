@@ -120,26 +120,26 @@ export function Hero() {
   useEffect(() => {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
-    setSectionHeight(3000); // Maintain cinematic total scroll height
+    setSectionHeight(mobile ? 2400 : 3500); // Snappier scroll on mobile, majestic on desktop
   }, []);
 
-  // Responsive Timings (Adjusted to be 50% SLOWER for WeShareToInspire & Photos)
-  const tP1End = isMobile ? 0.18 : 0.22;
-  const tP2Start = isMobile ? 0.14 : 0.18;
-  const tP3End = isMobile ? 0.45 : 0.58;
-
-  const tP4Start = tP3End;
-  // We compress the spread so the photos spawn closer together, 
-  // preventing the timeline from exceeding the 1.0 max progress limit.
-  const tP4Spread = isMobile ? 0.20 : 0.15;
+  // Responsive Timings (Optimized for high-performance feel)
+  const tP1End = isMobile ? 0.12 : 0.16;    // Text fade/zoom finishes sooner
+  const tP2Start = isMobile ? 0.08 : 0.12;  // White cut starts sooner
+  const tP3End = isMobile ? 0.24 : 0.35;    // Fly-through finishes MUCH sooner
+  // Photos start during the fly-through to create a seamless transition
+  const tP4Start = tP3End - (isMobile ? 0.04 : 0.08);
+  
+  // Increased spread for a clear "one-by-one" staggered effect
+  const tP4Spread = isMobile ? 0.28 : 0.22; 
   const tP4End = tP4Start + tP4Spread;
 
-  // Accelerate the background photo appearance so it settles before text
-  const tP5Start = tP4End;
-  const tP5EndOpacity = tP5Start + 0.05;
-  const tP5EndScale = tP5Start + 0.10;
+  // Background photo starts earlier to overlap, but settles EXACTLY after the last photo exits
+  const tP5Start = tP4Start + (tP4Spread * 0.5); 
+  const tP5EndOpacity = tP5Start + 0.10;
+  const tP5EndScale = tP4End + 0.05; // Settles right after flyover photos are gone
 
-  // Content appears strictly AFTER the background is fully settled (scale 1.0)
+  // Content appears shortly after background settles
   const tP6Start = tP5EndScale + 0.02;
 
   const togglePlayPause = () => {
@@ -247,34 +247,33 @@ export function Hero() {
   ];
 
   const photoConfigs = useMemo(() => {
-    // We shuffle the layout array deterministically so they pop up randomly across the screen
-    // rather than left-to-right, making the "1 by 1" appearance feel much more dynamic!
-    const shuffledLayout = [...PIONIR_LAYOUT].sort((a, b) => (a.x * a.y) % 3 - 1);
+    // Use fewer photos on mobile for a clearer "one-by-one" experience
+    const layout = isMobile ? PIONIR_LAYOUT.slice(0, 8) : PIONIR_LAYOUT;
+    const shuffledLayout = [...layout].sort((a, b) => (a.x * a.y) % 3 - 1);
 
     const configs = [];
-    for (let i = 0; i < shuffledLayout.length; i++) {
+    const total = shuffledLayout.length;
+    
+    for (let i = 0; i < total; i++) {
       const { x: xStart, y: yStart, w: widthVW } = shuffledLayout[i];
 
-      // Sequential appearance: strict 1-by-1 staggered timeline
-      const seq = i / shuffledLayout.length;
-      const startP = tP4Start + (seq * tP4Spread); // Starts after hero fly-through
+      // Staggered timeline: each photo has a clear distinct start time
+      const seq = i / (total - 1 || 1);
+      const startP = tP4Start + (seq * (tP4Spread - 0.10)); // Ensure starts finish before the end of the spread
 
-      // Flyover Photo speed reduced by 50% (takes 50% more progress to fly across)
-      const duration = (0.12 + Math.random() * 0.06) * (isMobile ? 1.2 : 1);
+      // Fast flight duration to keep them snappy and distinct
+      const duration = isMobile ? 0.09 : 0.11;
       const exitP = startP + duration;
 
       configs.push({
-        xStart,
-        yStart,
-        widthVW,
-        startP,
-        exitP,
+        xStart, yStart, widthVW,
+        startP, exitP,
         srcIndex: i % SCRAPBOOK_PHOTOS.length,
-        zIndex: 100 - i // Older photos (lower i) get a higher z-index to stay on top!
+        zIndex: 100 - i
       });
     }
     return configs;
-  }, []);
+  }, [tP4Start, tP4Spread, isMobile]);
 
   /* === PHASE 5: Background Photo === */
   // Spawns after all scrapbook photos have at least started appearing.

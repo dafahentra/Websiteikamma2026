@@ -29,24 +29,24 @@ function IkammaLogo({ className }: { className?: string }) {
 }
 
 // Component for a flying parallax photo
-function FlyingPhoto({ 
-  src, 
-  progress, 
-  cfg 
-}: { 
-  src: string, 
-  progress: MotionValue<number>, 
-  cfg: { xStart: number, yStart: number, rot: number, sStart: number, exit: number } 
+function FlyingPhoto({
+  src,
+  progress,
+  cfg
+}: {
+  src: string,
+  progress: MotionValue<number>,
+  cfg: { xStart: number, yStart: number, rot: number, sStart: number, exit: number }
 }) {
   const { xStart, yStart, rot, sStart, exit } = cfg;
   const sEnd = 6; // Final scale when it flies past the camera
   const ratio = sEnd / sStart;
-  
+
   // Parallax calculations: As the object scales up (gets closer), its distance from the center increases proportionally
   const scale = useTransform(progress, [0, exit], [sStart, sEnd]);
   const x = useTransform(progress, [0, exit], [`${xStart}vw`, `${xStart * ratio}vw`]);
   const y = useTransform(progress, [0, exit], [`${yStart}vh`, `${yStart * ratio}vh`]);
-  
+
   // Fade out smoothly right before it exits the screen
   const opacity = useTransform(progress, [exit - 0.15, exit], [1, 0]);
 
@@ -85,7 +85,7 @@ export function AboutSection() {
     };
     fetchSettings();
   }, []);
-  
+
   // 600vh gives plenty of scroll room for the 3D tunnel effect
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -100,14 +100,14 @@ export function AboutSection() {
       const xStart = (Math.random() - 0.5) * 80; // -40vw to 40vw
       const yStart = (Math.random() - 0.5) * 60; // -30vh to 30vh
       const rot = (Math.random() - 0.5) * 60;    // -30 to 30 deg rotation
-      
+
       // Z-depth calculation (0 is far, 1 is close)
-      const depth = Math.random(); 
+      const depth = Math.random();
       // If it's close (depth=1), it starts large and exits early (fast).
       // If it's far (depth=0), it starts small and exits late (slow).
       const sStartVal = 0.15 + (depth * 1.5); // Starts between 0.15 and 1.65
       const exitVal = 0.85 - (depth * 0.65);  // Exits between 0.85 and 0.20
-      
+
       configs.push({
         xStart,
         yStart,
@@ -134,8 +134,8 @@ export function AboutSection() {
 
   return (
     <section id="about" ref={containerRef} className="relative w-full h-[1200vh] bg-white">
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
-        
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#081C36]">
+
         {/* Final Background Photo - Rendered first so it's behind all the flying photos */}
         <motion.div
           className="absolute z-0 flex items-center justify-center overflow-hidden shadow-2xl"
@@ -153,7 +153,7 @@ export function AboutSection() {
             className="w-full h-full object-cover scale-105"
           />
           {/* Dark Overlay */}
-          <motion.div 
+          <motion.div
             className="absolute inset-0 bg-black"
             style={{ opacity: overlayOpacity }}
           />
@@ -161,7 +161,7 @@ export function AboutSection() {
 
         {/* The 50 Flying Parallax Photos */}
         {photoConfigs.map((cfg, i) => (
-          <FlyingPhoto 
+          <FlyingPhoto
             key={i}
             src={SCRAPBOOK_PHOTOS[cfg.srcIndex]}
             progress={scrollYProgress}
@@ -170,7 +170,7 @@ export function AboutSection() {
         ))}
 
         {/* About Section Content */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-center py-12"
           style={{ opacity: contentOpacity, y: contentY }}
         >
@@ -202,7 +202,7 @@ export function AboutSection() {
                   <div className="inline-block bg-[#081C36] px-3 py-1 mb-4">
                     <h3 className="text-white text-xl font-bold">Company Profile</h3>
                   </div>
-                  <div className="w-full aspect-video bg-[#D9D9D9] rounded-[2rem] shadow-lg mb-4 relative overflow-hidden">
+                  <div className="w-full aspect-video bg-[#002444] rounded-[2rem] shadow-lg mb-4 relative overflow-hidden">
                     <iframe
                       className="w-full h-full"
                       src={getEmbedUrl(videoUrl)}
@@ -214,11 +214,11 @@ export function AboutSection() {
                     ></iframe>
                   </div>
                   <div className="text-right">
-                  <div className="text-right">
-                    <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#081C36] transition-colors inline-flex items-center gap-2 text-sm underline underline-offset-4">
-                      Click to See Full Video <ArrowRight size={14} />
-                    </a>
-                  </div>
+                    <div className="text-right">
+                      <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#081C36] transition-colors inline-flex items-center gap-2 text-sm underline underline-offset-4">
+                        Click to See Full Video <ArrowRight size={14} />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useSpring, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
 import LOGO1 from '../../assets/LogoEvent/ManagementEvent.png';
@@ -28,24 +28,35 @@ interface CarouselCardProps {
   index: number;
   activeIndex: number;
   item: { photo: string; logo: string };
-  isInView: boolean;
+  unfoldProgress: MotionValue<number>;
   onClick: () => void;
 }
 
-function CarouselCard({ index, activeIndex, item, isInView, onClick, xFactor }: CarouselCardProps & { xFactor: number }) {
+function CarouselCard({ index, activeIndex, item, unfoldProgress, onClick, xFactor }: CarouselCardProps & { xFactor: number }) {
   const posIndex = (index - activeIndex + 4) % 4;
-  
-  // If not in view, all cards start folded in the center
-  const target = isInView 
-    ? { ...POSITIONS[posIndex], x: POSITIONS[posIndex].x * xFactor }
-    : { x: 0, y: 0, rotate: 0, scale: 0.8, zIndex: 5, brightness: 0.5 };
+  const target = { ...POSITIONS[posIndex], x: POSITIONS[posIndex].x * xFactor };
 
-  // Motion values animate automatically when target changes
-  const x = useSpring(target.x, { stiffness: 60, damping: 15 });
-  const y = useSpring(target.y, { stiffness: 60, damping: 15 });
-  const rotate = useSpring(target.rotate, { stiffness: 60, damping: 15 });
-  const scale = useSpring(target.scale, { stiffness: 60, damping: 15 });
-  const brightness = useSpring(target.brightness, { stiffness: 60, damping: 15 });
+  // Motion values for the targets (state-driven)
+  const tX = useSpring(target.x, { stiffness: 200, damping: 25 });
+  const tY = useSpring(target.y, { stiffness: 200, damping: 25 });
+  const tRotate = useSpring(target.rotate, { stiffness: 200, damping: 25 });
+  const tScale = useSpring(target.scale, { stiffness: 200, damping: 25 });
+  const tBright = useSpring(target.brightness, { stiffness: 200, damping: 25 });
+
+  useEffect(() => {
+    tX.set(target.x);
+    tY.set(target.y);
+    tRotate.set(target.rotate);
+    tScale.set(target.scale);
+    tBright.set(target.brightness);
+  }, [posIndex, target, tX, tY, tRotate, tScale, tBright]);
+
+  // Mix with scroll progress! (0 = folded up in the center, 1 = fanned out to target)
+  const x = useTransform([tX, unfoldProgress], (latest) => (latest[0] as number) * (latest[1] as number));
+  const y = useTransform([tY, unfoldProgress], (latest) => (latest[0] as number) * (latest[1] as number));
+  const rotate = useTransform([tRotate, unfoldProgress], (latest) => (latest[0] as number) * (latest[1] as number));
+  const scale = useTransform([tScale, unfoldProgress], (latest) => 0.8 + ((latest[0] as number) - 0.8) * (latest[1] as number));
+  const brightness = useTransform([tBright, unfoldProgress], (latest) => 0.5 + ((latest[0] as number) - 0.5) * (latest[1] as number));
 
   const filter = useTransform(brightness, (b) => `brightness(${b})`);
 
@@ -98,8 +109,15 @@ export function EventsSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Trigger animation automatically when scrolled into view
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  // Track scroll progress relative to this section, but map it so it finishes very fast
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start 80%", "start 20%"] // Start animating when the top hits 80% of screen, finish completely by 20%
+  });
+
+  // Smooth out the scroll progress slightly and map it 0-1
+  const rawProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const unfoldProgress = useSpring(rawProgress, { stiffness: 100, damping: 30 });
 
   return (
     <>
@@ -141,7 +159,7 @@ export function EventsSection() {
                   index={i}
                   activeIndex={activeIndex}
                   item={item}
-                  isInView={isInView}
+                  unfoldProgress={unfoldProgress}
                   xFactor={xFactor}
                   onClick={() => setActiveIndex(i)}
                 />

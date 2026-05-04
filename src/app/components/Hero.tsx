@@ -127,8 +127,13 @@ export function Hero() {
   const tP1End = isMobile ? 0.12 : 0.16;    // Text fade/zoom finishes sooner
   const tP2Start = isMobile ? 0.08 : 0.12;  // White cut starts sooner
   const tP3End = isMobile ? 0.24 : 0.35;    // Fly-through finishes MUCH sooner
-  // Photos start during the fly-through to create a seamless transition
-  const tP4Start = tP3End - (isMobile ? 0.04 : 0.08);
+  // Photos start at 90% through the hero animation-out so no empty gap remains.
+  // We replicate tP3FadeStart logic here (it's defined again below for transforms):
+  const _flyDur = tP3End - tP1End;
+  const _tP3FadeEnd = tP1End + _flyDur * 0.8;
+  const _tP3FadeStart = Math.max(tP1End, _tP3FadeEnd - 0.10);
+  // Start photos right at the 90% point of the hero fade-out
+  const tP4Start = _tP3FadeStart;
 
   // Increased spread for a clear "one-by-one" staggered effect
   const tP4Spread = isMobile ? 0.28 : 0.22;

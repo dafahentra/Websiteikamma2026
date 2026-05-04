@@ -133,6 +133,20 @@ export function Hero() {
     setSectionHeight(mobile ? 6000 : 6000); //yang pertama itu mobile, yang kedua itu desktop
   }, []);
 
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play().catch(() => {});
+        userPaused.current = false;
+        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
+        userPaused.current = true;
+        setIsPlaying(false);
+      }
+    }
+  };
+
   useEffect(() => {
     function measure() {
       if (containerRef.current) {
@@ -400,12 +414,13 @@ export function Hero() {
 
         {/* === PHASE 1, 2 & 3: Hero Initial State === */}
         <motion.div
-          className="absolute inset-0 z-40 flex items-center justify-center"
+          className="absolute inset-0 z-40 flex items-center justify-center cursor-pointer"
           style={{
             scale: heroScale,
             opacity: heroOpacity,
             pointerEvents: heroPointerEvents
           }}
+          onClick={togglePlayPause}
         >
           {/* Video Layer */}
           <div className="absolute inset-0 z-0">
@@ -416,7 +431,7 @@ export function Hero() {
               loop
               muted
               playsInline
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover pointer-events-none"
             />
             <motion.div
               className="absolute inset-0 bg-white"

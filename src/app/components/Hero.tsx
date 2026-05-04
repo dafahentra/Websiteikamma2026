@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate, MotionValue, useSpring } from "motion/react";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
 import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 
@@ -131,7 +131,7 @@ export function Hero() {
   useEffect(() => {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
-    setSectionHeight(mobile ? 4500 : 6000); // 4500 = 25% lebih cepat dari 6000
+    setSectionHeight(mobile ? 6000 : 6000); // 4500 = 25% lebih cepat dari 6000
   }, []);
 
   const togglePlayPause = () => {
@@ -437,15 +437,6 @@ export function Hero() {
               className="absolute inset-0 bg-white"
               style={{ opacity: whiteLayerOpacity }}
             />
-
-            {/* Play Indicator when Paused */}
-            {!isPlaying && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[100]">
-                <div className="bg-black/30 backdrop-blur-md p-6 rounded-full text-white shadow-xl transition-all">
-                  <Play size={48} fill="currentColor" className="ml-2" />
-                </div>
-              </div>
-            )}
           </div>
 
           {/* SVG Mask Layer */}

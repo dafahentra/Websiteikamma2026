@@ -131,15 +131,25 @@ export function Hero() {
   useEffect(() => {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
-    setSectionHeight(6000); // Maintain cinematic total scroll height
+    setSectionHeight(2000); // Maintain cinematic total scroll height
   }, []);
 
-  // Responsive Timings to compress WeShareToInspire zoom and stretch the photos on mobile
-  const tP1End = isMobile ? 0.11 : 0.15;
-  const tP2Start = isMobile ? 0.08 : 0.12;
-  const tP3End = isMobile ? 0.30 : 0.40;
+  // Ultra-snappy Responsive Timings
+  const tP1End = isMobile ? 0.08 : 0.10; // Zoom out much faster
+  const tP2Start = isMobile ? 0.06 : 0.08;
+  const tP3End = isMobile ? 0.20 : 0.26; // Camera fly-through much faster
+
   const tP4Start = tP3End;
-  const tP4Spread = 0.55 - tP4Start;
+  const tP4Spread = isMobile ? 0.25 : 0.20; // Photos stretch to fill space elegantly
+  const tP4End = tP4Start + tP4Spread;
+
+  // Accelerate the background photo appearance so it settles before text
+  const tP5Start = tP4End;
+  const tP5EndOpacity = tP5Start + 0.05;
+  const tP5EndScale = tP5Start + 0.10;
+
+  // Content appears strictly AFTER the background is fully settled (scale 1.0)
+  const tP6Start = tP5EndScale + 0.02;
 
   const togglePlayPause = () => {
     if (videoRef.current) {
@@ -175,10 +185,10 @@ export function Hero() {
     { clamp: true }
   );
 
-  // Apply a smooth spring physics wrapper to eliminate rigid mouse-wheel tick stiffness
+  // Apply a snappy spring physics wrapper to eliminate rigid stiffness and feel ultra-responsive
   const progress = useSpring(rawProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 150,
+    damping: 25,
     restDelta: 0.001
   });
 
@@ -247,7 +257,7 @@ export function Hero() {
       const startP = tP4Start + (seq * tP4Spread); // Starts after hero fly-through
 
       // Variable duration so some fly slightly faster/slower, adding depth
-      const duration = (0.10 + Math.random() * 0.05) * (isMobile ? 1.5 : 1);
+      const duration = (0.08 + Math.random() * 0.04) * (isMobile ? 1.2 : 1);
       const exitP = startP + duration;
 
       configs.push({
@@ -264,29 +274,27 @@ export function Hero() {
   }, []);
 
   /* === PHASE 5: Background Photo === */
-  // Spawns after all scrapbook photos have at least started appearing (0.55)
-  // Hits full screen (0.75) to ensure no blue space is visible before text appears
-  const finalScale = useTransform(progress, [0.55, 0.75, 0.90], [0.15, 1, 1.05]);
+  // Spawns after all scrapbook photos have at least started appearing
+  const finalScale = useTransform(progress, [tP5Start, tP5EndScale, tP5EndScale + 0.15], [0.15, 1, 1.05]);
 
   // Fades in and blurs just like the other scrapbook photos
-  const finalOpacity = useTransform(progress, [0.55, 0.65], [0, 1]);
-  const finalBlur = useTransform(progress, [0.55, 0.65], [10, 0]);
+  const finalOpacity = useTransform(progress, [tP5Start, tP5EndOpacity], [0, 1]);
+  const finalBlur = useTransform(progress, [tP5Start, tP5EndOpacity], [10, 0]);
   const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
 
   // The dark overlay ONLY appears at the very end when it becomes the background
-  const overlayOpacity = useTransform(progress, [0.73, 0.80], [0, 0.70]);
+  const overlayOpacity = useTransform(progress, [tP5EndScale - 0.02, tP6Start], [0, 0.70]);
 
   // Pointer events control: only allow clicks on content when it's visible
-  const contentPointerEvents = useTransform(progress, (v: number) => v > 0.80 ? "auto" : "none");
+  const contentPointerEvents = useTransform(progress, (v: number) => v > tP6Start ? "auto" : "none");
 
   /* === PHASE 6: About IKAMMA Content Fades In === */
-  // 0.77 to 0.80 - SNAPPY FADE
-  const contentOpacity = useTransform(progress, [0.77, 0.80], [0, 1]);
-  // Locomotive scroll effect: Locks at 0 (centered) at 0.85 progress for a seamless transition buffer
+  const contentOpacity = useTransform(progress, [tP6Start - 0.03, tP6Start], [0, 1]);
+  // Locomotive scroll effect: subtle upward drift (-200px) during the remaining long scroll distance
   const contentY = useTransform(
     progress,
-    [0.77, 0.83, 0.85, 1.0],
-    [60, 0, 0, 0]
+    [tP6Start - 0.03, tP6Start + 0.03, tP6Start + 0.05, 1.0],
+    [60, 0, 0, -200]
   );
 
   return (

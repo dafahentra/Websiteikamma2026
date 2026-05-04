@@ -131,13 +131,13 @@ export function Hero() {
   useEffect(() => {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
-    setSectionHeight(mobile ? 6000 : 6000); //yang pertama itu mobile, yang kedua itu desktop
+    setSectionHeight(mobile ? 3000 : 6000); // 4500 = 25% lebih cepat dari 6000
   }, []);
 
   const togglePlayPause = () => {
     if (videoRef.current) {
       if (videoRef.current.paused) {
-        videoRef.current.play().catch(() => {});
+        videoRef.current.play().catch(() => { });
         userPaused.current = false;
         setIsPlaying(true);
       } else {
@@ -474,13 +474,13 @@ export function Hero() {
                     #WeShareToInspire
                   </text>
                   <svg x="50%" y="50%" overflow="visible">
-                    <g 
-                      fill="black" 
-                      transform={isMobile 
-                        ? "translate(-56, -146) scale(0.1495)" 
+                    <g
+                      fill="black"
+                      transform={isMobile
+                        ? "translate(-56, -146) scale(0.1495)"
                         : "translate(-80, -221) scale(0.2136)"
-                      } 
-                      dangerouslySetInnerHTML={{ __html: svgInner }} 
+                      }
+                      dangerouslySetInnerHTML={{ __html: svgInner }}
                     />
                   </svg>
                 </mask>

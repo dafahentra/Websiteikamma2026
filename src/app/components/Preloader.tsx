@@ -11,18 +11,26 @@ export function Preloader({ onLoadingComplete }: { onLoadingComplete: () => void
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(onLoadingComplete, 300);
-          return 100;
-        }
-        return prev + 1;
-      });
-    }, 10); // 10ms * 100 = 1000ms (1 detik)
+    // Kunci scroll saat preloader aktif
+    document.body.style.overflow = "hidden";
+    
+    // Anti-scroll ekstra kuat untuk mencegah scrolling paksa di desktop/mobile
+    const preventScroll = (e: Event) => e.preventDefault();
+    document.addEventListener("wheel", preventScroll, { passive: false });
+    document.addEventListener("touchmove", preventScroll, { passive: false });
 
-    return () => clearInterval(timer);
+    // Set durasi persis 1 detik (1000ms) tanpa bergantung pada delay interval
+    const timer = setTimeout(() => {
+      onLoadingComplete();
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+      // Buka kembali scroll saat preloader selesai
+      document.body.style.overflow = "";
+      document.removeEventListener("wheel", preventScroll);
+      document.removeEventListener("touchmove", preventScroll);
+    };
   }, [onLoadingComplete]);
 
   return (

@@ -53,13 +53,6 @@ function FlyingPhoto({
   const fadeInEnd = startP + duration * 0.25;
   const opacity = useTransform(progress, [startP, fadeInEnd], [0, 1]);
 
-  // PERFORMANCE OPTIMIZATION: 
-  // Continuously applying 'blur(0px)' forces the browser to keep the image in the expensive filter pipeline.
-  // By returning 'none' when the blur is finished, we free up massive amounts of GPU memory!
-  const blurValue = useTransform(progress, [startP, fadeInEnd], [10, 0]);
-  const filter = useMotionTemplate`${blurValue}px`;
-  const optimizedFilter = useTransform(filter, (v) => parseFloat(v) > 0.1 ? `blur(${v})` : "none");
-
   return (
     <motion.div
       className="absolute pointer-events-none"
@@ -84,11 +77,6 @@ function FlyingPhoto({
           loading="lazy"
           decoding="async"
           className="w-full h-full object-cover"
-        />
-        {/* We apply the filter to a separate motion div or directly to the wrapper if possible. Actually, applying it to a wrapper is fine, but motion.div requires it. */}
-        <motion.div
-          className="absolute inset-0 z-20 pointer-events-none bg-transparent"
-          style={{ backdropFilter: optimizedFilter, willChange: "backdrop-filter" }}
         />
       </div>
     </motion.div>
@@ -143,7 +131,7 @@ export function Hero() {
   const tP4Start = tP3End;
   // We compress the spread so the photos spawn closer together, 
   // preventing the timeline from exceeding the 1.0 max progress limit.
-  const tP4Spread = isMobile ? 0.20 : 0.15; 
+  const tP4Spread = isMobile ? 0.20 : 0.15;
   const tP4End = tP4Start + tP4Spread;
 
   // Accelerate the background photo appearance so it settles before text
@@ -182,10 +170,21 @@ export function Hero() {
 
   const { scrollY } = useScroll();
 
+  // We map the scroll so that the background photo finishes scaling JUST BEFORE the container unpins.
+  // We subtract a small buffer (windowHeight * 0.15) to give the `useSpring` physics just enough time to catch up.
+  // This guarantees the photo is fully full-screen precisely as the Curved Divider peeks, without causing a noticeable delay.
   const rawProgress = useTransform(
     scrollY,
-    [containerTop, containerTop + sectionHeight - windowHeight],
-    [0, 1],
+    [
+      containerTop,
+      containerTop + sectionHeight - windowHeight - (windowHeight * 0.15),
+      containerTop + sectionHeight
+    ],
+    [
+      0,
+      tP5EndScale,
+      1.0
+    ],
     { clamp: true }
   );
 
@@ -282,10 +281,8 @@ export function Hero() {
   // Stops scaling exactly at tP5EndScale so it is completely still when text appears.
   const finalScale = useTransform(progress, [tP5Start, tP5EndScale], [0.15, 1]);
 
-  // Fades in and blurs just like the other scrapbook photos
+  // Fades in just like the other scrapbook photos (blur removed for performance)
   const finalOpacity = useTransform(progress, [tP5Start, tP5EndOpacity], [0, 1]);
-  const finalBlur = useTransform(progress, [tP5Start, tP5EndOpacity], [10, 0]);
-  const finalFilter = useMotionTemplate`blur(${finalBlur}px)`;
 
   // The dark overlay ONLY appears at the very end when it becomes the background
   const overlayOpacity = useTransform(progress, [tP5EndScale - 0.02, tP6Start], [0, 0.70]);
@@ -296,12 +293,12 @@ export function Hero() {
   /* === PHASE 6: About IKAMMA Content Fades In === */
   const contentOpacity = useTransform(progress, [tP6Start - 0.03, tP6Start], [0, 1]);
 
-  // Locomotive scroll effect: fast entrance (250 to 0), then subtle upward drift to -50px
-  // stops completely when Curved Divider appears.
+  // Since the container is now unpinned and scrolling up naturally during this phase, 
+  // we just do a gentle entrance slide and let it scroll naturally with the page.
   const contentY = useTransform(
     progress,
-    [tP6Start - 0.03, tP6Start + 0.03, tP6Start + 0.05, 1.0],
-    [50, 0, 0, -50] // Start at 250px so it flies in much faster!
+    [tP6Start - 0.03, tP6Start],
+    [30, 0]
   );
 
   return (
@@ -326,9 +323,6 @@ export function Hero() {
             src={BACKGROUND_IMAGE}
             alt="Background"
             className="w-full h-[100vh] object-cover"
-            style={{
-              filter: finalFilter
-            }}
           />
           <motion.div
             className="absolute inset-0 bg-black"
@@ -342,7 +336,8 @@ export function Hero() {
           style={{
             opacity: contentOpacity,
             y: contentY,
-            pointerEvents: contentPointerEvents
+            pointerEvents: contentPointerEvents,
+            willChange: "transform, opacity" // GPU Acceleration for heavy iframe and SVGs
           }}
         >
           {/* Main Content inside restricted width - Mobile: pt-[35px], Desktop: pt-[26px] (moved up 25px) */}
@@ -402,8 +397,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Spacing adjusted to push the logo closer to the bottom curved divider */}
-          <div className="mt-14 md:mt-[120px] w-full">
+          {/* Spacing adjusted to prevent logos from being cut off by the curved divider */}
+          <div className="mt-4 md:mt-[30px] w-full">
             <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-3 md:mb-4 flex items-center justify-center gap-2 md:gap-4">
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>
@@ -414,6 +409,7 @@ export function Hero() {
                 className="flex gap-8 md:gap-16 items-center min-w-fit pr-8 md:pr-16"
                 animate={{ x: ["0%", "-50%"] }}
                 transition={{ ease: "linear", duration: 30, repeat: Infinity }}
+                style={{ willChange: "transform" }}
               >
                 {/* We render 12 logos twice (24 total) to create a perfect, seamless endless loop! */}
                 {[...Array(24)].map((_, i) => (

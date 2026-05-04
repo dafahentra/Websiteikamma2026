@@ -169,10 +169,16 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="w-full border-b border-[#081C36]/15 group hover:bg-white/5 transition-colors cursor-pointer relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onMouseMove={handleMouseMove}
+      className="w-full border-b border-[#081C36]/15 group md:hover:bg-white/5 transition-colors cursor-pointer relative"
+      onMouseEnter={() => {
+        if (window.innerWidth >= 1024) setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        if (window.innerWidth >= 1024) setIsHovered(false);
+      }}
+      onMouseMove={(e) => {
+        if (window.innerWidth >= 1024) handleMouseMove(e);
+      }}
     >
       {item.href ? (
         <Link to={item.href} className="block w-full">

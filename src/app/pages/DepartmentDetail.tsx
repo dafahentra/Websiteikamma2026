@@ -89,7 +89,7 @@ export function DepartmentDetail() {
         <div className="relative w-full flex flex-row justify-between items-end h-[320px] md:h-[500px] max-w-[1800px] mx-auto px-0 shrink-0 mt-auto">
 
           {/* Background Large Logo (Centered) */}
-          <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[400px] md:w-[800px] opacity-[0.04] pointer-events-none z-0 flex items-center justify-center">
+          <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[400px] md:w-[800px] opacity-[0.04] pointer-events-none z-[-1] flex items-center justify-center">
             <img 
               src={department.logo} 
               alt={`${department.name} Logo`}
@@ -106,20 +106,20 @@ export function DepartmentDetail() {
               <motion.img
                 src={department.managerImg}
                 alt={department.manager}
-                className="h-full w-auto object-contain object-bottom drop-shadow-2xl"
+                className="h-full w-auto object-contain object-bottom drop-shadow-2xl relative z-10"
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.3 }}
               />
-              {/* Desktop label */}
+              {/* Manager Label - Positioned near head but behind */}
               <motion.div
-                className="hidden md:block absolute left-full -ml-[90px] top-[18%]"
+                className="absolute left-[70%] md:left-full ml-[10px] md:-ml-[90px] top-[15%] md:top-[18%] z-0"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-inter whitespace-nowrap drop-shadow-md" style={{ fontWeight: 800 }}>{department.manager}</h3>
-                <p className="text-[#081C36] text-lg lg:text-xl font-medium drop-shadow-md">Manager</p>
+                <h3 className="text-lg md:text-3xl lg:text-4xl font-inter whitespace-nowrap drop-shadow-md text-[#081C36]" style={{ fontWeight: 800 }}>{department.manager}</h3>
+                <p className="text-[#081C36]/70 text-[11px] md:text-lg lg:text-xl font-medium drop-shadow-md">Manager</p>
               </motion.div>
             </div>
           </motion.div>
@@ -130,38 +130,26 @@ export function DepartmentDetail() {
             className="flex items-end z-10 relative w-[50%] md:w-[45%] justify-end h-full -mr-[130px] md:-mr-[194px] lg:-mr-[226px]"
           >
             <div className="h-full w-auto shrink-0 relative">
-              {/* Desktop label */}
+              {/* Vice Manager Label - Positioned near head but behind */}
               <motion.div
-                className="hidden md:block absolute right-full -mr-[90px] top-[18%] text-right"
+                className="absolute right-[70%] md:right-full mr-[10px] md:-mr-[90px] top-[15%] md:top-[18%] text-right z-0"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-inter whitespace-nowrap drop-shadow-md" style={{ fontWeight: 800 }}>{department.viceManager}</h3>
-                <p className="text-[#081C36] text-lg lg:text-xl font-medium drop-shadow-md">Vice Manager</p>
+                <h3 className="text-lg md:text-3xl lg:text-4xl font-inter whitespace-nowrap drop-shadow-md text-[#081C36]" style={{ fontWeight: 800 }}>{department.viceManager}</h3>
+                <p className="text-[#081C36]/70 text-[11px] md:text-lg lg:text-xl font-medium drop-shadow-md">Vice Manager</p>
               </motion.div>
               <motion.img
                 src={department.viceManagerImg}
                 alt={department.viceManager}
-                className="h-full w-auto object-contain object-bottom drop-shadow-2xl"
+                className="h-full w-auto object-contain object-bottom drop-shadow-2xl relative z-10"
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.5 }}
               />
             </div>
           </motion.div>
-
-          {/* Mobile Labels - positioned near heads like desktop */}
-          <div className="md:hidden absolute top-[12%] left-1/2 -translate-x-1/2 flex justify-between items-start z-20 w-full px-[60px]">
-            <div className="text-left">
-              <h3 className="text-sm font-inter text-[#081C36] drop-shadow-sm" style={{ fontWeight: 800 }}>{department.manager}</h3>
-              <p className="text-[#081C36]/50 text-[10px] font-bold uppercase tracking-widest">Manager</p>
-            </div>
-            <div className="text-right">
-              <h3 className="text-sm font-inter text-[#081C36] drop-shadow-sm" style={{ fontWeight: 800 }}>{department.viceManager}</h3>
-              <p className="text-[#081C36]/50 text-[10px] font-bold uppercase tracking-widest">Vice Manager</p>
-            </div>
-          </div>
         </div>
       </section>
 

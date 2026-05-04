@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate, MotionValue, useSpring } from "motion/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
 import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 
@@ -19,6 +19,7 @@ const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
   .replace(/<svg[^>]*>/g, '')
   .replace(/<\/svg>/g, '')
+  .replace(/fill="[^"]*"/g, 'fill="black"')
   .trim();
 
 function IkammaLogo({ className }: { className?: string }) {
@@ -179,7 +180,7 @@ export function Hero() {
   useEffect(() => {
     const unsubscribe = progress.on("change", (latest) => {
       if (videoRef.current && !userPaused.current) {
-        if (latest > 0.4) {
+        if (latest > 0.15) {
           videoRef.current.pause();
         } else {
           videoRef.current.play().catch(() => { });
@@ -198,12 +199,11 @@ export function Hero() {
     return 70 * Math.pow(1 / 70, t); // smooth exponential zoom
   });
   const maskOpacity = useTransform(progress, [0.0, 0.05], [0, 1]);
-  const logoOpacity = useTransform(progress, [0.0, 0.05], [0, 1]); // Logo appears together with the mask
   const captionOpacity = useTransform(progress, [0.0, 0.05], [1, 0]);
 
   /* === PHASE 2: Text turns white === */
-  // 0.10 to 0.15 (Faster to cut down scroll time, fades directly at final position)
-  const whiteLayerOpacity = useTransform(progress, [0.10, 0.15], [0, 1]);
+  // 0.12 to 0.15 (Accelerated cut to white)
+  const whiteLayerOpacity = useTransform(progress, [0.12, 0.15], [0, 1]);
 
   /* === PHASE 3: Hero Flies Past Camera === */
   // 0.15 to 0.40 - Slower camera fly-through (Smooth exponential zoom)
@@ -215,8 +215,8 @@ export function Hero() {
   });
   const heroOpacity = useTransform(progress, [0.30, 0.40], [1, 0]);
 
-  // Disable clicks on hero video once we fly past it
-  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.40 ? "auto" : "none");
+  // Disable clicks on hero video once it turns white and pauses
+  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.15 ? "auto" : "none");
 
   // Reduced to 12 photos for extreme performance optimization
   const PIONIR_LAYOUT = [
@@ -324,7 +324,7 @@ export function Hero() {
           }}
         >
           {/* Main Content inside restricted width - Mobile: pt-[35px], Desktop: pt-[26px] (moved up 25px) */}
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pointer-events-auto pt-[35px] md:pt-[26px]">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col pt-[35px] md:pt-[26px]">
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 lg:gap-16 items-start">
               {/* Left Column */}
@@ -381,7 +381,7 @@ export function Hero() {
           </div>
 
           {/* Spacing adjusted for better mobile breathing room (mt-9 = 36px) */}
-          <div className="mt-9 md:mt-8 w-full pointer-events-auto">
+          <div className="mt-9 md:mt-8 w-full">
             <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-3 md:mb-4 flex items-center justify-center gap-2 md:gap-4">
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>
@@ -420,7 +420,7 @@ export function Hero() {
             opacity: heroOpacity,
             pointerEvents: heroPointerEvents
           }}
-          onClick={togglePlayPause}
+          onPointerDown={togglePlayPause}
         >
           {/* Video Layer */}
           <div className="absolute inset-0 z-0">
@@ -437,11 +437,20 @@ export function Hero() {
               className="absolute inset-0 bg-white"
               style={{ opacity: whiteLayerOpacity }}
             />
+
+            {/* Play Indicator when Paused */}
+            {!isPlaying && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[100]">
+                <div className="bg-black/30 backdrop-blur-md p-6 rounded-full text-white shadow-xl transition-all">
+                  <Play size={48} fill="currentColor" className="ml-2" />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* SVG Mask Layer */}
           <motion.div
-            className="absolute inset-0 z-10"
+            className="absolute inset-0 z-10 pointer-events-none"
             style={{ scale: maskScale, opacity: maskOpacity }}
           >
             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -464,29 +473,20 @@ export function Hero() {
                   >
                     #WeShareToInspire
                   </text>
+                  <svg x="50%" y="50%" overflow="visible">
+                    <g 
+                      fill="black" 
+                      transform={isMobile 
+                        ? "translate(-56, -146) scale(0.1495)" 
+                        : "translate(-80, -221) scale(0.2136)"
+                      } 
+                      dangerouslySetInnerHTML={{ __html: svgInner }} 
+                    />
+                  </svg>
                 </mask>
               </defs>
               <rect width="100%" height="100%" fill="#0C2340" mask="url(#textMask)" />
             </svg>
-          </motion.div>
-
-          {/* Logo above text */}
-          <motion.div
-            className="absolute z-30 inset-0 pointer-events-none"
-            style={{
-              opacity: logoOpacity,
-              scale: maskScale, // Logo scales together with the text mask
-              transformOrigin: "center center"
-            }}
-          >
-            <div className="absolute w-full h-full flex justify-center">
-              <img 
-                src={LOGO} 
-                alt="IKAMMA Logo" 
-                className="absolute w-28 md:w-40 object-contain" 
-                style={{ bottom: "calc(50% + clamp(1rem, 4vw, 3.5rem) + 50px)" }} 
-              />
-            </div>
           </motion.div>
 
         </motion.div>

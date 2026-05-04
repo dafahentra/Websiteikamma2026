@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
+import { motion, useSpring, useTransform, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
 import LOGO1 from '../../assets/LogoEvent/ManagementEvent.png';
@@ -28,35 +28,25 @@ interface CarouselCardProps {
   index: number;
   activeIndex: number;
   item: { photo: string; logo: string };
-  unfoldProgress: MotionValue<number>;
+  isInView: boolean;
   onClick: () => void;
 }
 
-function CarouselCard({ index, activeIndex, item, unfoldProgress, onClick, xFactor }: CarouselCardProps & { xFactor: number }) {
+function CarouselCard({ index, activeIndex, item, isInView, onClick, xFactor }: CarouselCardProps & { xFactor: number }) {
   const posIndex = (index - activeIndex + 4) % 4;
-  const target = { ...POSITIONS[posIndex], x: POSITIONS[posIndex].x * xFactor };
+  
+  // If not in view, all cards start folded in the center
+  const target = isInView 
+    ? { ...POSITIONS[posIndex], x: POSITIONS[posIndex].x * xFactor }
+    : { x: 0, y: 0, rotate: 0, scale: 0.8, zIndex: 5, brightness: 0.5 };
 
-  // Motion values for the targets (state-driven)
-  const tX = useSpring(target.x, { stiffness: 200, damping: 25 });
-  const tY = useSpring(target.y, { stiffness: 200, damping: 25 });
-  const tRotate = useSpring(target.rotate, { stiffness: 200, damping: 25 });
-  const tScale = useSpring(target.scale, { stiffness: 200, damping: 25 });
-  const tBright = useSpring(target.brightness, { stiffness: 200, damping: 25 });
+  // Motion values animate automatically when target changes
+  const x = useSpring(target.x, { stiffness: 60, damping: 15 });
+  const y = useSpring(target.y, { stiffness: 60, damping: 15 });
+  const rotate = useSpring(target.rotate, { stiffness: 60, damping: 15 });
+  const scale = useSpring(target.scale, { stiffness: 60, damping: 15 });
+  const brightness = useSpring(target.brightness, { stiffness: 60, damping: 15 });
 
-  useEffect(() => {
-    tX.set(target.x);
-    tY.set(target.y);
-    tRotate.set(target.rotate);
-    tScale.set(target.scale);
-    tBright.set(target.brightness);
-  }, [posIndex, target, tX, tY, tRotate, tScale, tBright]);
-
-  // Mix with scroll progress! (0 = folded up in the center, 1 = fanned out to target)
-  const x = useTransform([tX, unfoldProgress], (latest) => (latest[0] as number) * (latest[1] as number));
-  const y = useTransform([tY, unfoldProgress], (latest) => (latest[0] as number) * (latest[1] as number));
-  const rotate = useTransform([tRotate, unfoldProgress], (latest) => (latest[0] as number) * (latest[1] as number));
-  const scale = useTransform([tScale, unfoldProgress], (latest) => 0.8 + ((latest[0] as number) - 0.8) * (latest[1] as number));
-  const brightness = useTransform([tBright, unfoldProgress], (latest) => 0.5 + ((latest[0] as number) - 0.5) * (latest[1] as number));
   const filter = useTransform(brightness, (b) => `brightness(${b})`);
 
   const isCenter = posIndex === 0;
@@ -108,19 +98,13 @@ export function EventsSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Track scroll progress relative to this section
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end end"]
-  });
-
-  // Calculate 0 to 1 unfold progression based on scroll
-  const unfoldProgress = useTransform(scrollYProgress, [0.05, 0.70], [0, 1]);
+  // Trigger animation automatically when scrolled into view
+  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   return (
     <>
-      <section ref={sectionRef} id="events" className="relative w-full h-[120vh] bg-[#f8f9fa]">
-        <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
+      <section ref={sectionRef} id="events" className="relative w-full bg-[#f8f9fa] pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
+        <div className="w-full flex flex-col justify-center">
           {/* Background with Heavy White Overlay */}
           <div className="absolute inset-0 z-0">
             <img
@@ -150,14 +134,14 @@ export function EventsSection() {
             </div>
 
             {/* Stacked Interactive Carousel Visualization */}
-            <div className="relative w-full max-w-4xl mx-auto h-[400px] md:h-[450px] flex items-center justify-center mb-0 mt-[-50px] perspective-[1000px]">
+            <div className="relative w-full max-w-4xl mx-auto h-[400px] md:h-[450px] flex items-center justify-center mb-12 mt-0 perspective-[1000px]">
               {EVENT_ITEMS.map((item, i) => (
                 <CarouselCard
                   key={i}
                   index={i}
                   activeIndex={activeIndex}
                   item={item}
-                  unfoldProgress={unfoldProgress}
+                  isInView={isInView}
                   xFactor={xFactor}
                   onClick={() => setActiveIndex(i)}
                 />

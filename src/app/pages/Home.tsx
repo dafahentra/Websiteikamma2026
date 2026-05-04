@@ -48,7 +48,7 @@ export function Home() {
       */}
       <div 
         className="relative z-30 -mt-[5vh] bg-white"
-        style={{ clipPath: "url(#events-curve)" }}
+        style={{ clipPath: "polygon(0% 0%, 5% 0.48%, 10% 0.9%, 15% 1.28%, 20% 1.6%, 25% 1.88%, 30% 2.1%, 35% 2.28%, 40% 2.4%, 45% 2.48%, 50% 2.5%, 55% 2.48%, 60% 2.4%, 65% 2.28%, 70% 2.1%, 75% 1.88%, 80% 1.6%, 85% 1.28%, 90% 0.9%, 95% 0.48%, 100% 0%, 100% 100%, 0% 100%)" }}
       >
         <EventsSection />
       </div>
@@ -60,7 +60,7 @@ export function Home() {
       {hasArticles && (
         <div 
           className="relative z-40 -mt-[10vh] bg-white"
-          style={{ clipPath: "url(#articles-curve)" }}
+          style={{ clipPath: "polygon(0% 0%, 5% 0.48%, 10% 0.9%, 15% 1.28%, 20% 1.6%, 25% 1.88%, 30% 2.1%, 35% 2.28%, 40% 2.4%, 45% 2.48%, 50% 2.5%, 55% 2.48%, 60% 2.4%, 65% 2.28%, 70% 2.1%, 75% 1.88%, 80% 1.6%, 85% 1.28%, 90% 0.9%, 95% 0.48%, 100% 0%, 100% 100%, 0% 100%)" }}
         >
           <ArticlesSection />
         </div>
@@ -72,7 +72,7 @@ export function Home() {
       */}
       <div 
         className={`relative bg-white ${!hasArticles ? 'z-40 -mt-[10vh]' : 'z-30'}`}
-        style={!hasArticles ? { clipPath: "url(#articles-curve)" } : {}}
+        style={!hasArticles ? { clipPath: "polygon(0% 0%, 5% 0.48%, 10% 0.9%, 15% 1.28%, 20% 1.6%, 25% 1.88%, 30% 2.1%, 35% 2.28%, 40% 2.4%, 45% 2.48%, 50% 2.5%, 55% 2.48%, 60% 2.4%, 65% 2.28%, 70% 2.1%, 75% 1.88%, 80% 1.6%, 85% 1.28%, 90% 0.9%, 95% 0.48%, 100% 0%, 100% 100%, 0% 100%)" } : {}}
       >
         <NewsSection />
       </div>
@@ -92,15 +92,7 @@ export function Home() {
         <Footer />
       </div>
 
-      {/* SVG definition for the concave transitions */}
-      <svg style={{ width: 0, height: 0, position: "absolute" }} aria-hidden="true" focusable="false">
-        <clipPath id="events-curve" clipPathUnits="objectBoundingBox">
-          <path d="M 0,0 Q 0.5,0.05 1,0 L 1,1 L 0,1 Z" />
-        </clipPath>
-        <clipPath id="articles-curve" clipPathUnits="objectBoundingBox">
-          <path d="M 0,0 Q 0.5,0.05 1,0 L 1,1 L 0,1 Z" />
-        </clipPath>
-      </svg>
+
     </div>
   );
 }

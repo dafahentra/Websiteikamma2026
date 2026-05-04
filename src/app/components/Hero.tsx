@@ -131,7 +131,7 @@ export function Hero() {
   useEffect(() => {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
-    setSectionHeight(mobile ? 3000 : 6000); // 4500 = 25% lebih cepat dari 6000
+    setSectionHeight(mobile ? 4500 : 6000); // 4500 = 25% lebih cepat dari 6000
   }, []);
 
   const togglePlayPause = () => {

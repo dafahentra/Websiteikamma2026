@@ -131,8 +131,15 @@ export function Hero() {
   useEffect(() => {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
-    setSectionHeight(mobile ? 6000 : 6000); // 4500 = 25% lebih cepat dari 6000
+    setSectionHeight(6000); // Maintain cinematic total scroll height
   }, []);
+
+  // Responsive Timings to compress WeShareToInspire zoom and stretch the photos on mobile
+  const tP1End = isMobile ? 0.11 : 0.15;
+  const tP2Start = isMobile ? 0.08 : 0.12;
+  const tP3End = isMobile ? 0.30 : 0.40;
+  const tP4Start = tP3End;
+  const tP4Spread = 0.55 - tP4Start;
 
   const togglePlayPause = () => {
     if (videoRef.current) {
@@ -180,7 +187,7 @@ export function Hero() {
   useEffect(() => {
     const unsubscribe = progress.on("change", (latest) => {
       if (videoRef.current && !userPaused.current) {
-        if (latest > 0.15) {
+        if (latest > tP1End) {
           videoRef.current.pause();
         } else {
           videoRef.current.play().catch(() => { });
@@ -191,32 +198,32 @@ export function Hero() {
   }, [progress]);
 
   /* === PHASE 1: Hero Zoom Out === */
-  // 0.00 to 0.15 - Smooth single-motion mask zoom using exponential decay
+  // Smooth single-motion mask zoom using exponential decay
   const maskScale = useTransform(progress, (p) => {
     if (p <= 0) return 70;
-    if (p >= 0.15) return 1;
-    const t = p / 0.15; // normalize to 0..1
+    if (p >= tP1End) return 1;
+    const t = p / tP1End; // normalize to 0..1
     return 70 * Math.pow(1 / 70, t); // smooth exponential zoom
   });
   const maskOpacity = useTransform(progress, [0.0, 0.05], [0, 1]);
   const captionOpacity = useTransform(progress, [0.0, 0.05], [1, 0]);
 
   /* === PHASE 2: Text turns white === */
-  // 0.12 to 0.15 (Accelerated cut to white)
-  const whiteLayerOpacity = useTransform(progress, [0.12, 0.15], [0, 1]);
+  // Accelerated cut to white
+  const whiteLayerOpacity = useTransform(progress, [tP2Start, tP1End], [0, 1]);
 
   /* === PHASE 3: Hero Flies Past Camera === */
-  // 0.15 to 0.40 - Slower camera fly-through (Smooth exponential zoom)
+  // Slower camera fly-through (Smooth exponential zoom)
   const heroScale = useTransform(progress, (p) => {
-    if (p <= 0.15) return 1;
-    if (p >= 0.40) return 40;
-    const t = (p - 0.15) / 0.25; // normalize to 0..1
+    if (p <= tP1End) return 1;
+    if (p >= tP3End) return 40;
+    const t = (p - tP1End) / (tP3End - tP1End); // normalize to 0..1
     return Math.pow(40, t); // smooth exponential zoom
   });
-  const heroOpacity = useTransform(progress, [0.30, 0.40], [1, 0]);
+  const heroOpacity = useTransform(progress, [tP3End - 0.10, tP3End], [1, 0]);
 
   // Disable clicks on hero video once it turns white and pauses
-  const heroPointerEvents = useTransform(progress, (v: number) => v < 0.15 ? "auto" : "none");
+  const heroPointerEvents = useTransform(progress, (v: number) => v < tP1End ? "auto" : "none");
 
   // Reduced to 12 photos for extreme performance optimization
   const PIONIR_LAYOUT = [
@@ -237,10 +244,10 @@ export function Hero() {
 
       // Sequential appearance: strict 1-by-1 staggered timeline
       const seq = i / shuffledLayout.length;
-      const startP = 0.40 + (seq * 0.15); // Starts after hero fly-through
+      const startP = tP4Start + (seq * tP4Spread); // Starts after hero fly-through
 
       // Variable duration so some fly slightly faster/slower, adding depth
-      const duration = 0.10 + Math.random() * 0.05;
+      const duration = (0.10 + Math.random() * 0.05) * (isMobile ? 1.5 : 1);
       const exitP = startP + duration;
 
       configs.push({

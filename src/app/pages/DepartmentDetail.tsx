@@ -99,11 +99,11 @@ export function DepartmentDetail() {
 
           {/* Manager (Left) */}
           <motion.div
-            style={{ x: parallaxXLeft }}
             className="flex items-end z-10 relative w-[50%] md:w-[45%] justify-start h-full -ml-[130px] md:-ml-[194px] lg:-ml-[226px]"
           >
             <div className="h-full w-auto shrink-0 relative">
               <motion.img
+                style={{ x: parallaxXLeft }}
                 src={department.managerImg}
                 alt={department.manager}
                 className="h-full w-auto object-contain object-bottom drop-shadow-2xl relative z-10"
@@ -126,7 +126,6 @@ export function DepartmentDetail() {
 
           {/* Vice Manager (Right) */}
           <motion.div
-            style={{ x: parallaxXRight }}
             className="flex items-end z-10 relative w-[50%] md:w-[45%] justify-end h-full -mr-[130px] md:-mr-[194px] lg:-mr-[226px]"
           >
             <div className="h-full w-auto shrink-0 relative">
@@ -141,6 +140,7 @@ export function DepartmentDetail() {
                 <p className="text-[#081C36]/70 text-[11px] md:text-lg lg:text-xl font-medium drop-shadow-md">Vice Manager</p>
               </motion.div>
               <motion.img
+                style={{ x: parallaxXRight }}
                 src={department.viceManagerImg}
                 alt={department.viceManager}
                 className="h-full w-auto object-contain object-bottom drop-shadow-2xl relative z-10"

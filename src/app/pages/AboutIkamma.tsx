@@ -43,21 +43,21 @@ function AboutHero() {
     offset: ["start start", "end end"]
   });
 
-  const progress = useSpring(scrollYProgress, { stiffness: 150, damping: 30, restDelta: 0.001 });
+  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 30, restDelta: 0.001 });
 
-  // Photo shrinking animations
-  const photoWidth = useTransform(progress, [0, 0.4], ["100vw", "60vw"]);
-  const photoHeight = useTransform(progress, [0, 0.4], ["100vh", "45vh"]);
+  // Photo shrinking animations - Mapped to more of the scroll for better symmetry up/down
+  const photoWidth = useTransform(progress, [0, 0.8], ["100vw", "60vw"]);
+  const photoHeight = useTransform(progress, [0, 0.8], ["100vh", "45vh"]);
 
   // Keep photo perfectly centered vertically
-  const photoY = useTransform(progress, [0.4, 0.6], ["0vh", "0vh"]);
-  const photoRadius = useTransform(progress, [0, 0.2], ["0px", "0px"]);
+  const photoY = useTransform(progress, [0, 1], ["0vh", "0vh"]);
+  const photoRadius = useTransform(progress, [0, 0.6], ["0px", "32px"]); // Subtle rounded corners for a premium feel
 
   // Overlay fade in (tambalan warna putih) - happens simultaneously with scale
-  const overlayOpacity = useTransform(progress, [0, 0.4], [0, 0.35]);
+  const overlayOpacity = useTransform(progress, [0, 0.8], [0, 0.35]);
 
-  // Text fade ins
-  const bgOpacity = useTransform(progress, [0.1, 0.3], [0, 1]);
+  // Text fade ins - Adjusted to fit the new scroll range
+  const bgOpacity = useTransform(progress, [0.2, 0.7], [0, 1]);
 
   const MarqueeHalf = () => (
     <div className="flex items-center">
@@ -77,7 +77,7 @@ function AboutHero() {
   );
 
   return (
-    <div ref={containerRef} className="relative w-full h-[250vh] bg-white">
+    <div ref={containerRef} className="relative w-full h-[140vh] bg-white">
       <div className="sticky top-0 w-full h-screen bg-white overflow-hidden">
 
         {/* Background Marquee Text - 2 Sliders */}
@@ -190,13 +190,13 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
           translateX: "-50%",
           translateY: "-50%"
         }}
-        transition={{ 
+        transition={{
           opacity: { duration: 0.2 }
         }}
       >
-        <img 
-          src={photo} 
-          alt={item.name} 
+        <img
+          src={photo}
+          alt={item.name}
           className="w-full h-full object-cover"
         />
       </motion.div>

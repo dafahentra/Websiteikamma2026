@@ -20,7 +20,7 @@ export function Preloader({ onLoadingComplete }: { onLoadingComplete: () => void
         }
         return prev + 1;
       });
-    }, 12);
+    }, 10); // 10ms * 100 = 1000ms (1 detik)
 
     return () => clearInterval(timer);
   }, [onLoadingComplete]);
@@ -33,7 +33,7 @@ export function Preloader({ onLoadingComplete }: { onLoadingComplete: () => void
         y: -30,
         transition: { duration: 0.9, ease: [0.43, 0.13, 0.23, 0.96] }
       }}
-      className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden pointer-events-none"
+      className="fixed inset-0 z-[9999] bg-[#002444]/70 backdrop-blur-3xl flex flex-col items-center justify-center overflow-hidden pointer-events-none"
     >
       {/* Background Subtle Gradient Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(255,255,255,0.03)_0%,_transparent_60%)]" />
@@ -60,37 +60,37 @@ export function Preloader({ onLoadingComplete }: { onLoadingComplete: () => void
                 offset="0%"
                 stopColor="rgba(255,255,255,0)"
                 animate={{ offset: ["-150%", "250%"] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.5 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.1 }}
               />
               <motion.stop
                 offset="15%"
                 stopColor="rgba(255,255,255,0.2)"
                 animate={{ offset: ["-135%", "265%"] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.5 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.1 }}
               />
               <motion.stop
                 offset="20%"
                 stopColor="rgba(255,255,255,1)"
                 animate={{ offset: ["-130%", "270%"] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.5 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.1 }}
               />
               <motion.stop
                 offset="22%"
                 stopColor="rgba(255,255,255,1)"
                 animate={{ offset: ["-128%", "272%"] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.5 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.1 }}
               />
               <motion.stop
                 offset="25%"
                 stopColor="rgba(255,255,255,0.2)"
                 animate={{ offset: ["-125%", "275%"] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.5 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.1 }}
               />
               <motion.stop
                 offset="40%"
                 stopColor="rgba(255,255,255,0)"
                 animate={{ offset: ["-110%", "290%"] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.5 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.1 }}
               />
             </linearGradient>
 
@@ -120,10 +120,10 @@ export function Preloader({ onLoadingComplete }: { onLoadingComplete: () => void
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{
-              duration: 3.5,
+              duration: 2,
               repeat: Infinity,
               ease: "easeInOut",
-              repeatDelay: 0.5
+              repeatDelay: 0.1
             }}
             fillRule="evenodd"
             clipRule="evenodd"

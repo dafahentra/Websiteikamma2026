@@ -98,6 +98,7 @@ function FlyingPhoto({
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerTop, setContainerTop] = useState(0);
+  const [windowHeight, setWindowHeight] = useState(1000);
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const userPaused = useRef(false); // Track if user manually paused
@@ -131,16 +132,16 @@ export function Hero() {
   useEffect(() => {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
-    setSectionHeight(2000); // Maintain cinematic total scroll height
+    setSectionHeight(3000); // Maintain cinematic total scroll height
   }, []);
 
-  // Ultra-snappy Responsive Timings
-  const tP1End = isMobile ? 0.08 : 0.10; // Zoom out much faster
-  const tP2Start = isMobile ? 0.06 : 0.08;
-  const tP3End = isMobile ? 0.20 : 0.26; // Camera fly-through much faster
+  // Responsive Timings (Adjusted to be 50% slower for WeShareToInspire & Photos)
+  const tP1End = isMobile ? 0.12 : 0.15;
+  const tP2Start = isMobile ? 0.09 : 0.12;
+  const tP3End = isMobile ? 0.30 : 0.39;
 
   const tP4Start = tP3End;
-  const tP4Spread = isMobile ? 0.25 : 0.20; // Photos stretch to fill space elegantly
+  const tP4Spread = isMobile ? 0.37 : 0.30; // Photos stretch to fill space elegantly
   const tP4End = tP4Start + tP4Spread;
 
   // Accelerate the background photo appearance so it settles before text
@@ -170,6 +171,7 @@ export function Hero() {
       if (containerRef.current) {
         setContainerTop(containerRef.current.offsetTop);
       }
+      setWindowHeight(window.innerHeight);
     }
     measure();
     window.addEventListener("resize", measure);
@@ -180,7 +182,7 @@ export function Hero() {
 
   const rawProgress = useTransform(
     scrollY,
-    [containerTop, containerTop + sectionHeight],
+    [containerTop, containerTop + sectionHeight - windowHeight],
     [0, 1],
     { clamp: true }
   );
@@ -274,8 +276,9 @@ export function Hero() {
   }, []);
 
   /* === PHASE 5: Background Photo === */
-  // Spawns after all scrapbook photos have at least started appearing
-  const finalScale = useTransform(progress, [tP5Start, tP5EndScale, tP5EndScale + 0.15], [0.15, 1, 1.05]);
+  // Spawns after all scrapbook photos have at least started appearing.
+  // Stops scaling exactly at tP5EndScale so it is completely still when text appears.
+  const finalScale = useTransform(progress, [tP5Start, tP5EndScale], [0.15, 1]);
 
   // Fades in and blurs just like the other scrapbook photos
   const finalOpacity = useTransform(progress, [tP5Start, tP5EndOpacity], [0, 1]);
@@ -290,11 +293,13 @@ export function Hero() {
 
   /* === PHASE 6: About IKAMMA Content Fades In === */
   const contentOpacity = useTransform(progress, [tP6Start - 0.03, tP6Start], [0, 1]);
-  // Locomotive scroll effect: subtle upward drift (-200px) during the remaining long scroll distance
+
+  // Locomotive scroll effect: upward drift (-60px) during the remaining pinned scroll,
+  // then completely stops so it doesn't move when the Curved Divider appears.
   const contentY = useTransform(
     progress,
     [tP6Start - 0.03, tP6Start + 0.03, tP6Start + 0.05, 1.0],
-    [60, 0, 0, -200]
+    [60, 0, 0, -50]
   );
 
   return (
@@ -395,8 +400,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Spacing adjusted for better mobile breathing room (mt-9 = 36px) */}
-          <div className="mt-9 md:mt-8 w-full">
+          {/* Spacing adjusted to push the logo closer to the bottom curved divider */}
+          <div className="mt-14 md:mt-30 w-full">
             <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-3 md:mb-4 flex items-center justify-center gap-2 md:gap-4">
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>

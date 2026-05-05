@@ -1,6 +1,6 @@
-import AurelliaFoto from '../assets/FotoPengurus/DondoFoto.png';
-import ArwandaFoto from '../assets/FotoPengurus/DondoFoto.png';
-import FelitaFoto from '../assets/FotoPengurus/DondoFoto.png';
+import ChairmanImg from '../assets/FotoPengurus/Chairman.png';
+import ViceChair1Img from '../assets/FotoPengurus/ViceChair1.png';
+import ViceChair2Img from '../assets/FotoPengurus/ViceChair2.png';
 
 export interface TeamMember {
   name: string;
@@ -13,17 +13,17 @@ export const CORE_LEADERS: TeamMember[] = [
   {
     name: "Arwanda Darin R",
     role: "Vice Chairman",
-    img: ArwandaFoto
+    img: ViceChair1Img
   },
   {
     name: "Aurellia Lysandra M",
     role: "Chairman",
-    img: AurelliaFoto
+    img: ChairmanImg
   },
   {
     name: "Felita Sabila P",
     role: "Vice Chairman",
-    img: FelitaFoto
+    img: ViceChair2Img
   },
 ];
 

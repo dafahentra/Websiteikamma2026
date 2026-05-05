@@ -1,5 +1,57 @@
-import DondoFoto from '../assets/FotoPengurus/DondoFoto.png';
-import AbedFoto from '../assets/FotoPengurus/AbedFoto.png';
+// ── Foto Pengurus (Managers & Vice Managers) ────────────────────────
+import HRMManager from '../assets/FotoPengurus/HRMManager.png';
+import HRMViceManager from '../assets/FotoPengurus/HRMViceManager.png';
+import HRBBManager from '../assets/FotoPengurus/HRBBManager.png';
+import HRBBViceManager from '../assets/FotoPengurus/HRBBViceManager.png';
+import AdvanceManager from '../assets/FotoPengurus/AdvanceManager.png';
+import AdvanceViceManager from '../assets/FotoPengurus/AdvanceViceManager.png';
+import MMManager from '../assets/FotoPengurus/MMManager.png';
+import MMViceManager from '../assets/FotoPengurus/MMViceManager.png';
+import IntManager from '../assets/FotoPengurus/IntManager.png';
+import IntViceManager from '../assets/FotoPengurus/IntViceManager.png';
+import ExtManager from '../assets/FotoPengurus/ExtManager.png';
+import ExtViceManager from '../assets/FotoPengurus/ExtViceManager.png';
+import IndevManager from '../assets/FotoPengurus/IndevManager.png';
+import IndevViceManager from '../assets/FotoPengurus/IndevViceManager.png';
+import EntreManager from '../assets/FotoPengurus/EntreManager.png';
+import EntreViceManager from '../assets/FotoPengurus/EntreViceManager.png';
+import SpartaManager from '../assets/FotoPengurus/SpartaManager.png';
+import SpartaViceManager from '../assets/FotoPengurus/SpartaViceManager.png';
+
+// ── Group Photos ────────────────────────────────────────────────────
+import GroupHRM from '../assets/BirDepDetail/Group/HRMGroup.JPG';
+import GroupHRBB from '../assets/BirDepDetail/Group/HRBBGroup.jpg';
+import GroupAdvance from '../assets/BirDepDetail/Group/AdvanceGroup.JPG';
+import GroupMM from '../assets/BirDepDetail/Group/MMGroup.jpeg';
+import GroupInternal from '../assets/BirDepDetail/Group/IntGroup.JPG';
+import GroupExternal from '../assets/BirDepDetail/Group/ExtGroup.jpg';
+import GroupIndev from '../assets/BirDepDetail/Group/IndevGroup.jpeg';
+import GroupEntre from '../assets/BirDepDetail/Group/EntreGroup.jpeg';
+import GroupSparta from '../assets/BirDepDetail/Group/SpartaGroup.jpeg';
+
+// ── Meeting Photos ──────────────────────────────────────────────────
+import MeetingHRM from '../assets/BirDepDetail/Meeting/HRMMeeting.jpg';
+import MeetingHRBB from '../assets/BirDepDetail/Meeting/HRBBMeeting.jpg';
+import MeetingAdvance from '../assets/BirDepDetail/Meeting/AdvanceMeeting.jpg';
+import MeetingMM from '../assets/BirDepDetail/Meeting/MMMeeting.jpeg';
+import MeetingInternal from '../assets/BirDepDetail/Meeting/IntMeeting.JPG';
+import MeetingExternal from '../assets/BirDepDetail/Meeting/ExtMeeting.jpg';
+import MeetingIndev from '../assets/BirDepDetail/Meeting/IndevMeeting.jpeg';
+import MeetingEntre from '../assets/BirDepDetail/Meeting/EntreMeeting.jpeg';
+import MeetingSparta from '../assets/BirDepDetail/Meeting/SpartaMeeting.JPEG';
+
+// ── Activity Photos ─────────────────────────────────────────────────
+import ActivityHRM from '../assets/BirDepDetail/Activity/HRMActivity.JPG';
+import ActivityHRBB from '../assets/BirDepDetail/Activity/HRBBActivity.jpg';
+import ActivityAdvance from '../assets/BirDepDetail/Activity/AdvanceActivity.jpg';
+import ActivityMM from '../assets/BirDepDetail/Activity/MMActivity.jpeg';
+import ActivityInternal from '../assets/BirDepDetail/Activity/IntActivity.JPG';
+import ActivityExternal from '../assets/BirDepDetail/Activity/ExtActivity.jpeg';
+import ActivityIndev from '../assets/BirDepDetail/Activity/IndevActivty.jpeg';
+import ActivityEntre from '../assets/BirDepDetail/Activity/EntreActivity.jpeg';
+import ActivitySparta from '../assets/BirDepDetail/Activity/SpartaActivity.jpg';
+
+// ── Logos ───────────────────────────────────────────────────────────
 import LogoHRM from '../assets/LogoBirDept/HRM.svg';
 import LogoHRBB from '../assets/LogoBirDept/HRBB.svg';
 import LogoAdvance from '../assets/LogoBirDept/ADVANCE.svg';
@@ -9,68 +61,6 @@ import LogoExternal from '../assets/LogoBirDept/EXTERNAL.svg';
 import LogoIndev from '../assets/LogoBirDept/INDEV.svg';
 import LogoEntre from '../assets/LogoBirDept/ENTRE.svg';
 import LogoSparta from '../assets/LogoBirDept/SPARTA.svg';
-import GroupHRM from '../assets/LogoBirDept/SPARTA.svg';
-import MeetingHRM from '../assets/LogoBirDept/SPARTA.svg';
-import ActivityHRM from '../assets/LogoBirDept/SPARTA.svg';
-import GroupHRBB from '../assets/LogoBirDept/SPARTA.svg';
-import MeetingHRBB from '../assets/LogoBirDept/SPARTA.svg';
-import ActivityHRBB from '../assets/LogoBirDept/SPARTA.svg';
-import GroupInternal from '../assets/LogoBirDept/SPARTA.svg';
-import MeetingInternal from '../assets/LogoBirDept/SPARTA.svg';
-import ActivityInternal from '../assets/LogoBirDept/SPARTA.svg';
-import GroupExternal from '../assets/LogoBirDept/SPARTA.svg';
-import MeetingExternal from '../assets/LogoBirDept/SPARTA.svg';
-import ActivityExternal from '../assets/LogoBirDept/SPARTA.svg';
-import GroupIndev from '../assets/LogoBirDept/SPARTA.svg';
-import MeetingIndev from '../assets/LogoBirDept/SPARTA.svg';
-import ActivityIndev from '../assets/LogoBirDept/SPARTA.svg';
-import GroupEntre from '../assets/LogoBirDept/SPARTA.svg';
-import MeetingEntre from '../assets/LogoBirDept/SPARTA.svg';
-import ActivityEntre from '../assets/LogoBirDept/SPARTA.svg';
-import GroupSparta from '../assets/LogoBirDept/SPARTA.svg';
-import MeetingSparta from '../assets/LogoBirDept/SPARTA.svg';
-import ActivitySparta from '../assets/LogoBirDept/SPARTA.svg';
-import Proker1 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker2 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker3 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker4 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker5 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker6 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker7 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker8 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker9 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker10 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker11 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker12 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker13 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker14 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker15 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker16 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker17 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker18 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker19 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker20 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker21 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker22 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker23 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker24 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker25 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker26 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker27 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker28 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker29 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker30 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker31 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker32 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker33 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker34 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker35 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker36 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker37 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker38 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker39 from '../assets/LogoBirDept/SPARTA.svg';
-import Proker40 from '../assets/LogoBirDept/SPARTA.svg';
-
 
 export interface WorkProgram {
   id: number;
@@ -100,42 +90,41 @@ export const departmentsData: Record<string, DepartmentData> = {
     manager: "Rafeyfa Ammara",
     viceManager: "Kireina Nayla",
     description: "Human Resources Birdept Buddy (HRBB) merupakan biro yang berperan dalam **pengembangan sumber daya manusia** yang ada pada kepengurusan IKAMMA, khususnya pada **pendampingan program kerja, pengembangan kompetensi**, serta **apresiasi kinerja**. Biro HR Birdept Buddy akan memastikan setiap biro/departemen merasa didukung dan didengar, sehingga kesejahteraan dan produktivitas di IKAMMA tetap terjaga.",
-    managerImg: DondoFoto,
-    viceManagerImg: AbedFoto,
-    groupImg: "/team_group_photo_1777615655077.png",
+    managerImg: HRBBManager,
+    viceManagerImg: HRBBViceManager,
+    groupImg: GroupHRBB,
     logo: LogoHRBB,
-    meetingImg: "/meeting_placeholder.jpg",
-    activityImg: "/activity_placeholder.jpg",
+    meetingImg: MeetingHRBB,
+    activityImg: ActivityHRBB,
     programs: [
-      { id: 1, title: "School Of IKAMMA", img: "/program_thumbnail_1777615687215.png" },
-      { id: 2, title: "Open Recruitment", img: "/program_thumbnail_1777615687215.png" },
-      { id: 3, title: "Sertijab X IKAMMA Orientation Day", img: "/program_thumbnail_1777615687215.png" },
-      { id: 4, title: "Internal Upgrading", img: "/program_thumbnail_1777615687215.png" },
-      { id: 5, title: "IKAMMA Upgrading Program", img: "/program_thumbnail_1777615687215.png" },
-      { id: 6, title: "Magang IKAMMA", img: "/program_thumbnail_1777615687215.png" },
-      { id: 7, title: "IKAMMA Connect", img: "/program_thumbnail_1777615687215.png" },
-      { id: 8, title: "Monthly Appreciation Post", img: "/program_thumbnail_1777615687215.png" },
-      { id: 9, title: "Birthday Calendar", img: "/program_thumbnail_1777615687215.png" },
-      { id: 10, title: "Farewell IKAMMA", img: "/program_thumbnail_1777615687215.png" },
+      { id: 1, title: "School Of IKAMMA", img: GroupHRBB },
+      { id: 2, title: "Open Recruitment", img: GroupHRBB },
+      { id: 3, title: "Sertijab X IKAMMA Orientation Day", img: GroupHRBB },
+      { id: 4, title: "Internal Upgrading", img: GroupHRBB },
+      { id: 5, title: "IKAMMA Upgrading Program", img: GroupHRBB },
+      { id: 6, title: "Magang IKAMMA", img: GroupHRBB },
+      { id: 7, title: "IKAMMA Connect", img: GroupHRBB },
+      { id: 8, title: "Monthly Appreciation Post", img: GroupHRBB },
+      { id: 9, title: "Birthday Calendar", img: GroupHRBB },
+      { id: 10, title: "Farewell IKAMMA", img: GroupHRBB },
     ]
   },
-  // Placeholder for other departments - the user can add them here
   'hr-monitoring': {
     slug: 'hr-monitoring',
     name: "HR Monitoring",
     manager: "Meila Andini",
     viceManager: "Nisrinatsani Daffa",
     description: "Biro Human Resource (HR) Monitoring adalah **biro baru** di IKAMMA yang merupakan hasil **pemekaran dari Biro Human Resource**, dengan tugas utama **memastikan** kinerja pengurus serta pelaksanaan program kerja tetap **selaras dengan visi dan misi IKAMMA**.",
-    managerImg: DondoFoto, // Fallback for now
-    viceManagerImg: AbedFoto,
-    groupImg: "/team_group_photo_1777615655077.png",
+    managerImg: HRMManager,
+    viceManagerImg: HRMViceManager,
+    groupImg: GroupHRM,
     logo: LogoHRM,
-    meetingImg: "/meeting_placeholder.jpg",
-    activityImg: "/activity_placeholder.jpg",
+    meetingImg: MeetingHRM,
+    activityImg: ActivityHRM,
     programs: [
-      { id: 11, title: "Appraisal Form", img: "/program_thumbnail_1777615687215.png" },
-      { id: 12, title: "IKAMMA Evaluation & Appreciation Day", img: "/program_thumbnail_1777615687215.png" },
-      { id: 13, title: "Staff of The Month", img: "/program_thumbnail_1777615687215.png" },
+      { id: 11, title: "Appraisal Form", img: GroupHRM },
+      { id: 12, title: "IKAMMA Evaluation & Appreciation Day", img: GroupHRM },
+      { id: 13, title: "Staff of The Month", img: GroupHRM },
     ]
   },
   'mm': {
@@ -144,17 +133,17 @@ export const departmentsData: Record<string, DepartmentData> = {
     manager: "Winonazwetta",
     viceManager: "Keisha Naila",
     description: "Biro Marketing Media merupakan biro yang berfungsi untuk **membangun citra dan wajah IKAMMA** serta memperkenalkannya kepada publik dengan **penyampaian informasi** dan **digitalisasi** melalui berbagai media.",
-    managerImg: DondoFoto,
-    viceManagerImg: AbedFoto,
-    groupImg: "/team_group_photo_1777615655077.png",
+    managerImg: MMManager,
+    viceManagerImg: MMViceManager,
+    groupImg: GroupMM,
     logo: LogoMM,
-    meetingImg: "/meeting_placeholder.jpg",
-    activityImg: "/activity_placeholder.jpg",
+    meetingImg: MeetingMM,
+    activityImg: ActivityMM,
     programs: [
-      { id: 14, title: "School of MM", img: "/program_thumbnail_1777615687215.png" },
-      { id: 15, title: "Social Media", img: "/program_thumbnail_1777615687215.png" },
-      { id: 16, title: "Creative Production", img: "/program_thumbnail_1777615687215.png" },
-      { id: 17, title: "Website IKAMMA", img: "/program_thumbnail_1777615687215.png" },
+      { id: 14, title: "School of MM", img: GroupMM },
+      { id: 15, title: "Social Media", img: GroupMM },
+      { id: 16, title: "Creative Production", img: GroupMM },
+      { id: 17, title: "Website IKAMMA", img: GroupMM },
     ]
   },
   'advance': {
@@ -163,16 +152,16 @@ export const departmentsData: Record<string, DepartmentData> = {
     manager: "Belat Puspa",
     viceManager: "Fikri Akbar",
     description: "Biro Administration and Finance (Advance) adalah biro yang berperan untuk **mengelola administrasi dan keuangan** di IKAMMA serta memastikan semua kegiatan organisasi berjalan dengan **tertib**, **efisien**, dan **transparan**. Advance bertanggung jawab terhadap seluruh proses administrasi, pengelolaan keuangan, serta inventarisasi aset organisasi yang berguna untuk **mendukung kelancaran program kerja di IKAMMA**.",
-    managerImg: DondoFoto,
-    viceManagerImg: AbedFoto,
-    groupImg: "/team_group_photo_1777615655077.png",
+    managerImg: AdvanceManager,
+    viceManagerImg: AdvanceViceManager,
+    groupImg: GroupAdvance,
     logo: LogoAdvance,
-    meetingImg: "/meeting_placeholder.jpg",
-    activityImg: "/activity_placeholder.jpg",
+    meetingImg: MeetingAdvance,
+    activityImg: ActivityAdvance,
     programs: [
-      { id: 18, title: "Kesekretariatan", img: "/program_thumbnail_1777615687215.png" },
-      { id: 19, title: "Kebendaharaan", img: "/program_thumbnail_1777615687215.png" },
-      { id: 20, title: "Kerumahtanggaan", img: "/program_thumbnail_1777615687215.png" },
+      { id: 18, title: "Kesekretariatan", img: GroupAdvance },
+      { id: 19, title: "Kebendaharaan", img: GroupAdvance },
+      { id: 20, title: "Kerumahtanggaan", img: GroupAdvance },
     ]
   },
   'internal': {
@@ -181,18 +170,18 @@ export const departmentsData: Record<string, DepartmentData> = {
     manager: "Bachtiar Rizki",
     viceManager: "Darrel Raditya",
     description: "Internal adalah departemen yang bertugas membangun **rasa saling memiliki**, menumbuhkan **nilai kekeluargaan**, serta **meningkatkan solidaritas** di antara mahasiswa Manajemen FEB UGM. Melalui berbagai program dan kegiatan, Internal berperan dalam menciptakan **lingkungan yang inklusif**, **suportif**, dan **nyaman** sebagai wadah pengembangan relasi serta kebersamaan antar mahasiswa.",
-    managerImg: DondoFoto,
-    viceManagerImg: AbedFoto,
-    groupImg: "/team_group_photo_1777615655077.png",
+    managerImg: IntManager,
+    viceManagerImg: IntViceManager,
+    groupImg: GroupInternal,
     logo: LogoInternal,
-    meetingImg: "/meeting_placeholder.jpg",
-    activityImg: "/activity_placeholder.jpg",
+    meetingImg: MeetingInternal,
+    activityImg: ActivityInternal,
     programs: [
-      { id: 21, title: "SOERTI", img: "/program_thumbnail_1777615687215.png" },
-      { id: 22, title: "PAAM", img: "/program_thumbnail_1777615687215.png" },
-      { id: 23, title: "Debat Internal", img: "/program_thumbnail_1777615687215.png" },
-      { id: 24, title: "I-CARE Volunteer", img: "/program_thumbnail_1777615687215.png" },
-      { id: 25, title: "M-WEEK", img: "/program_thumbnail_1777615687215.png" },
+      { id: 21, title: "SOERTI", img: GroupInternal },
+      { id: 22, title: "PAAM", img: GroupInternal },
+      { id: 23, title: "Debat Internal", img: GroupInternal },
+      { id: 24, title: "I-CARE Volunteer", img: GroupInternal },
+      { id: 25, title: "M-WEEK", img: GroupInternal },
     ]
   },
   'external': {
@@ -201,19 +190,19 @@ export const departmentsData: Record<string, DepartmentData> = {
     manager: "Glorio Gracias",
     viceManager: "Made Raditya",
     description: "Departemen External adalah salah satu departemen IKAMMA FEB UGM yang bertujuan untuk **menjadi lini terdepan** dan **representasi organisasi** dalam **menjalin serta mengelola hubungan eksternal.** Departemen ini berfokus pada diplomasi dan profesionalisme dalam membangun kolaborasi strategis dengan perusahaan, organisasi eksternal, serta alumni Manajemen FEB UGM dengan upaya **menciptakan networking yang luas** dan **membuka career pathways bagi mahasiswa Manajemen FEB UGM.**",
-    managerImg: DondoFoto,
-    viceManagerImg: AbedFoto,
-    groupImg: "/team_group_photo_1777615655077.png",
+    managerImg: ExtManager,
+    viceManagerImg: ExtViceManager,
+    groupImg: GroupExternal,
     logo: LogoExternal,
-    meetingImg: "/meeting_placeholder.jpg",
-    activityImg: "/activity_placeholder.jpg",
+    meetingImg: MeetingExternal,
+    activityImg: ActivityExternal,
     programs: [
-      { id: 26, title: "Partnership", img: "/program_thumbnail_1777615687215.png" },
-      { id: 27, title: "Terima Kunjungan", img: "/program_thumbnail_1777615687215.png" },
-      { id: 28, title: "Company Visit", img: "/program_thumbnail_1777615687215.png" },
-      { id: 29, title: "iNEXT", img: "/program_thumbnail_1777615687215.png" },
-      { id: 30, title: "IKVIS", img: "/program_thumbnail_1777615687215.png" },
-      { id: 31, title: "IKAMMA Alumni Database", img: "/program_thumbnail_1777615687215.png" },
+      { id: 26, title: "Partnership", img: GroupExternal },
+      { id: 27, title: "Terima Kunjungan", img: GroupExternal },
+      { id: 28, title: "Company Visit", img: GroupExternal },
+      { id: 29, title: "iNEXT", img: GroupExternal },
+      { id: 30, title: "IKVIS", img: GroupExternal },
+      { id: 31, title: "IKAMMA Alumni Database", img: GroupExternal },
     ]
   },
   'indev': {
@@ -222,16 +211,16 @@ export const departmentsData: Record<string, DepartmentData> = {
     manager: "Dionisia Clarisa",
     viceManager: "Timoti Pasaribu",
     description: "Departemen Intellectual and Development (Indev) merupakan departemen yang menjadi **wadah pengembangan kapasitas anggota** serta **mendukung seluruh mahasiswa Manajemen FEB UGM** untuk **memaksimalkan potensi diri** dalam bidang akademik, nonakademik, dan persiapan karier jangka panjang melalui berbagai program dan fasilitas. Departemen ini berperan sebagai **fasilitator pengembangan** yang sesuai dengan kebutuhan mahasiswa serta menghadirkan kebermanfaatan nyata IKAMMA bagi mahasiswa Manajemen.",
-    managerImg: DondoFoto,
-    viceManagerImg: AbedFoto,
-    groupImg: "/team_group_photo_1777615655077.png",
+    managerImg: IndevManager,
+    viceManagerImg: IndevViceManager,
+    groupImg: GroupIndev,
     logo: LogoIndev,
-    meetingImg: "/meeting_placeholder.jpg",
-    activityImg: "/activity_placeholder.jpg",
+    meetingImg: MeetingIndev,
+    activityImg: ActivityIndev,
     programs: [
-      { id: 32, title: "Management Facilitator", img: "/program_thumbnail_1777615687215.png" },
-      { id: 33, title: "Career Insight", img: "/program_thumbnail_1777615687215.png" },
-      { id: 34, title: "Ready", img: "/program_thumbnail_1777615687215.png" },
+      { id: 32, title: "Management Facilitator", img: GroupIndev },
+      { id: 33, title: "Career Insight", img: GroupIndev },
+      { id: 34, title: "Ready", img: GroupIndev },
     ]
   },
   'entre': {
@@ -240,15 +229,15 @@ export const departmentsData: Record<string, DepartmentData> = {
     manager: "Rafif Imtiyaaz",
     viceManager: "Ivan Tanzil",
     description: "Departemen Entrepreneurship merupakan departemen yang berfokus pada **membangun jiwa kewirausahaan** di lingkungan manajemen FEB UGM. Departemen Entrepreneurship juga **mengembangkan potensi serta minat** mahasiswa Manajemen FEB UGM terhadap **bidang kewirausahaan**.",
-    managerImg: DondoFoto,
-    viceManagerImg: AbedFoto,
-    groupImg: "/team_group_photo_1777615655077.png",
+    managerImg: EntreManager,
+    viceManagerImg: EntreViceManager,
+    groupImg: GroupEntre,
     logo: LogoEntre,
-    meetingImg: "/meeting_placeholder.jpg",
-    activityImg: "/activity_placeholder.jpg",
+    meetingImg: MeetingEntre,
+    activityImg: ActivityEntre,
     programs: [
-      { id: 35, title: "YES!", img: "/program_thumbnail_1777615687215.png" },
-      { id: 36, title: "E-Club", img: "/program_thumbnail_1777615687215.png" },
+      { id: 35, title: "YES!", img: GroupEntre },
+      { id: 36, title: "E-Club", img: GroupEntre },
     ]
   },
   'sparta': {
@@ -257,17 +246,17 @@ export const departmentsData: Record<string, DepartmentData> = {
     manager: "Nodas Natalleo",
     viceManager: "Sulthan Fairuz",
     description: "Sport and Art Association Departement (SPARTA) adalah departemen yang hadir untuk **memberikan ruang** kepada teman-teman dalam **mengembangkan minat dan bakat di bidang olahraga dan seni**. SPARTA bertujuan untuk menciptakan keseimbangan antara kegiatan akademis dan non akademis, berfungsi sebagai wadah untuk mengintegrasikan aktivitas fisik dan kreativitas, serta menciptakan keseimbangan antara kehidupan akademik dan non akademik.",
-    managerImg: DondoFoto,
-    viceManagerImg: AbedFoto,
-    groupImg: "/team_group_photo_1777615655077.png",
+    managerImg: SpartaManager,
+    viceManagerImg: SpartaViceManager,
+    groupImg: GroupSparta,
     logo: LogoSparta,
-    meetingImg: "/meeting_placeholder.jpg",
-    activityImg: "/activity_placeholder.jpg",
+    meetingImg: MeetingSparta,
+    activityImg: ActivitySparta,
     programs: [
-      { id: 37, title: "SPRITE", img: "/program_thumbnail_1777615687215.png" },
-      { id: 38, title: "POSKAM", img: "/program_thumbnail_1777615687215.png" },
-      { id: 39, title: "Management's Festival", img: "/program_thumbnail_1777615687215.png" },
-      { id: 40, title: "Gadjah Mada Super Cup", img: "/program_thumbnail_1777615687215.png" },
+      { id: 37, title: "SPRITE", img: GroupSparta },
+      { id: 38, title: "POSKAM", img: GroupSparta },
+      { id: 39, title: "Management's Festival", img: GroupSparta },
+      { id: 40, title: "Gadjah Mada Super Cup", img: GroupSparta },
     ]
   }
 };

@@ -5,223 +5,119 @@
  * 
  * Setiap foto di-import secara eksplisit agar mudah diganti.
  * Untuk mengganti foto, cukup ubah path import-nya saja.
- * 
- * Contoh: ganti `import heroMain from './Compressed/Int/FotoInt37.jpg';`
- *         menjadi `import heroMain from './Compressed/Ext/FotoExt10.jpg';`
  */
 
-// ── Hero / Intro ────────────────────────────────────────────────────
-import heroMain from './Compressed/Int/FotoInt37.jpg';
+// ── Hero / Intro / Backgrounds ──────────────────────────────────────
+import heroMain from './Background/BackgroundMain.jpg';
+import aboutBg from './Background/BackgroundAbout.jpg';
+import heroSectionBg from './Background/BackgroundMain.jpg';
 
-// ── About Section Background ────────────────────────────────────────
-import aboutBg from './Compressed/Int/FotoInt37.jpg';
+// ── Scrapbook Photos (Flying Photos) ────────────────────────────────
+import scrapbook1 from './FlyingPhoto/Flyingphoto1.JPG';
+import scrapbook2 from './FlyingPhoto/FlyingPhoto2.JPG';
+import scrapbook3 from './FlyingPhoto/FlyingPhoto3.jpg';
+import scrapbook4 from './FlyingPhoto/FlyingPhoto4.jpg';
+import scrapbook5 from './FlyingPhoto/FlyingPhoto5.jpg';
+import scrapbook6 from './FlyingPhoto/FlyingPhoto6.jpg';
+import scrapbook7 from './FlyingPhoto/FlyingPhoto7.jpg';
+import scrapbook8 from './FlyingPhoto/FlyingPhoto8.jpg';
+import scrapbook9 from './FlyingPhoto/FlyingPhoto9.jpg';
+import scrapbook10 from './FlyingPhoto/FlyingPhoto10.jpg';
+import scrapbook11 from './FlyingPhoto/FlyingPhoto11.jpg';
+import scrapbook12 from './FlyingPhoto/FlyingPhoto12.jpg';
+import scrapbook13 from './FlyingPhoto/FlyingPhoto13.jpg';
+import scrapbook14 from './FlyingPhoto/FlyingPhoto14.jpg';
+import scrapbook15 from './FlyingPhoto/FlyingPhoto15.jpg';
 
-// ── Hero Section Background (for the final background photo) ────────
-import heroSectionBg from './Compressed/HRBB/FotoHRBB2.jpg';
+// ── Department Groups ──────────────────────────────────────────────
+import PotoHRBB from './BirDepDetail/Group/HRBBGroup.jpg';
+import PotoHRM from './BirDepDetail/Group/HRMGroup.JPG';
+import PotoAdvance from './BirDepDetail/Group/AdvanceGroup.JPG';
+import PotoMM from './BirDepDetail/Group/MMGroup.jpeg';
+import PotoInternal from './BirDepDetail/Group/IntGroup.JPG';
+import PotoExternal from './BirDepDetail/Group/ExtGroup.jpg';
+import PotoIndev from './BirDepDetail/Group/IndevGroup.jpeg';
+import PotoEntre from './BirDepDetail/Group/EntreGroup.jpeg';
+import PotoSparta from './BirDepDetail/Group/SpartaGroup.jpeg';
 
-// ── Scrapbook Photos (untuk parallax flying photos di AboutSection) ─
-import scrapbook1 from './Compressed/Int/FotoInt1.jpg';
-import scrapbook2 from './Compressed/Int/FotoInt2.jpg';
-import scrapbook3 from './Compressed/Int/FotoInt3.jpg';
-import scrapbook4 from './Compressed/Int/FotoInt4.jpg';
-import scrapbook5 from './Compressed/Int/FotoInt5.jpg';
-import scrapbook6 from './Compressed/Int/FotoInt6.jpg';
-import scrapbook7 from './Compressed/Int/FotoInt7.jpg';
-import scrapbook8 from './Compressed/Int/FotoInt8.jpg';
-import scrapbook9 from './Compressed/Int/FotoInt9.jpg';
-import scrapbook10 from './Compressed/Int/FotoInt10.jpg';
-import scrapbook11 from './Compressed/Ext/FotoExt1.jpg';
-import scrapbook12 from './Compressed/Ext/FotoExt2.jpg';
+// ── Logos ───────────────────────────────────────────────────────────
+import LogoHRM from './LogoBirDept/HRM.svg';
+import LogoHRBB from './LogoBirDept/HRBB.svg';
+import LogoAdvance from './LogoBirDept/ADVANCE.svg';
+import LogoMM from './LogoBirDept/MM.svg';
+import LogoInternal from './LogoBirDept/INTERNAL.svg';
+import LogoExternal from './LogoBirDept/EXTERNAL.svg';
+import LogoIndev from './LogoBirDept/INDEV.svg';
+import LogoEntre from './LogoBirDept/ENTRE.svg';
+import LogoSparta from './LogoBirDept/SPARTA.svg';
 
-// ── Foto Departemen untuk /about ─
-import PotoHRBB from './Compressed/HRBB/FotoHRBB14.jpg';
-import PotoHRM from './Compressed/HRBB/FotoHRBB6.jpg';
-import PotoAdvance from './Compressed/Advance/FotoAdvance1.jpg';
-import PotoMM from './Compressed/MM/FotoMM4.jpg';
-import PotoInternal from './Compressed/Int/FotoInt30.jpg';
-import PotoExternal from './Compressed/Ext/FotoExt3.jpg';
-import PotoIndev from './Compressed/indev/FotoIndev16.jpg';
-import PotoEntre from './Compressed/Entre/FotoEntre3.jpg';
-import PotoSparta from './Compressed/Sparta/FotoSparta11.jpg';
+// ── Events ──────────────────────────────────────────────────────────
+import eventCard1 from './FotoEvent/FotoCI.jpg';
+import eventCard2 from './FotoEvent/FotoME.JPG';
+import eventCard3 from './FotoEvent/FotoMenefest.jpg';
+import eventCard4 from './FotoEvent/FotoYES!.jpg';
+import eventsBg from './Background/BackgroundAbout.jpg';
 
-// ── Logo BirDep ─
-import LogoHRM from '../assets/LogoBirDept/HRM.svg';
-import LogoHRBB from '../assets/LogoBirDept/HRBB.svg';
-import LogoAdvance from '../assets/LogoBirDept/ADVANCE.svg';
-import LogoMM from '../assets/LogoBirDept/MM.svg';
-import LogoInternal from '../assets/LogoBirDept/INTERNAL.svg';
-import LogoExternal from '../assets/LogoBirDept/EXTERNAL.svg';
-import LogoIndev from '../assets/LogoBirDept/INDEV.svg';
-import LogoEntre from '../assets/LogoBirDept/ENTRE.svg';
-import LogoSparta from '../assets/LogoBirDept/SPARTA.svg';
+// ── Articles / Gallery (Fallback to old for now or use backgrounds) ──
+import article1 from './Background/BackgroundAbout.jpg';
+import article2 from './Background/BackgroundMain.jpg';
+import article3 from './Background/BackgroundAbout.jpg';
 
-// ── Events Section (carousel cards + background) ────────────────────
-import eventCard1 from './Compressed/Ext/FotoExt13.jpg';
-import eventCard2 from './Compressed/Ext/FotoExt14.jpg';
-import eventCard3 from './Compressed/Ext/FotoExt15.jpg';
-import eventCard4 from './Compressed/Ext/FotoExt16.jpg';
-import eventsBg from './Compressed/Int/FotoInt13.jpg';
+import gallery1 from './Background/BackgroundMain.jpg';
+import gallery2 from './Background/BackgroundAbout.jpg';
+import gallery3 from './Background/BackgroundMain.jpg';
+import gallery4 from './Background/BackgroundAbout.jpg';
+import gallery5 from './Background/BackgroundMain.jpg';
+import gallery6 from './Background/BackgroundAbout.jpg';
 
-// ── Articles Section (homepage) ─────────────────────────────────────
-import article1 from './Compressed/Int/FotoInt14.jpg';
-import article2 from './Compressed/Ext/FotoExt17.jpg';
-import article3 from './Compressed/Indev/FotoIndev6.jpg';
+// ── Upcoming / News ────────────────────────────────────────────────
+import upcoming1 from './FotoEvent/FotoCI.jpg';
+import upcoming2 from './FotoEvent/FotoME.JPG';
+import upcoming3 from './FotoEvent/FotoMenefest.jpg';
 
-// ── Gallery Section ─────────────────────────────────────────────────
-import gallery1 from './Compressed/Int/FotoInt15.jpg';
-import gallery2 from './Compressed/Ext/FotoExt18.jpg';
-import gallery3 from './Compressed/HRBB/FotoHRBB7.jpg';
-import gallery4 from './Compressed/Indev/FotoIndev7.jpg';
-import gallery5 from './Compressed/MM/FotoMM6.jpg';
-import gallery6 from './Compressed/Sparta/FotoSparta6.jpg';
-
-// ── Programs Section ────────────────────────────────────────────────
-import program1 from './Compressed/Int/FotoInt16.jpg';
-import program2 from './Compressed/Ext/FotoExt19.jpg';
-import program3 from './Compressed/HRBB/FotoHRBB8.jpg';
-import program4 from './Compressed/Indev/FotoIndev8.jpg';
-import program5 from './Compressed/MM/FotoMM7.jpg';
-import program6 from './Compressed/Sparta/FotoSparta7.jpg';
-
-// ── Upcoming Events Section ─────────────────────────────────────────
-import upcoming1 from './Compressed/Ext/FotoExt20.jpg';
-import upcoming2 from './Compressed/Ext/FotoExt21.jpg';
-import upcoming3 from './Compressed/Ext/FotoExt22.jpg';
-
-// ── News Section (placeholder + background) ─────────────────────────
-import newsBg from './Compressed/Int/FotoInt17.jpg';
-import newsPlaceholder1 from './Compressed/Int/FotoInt18.jpg';
-import newsPlaceholder2 from './Compressed/Int/FotoInt19.jpg';
-import newsPlaceholder3 from './Compressed/Int/FotoInt20.jpg';
-import newsPlaceholder4 from './Compressed/Ext/FotoExt23.jpg';
-import newsPlaceholder5 from './Compressed/Ext/FotoExt24.jpg';
-import newsPlaceholder6 from './Compressed/Ext/FotoExt25.jpg';
-import newsPlaceholder7 from './Compressed/HRBB/FotoHRBB9.jpg';
-import newsPlaceholder8 from './Compressed/HRBB/FotoHRBB10.jpg';
-import newsPlaceholder9 from './Compressed/Indev/FotoIndev9.jpg';
-import newsPlaceholder10 from './Compressed/Indev/FotoIndev10.jpg';
-import newsPlaceholder11 from './Compressed/MM/FotoMM8.jpg';
-import newsPlaceholder12 from './Compressed/MM/FotoMM9.jpg';
-
-// ── Events Page ─────────────────────────────────────────────────────
-import eventsPageHero from './Compressed/Int/FotoInt21.jpg';
-import eventsPageOngoing1 from './Compressed/Int/FotoInt22.jpg';
-import eventsPageOngoing2 from './Compressed/Ext/FotoExt26.jpg';
-import eventsPageOngoing3 from './Compressed/Ext/FotoExt27.jpg';
-import eventsPagePast1 from './Compressed/HRBB/FotoHRBB11.jpg';
-import eventsPagePast2 from './Compressed/Indev/FotoIndev11.jpg';
-import eventsPagePast3 from './Compressed/MM/FotoMM10.jpg';
-import eventsPagePast4 from './Compressed/Sparta/FotoSparta8.jpg';
-import eventsPagePast5 from './Compressed/Entre/FotoEntre6.jpg';
-import eventsPagePast6 from './Compressed/Int/FotoInt23.jpg';
-
-// ── Articles Page ───────────────────────────────────────────────────
-import articlesPageHero from './Compressed/Int/FotoInt24.jpg';
-import articlesPage1 from './Compressed/Int/FotoInt25.jpg';
-import articlesPage2 from './Compressed/Ext/FotoExt28.jpg';
-import articlesPage3 from './Compressed/HRBB/FotoHRBB12.jpg';
-import articlesPage4 from './Compressed/Indev/FotoIndev12.jpg';
-import articlesPage5 from './Compressed/MM/FotoMM11.jpg';
-import articlesPage6 from './Compressed/Sparta/FotoSparta9.jpg';
-
-// ── Info Mahasiswa Page ─────────────────────────────────────────────
-import infoMahasiswaHero from './Compressed/Int/FotoInt26.jpg';
-import infoMahasiswa1 from './Compressed/Int/FotoInt27.jpg';
-import infoMahasiswa2 from './Compressed/Ext/FotoExt29.jpg';
-import infoMahasiswa3 from './Compressed/HRBB/FotoHRBB13.jpg';
-import infoMahasiswa4 from './Compressed/Indev/FotoIndev13.jpg';
-import infoMahasiswa5 from './Compressed/MM/FotoMM12.jpg';
-import infoMahasiswa6 from './Compressed/Sparta/FotoSparta10.jpg';
-import infoMahasiswa7 from './Compressed/Entre/FotoEntre7.jpg';
-import infoMahasiswa8 from './Compressed/Int/FotoInt28.jpg';
-import infoMahasiswa9 from './Compressed/Ext/FotoExt30.jpg';
-
+import newsBg from './Background/BackgroundMain.jpg';
 
 // ═══════════════════════════════════════════════════════════════════
-// EXPORTS — organized by section
+// EXPORTS
 // ═══════════════════════════════════════════════════════════════════
 
-/** Hero / Intro Animation */
 export const HERO_IMAGE = heroMain;
-
-/** About Section — background photo */
 export const ABOUT_BACKGROUND = aboutBg;
-
-/** Hero Section — final background photo (after scrapbook) */
 export const HERO_BG = heroSectionBg;
 
-/** About Section — 50 flying scrapbook photos for parallax */
 export const SCRAPBOOK_PHOTOS: string[] = [
   scrapbook1, scrapbook2, scrapbook3, scrapbook4, scrapbook5,
   scrapbook6, scrapbook7, scrapbook8, scrapbook9, scrapbook10,
-  scrapbook11, scrapbook12,
+  scrapbook11, scrapbook12, scrapbook13, scrapbook14, scrapbook15
 ];
 
-/** About Section — 50 flying scrapbook photos for parallax */
 export const LOGO_BIRDEP: string[] = [
   LogoAdvance, LogoEntre, LogoExternal, LogoHRBB, LogoHRM, LogoIndev, LogoInternal, LogoMM, LogoSparta
 ];
 
-/** Events Section — 4 carousel card photos */
 export const EVENT_PHOTOS: string[] = [eventCard1, eventCard2, eventCard3, eventCard4];
-
-/** Events Section — background image */
 export const EVENTS_BG = eventsBg;
 
-/** Articles Section (homepage) — 3 article thumbnails */
 export const ARTICLE_PHOTOS: string[] = [article1, article2, article3];
-
-/** Gallery Section — 6 gallery images */
 export const GALLERY_PHOTOS: string[] = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6];
+export const PROGRAM_PHOTOS: string[] = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6];
 
-/** Programs Section — 6 program card images */
-export const PROGRAM_PHOTOS: string[] = [program1, program2, program3, program4, program5, program6];
-
-/** Department Section — Photos for each bureau/department */
 export const DEPT_PHOTOS: string[] = [
   PotoHRBB, PotoHRM, PotoAdvance, PotoMM, PotoInternal, PotoExternal, PotoIndev, PotoEntre, PotoSparta
 ];
 
-/** Upcoming Events Section — 3 event card images */
 export const UPCOMING_PHOTOS: string[] = [upcoming1, upcoming2, upcoming3];
-
-/** News Section — background image */
 export const NEWS_BG = newsBg;
 
-/** News Section — 12 placeholder images (used when Instagram API is unavailable) */
-export const NEWS_PLACEHOLDER_PHOTOS: string[] = [
-  newsPlaceholder1, newsPlaceholder2, newsPlaceholder3, newsPlaceholder4,
-  newsPlaceholder5, newsPlaceholder6, newsPlaceholder7, newsPlaceholder8,
-  newsPlaceholder9, newsPlaceholder10, newsPlaceholder11, newsPlaceholder12,
-];
+// Use some of the flying photos as placeholders for news if needed
+export const NEWS_PLACEHOLDER_PHOTOS: string[] = SCRAPBOOK_PHOTOS;
 
-/** Events Page — hero background */
-export const EVENTS_PAGE_HERO = eventsPageHero;
+export const EVENTS_PAGE_HERO = aboutBg;
+export const EVENTS_PAGE_ONGOING: string[] = [eventCard1, eventCard2, eventCard3];
+export const EVENTS_PAGE_PAST: string[] = [eventCard1, eventCard2, eventCard3, eventCard4];
 
-/** Events Page — 3 ongoing event images */
-export const EVENTS_PAGE_ONGOING: string[] = [eventsPageOngoing1, eventsPageOngoing2, eventsPageOngoing3];
+export const ARTICLES_PAGE_HERO = aboutBg;
+export const ARTICLES_PAGE_PHOTOS: string[] = [article1, article2, article3];
 
-/** Events Page — 6 past event images */
-export const EVENTS_PAGE_PAST: string[] = [
-  eventsPagePast1, eventsPagePast2, eventsPagePast3,
-  eventsPagePast4, eventsPagePast5, eventsPagePast6,
-];
-
-/** Articles Page — hero background */
-export const ARTICLES_PAGE_HERO = articlesPageHero;
-
-/** Articles Page — 6 article thumbnails */
-export const ARTICLES_PAGE_PHOTOS: string[] = [
-  articlesPage1, articlesPage2, articlesPage3,
-  articlesPage4, articlesPage5, articlesPage6,
-];
-
-/** Info Mahasiswa Page — hero background */
-export const INFO_MAHASISWA_HERO = infoMahasiswaHero;
-
-/** Info Mahasiswa Page — 9 poster images */
-export const INFO_MAHASISWA_PHOTOS: string[] = [
-  infoMahasiswa1, infoMahasiswa2, infoMahasiswa3,
-  infoMahasiswa4, infoMahasiswa5, infoMahasiswa6,
-  infoMahasiswa7, infoMahasiswa8, infoMahasiswa9,
-];
+export const INFO_MAHASISWA_HERO = aboutBg;
+export const INFO_MAHASISWA_PHOTOS: string[] = [article1, article2, article3];

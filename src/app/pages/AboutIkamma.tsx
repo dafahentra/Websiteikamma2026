@@ -5,7 +5,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import LogoPutihRaw from '../../assets/LogoIKAMMA/LogoPutih.svg?raw';
 import LogoHitamRaw from '../../assets/LogoIKAMMA/LogoHitam.svg?raw';
-import { SCRAPBOOK_PHOTOS, DEPT_PHOTOS } from '../../assets/photos';
+import { SCRAPBOOK_PHOTOS, DEPT_PHOTOS, ABOUT_BACKGROUND } from '../../assets/photos';
 import { departmentsData } from '../../data/departments';
 import { CORE_LEADERS, ORGANIZATION_LIST } from '../../data/team';
 import BenihSvg from '../../assets/LogoKabinet/Benih.svg';
@@ -77,8 +77,8 @@ function AboutHero() {
   );
 
   return (
-    <div ref={containerRef} className="relative w-full h-[140vh] bg-white">
-      <div className="sticky top-0 w-full h-screen bg-white overflow-hidden">
+    <div ref={containerRef} className="relative w-full h-[140vh] bg-transparent">
+      <div className="sticky top-0 w-full h-screen bg-transparent overflow-hidden">
 
         {/* Background Marquee Text - 2 Sliders */}
         <motion.div
@@ -307,7 +307,7 @@ export function AboutIkamma() {
   };
 
   const renderTeamMember = (member: { name: string; role: string; img?: string }, i: number, isSlider = false) => {
-    let wrapperClass = "flex flex-col items-center text-center shrink-0 w-44 md:w-56";
+    let wrapperClass = "flex flex-col items-center text-center shrink-0 w-[45%] md:w-56";
 
     if (isSlider && currentSlide === 0) {
       if (member.role === "Chairman") {
@@ -323,7 +323,7 @@ export function AboutIkamma() {
         <div className="relative w-36 h-36 md:w-44 md:h-44 mb-6 rounded-full">
           {/* Crescent glow at the bottom */}
           <div className="absolute inset-[-3px] rounded-full bg-gradient-to-b from-transparent via-transparent to-white/50 blur-[2px] opacity-80"></div>
-          <div className="absolute inset-0 rounded-full overflow-hidden bg-[#1A365D]">
+          <div className="absolute inset-0 rounded-full overflow-hidden bg-transparent">
             <img src={member.img || SCRAPBOOK_PHOTOS[8]} alt={member.name} className="w-full h-full object-cover object-top" />
           </div>
         </div>
@@ -357,12 +357,21 @@ export function AboutIkamma() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#081C36] flex flex-col relative">
+    <div className="min-h-screen bg-white text-[#081C36] flex flex-col relative overflow-x-hidden">
+      {/* Global Background Image */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <img 
+          src={ABOUT_BACKGROUND} 
+          alt="Background" 
+          className="w-full h-full object-cover opacity-10"
+        />
+      </div>
+
       <Navbar />
 
       <AboutHero />
 
-      <main className="flex-grow relative z-10 max-w-[1400px] mx-auto w-full px-6 md:px-12 bg-white">
+      <main className="flex-grow relative z-10 max-w-[1400px] mx-auto w-full px-6 md:px-12 bg-transparent">
 
         {/* Info Block */}
         <motion.div

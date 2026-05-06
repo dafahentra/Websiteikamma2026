@@ -84,6 +84,44 @@ export const AdminArticleForm = () => {
     }
   }, [id, isEdit]);
 
+  const uploadInlineImages = async (content: string) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = content;
+    const images = tempDiv.querySelectorAll('img');
+    let hasChanged = false;
+
+    for (const img of Array.from(images)) {
+      const src = img.getAttribute('src');
+      if (src && src.startsWith('blob:')) {
+        try {
+          const response = await fetch(src);
+          const blob = await response.blob();
+          const file = new File([blob], `inline-${Date.now()}.webp`, { type: 'image/webp' });
+          
+          const optimizedBlob = await convertToWebP(file, { maxWidth: 1000, maxHeight: 1000, quality: 0.5 });
+          const fileName = `content-${Date.now()}-${Math.random().toString(36).substring(7)}.webp`;
+          const optimizedFile = new File([optimizedBlob], fileName, { type: 'image/webp' });
+
+          const { error: uploadError } = await supabase.storage
+            .from('article-images')
+            .upload(fileName, optimizedFile, { contentType: 'image/webp' });
+
+          if (uploadError) throw uploadError;
+
+          const { data } = supabase.storage.from('article-images').getPublicUrl(fileName);
+          img.setAttribute('src', data.publicUrl);
+          hasChanged = true;
+          
+          URL.revokeObjectURL(src);
+        } catch (err) {
+          console.error('Failed to upload inline image:', err);
+        }
+      }
+    }
+
+    return hasChanged ? tempDiv.innerHTML : content;
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -96,6 +134,9 @@ export const AdminArticleForm = () => {
     e.preventDefault();
     setSaving(true);
 
+    // 1. Upload inline images from editor content first
+    const updatedContent = await uploadInlineImages(formData.content);
+    
     let image_url = previewUrl;
 
     if (imageFile) {
@@ -168,6 +209,7 @@ export const AdminArticleForm = () => {
 
     const payload = {
       ...formData,
+      content: updatedContent,
       date: formData.date || null, // Standard DATE format for DB
       editor: formData.editor.trim() !== '' ? formData.editor : formData.author,
       description: autoDescription,

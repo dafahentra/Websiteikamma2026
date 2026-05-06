@@ -137,35 +137,13 @@ export const suggestionItems = createSuggestionItems([
       input.onchange = async () => {
         if (input.files?.length) {
           const file = input.files[0];
-          const toastId = toast.loading("Mengoptimasi & mengupload gambar...");
           
-          try {
-            // Optimasi gambar menjadi WebP lebih ekstrim untuk inline article agar upload stabil
-            const webpBlob = await convertToWebP(file, { maxWidth: 1000, maxHeight: 1000, quality: 0.5 });
-            const fileName = `content-${Date.now()}-${Math.random().toString(36).substring(7)}.webp`;
-            
-            console.log(`[Upload Image] Original size: ${(file.size / 1024).toFixed(2)} KB`);
-            console.log(`[Upload Image] Optimized size: ${(webpBlob.size / 1024).toFixed(2)} KB`);
-            
-            // Konversi Blob menjadi File agar Supabase bisa membaca ukurannya dengan akurat
-            const webpFile = new File([webpBlob], fileName, { type: 'image/webp' });
-            
-            // Upload ke storage Supabase
-            const { error: uploadError } = await supabase.storage
-              .from('article-images')
-              .upload(fileName, webpFile, { contentType: 'image/webp', upsert: true });
-              
-            if (uploadError) throw uploadError;
-            
-            // Dapatkan URL publik dan masukkan ke editor
-            const { data } = supabase.storage.from('article-images').getPublicUrl(fileName);
-            editor.chain().focus().setImage({ src: data.publicUrl }).run();
-            
-            toast.success("Gambar berhasil ditambahkan", { id: toastId });
-          } catch (err: any) {
-            console.error("Image upload error:", err);
-            toast.error(`Gagal memproses gambar: ${err.message || 'Unknown error'}`, { id: toastId });
-          }
+          // Create a local blob URL for preview
+          // We will upload this to Supabase only when the user clicks 'Save' in the main form
+          const blobUrl = URL.createObjectURL(file);
+          editor.chain().focus().setImage({ src: blobUrl }).run();
+          
+          toast.success("Gambar pratinjau ditambahkan (akan diunggah saat simpan)");
         }
       };
       input.click();

@@ -26,6 +26,8 @@ const EventsPage = lazy(() => import('./pages/EventsPage').then(m => ({ default:
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
 const InfoMahasiswaPage = lazy(() => import('./pages/InfoMahasiswaPage').then(m => ({ default: m.InfoMahasiswaPage })));
 
+import ScrollToTop from './components/ScrollToTop';
+
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
@@ -41,6 +43,7 @@ export default function App() {
 
   return (
     <>
+      <ScrollToTop />
       <AnimatePresence mode="wait">
         {isLoading && location.pathname === '/' && (
           <Preloader onLoadingComplete={() => setIsLoading(false)} />

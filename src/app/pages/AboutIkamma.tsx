@@ -324,7 +324,7 @@ export function AboutIkamma() {
         <div className="relative w-36 h-36 md:w-44 md:h-44 mb-6 rounded-full">
           {/* Crescent glow at the bottom */}
           <div className="absolute inset-[-3px] rounded-full bg-gradient-to-b from-transparent via-transparent to-white/50 blur-[2px] opacity-80"></div>
-          <div className="absolute inset-0 rounded-full overflow-hidden bg-[#1A365D]">
+          <div className="absolute inset-0 rounded-full overflow-hidden bg-transparent">
             <img src={member.img || SCRAPBOOK_PHOTOS[8]} alt={member.name} className="w-full h-full object-cover object-top" />
           </div>
         </div>
@@ -532,7 +532,7 @@ export function AboutIkamma() {
         </section>
 
         {/* Section: Our Mission */}
-        <section className="mb-32">
+        <section className="mb-32 w-full flex flex-col">
           <div className="mb-12 flex items-center gap-3 w-full">
             <span className="text-[#081C36] font-inter text-xl md:text-2xl">03</span>
             <span className="text-[#081C36]/50 text-xl">—</span>
@@ -541,26 +541,32 @@ export function AboutIkamma() {
             </h2>
           </div>
 
-          <div className="flex flex-col gap-4 max-w-4xl">
+          <div className="w-[100vw] self-center grid grid-cols-1 md:grid-cols-2 border-t border-[#081C36]/15 relative">
             {[
               'Mewujudkan lingkungan organisasi yang **profesional dan solid** melalui **penguatan sistem dan SOP.**',
               'Menumbuhkan potensi anggota melalui **apresiasi, pengembangan diri,** serta iklim kerja yang **inklusif dan kolaboratif.**',
               'Menjadi pionir kolaborasi lintas himpunan untuk **memperluas jejaring** dan membangun **citra positif IKAMMA** di tingkat nasional.',
               'Melaksanakan **program kerja yang relevan** dengan kebutuhan mahasiswa manajemen.',
               'Merealisasikan program yang **berdampak langsung bagi masyarakat** untuk memperkuat kontribusi sosial dan kebermanfaatan mahasiswa.'
-            ].map((text, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="p-5 md:p-6 rounded-2xl bg-[#081C36]/[0.02] border border-[#081C36]/10 shadow-lg shadow-[#081C36]/5 hover:bg-[#081C36]/[0.04] hover:border-[#081C36]/15 hover:shadow-xl hover:shadow-[#081C36]/10 transition-all duration-300 flex items-start gap-4"
-              >
-                <span className="text-[#081C36] font-inter font-bold text-lg mt-0.5 shrink-0">0{i + 1}</span>
-                <p className="font-inter text-base md:text-lg leading-relaxed text-[#081C36]/60 text-left" dangerouslySetInnerHTML={{ __html: text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-[#081C36]">$1</strong>') }} />
-              </motion.div>
-            ))}
+            ].map((text, i, arr) => {
+              const isLastOdd = arr.length % 2 !== 0 && i === arr.length - 1;
+              const hasBorderR = !isLastOdd && i % 2 === 0;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className={`w-full border-b border-[#081C36]/15 group md:hover:bg-[#081C36]/[0.03] transition-colors cursor-pointer flex justify-center ${isLastOdd ? 'md:col-span-2' : ''} ${hasBorderR ? 'md:border-r border-[#081C36]/15' : ''}`}
+                >
+                  <div className={`w-full max-w-[700px] flex flex-col items-center justify-center text-center gap-2 md:gap-4 py-8 md:py-12 px-6 md:px-12 ${isLastOdd ? 'md:max-w-[1000px]' : ''}`}>
+                    <span className="text-[#081C36] font-inter font-bold text-xl md:text-2xl shrink-0">0{i + 1}</span>
+                    <p className="font-inter text-base md:text-lg leading-relaxed text-[#081C36]" dangerouslySetInnerHTML={{ __html: text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-[#081C36]">$1</strong>') }} />
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </section>
 

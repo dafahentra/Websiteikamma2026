@@ -107,6 +107,7 @@ export const AdminArticleForm = () => {
 
     const payload = {
       ...formData,
+      editor: formData.editor.trim() !== '' ? formData.editor : formData.author,
       description: autoDescription,
       image_url,
     };

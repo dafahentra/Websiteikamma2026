@@ -13,6 +13,7 @@ import BatangSvg from '../../assets/LogoKabinet/Batang.svg';
 import TanganSvg from '../../assets/LogoKabinet/Tangan.svg';
 import DaunSvg from '../../assets/LogoKabinet/Daun.svg';
 import BungaSvg from '../../assets/LogoKabinet/Bunga.svg';
+import HeroAbout from '../../assets/Background/HeroAbout.jpg';
 import { Users, Briefcase, ShieldCheck, GraduationCap } from 'lucide-react';
 
 // Extract SVG inner paths
@@ -118,7 +119,7 @@ function AboutHero() {
             }}
           >
             <img
-              src={SCRAPBOOK_PHOTOS[8]}
+              src={HeroAbout}
               className="w-full h-full object-cover"
               alt="FEB UGM"
             />
@@ -307,7 +308,7 @@ export function AboutIkamma() {
   };
 
   const renderTeamMember = (member: { name: string; role: string; img?: string }, i: number, isSlider = false) => {
-    let wrapperClass = "flex flex-col items-center text-center shrink-0 w-44 md:w-56";
+    let wrapperClass = "flex flex-col items-center text-center shrink-0 w-[45%] md:w-56";
 
     if (isSlider && currentSlide === 0) {
       if (member.role === "Chairman") {
@@ -625,7 +626,7 @@ export function AboutIkamma() {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-                  className="absolute w-full flex flex-wrap justify-center gap-8 md:gap-12 will-change-transform"
+                  className="absolute w-full flex flex-wrap justify-center gap-x-4 gap-y-8 md:gap-12 will-change-transform"
                 >
                   {currentMembers.map((member, i) => renderTeamMember(member, i, true))}
                 </motion.div>

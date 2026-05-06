@@ -15,7 +15,7 @@ export const AdminEventsList = () => {
       .from('events')
       .select('*')
       .order('created_at', { ascending: false });
-      
+
     if (error) {
       toast.error('Gagal memuat event');
     } else {
@@ -26,7 +26,7 @@ export const AdminEventsList = () => {
         const end = evt.end_date ? new Date(evt.end_date) : null;
         if (end) end.setHours(0, 0, 0, 0);
         const isPast = (evt.type === 'past') || (end && now > end);
-        
+
         return activeTab === 'past' ? isPast : !isPast;
       });
 
@@ -41,7 +41,7 @@ export const AdminEventsList = () => {
 
   const handleDelete = async (id: number) => {
     if (!window.confirm('Yakin ingin menghapus event ini?')) return;
-    
+
     const { error } = await supabase.from('events').delete().eq('id', id);
     if (error) {
       toast.error('Gagal menghapus event');
@@ -54,7 +54,7 @@ export const AdminEventsList = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Manajemen Event</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Event</h1>
         <Link
           to="/admin/events/new"
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -79,7 +79,7 @@ export const AdminEventsList = () => {
             Past Events
           </button>
         </div>
-        
+
         {loading ? (
           <div className="p-8 text-center text-gray-500">Memuat...</div>
         ) : (
@@ -124,7 +124,7 @@ export const AdminEventsList = () => {
                             now.setHours(0, 0, 0, 0);
                             const start = evt.start_date ? new Date(evt.start_date) : null;
                             const end = evt.end_date ? new Date(evt.end_date) : null;
-                            
+
                             if (start) start.setHours(0, 0, 0, 0);
                             if (end) end.setHours(0, 0, 0, 0);
 

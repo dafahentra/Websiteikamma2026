@@ -56,54 +56,54 @@ export const AdminEventContacts = () => {
   return (
     <div className="max-w-6xl mx-auto">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold">Manajemen Kontak Event Besar</h1>
-        <button 
+        <h1 className="text-2xl font-bold">Kontak Event</h1>
+        <button
           onClick={() => setIsAdding(true)}
           className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
         >
-          <Plus size={20} /> Tambah Kontak Baru
+          <Plus size={20} /> Tambah Kontak
         </button>
       </div>
 
       {isAdding && (
         <div className="bg-white p-6 rounded-xl border border-blue-200 shadow-sm mb-8">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold">Tambah Kontak Event Baru</h3>
+            <h3 className="font-bold">Tambah Kontak</h3>
             <button onClick={() => setIsAdding(false)}><X size={20} /></button>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <input 
-              placeholder="Nama Event (Contoh: IDEAS 2026)" 
+            <input
+              placeholder="Nama Event (Contoh: IDEAS 2026)"
               className="p-2 border rounded"
               value={newContact.name}
-              onChange={e => setNewContact({...newContact, name: e.target.value})}
+              onChange={e => setNewContact({ ...newContact, name: e.target.value })}
             />
-            <input 
-              placeholder="Deskripsi Singkat" 
+            <input
+              placeholder="Deskripsi Singkat"
               className="p-2 border rounded"
               value={newContact.description}
-              onChange={e => setNewContact({...newContact, description: e.target.value})}
+              onChange={e => setNewContact({ ...newContact, description: e.target.value })}
             />
-            <input 
-              placeholder="Instagram (@...)" 
+            <input
+              placeholder="Instagram (@...)"
               className="p-2 border rounded"
               value={newContact.instagram}
-              onChange={e => setNewContact({...newContact, instagram: e.target.value})}
+              onChange={e => setNewContact({ ...newContact, instagram: e.target.value })}
             />
-            <input 
-              placeholder="Email" 
+            <input
+              placeholder="Email"
               className="p-2 border rounded"
               value={newContact.email}
-              onChange={e => setNewContact({...newContact, email: e.target.value})}
+              onChange={e => setNewContact({ ...newContact, email: e.target.value })}
             />
-            <input 
-              placeholder="WhatsApp (+62...)" 
+            <input
+              placeholder="WhatsApp (+62...)"
               className="p-2 border rounded"
               value={newContact.whatsapp}
-              onChange={e => setNewContact({...newContact, whatsapp: e.target.value})}
+              onChange={e => setNewContact({ ...newContact, whatsapp: e.target.value })}
             />
           </div>
-          <button 
+          <button
             onClick={handleAdd}
             className="w-full bg-blue-600 text-white py-2 rounded-lg font-bold"
           >
@@ -129,15 +129,15 @@ export const AdminEventContacts = () => {
               contacts.map(c => (
                 <tr key={c.id}>
                   <td className="p-4">
-                    <input 
-                      defaultValue={c.name} 
+                    <input
+                      defaultValue={c.name}
                       onBlur={e => handleUpdate(c.id, 'name', e.target.value)}
                       className="w-full bg-transparent focus:bg-white p-1 border-transparent focus:border-gray-200 border rounded"
                     />
                   </td>
                   <td className="p-4">
-                    <input 
-                      defaultValue={c.description} 
+                    <input
+                      defaultValue={c.description}
                       onBlur={e => handleUpdate(c.id, 'description', e.target.value)}
                       className="w-full bg-transparent focus:bg-white p-1 border-transparent focus:border-gray-200 border rounded"
                     />
@@ -145,24 +145,24 @@ export const AdminEventContacts = () => {
                   <td className="p-4 space-y-2">
                     <div className="flex gap-2 text-xs">
                       <span className="w-16 font-bold">IG:</span>
-                      <input 
-                        defaultValue={c.instagram} 
+                      <input
+                        defaultValue={c.instagram}
                         onBlur={e => handleUpdate(c.id, 'instagram', e.target.value)}
                         className="flex-1 bg-transparent border-b border-gray-100"
                       />
                     </div>
                     <div className="flex gap-2 text-xs">
                       <span className="w-16 font-bold">Email:</span>
-                      <input 
-                        defaultValue={c.email} 
+                      <input
+                        defaultValue={c.email}
                         onBlur={e => handleUpdate(c.id, 'email', e.target.value)}
                         className="flex-1 bg-transparent border-b border-gray-100"
                       />
                     </div>
                     <div className="flex gap-2 text-xs">
                       <span className="w-16 font-bold">WA:</span>
-                      <input 
-                        defaultValue={c.whatsapp} 
+                      <input
+                        defaultValue={c.whatsapp}
                         onBlur={e => handleUpdate(c.id, 'whatsapp', e.target.value)}
                         className="flex-1 bg-transparent border-b border-gray-100"
                       />

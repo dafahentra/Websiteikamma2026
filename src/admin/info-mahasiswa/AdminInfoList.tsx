@@ -15,13 +15,13 @@ export const AdminInfoList = () => {
       .from('info_mahasiswa')
       .select('id, title, category, posted_date, description, full_description, poster_url, period_start, period_end, status, link, organizer, work_type')
       .order('created_at', { ascending: false });
-    
+
     if (activeTab !== 'Semua') {
       query = query.eq('category', activeTab);
     }
-    
+
     const { data, error } = await query;
-      
+
     if (error) {
       toast.error('Gagal memuat info mahasiswa');
     } else {
@@ -36,7 +36,7 @@ export const AdminInfoList = () => {
 
   const handleDelete = async (id: number) => {
     if (!window.confirm('Yakin ingin menghapus info ini?')) return;
-    
+
     const { error } = await supabase.from('info_mahasiswa').delete().eq('id', id);
     if (error) {
       toast.error('Gagal menghapus info');
@@ -51,7 +51,7 @@ export const AdminInfoList = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Manajemen Info Mahasiswa</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Info Mahasiswa </h1>
         <Link
           to="/admin/info-mahasiswa/new"
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -73,7 +73,7 @@ export const AdminInfoList = () => {
             </button>
           ))}
         </div>
-        
+
         {loading ? (
           <div className="p-8 text-center text-gray-500">Memuat...</div>
         ) : (

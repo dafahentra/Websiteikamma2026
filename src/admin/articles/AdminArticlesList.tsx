@@ -14,7 +14,7 @@ export const AdminArticlesList = () => {
       .from('articles')
       .select('*')
       .order('created_at', { ascending: false });
-      
+
     if (error) {
       toast.error('Gagal memuat artikel');
     } else {
@@ -29,7 +29,7 @@ export const AdminArticlesList = () => {
 
   const handleDelete = async (id: number) => {
     if (!window.confirm('Yakin ingin menghapus artikel ini?')) return;
-    
+
     const { error } = await supabase.from('articles').delete().eq('id', id);
     if (error) {
       toast.error('Gagal menghapus artikel');
@@ -44,7 +44,7 @@ export const AdminArticlesList = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Manajemen Artikel</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Artikel</h1>
         <Link
           to="/admin/articles/new"
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"

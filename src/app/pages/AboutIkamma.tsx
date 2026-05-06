@@ -562,7 +562,7 @@ export function AboutIkamma() {
                 >
                   <div className={`w-full max-w-[700px] flex flex-col items-center justify-center text-center gap-2 md:gap-4 py-8 md:py-12 px-6 md:px-12 ${isLastOdd ? 'md:max-w-[1000px]' : ''}`}>
                     <span className="text-[#081C36] font-inter font-bold text-xl md:text-2xl shrink-0">0{i + 1}</span>
-                    <p className="font-inter text-base md:text-lg leading-relaxed text-[#081C36]" dangerouslySetInnerHTML={{ __html: text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-[#081C36]">$1</strong>') }} />
+                    <p className="font-inter text-base md:text-lg leading-relaxed text-[#081C36]" dangerouslySetInnerHTML={{ __html: text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-inter font-bold italic text-[#081C36]">$1</strong>') }} />
                   </div>
                 </motion.div>
               );

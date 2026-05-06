@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router';
 import toast from 'react-hot-toast';
 import { NovelEditor } from './NovelEditor';
 import { convertToWebP } from '../../lib/imageOptimization';
+import { ArrowLeft } from 'lucide-react';
 
 // Registering custom fonts or sizes if needed, but for now we'll use standard ones
 // and ensure the toolbar is comprehensive.
@@ -134,7 +135,16 @@ export const AdminArticleForm = () => {
 
   return (
     <div className="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-      <h1 className="text-2xl font-bold mb-6">{isEdit ? 'Edit Artikel' : 'Tambah Artikel'}</h1>
+      <div className="flex items-center gap-3 mb-6">
+        <button 
+          onClick={() => navigate('/admin/articles')}
+          className="p-2 -ml-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors focus:outline-none"
+          title="Kembali"
+        >
+          <ArrowLeft size={24} />
+        </button>
+        <h1 className="text-2xl font-bold">{isEdit ? 'Edit Artikel' : 'Tambah Artikel'}</h1>
+      </div>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

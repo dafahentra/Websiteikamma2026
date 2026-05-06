@@ -261,8 +261,8 @@ export function Hero() {
   ];
 
   const photoConfigs = useMemo(() => {
-    // Use 12 photos on both mobile and desktop for consistent experience
-    const layout = PIONIR_LAYOUT;
+    // Gunakan 15 foto di desktop dan 12 foto di mobile untuk performa
+    const layout = isMobile ? PIONIR_LAYOUT.slice(0, 12) : PIONIR_LAYOUT;
     const shuffledLayout = [...layout].sort((a, b) => (a.x * a.y) % 3 - 1);
 
     const configs = [];

@@ -187,8 +187,8 @@ export const departmentsData: Record<string, DepartmentData> = {
   'external': {
     slug: 'external',
     name: "External",
-    manager: "Glorio Gracias",
-    viceManager: "Made Raditya",
+    manager: "Made Raditya",
+    viceManager: "Glorio Gracias",
     description: "Departemen External adalah salah satu departemen IKAMMA FEB UGM yang bertujuan untuk **menjadi lini terdepan** dan **representasi organisasi** dalam **menjalin serta mengelola hubungan eksternal.** Departemen ini berfokus pada diplomasi dan profesionalisme dalam membangun kolaborasi strategis dengan perusahaan, organisasi eksternal, serta alumni Manajemen FEB UGM dengan upaya **menciptakan networking yang luas** dan **membuka career pathways bagi mahasiswa Manajemen FEB UGM.**",
     managerImg: ExtManager,
     viceManagerImg: ExtViceManager,

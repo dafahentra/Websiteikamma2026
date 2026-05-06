@@ -17,9 +17,10 @@ export const AdminArticleForm = () => {
   const [saving, setSaving] = useState(false);
   
   const [formData, setFormData] = useState({
-    category: 'IKAMMA Insights',
+    category: 'Research & Study',
     title: '',
     author: '',
+    editor: '',
     date: '',
     read_time: '',
     content: '',
@@ -37,6 +38,7 @@ export const AdminArticleForm = () => {
             category: data.category,
             title: data.title,
             author: data.author,
+            editor: data.editor || '',
             date: data.date,
             read_time: data.read_time,
             content: data.content || '',
@@ -142,10 +144,10 @@ export const AdminArticleForm = () => {
             className="w-full p-2 border rounded"
             required
           >
-            <option value="IKAMMA Insights">IKAMMA Insights</option>
-            <option value="Campus Life">Campus Life</option>
-            <option value="Career">Career</option>
-            <option value="Alumni">Alumni</option>
+            <option value="Research & Study">Research & Study</option>
+            <option value="Sparta Info Terkini">Sparta Info Terkini</option>
+            <option value="Announcement">Announcement</option>
+            <option value="News">News</option>
           </select>
         </div>
 
@@ -171,7 +173,7 @@ export const AdminArticleForm = () => {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Penulis *</label>
             <input 
@@ -180,6 +182,16 @@ export const AdminArticleForm = () => {
               onChange={(e) => setFormData({...formData, author: e.target.value})}
               className="w-full p-2 border rounded"
               required 
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Editor</label>
+            <input 
+              type="text" 
+              value={formData.editor} 
+              onChange={(e) => setFormData({...formData, editor: e.target.value})}
+              className="w-full p-2 border rounded"
+              placeholder="Opsional"
             />
           </div>
           <div>
@@ -192,21 +204,20 @@ export const AdminArticleForm = () => {
               required 
             />
           </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Estimasi Waktu Baca *</label>
-          <select 
-            value={formData.read_time} 
-            onChange={(e) => setFormData({...formData, read_time: e.target.value})}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option value="">Pilih waktu baca</option>
-            {[...Array(15)].map((_, i) => (
-              <option key={i+1} value={`${i+1} min read`}>{i+1} min read</option>
-            ))}
-          </select>
+          <div>
+            <label className="block text-sm font-medium mb-1">Estimasi Waktu Baca *</label>
+            <select 
+              value={formData.read_time} 
+              onChange={(e) => setFormData({...formData, read_time: e.target.value})}
+              className="w-full p-2 border rounded"
+              required
+            >
+              <option value="">Pilih waktu baca</option>
+              {[...Array(15)].map((_, i) => (
+                <option key={i+1} value={`${i+1} min read`}>{i+1} min read</option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div>

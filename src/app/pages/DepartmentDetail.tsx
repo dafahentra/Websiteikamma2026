@@ -113,13 +113,13 @@ export function DepartmentDetail() {
               />
               {/* Manager Label - Positioned near head but behind */}
               <motion.div
-                className="absolute left-[70%] md:left-full ml-[10px] md:-ml-[90px] top-[15%] md:top-[18%] z-0"
+                className="absolute left-[70%] md:left-full ml-[-10px] md:-ml-[90px] top-[15%] md:top-[18%] z-0"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <h3 className="text-lg md:text-3xl lg:text-4xl font-inter whitespace-nowrap drop-shadow-md text-[#081C36]" style={{ fontWeight: 800 }}>{department.manager}</h3>
-                <p className="text-[#081C36]/70 text-[11px] md:text-lg lg:text-xl font-medium drop-shadow-md">Manager</p>
+                <h3 className="text-base md:text-3xl lg:text-4xl font-inter whitespace-nowrap drop-shadow-md text-[#081C36]" style={{ fontWeight: 800 }}>{department.manager}</h3>
+                <p className="text-[#081C36]/70 text-[9px] md:text-lg lg:text-xl font-medium drop-shadow-md">Manager</p>
               </motion.div>
             </div>
           </motion.div>
@@ -131,13 +131,13 @@ export function DepartmentDetail() {
             <div className="h-full w-auto shrink-0 relative">
               {/* Vice Manager Label - Positioned near head but behind */}
               <motion.div
-                className="absolute right-[70%] md:right-full mr-[10px] md:-mr-[90px] top-[15%] md:top-[18%] text-right z-0"
+                className="absolute right-[70%] md:right-full mr-[-10px] md:-mr-[90px] top-[15%] md:top-[18%] text-right z-0"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <h3 className="text-lg md:text-3xl lg:text-4xl font-inter whitespace-nowrap drop-shadow-md text-[#081C36]" style={{ fontWeight: 800 }}>{department.viceManager}</h3>
-                <p className="text-[#081C36]/70 text-[11px] md:text-lg lg:text-xl font-medium drop-shadow-md">Vice Manager</p>
+                <h3 className="text-base md:text-3xl lg:text-4xl font-inter whitespace-nowrap drop-shadow-md text-[#081C36]" style={{ fontWeight: 800 }}>{department.viceManager}</h3>
+                <p className="text-[#081C36]/70 text-[9px] md:text-lg lg:text-xl font-medium drop-shadow-md">Vice Manager</p>
               </motion.div>
               <motion.img
                 style={{ x: parallaxXRight }}

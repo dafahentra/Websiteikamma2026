@@ -28,12 +28,39 @@ export const AdminArticlesList = () => {
   }, []);
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm('Yakin ingin menghapus artikel ini?')) return;
+    if (!window.confirm('Yakin ingin menghapus artikel ini beserta semua gambarnya?')) return;
+
+    const article = articles.find(a => a.id === id);
+    const imagesToDelete: string[] = [];
+
+    if (article) {
+      // Hapus banner image
+      if (article.image_url && article.image_url.includes('article-images')) {
+        const fileName = article.image_url.split('/').pop();
+        if (fileName) imagesToDelete.push(fileName);
+      }
+      
+      // Hapus gambar inline di dalam content
+      if (article.content) {
+        const matches = Array.from(article.content.matchAll(/src="([^"]+)"/g));
+        matches.forEach((m: any) => {
+          const url = m[1];
+          if (url.includes('supabase.co') && url.includes('article-images')) {
+            const fileName = url.split('/').pop();
+            if (fileName) imagesToDelete.push(fileName);
+          }
+        });
+      }
+    }
 
     const { error } = await supabase.from('articles').delete().eq('id', id);
     if (error) {
       toast.error('Gagal menghapus artikel');
     } else {
+      if (imagesToDelete.length > 0) {
+        // Hapus file dari storage berjalan di background
+        supabase.storage.from('article-images').remove(imagesToDelete).catch(console.error);
+      }
       toast.success('Artikel berhasil dihapus');
       fetchArticles();
     }

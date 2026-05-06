@@ -97,10 +97,11 @@ export const AdminInfoForm = () => {
         const webpBlob = await convertToWebP(imageFile);
         const fileName = `${Math.random()}.webp`;
         const filePath = `${fileName}`;
+        const webpFile = new File([webpBlob], fileName, { type: 'image/webp' });
 
         const { error: uploadError } = await supabase.storage
           .from('info-mahasiswa-posters')
-          .upload(filePath, webpBlob, {
+          .upload(filePath, webpFile, {
             contentType: 'image/webp'
           });
 

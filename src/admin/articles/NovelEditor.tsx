@@ -11,6 +11,12 @@ import {
 } from "novel";
 import { defaultExtensions } from "./extensions";
 import { slashCommand, suggestionItems } from "./slash-command";
+import { AISelector } from "./AISelector";
+import { NodeSelector } from "./NodeSelector";
+import { ColorSelector } from "./ColorSelector";
+import { EquationSelector } from "./EquationSelector";
+import { Bold, Italic, Underline, Link as LinkIcon, Unlink, Strikethrough, Code } from "lucide-react";
+import "katex/dist/katex.min.css";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -22,6 +28,20 @@ interface NovelEditorProps {
 
 export const NovelEditor = ({ content, onChange, minHeight = "300px" }: NovelEditorProps) => {
   const [editorInstance, setEditorInstance] = useState<any>(null);
+
+  // Helper to get active command mode name
+  const getActiveCommandMode = () => {
+    if (!editorInstance) return "Text";
+    if (editorInstance.isActive("heading", { level: 1 })) return "Heading 1";
+    if (editorInstance.isActive("heading", { level: 2 })) return "Heading 2";
+    if (editorInstance.isActive("heading", { level: 3 })) return "Heading 3";
+    if (editorInstance.isActive("blockquote")) return "Quote";
+    if (editorInstance.isActive("bulletList")) return "Bullet List";
+    if (editorInstance.isActive("orderedList")) return "Numbered List";
+    if (editorInstance.isActive("taskList")) return "To-do List";
+    if (editorInstance.isActive("codeBlock")) return "Code Block";
+    return "Text";
+  };
 
   return (
     <div 
@@ -43,7 +63,7 @@ export const NovelEditor = ({ content, onChange, minHeight = "300px" }: NovelEdi
               keydown: (_view, event) => handleCommandNavigation(event),
             },
             attributes: {
-              class: `prose prose-lg focus:outline-none max-w-full px-2 py-2`,
+              class: `prose prose-lg focus:outline-none max-w-full px-4 py-4`,
               style: `min-height: ${minHeight}`,
             },
           }}
@@ -53,10 +73,12 @@ export const NovelEditor = ({ content, onChange, minHeight = "300px" }: NovelEdi
             setEditorInstance(editor);
           }}
           onCreate={({ editor }) => {
-            setEditorInstance(editor);
-            if (content && content.startsWith('<')) {
-              editor.commands.setContent(content);
-            }
+            setTimeout(() => {
+              setEditorInstance(editor);
+              if (content && content.startsWith('<')) {
+                editor.commands.setContent(content);
+              }
+            }, 0);
           }}
         >
           <EditorCommand className='z-50 h-auto max-h-[330px] w-72 overflow-y-auto rounded-md border border-muted bg-white px-1 py-2 shadow-md transition-all'>
@@ -81,30 +103,16 @@ export const NovelEditor = ({ content, onChange, minHeight = "300px" }: NovelEdi
             </EditorCommandList>
           </EditorCommand>
 
-          <EditorBubble className='flex w-fit max-w-[90vw] overflow-hidden rounded-md border border-muted bg-white p-1 shadow-xl animate-in fade-in zoom-in duration-200'>
-             <div className="flex items-center gap-0.5">
-                <button 
-                  onClick={(e) => { e.preventDefault(); editorInstance?.chain().focus().toggleBold().run(); }}
-                  className={`p-2 rounded hover:bg-gray-100 transition-colors ${editorInstance?.isActive('bold') ? 'bg-gray-100 text-blue-600' : 'text-gray-600'}`}
-                  title="Bold"
-                >
-                  <span className="font-bold text-sm px-1">B</span>
-                </button>
-                <button 
-                  onClick={(e) => { e.preventDefault(); editorInstance?.chain().focus().toggleItalic().run(); }}
-                  className={`p-2 rounded hover:bg-gray-100 transition-colors ${editorInstance?.isActive('italic') ? 'bg-gray-100 text-blue-600' : 'text-gray-600'}`}
-                  title="Italic"
-                >
-                  <span className="italic text-sm px-1 font-serif">I</span>
-                </button>
-                <button 
-                  onClick={(e) => { e.preventDefault(); editorInstance?.chain().focus().toggleUnderline().run(); }}
-                  className={`p-2 rounded hover:bg-gray-100 transition-colors ${editorInstance?.isActive('underline') ? 'bg-gray-100 text-blue-600' : 'text-gray-600'}`}
-                  title="Underline"
-                >
-                  <span className="underline text-sm px-1">U</span>
-                </button>
+          <EditorBubble className='flex w-fit max-w-[95vw] rounded-md border border-muted bg-white p-1 shadow-xl animate-in fade-in zoom-in duration-200 overflow-visible'>
+             <div className="flex flex-row items-center flex-nowrap gap-0.5">
+                <AISelector editor={editorInstance} />
+                
                 <div className="w-[1px] h-4 bg-gray-200 mx-1" />
+                
+                <NodeSelector editor={editorInstance} />
+
+                <div className="w-[1px] h-4 bg-gray-200 mx-1" />
+                
                 <button 
                   onClick={(e) => { 
                     e.preventDefault(); 
@@ -116,15 +124,61 @@ export const NovelEditor = ({ content, onChange, minHeight = "300px" }: NovelEdi
                   className={`p-2 rounded hover:bg-gray-100 transition-colors ${editorInstance?.isActive('link') ? 'bg-gray-100 text-blue-600' : 'text-gray-600'}`}
                   title="Link"
                 >
-                  <span className="text-xs">Link</span>
+                  <LinkIcon size={16} />
                 </button>
                 <button 
                   onClick={(e) => { e.preventDefault(); editorInstance?.chain().focus().unsetLink().run(); }}
                   className="p-2 rounded hover:bg-gray-100 transition-colors text-gray-400"
                   title="Unlink"
                 >
-                  <span className="text-[10px]">Unlink</span>
+                  <Unlink size={16} />
                 </button>
+
+                <div className="w-[1px] h-4 bg-gray-200 mx-1" />
+
+                <EquationSelector editor={editorInstance} />
+
+                <div className="w-[1px] h-4 bg-gray-200 mx-1" />
+
+                <button 
+                  onClick={(e) => { e.preventDefault(); editorInstance?.chain().focus().toggleBold().run(); }}
+                  className={`p-2 rounded hover:bg-gray-100 transition-colors ${editorInstance?.isActive('bold') ? 'bg-gray-100 text-blue-600' : 'text-gray-600'}`}
+                  title="Bold"
+                >
+                  <Bold size={16} />
+                </button>
+                <button 
+                  onClick={(e) => { e.preventDefault(); editorInstance?.chain().focus().toggleItalic().run(); }}
+                  className={`p-2 rounded hover:bg-gray-100 transition-colors ${editorInstance?.isActive('italic') ? 'bg-gray-100 text-blue-600' : 'text-gray-600'}`}
+                  title="Italic"
+                >
+                  <Italic size={16} />
+                </button>
+                <button 
+                  onClick={(e) => { e.preventDefault(); editorInstance?.chain().focus().toggleUnderline().run(); }}
+                  className={`p-2 rounded hover:bg-gray-100 transition-colors ${editorInstance?.isActive('underline') ? 'bg-gray-100 text-blue-600' : 'text-gray-600'}`}
+                  title="Underline"
+                >
+                  <Underline size={16} />
+                </button>
+                <button 
+                  onClick={(e) => { e.preventDefault(); editorInstance?.chain().focus().toggleStrike().run(); }}
+                  className={`p-2 rounded hover:bg-gray-100 transition-colors ${editorInstance?.isActive('strike') ? 'bg-gray-100 text-blue-600' : 'text-gray-600'}`}
+                  title="Strikethrough"
+                >
+                  <Strikethrough size={16} />
+                </button>
+                <button 
+                  onClick={(e) => { e.preventDefault(); editorInstance?.chain().focus().toggleCode().run(); }}
+                  className={`p-2 rounded hover:bg-gray-100 transition-colors ${editorInstance?.isActive('code') ? 'bg-gray-100 text-blue-600' : 'text-gray-600'}`}
+                  title="Code"
+                >
+                  <Code size={16} />
+                </button>
+
+                <div className="w-[1px] h-4 bg-gray-200 mx-1" />
+
+                <ColorSelector editor={editorInstance} />
              </div>
           </EditorBubble>
         </EditorContent>

@@ -10,8 +10,13 @@ import {
   MessageSquarePlus,
   Text,
   TextQuote,
+  Youtube as YoutubeIcon,
+  Twitter as TwitterIcon,
 } from "lucide-react";
 import { createSuggestionItems, Command } from "novel";
+import { convertToWebP } from "../../lib/imageOptimization";
+import { supabase } from "../../lib/supabase";
+import toast from "react-hot-toast";
 
 export const suggestionItems = createSuggestionItems([
   {
@@ -126,22 +131,82 @@ export const suggestionItems = createSuggestionItems([
     icon: ImageIcon,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).run();
-      // upload image logic would go here
       const input = document.createElement("input");
       input.type = "file";
       input.accept = "image/*";
       input.onchange = async () => {
         if (input.files?.length) {
           const file = input.files[0];
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const src = e.target?.result as string;
-            editor.chain().focus().setImage({ src }).run();
-          };
-          reader.readAsDataURL(file);
+          const toastId = toast.loading("Mengoptimasi & mengupload gambar...");
+          
+          try {
+            // Optimasi gambar menjadi WebP lebih agresif untuk inline article
+            const webpBlob = await convertToWebP(file, { maxWidth: 1200, maxHeight: 1200, quality: 0.7 });
+            const fileName = `content-${Date.now()}-${Math.random().toString(36).substring(7)}.webp`;
+            
+            console.log(`[Upload Image] Original size: ${(file.size / 1024).toFixed(2)} KB`);
+            console.log(`[Upload Image] Optimized size: ${(webpBlob.size / 1024).toFixed(2)} KB`);
+            
+            // Konversi Blob menjadi File agar Supabase bisa membaca ukurannya dengan akurat
+            const webpFile = new File([webpBlob], fileName, { type: 'image/webp' });
+            
+            // Upload ke storage Supabase
+            const { error: uploadError } = await supabase.storage
+              .from('article-images')
+              .upload(fileName, webpFile, { contentType: 'image/webp', upsert: true });
+              
+            if (uploadError) throw uploadError;
+            
+            // Dapatkan URL publik dan masukkan ke editor
+            const { data } = supabase.storage.from('article-images').getPublicUrl(fileName);
+            editor.chain().focus().setImage({ src: data.publicUrl }).run();
+            
+            toast.success("Gambar berhasil ditambahkan", { id: toastId });
+          } catch (err: any) {
+            console.error("Image upload error:", err);
+            toast.error(`Gagal memproses gambar: ${err.message || 'Unknown error'}`, { id: toastId });
+          }
         }
       };
       input.click();
+    },
+  },
+  {
+    title: "Youtube",
+    description: "Embed a Youtube video.",
+    searchTerms: ["video", "youtube", "embed"],
+    icon: YoutubeIcon,
+    command: ({ editor, range }) => {
+      const videoLink = prompt("Please enter Youtube URL");
+      if (videoLink) {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setYoutubeVideo({
+            src: videoLink,
+          })
+          .run();
+      }
+    },
+  },
+  {
+    title: "Twitter",
+    description: "Embed a Tweet.",
+    searchTerms: ["twitter", "tweet", "embed"],
+    icon: TwitterIcon,
+    command: ({ editor, range }) => {
+      const tweetLink = prompt("Please enter Tweet URL");
+      if (tweetLink) {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setTweet({
+            src: tweetLink,
+          })
+          .run();
+      }
     },
   },
 ]);

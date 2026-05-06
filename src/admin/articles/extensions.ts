@@ -7,7 +7,13 @@ import {
   HorizontalRule,
   StarterKit,
   Placeholder,
+  Youtube,
+  Color,
+  TextStyle,
+  HighlightExtension as Highlight,
 } from "novel";
+import { Mathematics } from "./math-extension";
+import { Twitter } from "./twitter-extension";
 
 import { cx } from "class-variance-authority";
 
@@ -71,6 +77,13 @@ const horizontalRule = HorizontalRule.configure({
   },
 });
 
+const youtube = Youtube.configure({
+  HTMLAttributes: {
+    class: cx("rounded-lg border border-muted"),
+  },
+  inline: false,
+});
+
 const starterKit = StarterKit.configure({
   bulletList: {
     HTMLAttributes: {
@@ -119,4 +132,10 @@ export const defaultExtensions = [
   taskList,
   taskItem,
   horizontalRule,
+  youtube,
+  Twitter,
+  Mathematics,
+  Color,
+  TextStyle,
+  Highlight.configure({ multicolor: true }),
 ];

@@ -29,6 +29,7 @@ export const AdminInfoForm = () => {
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [oldImageUrl, setOldImageUrl] = useState<string>('');
 
   useEffect(() => {
     if (isEdit) {
@@ -50,6 +51,7 @@ export const AdminInfoForm = () => {
             work_type: data.work_type || 'offline',
           });
           setPreviewUrl(data.poster_url || '');
+          setOldImageUrl(data.poster_url || '');
         } else if (error) {
           toast.error('Gagal memuat data info mahasiswa');
         }
@@ -116,6 +118,14 @@ export const AdminInfoForm = () => {
           .getPublicUrl(filePath);
 
         poster_url = publicUrlData.publicUrl;
+
+        // Cleanup old poster from storage if replaced
+        if (isEdit && oldImageUrl && oldImageUrl.includes('info-mahasiswa-posters')) {
+          const oldFileName = oldImageUrl.split('/').pop();
+          if (oldFileName) {
+            supabase.storage.from('info-mahasiswa-posters').remove([oldFileName]).catch(console.error);
+          }
+        }
       } catch (err) {
         toast.error('Gagal mengoptimasi gambar');
         setSaving(false);

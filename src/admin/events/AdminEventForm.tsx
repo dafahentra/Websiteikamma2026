@@ -30,6 +30,7 @@ export const AdminEventForm = () => {
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [oldImageUrl, setOldImageUrl] = useState<string>('');
 
   useEffect(() => {
     if (isEdit) {
@@ -52,6 +53,7 @@ export const AdminEventForm = () => {
             registration_link: data.registration_link || '',
           });
           setPreviewUrl(data.image_url || '');
+          setOldImageUrl(data.image_url || '');
         } else if (error) {
           toast.error('Gagal memuat data event');
         }
@@ -124,6 +126,14 @@ export const AdminEventForm = () => {
           .getPublicUrl(filePath);
 
         image_url = publicUrlData.publicUrl;
+
+        // Cleanup old image from storage if replaced
+        if (isEdit && oldImageUrl && oldImageUrl.includes('event-banners')) {
+          const oldFileName = oldImageUrl.split('/').pop();
+          if (oldFileName) {
+            supabase.storage.from('event-banners').remove([oldFileName]).catch(console.error);
+          }
+        }
       } catch (err) {
         toast.error('Gagal mengoptimasi gambar');
         setSaving(false);

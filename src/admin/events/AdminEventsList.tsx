@@ -42,10 +42,19 @@ export const AdminEventsList = () => {
   const handleDelete = async (id: number) => {
     if (!window.confirm('Yakin ingin menghapus event ini?')) return;
 
+    const event = events.find(e => e.id === id);
+    let imageToDelete = '';
+    if (event && event.image_url && event.image_url.includes('event-banners')) {
+      imageToDelete = event.image_url.split('/').pop() || '';
+    }
+
     const { error } = await supabase.from('events').delete().eq('id', id);
     if (error) {
       toast.error('Gagal menghapus event');
     } else {
+      if (imageToDelete) {
+        supabase.storage.from('event-banners').remove([imageToDelete]).catch(console.error);
+      }
       toast.success('Event berhasil dihapus');
       fetchEvents();
     }

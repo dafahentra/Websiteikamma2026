@@ -37,10 +37,19 @@ export const AdminInfoList = () => {
   const handleDelete = async (id: number) => {
     if (!window.confirm('Yakin ingin menghapus info ini?')) return;
 
+    const item = infoItems.find(i => i.id === id);
+    let imageToDelete = '';
+    if (item && item.poster_url && item.poster_url.includes('info-mahasiswa-posters')) {
+      imageToDelete = item.poster_url.split('/').pop() || '';
+    }
+
     const { error } = await supabase.from('info_mahasiswa').delete().eq('id', id);
     if (error) {
       toast.error('Gagal menghapus info');
     } else {
+      if (imageToDelete) {
+        supabase.storage.from('info-mahasiswa-posters').remove([imageToDelete]).catch(console.error);
+      }
       toast.success('Info berhasil dihapus');
       fetchInfo();
     }

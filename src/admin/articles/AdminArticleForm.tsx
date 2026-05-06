@@ -25,6 +25,7 @@ export const AdminArticleForm = () => {
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [oldImageUrl, setOldImageUrl] = useState<string>('');
 
   const formatDateForInput = (dateStr: string) => {
     if (!dateStr) return '';
@@ -73,6 +74,7 @@ export const AdminArticleForm = () => {
             content: data.content || '',
           });
           setPreviewUrl(data.image_url || '');
+          setOldImageUrl(data.image_url || '');
         } else if (error) {
           toast.error('Gagal memuat data artikel');
         }
@@ -98,11 +100,11 @@ export const AdminArticleForm = () => {
 
     if (imageFile) {
       try {
-        // Aggressive optimization for article banners to fit Supabase limits
+        // Extreme optimization for article banners to ensure minimal file size
         const webpBlob = await convertToWebP(imageFile, { 
-          maxWidth: 1280, 
-          maxHeight: 720, 
-          quality: 0.7 
+          maxWidth: 1000, 
+          maxHeight: 600, 
+          quality: 0.5 
         });
         const fileName = `${Math.random()}.webp`;
         const filePath = `${fileName}`;
@@ -125,6 +127,14 @@ export const AdminArticleForm = () => {
           .getPublicUrl(filePath);
 
         image_url = publicUrlData.publicUrl;
+
+        // If editing and we have a new upload, delete the old image file from storage
+        if (isEdit && oldImageUrl && oldImageUrl.includes('article-images')) {
+          const oldFileName = oldImageUrl.split('/').pop();
+          if (oldFileName) {
+            supabase.storage.from('article-images').remove([oldFileName]).catch(console.error);
+          }
+        }
       } catch (err) {
         toast.error('Gagal mengoptimasi gambar');
         setSaving(false);

@@ -140,8 +140,8 @@ export const suggestionItems = createSuggestionItems([
           const toastId = toast.loading("Mengoptimasi & mengupload gambar...");
           
           try {
-            // Optimasi gambar menjadi WebP lebih agresif untuk inline article
-            const webpBlob = await convertToWebP(file, { maxWidth: 1200, maxHeight: 1200, quality: 0.7 });
+            // Optimasi gambar menjadi WebP lebih ekstrim untuk inline article agar upload stabil
+            const webpBlob = await convertToWebP(file, { maxWidth: 1000, maxHeight: 1000, quality: 0.5 });
             const fileName = `content-${Date.now()}-${Math.random().toString(36).substring(7)}.webp`;
             
             console.log(`[Upload Image] Original size: ${(file.size / 1024).toFixed(2)} KB`);

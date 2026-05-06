@@ -90,10 +90,10 @@ export function DepartmentDetail() {
 
           {/* Background Large Logo (Centered) */}
           <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[400px] md:w-[800px] opacity-[0.04] pointer-events-none z-[-1] flex items-center justify-center">
-            <img 
-              src={department.logo} 
+            <img
+              src={department.logo}
               alt={`${department.name} Logo`}
-              className="w-full h-auto opacity-15 mix-blend-multiply" 
+              className="w-full h-auto opacity-15 mix-blend-multiply"
             />
           </div>
 
@@ -113,13 +113,13 @@ export function DepartmentDetail() {
               />
               {/* Manager Label - Positioned near head but behind */}
               <motion.div
-                className="absolute left-[70%] md:left-full ml-[-10px] md:-ml-[90px] top-[15%] md:top-[18%] z-0"
+                className="absolute left-[70%] md:left-full ml-[-30px] md:-ml-[90px] top-[15%] md:top-[18%] z-0 max-w-[140px] md:max-w-none"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <h3 className="text-base md:text-3xl lg:text-4xl font-inter whitespace-nowrap drop-shadow-md text-[#081C36]" style={{ fontWeight: 800 }}>{department.manager}</h3>
-                <p className="text-[#081C36]/70 text-[9px] md:text-lg lg:text-xl font-medium drop-shadow-md">Manager</p>
+                <h3 className="text-sm sm:text-base md:text-3xl lg:text-4xl font-inter md:whitespace-nowrap drop-shadow-md text-[#081C36] leading-tight" style={{ fontWeight: 800 }}>{department.manager}</h3>
+                <p className="text-[#081C36]/70 text-[8px] sm:text-[9px] md:text-lg lg:text-xl font-medium drop-shadow-md">Manager</p>
               </motion.div>
             </div>
           </motion.div>
@@ -131,13 +131,13 @@ export function DepartmentDetail() {
             <div className="h-full w-auto shrink-0 relative">
               {/* Vice Manager Label - Positioned near head but behind */}
               <motion.div
-                className="absolute right-[70%] md:right-full mr-[-10px] md:-mr-[90px] top-[15%] md:top-[18%] text-right z-0"
+                className="absolute right-[70%] md:right-full mr-[-30px] md:-mr-[90px] top-[15%] md:top-[18%] text-right z-0 max-w-[140px] md:max-w-none"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <h3 className="text-base md:text-3xl lg:text-4xl font-inter whitespace-nowrap drop-shadow-md text-[#081C36]" style={{ fontWeight: 800 }}>{department.viceManager}</h3>
-                <p className="text-[#081C36]/70 text-[9px] md:text-lg lg:text-xl font-medium drop-shadow-md">Vice Manager</p>
+                <h3 className="text-sm sm:text-base md:text-3xl lg:text-4xl font-inter md:whitespace-nowrap drop-shadow-md text-[#081C36] leading-tight" style={{ fontWeight: 800 }}>{department.viceManager}</h3>
+                <p className="text-[#081C36]/70 text-[8px] sm:text-[9px] md:text-lg lg:text-xl font-medium drop-shadow-md">Vice Manager</p>
               </motion.div>
               <motion.img
                 style={{ x: parallaxXRight }}
@@ -197,10 +197,10 @@ export function DepartmentDetail() {
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
-                <img 
-                  src={department.logo} 
+                <img
+                  src={department.logo}
                   alt={`${department.name} Logo`}
-                  className="max-w-full max-h-full object-contain mix-blend-multiply drop-shadow-xl" 
+                  className="max-w-full max-h-full object-contain mix-blend-multiply drop-shadow-xl"
                 />
               </motion.div>
             </div>
@@ -219,7 +219,7 @@ export function DepartmentDetail() {
                 <span className="font-caslon-italic font-bold">About</span> <span className="font-inter font-bold">{department.name}</span>
               </span>
             </h2>
-            <p 
+            <p
               className="text-[#081C36]/70 text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl text-justify md:text-left"
               dangerouslySetInnerHTML={{ __html: department.description.replace(/\*\*(.*?)\*\*/g, '<span class="text-[#081C36] font-bold font-inter">$1</span>') }}
             />

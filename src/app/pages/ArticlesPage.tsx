@@ -29,7 +29,7 @@ const DotPattern = ({ className }: { className: string }) => (
 import { ARTICLES_PAGE_PHOTOS, ARTICLES_PAGE_HERO } from '../../assets/photos';
 
 /* ── Sample Data ─────────────────────────────────────────────────── */
-const CATEGORIES = ['All Topics', 'IKAMMA Insights', 'Campus Life', 'Career', 'Alumni'];
+const CATEGORIES = ['All Topics', 'Research & Study', 'Sparta Info Terkini', 'News', 'Announcement'];
 
 export function ArticlesPage() {
   const { pathname } = useLocation();

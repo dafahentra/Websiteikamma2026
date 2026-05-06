@@ -6,9 +6,6 @@ import { NovelEditor } from './NovelEditor';
 import { convertToWebP } from '../../lib/imageOptimization';
 import { ChevronLeft } from 'lucide-react';
 
-// Registering custom fonts or sizes if needed, but for now we'll use standard ones
-// and ensure the toolbar is comprehensive.
-
 export const AdminArticleForm = () => {
   const { id } = useParams();
   const isEdit = !!id;
@@ -28,6 +25,37 @@ export const AdminArticleForm = () => {
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
+
+  const formatDateForInput = (dateStr: string) => {
+    if (!dateStr) return '';
+    if (dateStr.includes('-') && dateStr.split('-').length === 3) return dateStr;
+    
+    const parts = dateStr.split(' ');
+    if (parts.length !== 3) return dateStr;
+    
+    const day = parts[0].padStart(2, '0');
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    const monthIndex = months.indexOf(parts[1]);
+    if (monthIndex === -1) return dateStr;
+    
+    const month = (monthIndex + 1).toString().padStart(2, '0');
+    return `${parts[2]}-${month}-${day}`;
+  };
+
+  const formatDateForStorage = (dateStr: string) => {
+    if (!dateStr) return null;
+    if (!dateStr.includes('-')) return dateStr;
+
+    try {
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return dateStr;
+      
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+    } catch (e) {
+      return dateStr;
+    }
+  };
 
   useEffect(() => {
     if (isEdit) {
@@ -69,10 +97,13 @@ export const AdminArticleForm = () => {
     let image_url = previewUrl;
 
     if (imageFile) {
-      setSaving(true);
       try {
-        // Optimize and convert to WebP
-        const webpBlob = await convertToWebP(imageFile);
+        // Aggressive optimization for article banners to fit Supabase limits
+        const webpBlob = await convertToWebP(imageFile, { 
+          maxWidth: 1280, 
+          maxHeight: 720, 
+          quality: 0.7 
+        });
         const fileName = `${Math.random()}.webp`;
         const filePath = `${fileName}`;
         const webpFile = new File([webpBlob], fileName, { type: 'image/webp' });
@@ -101,30 +132,55 @@ export const AdminArticleForm = () => {
       }
     }
 
-    // Generate snippet from content by removing HTML tags
     const plainTextContent = formData.content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ');
     const autoDescription = plainTextContent.length > 200 
       ? plainTextContent.substring(0, 200) + '...' 
       : plainTextContent;
 
+    // Validate required fields manually
+    if (!formData.title.trim()) {
+      toast.error('Judul wajib diisi');
+      setSaving(false);
+      return;
+    }
+
+    if (!formData.content.trim()) {
+      toast.error('Konten artikel wajib diisi');
+      setSaving(false);
+      return;
+    }
+
+    if (!isEdit && !imageFile && !previewUrl) {
+      toast.error('Silakan pilih gambar banner');
+      setSaving(false);
+      return;
+    }
+
     const payload = {
       ...formData,
+      date: formData.date || null, // Standard DATE format for DB
       editor: formData.editor.trim() !== '' ? formData.editor : formData.author,
       description: autoDescription,
       image_url,
     };
 
+    console.log('DEBUG - Saving Article Payload:', payload);
+
     if (isEdit) {
       const { error } = await supabase.from('articles').update(payload).eq('id', id);
-      if (error) toast.error('Gagal memperbarui artikel');
-      else {
+      if (error) {
+        console.error('Supabase Update Error:', error);
+        toast.error(`Gagal memperbarui artikel: ${error.message || JSON.stringify(error)}`);
+      } else {
         toast.success('Artikel diperbarui');
         navigate('/admin/articles');
       }
     } else {
       const { error } = await supabase.from('articles').insert([payload]);
-      if (error) toast.error('Gagal menyimpan artikel');
-      else {
+      if (error) {
+        console.error('Supabase Insert Error:', error);
+        toast.error(`Gagal menyimpan artikel: ${error.message || JSON.stringify(error)}`);
+      } else {
         toast.success('Artikel tersimpan');
         navigate('/admin/articles');
       }
@@ -158,8 +214,8 @@ export const AdminArticleForm = () => {
           >
             <option value="Research & Study">Research & Study</option>
             <option value="Sparta Info Terkini">Sparta Info Terkini</option>
-            <option value="Announcement">Announcement</option>
             <option value="News">News</option>
+            <option value="Announcement">Announcement</option>
           </select>
         </div>
 
@@ -173,8 +229,6 @@ export const AdminArticleForm = () => {
             required 
           />
         </div>
-
-
 
         <div>
           <label className="block text-sm font-medium mb-1">Konten Lengkap Artikel *</label>
@@ -210,7 +264,7 @@ export const AdminArticleForm = () => {
             <label className="block text-sm font-medium mb-1">Tanggal Diposting *</label>
             <input 
               type="date" 
-              value={formData.date} 
+              value={formatDateForInput(formData.date)} 
               onChange={(e) => setFormData({...formData, date: e.target.value})}
               className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required 
@@ -242,7 +296,6 @@ export const AdminArticleForm = () => {
                 accept="image/*" 
                 onChange={handleFileChange}
                 className="hidden"
-                required={!isEdit && !previewUrl}
               />
               <div className="flex items-center gap-3">
                 <label 

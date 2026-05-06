@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router';
 import toast from 'react-hot-toast';
 import { NovelEditor } from '../articles/NovelEditor';
 import { convertToWebP } from '../../lib/imageOptimization';
-import { ArrowLeft } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 
 export const AdminInfoForm = () => {
   const { id } = useParams();
@@ -153,13 +153,13 @@ export const AdminInfoForm = () => {
 
   return (
     <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-4 mb-6">
         <button 
           onClick={() => navigate('/admin/info-mahasiswa')}
-          className="p-2 -ml-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors focus:outline-none"
+          className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-50 hover:text-blue-600 text-gray-600 transition-all focus:outline-none"
           title="Kembali"
         >
-          <ArrowLeft size={24} />
+          <ChevronLeft size={24} strokeWidth={2} className="ml-[-2px]" />
         </button>
         <h1 className="text-2xl font-bold">{isEdit ? 'Edit Info Mahasiswa' : 'Tambah Info Mahasiswa'}</h1>
       </div>

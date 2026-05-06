@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
 import AnimatedButton from "./AnimatedButton";
+import { Clock, User, ChevronRight } from "lucide-react";
 
 interface Article {
   id: string;
@@ -10,6 +11,8 @@ interface Article {
   description: string;
   image_url: string;
   category: string;
+  read_time: string;
+  author: string;
 }
 
 export function ArticlesSection() {
@@ -69,25 +72,56 @@ export function ArticlesSection() {
               onClick={() => window.location.href = `/articles/${article.id}`}
             >
               {/* Image */}
-              <div className="w-full aspect-[4/3] bg-[#f0f2f5] mb-6 overflow-hidden rounded-2xl md:rounded-none relative">
+              <div className="w-full aspect-[4/3] bg-[#081C36]/[0.03] mb-6 overflow-hidden relative">
                 <img
                   src={article.image_url}
                   alt={article.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
               </div>
 
               {/* Text Content */}
-              <p className="text-[#081C36]/50 text-sm md:text-base font-light mb-2 md:mb-3">
-                {article.date}
-              </p>
-              <h3 className="text-xl md:text-2xl font-bold text-[#081C36] mb-3 md:mb-4 group-hover:text-[#081C36]/70 transition-colors duration-300">
-                {article.title}
-              </h3>
-              <p className="text-[#081C36]/60 font-light leading-relaxed text-sm md:text-base line-clamp-3">
-                {article.description}
-              </p>
+              <div className="flex flex-col flex-grow">
+                {/* Header Meta: Category & Date */}
+                <div className="flex items-center justify-between gap-1 mb-2 md:mb-3">
+                  <span className="inline-block px-2 py-0.5 md:px-3 md:py-1 rounded-md bg-[#081C36]/[0.06] text-[#081C36] text-[9px] md:text-xs font-inter font-semibold uppercase tracking-wider">
+                    {article.category}
+                  </span>
+                  <span className="text-[#081C36]/50 text-[9px] md:text-xs font-inter">
+                    {article.date}
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-sm md:text-2xl font-inter font-bold mb-1 group-hover:text-[#081C36]/70 transition-colors duration-300 line-clamp-2 leading-snug">
+                  {article.title}
+                </h3>
+
+                {/* Footer Meta: Author & Read Time */}
+                <div className="flex items-center gap-3 text-[#081C36]/50 text-[9px] md:text-xs font-inter mb-3 md:mb-4">
+                  <div className="flex items-center gap-1">
+                    <User size={10} className="md:w-3 md:h-3" />
+                    <span>{article.author}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock size={10} className="md:w-3 md:h-3" />
+                    <span>{article.read_time.includes('min') ? article.read_time : `${article.read_time} min read`}</span>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="text-[#081C36]/60 text-[11px] md:text-base font-inter leading-relaxed mb-3 md:mb-4 line-clamp-2 md:line-clamp-3">
+                  {article.description}
+                </p>
+
+                {/* Read More */}
+                <div className="mt-auto flex justify-end">
+                  <span className="text-[#081C36] text-[10px] md:text-sm font-bold flex items-center gap-1 group-hover:underline">
+                    Read More <ChevronRight size={14} className="md:w-4 md:h-4" />
+                  </span>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>

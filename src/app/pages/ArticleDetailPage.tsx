@@ -138,22 +138,29 @@ export function ArticleDetailPage() {
 
       {/* ── Metadata Bar ─────────────────────────────────────────── */}
       <div className="bg-white border-b border-gray-100 sticky top-20 z-30 backdrop-blur-xl bg-white/80">
-        <div className="container mx-auto px-6 md:px-12 py-8 flex flex-wrap items-center gap-x-12 gap-y-4 text-[#081C36]/80 text-base md:text-lg font-medium">
-          <div className="flex items-center gap-3">
-            <CalendarDays size={20} className="text-[#081C36]/20" />
-            <span>{article.date}</span>
+        <div className="container mx-auto px-6 md:px-12 py-6 md:py-8 grid grid-cols-2 md:grid-cols-4 items-center gap-y-4 text-[#081C36]/80 text-sm md:text-lg font-medium">
+          {/* 1. Date (Always Left) */}
+          <div className="flex items-center gap-3 order-1">
+            <CalendarDays size={20} className="text-[#081C36]/20 shrink-0" />
+            <span className="whitespace-nowrap">{article.date}</span>
           </div>
-          <div className="flex items-center gap-3">
-            <User size={20} className="text-[#081C36]/20" />
-            <span>Penulis: <span className="font-bold text-[#081C36]">{article.author}</span></span>
+
+          {/* 2. Penulis (Mobile: Right, Tablet: Center/Left) */}
+          <div className="flex items-center gap-3 order-2 justify-end md:justify-start">
+            <User size={20} className="text-[#081C36]/20 shrink-0" />
+            <span className="truncate">Penulis: <span className="font-bold text-[#081C36]">{article.author}</span></span>
           </div>
-          <div className="flex items-center gap-3">
-            <User size={20} className="text-[#081C36]/20" />
-            <span>Editor: <span className="font-bold text-[#081C36]">{article.editor || "IKAMMA Team"}</span></span>
+
+          {/* 3. Editor (Mobile: Left, Tablet: Right) */}
+          <div className="flex items-center gap-3 order-3 md:justify-end">
+            <User size={20} className="text-[#081C36]/20 shrink-0" />
+            <span className="truncate">Editor: <span className="font-bold text-[#081C36]">{article.editor || "IKAMMA Team"}</span></span>
           </div>
-          <div className="flex items-center gap-3 ml-auto">
-            <Clock size={20} className="text-[#081C36]/20" />
-            <span className="font-bold text-[#081C36]">{article.read_time}</span>
+
+          {/* 4. Read Time (Always Right) */}
+          <div className="flex items-center gap-3 order-4 justify-end">
+            <Clock size={20} className="text-[#081C36]/20 shrink-0" />
+            <span className="font-bold text-[#081C36] whitespace-nowrap">{article.read_time}</span>
           </div>
         </div>
       </div>

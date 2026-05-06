@@ -63,10 +63,50 @@ export function ArticleDetailPage() {
 
   if (loading) {
     return (
-      <div className="bg-[#081C36] min-h-screen text-white flex items-center justify-center">
-        <div className="animate-pulse flex flex-col items-center">
-          <div className="w-12 h-12 border-4 border-t-white border-[#081C36] rounded-full animate-spin"></div>
-          <p className="mt-4 text-white/50 font-inter">Loading article...</p>
+      <div className="bg-white min-h-screen">
+        <Navbar />
+        {/* Skeleton Hero */}
+        <div className="relative h-[70vh] md:h-[80vh] bg-gray-200 animate-pulse flex items-end px-6 md:px-12 pb-16">
+          <div className="max-w-4xl w-full">
+            <div className="h-8 w-32 bg-gray-300 rounded-full mb-6"></div>
+            <div className="h-12 md:h-20 w-full bg-gray-300 rounded-xl mb-4"></div>
+            <div className="h-12 md:h-20 w-3/4 bg-gray-300 rounded-xl"></div>
+          </div>
+        </div>
+
+        {/* Skeleton Meta Bar */}
+        <div className="border-b border-gray-100 py-8">
+          <div className="container mx-auto px-6 md:px-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-6 bg-gray-100 rounded animate-pulse"></div>
+            ))}
+          </div>
+        </div>
+
+        {/* Skeleton Content Area */}
+        <div className="container mx-auto px-6 md:px-12 py-20">
+          <div className="flex flex-col lg:flex-row gap-20">
+            <div className="lg:w-2/3 space-y-6">
+              <div className="h-4 w-full bg-gray-100 rounded animate-pulse"></div>
+              <div className="h-4 w-full bg-gray-100 rounded animate-pulse"></div>
+              <div className="h-4 w-5/6 bg-gray-100 rounded animate-pulse"></div>
+              <div className="h-4 w-full bg-gray-100 rounded animate-pulse"></div>
+              <div className="h-4 w-4/5 bg-gray-100 rounded animate-pulse"></div>
+              <div className="pt-10 space-y-4">
+                <div className="h-8 w-1/3 bg-gray-100 rounded animate-pulse"></div>
+                <div className="h-4 w-full bg-gray-100 rounded animate-pulse"></div>
+              </div>
+            </div>
+            <div className="lg:w-1/3 space-y-10">
+              <div className="h-10 w-1/2 bg-gray-100 rounded animate-pulse mb-8"></div>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="space-y-3">
+                  <div className="h-6 w-full bg-gray-100 rounded animate-pulse"></div>
+                  <div className="h-4 w-1/4 bg-gray-50 rounded animate-pulse"></div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -56,7 +56,7 @@ export default async (req: Request, context: Context) => {
     }
 
     // Call Gemini API
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
     
     const geminiResponse = await fetch(geminiUrl, {
       method: "POST",
@@ -79,9 +79,18 @@ export default async (req: Request, context: Context) => {
     if (!geminiResponse.ok) {
       const errorBody = await geminiResponse.text();
       console.error("Gemini API error:", errorBody);
+      
+      let errorMessage = "Gagal menghubungi AI. Periksa API key Anda.";
+      
+      if (geminiResponse.status === 429) {
+        errorMessage = "Batas penggunaan AI (limit quota) telah tercapai. Silakan coba lagi beberapa saat lagi.";
+      } else if (geminiResponse.status === 403) {
+        errorMessage = "API Key tidak valid atau tidak diizinkan.";
+      }
+      
       return new Response(
-        JSON.stringify({ error: "Gagal menghubungi AI. Periksa API key Anda." }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        JSON.stringify({ error: errorMessage }),
+        { status: geminiResponse.status, headers: { "Content-Type": "application/json" } }
       );
     }
 

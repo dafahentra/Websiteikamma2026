@@ -86,9 +86,9 @@ export function Footer() {
     <footer className="bg-white text-[#081C36] font-inter">
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
         <div className="grid grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-          
+
           {/* Column 1: Brand Identity */}
-          <div className="col-span-2 lg:col-span-4 flex flex-col md:flex-row items-start md:items-center text-left gap-6 w-fit mx-auto lg:mx-0">
+          <div className="col-span-2 lg:col-span-4 flex flex-col md:flex-row items-center md:items-center text-center md:text-left gap-6 w-fit mx-auto lg:mx-0">
             <img src={Logo} alt="IKAMMA Logo" className="w-20 md:w-24 lg:w-28 object-contain" />
             <div className="flex flex-col gap-0.5">
               <h3 className="font-bold text-base md:text-lg text-[#081C36] leading-tight">

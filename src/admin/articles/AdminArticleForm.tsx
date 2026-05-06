@@ -153,7 +153,7 @@ export const AdminArticleForm = () => {
           <select 
             value={formData.category} 
             onChange={(e) => setFormData({...formData, category: e.target.value})}
-            className="w-full p-2 border rounded"
+            className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
             required
           >
             <option value="Research & Study">Research & Study</option>
@@ -169,7 +169,7 @@ export const AdminArticleForm = () => {
             type="text" 
             value={formData.title} 
             onChange={(e) => setFormData({...formData, title: e.target.value})}
-            className="w-full p-2 border rounded"
+            className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
             required 
           />
         </div>
@@ -192,7 +192,7 @@ export const AdminArticleForm = () => {
               type="text" 
               value={formData.author} 
               onChange={(e) => setFormData({...formData, author: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required 
             />
           </div>
@@ -202,7 +202,7 @@ export const AdminArticleForm = () => {
               type="text" 
               value={formData.editor} 
               onChange={(e) => setFormData({...formData, editor: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               placeholder="Opsional"
             />
           </div>
@@ -212,7 +212,7 @@ export const AdminArticleForm = () => {
               type="date" 
               value={formData.date} 
               onChange={(e) => setFormData({...formData, date: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required 
             />
           </div>
@@ -221,7 +221,7 @@ export const AdminArticleForm = () => {
             <select 
               value={formData.read_time} 
               onChange={(e) => setFormData({...formData, read_time: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required
             >
               <option value="">Pilih waktu baca</option>

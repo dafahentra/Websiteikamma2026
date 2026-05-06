@@ -200,7 +200,7 @@ export const AdminEventForm = () => {
             <select 
               value={formData.category} 
               onChange={(e) => setFormData({...formData, category: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required
             >
               <option value="Seminar">Seminar</option>
@@ -218,7 +218,7 @@ export const AdminEventForm = () => {
             type="text" 
             value={formData.title} 
             onChange={(e) => setFormData({...formData, title: e.target.value})}
-            className="w-full p-2 border rounded"
+            className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
             required 
           />
         </div>
@@ -230,7 +230,7 @@ export const AdminEventForm = () => {
               type="text" 
               value={formData.location} 
               onChange={(e) => setFormData({...formData, location: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required 
             />
           </div>
@@ -267,7 +267,7 @@ export const AdminEventForm = () => {
               type="url" 
               value={formData.registration_link} 
               onChange={(e) => setFormData({...formData, registration_link: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               placeholder="https://..."
             />
           </div>
@@ -277,7 +277,7 @@ export const AdminEventForm = () => {
               type="text" 
               value={formData.time} 
               onChange={(e) => setFormData({...formData, time: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required={formData.type === 'upcoming'}
             />
           </div>
@@ -290,7 +290,7 @@ export const AdminEventForm = () => {
               type="date" 
               value={formData.event_date} 
               onChange={(e) => setFormData({...formData, event_date: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required 
             />
           </div>
@@ -300,7 +300,7 @@ export const AdminEventForm = () => {
               type="date" 
               value={(formData as any).event_end_date || ''} 
               onChange={(e) => setFormData({...formData, event_end_date: e.target.value} as any)}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
             />
           </div>
         </div>
@@ -311,7 +311,7 @@ export const AdminEventForm = () => {
             <select 
               value={formData.status} 
               onChange={(e) => setFormData({...formData, status: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required
             >
               <option value="upcoming">Segera Hadir</option>

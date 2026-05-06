@@ -172,7 +172,7 @@ export const AdminInfoForm = () => {
             <select 
               value={formData.category} 
               onChange={(e) => setFormData({...formData, category: e.target.value as any})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required
             >
               <option value="Magang">Magang</option>
@@ -185,7 +185,7 @@ export const AdminInfoForm = () => {
             <select 
               value={formData.status} 
               onChange={(e) => setFormData({...formData, status: e.target.value as any})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required
             >
               <option value="open">Open</option>
@@ -200,7 +200,7 @@ export const AdminInfoForm = () => {
             type="text" 
             value={formData.title} 
             onChange={(e) => setFormData({...formData, title: e.target.value})}
-            className="w-full p-2 border rounded"
+            className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
             required 
           />
         </div>
@@ -229,7 +229,7 @@ export const AdminInfoForm = () => {
             type="text" 
             value={formData.organizer} 
             onChange={(e) => setFormData({...formData, organizer: e.target.value})}
-            className="w-full p-2 border rounded"
+            className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
             required 
           />
         </div>
@@ -259,7 +259,7 @@ export const AdminInfoForm = () => {
               type="date" 
               value={formatDateForInput(formData.posted_date)} 
               onChange={(e) => setFormData({...formData, posted_date: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required 
             />
           </div>
@@ -269,7 +269,7 @@ export const AdminInfoForm = () => {
               type="date" 
               value={formatDateForInput(formData.period_start)} 
               onChange={(e) => setFormData({...formData, period_start: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required 
             />
           </div>
@@ -279,7 +279,7 @@ export const AdminInfoForm = () => {
               type="date" 
               value={formatDateForInput(formData.period_end)} 
               onChange={(e) => setFormData({...formData, period_end: e.target.value})}
-              className="w-full p-2 border rounded"
+              className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required 
             />
           </div>
@@ -291,7 +291,7 @@ export const AdminInfoForm = () => {
             type="url" 
             value={formData.link} 
             onChange={(e) => setFormData({...formData, link: e.target.value})}
-            className="w-full p-2 border rounded"
+            className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
             placeholder="https://..."
             required 
           />

@@ -14,6 +14,7 @@ import TanganSvg from '../../assets/LogoKabinet/Tangan.svg';
 import DaunSvg from '../../assets/LogoKabinet/Daun.svg';
 import BungaSvg from '../../assets/LogoKabinet/Bunga.svg';
 import { Users, Briefcase, ShieldCheck, GraduationCap } from 'lucide-react';
+import HeroAbout from '../../assets/Background/HeroAbout.jpg';
 
 // Extract SVG inner paths
 const svgInner = LogoHitamRaw
@@ -118,9 +119,9 @@ function AboutHero() {
             }}
           >
             <img
-              src={SCRAPBOOK_PHOTOS[8]}
+              src={HeroAbout}
               className="w-full h-full object-cover"
-              alt="FEB UGM"
+              alt="About Hero"
             />
             {/* White overlay tint */}
             <motion.div
@@ -150,13 +151,13 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
   };
 
   const RowContent = (
-    <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 py-4 md:py-8 flex items-center justify-between gap-3 md:gap-4">
-      <h3 className="font-inter font-bold text-base md:text-3xl text-[#081C36] flex-1 leading-tight">{item.name}</h3>
-      <div className="flex items-center gap-4 md:gap-10 shrink-0 relative z-10">
-        <span className="px-3 py-1 md:px-8 md:py-2 rounded-full bg-[#081C36] text-white font-inter text-[10px] md:text-base font-medium min-w-[70px] md:min-w-[120px] text-center">
+    <div className="w-full max-w-[1400px] mx-auto px-4 md:px-12 py-6 md:py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4 h-full">
+      <h3 className="font-inter font-bold text-sm md:text-3xl text-[#081C36] flex-1 leading-tight">{item.name}</h3>
+      <div className="flex items-center gap-2 md:gap-10 shrink-0 relative z-10 w-full md:w-auto justify-between md:justify-end">
+        <span className="px-2 py-0.5 md:px-8 md:py-2 rounded-full bg-[#081C36] text-white font-inter text-[8px] md:text-base font-medium min-w-[50px] md:min-w-[120px] text-center">
           {item.type}
         </span>
-        <svg className="w-5 h-5 md:w-8 md:h-8 text-[#081C36] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-4 h-4 md:w-8 md:h-8 text-[#081C36] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
       </div>
@@ -169,7 +170,7 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="w-full border-b border-[#081C36]/15 group md:hover:bg-white/5 transition-colors cursor-pointer relative"
+      className="w-full border-b border-r border-[#081C36]/15 group md:hover:bg-white/5 transition-colors cursor-pointer relative"
       onMouseEnter={() => {
         if (window.innerWidth >= 1024) setIsHovered(true);
       }}
@@ -323,7 +324,7 @@ export function AboutIkamma() {
         <div className="relative w-36 h-36 md:w-44 md:h-44 mb-6 rounded-full">
           {/* Crescent glow at the bottom */}
           <div className="absolute inset-[-3px] rounded-full bg-gradient-to-b from-transparent via-transparent to-white/50 blur-[2px] opacity-80"></div>
-          <div className="absolute inset-0 rounded-full overflow-hidden bg-[#1A365D]">
+          <div className="absolute inset-0 rounded-full overflow-hidden bg-transparent">
             <img src={member.img || SCRAPBOOK_PHOTOS[8]} alt={member.name} className="w-full h-full object-cover object-top" />
           </div>
         </div>
@@ -675,7 +676,7 @@ export function AboutIkamma() {
             </h2>
           </div>
 
-          <div className="w-[100vw] self-center flex flex-col border-t border-[#081C36]/15 mt-8 relative">
+          <div className="w-full grid grid-cols-2 md:grid-cols-1 border-t border-l border-[#081C36]/15 mt-8 relative">
             {ORGANIZATION_LIST.map((item, i) => (
               <HoverImageRow key={i} item={item} index={i} photo={DEPT_PHOTOS[i % DEPT_PHOTOS.length]} />
             ))}

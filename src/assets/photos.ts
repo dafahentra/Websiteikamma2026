@@ -9,7 +9,7 @@
 
 // ── Hero / Intro / Backgrounds ──────────────────────────────────────
 import heroMain from './Background/BackgroundMain.jpg';
-import aboutBg from './Background/BackgroundAbout.jpg';
+import aboutBg from './Background/HeroAbout.jpg';
 import heroSectionBg from './Background/BackgroundMain.jpg';
 
 // ── Scrapbook Photos (Flying Photos) ────────────────────────────────
@@ -56,19 +56,19 @@ import eventCard1 from './FotoEvent/FotoCI.jpg';
 import eventCard2 from './FotoEvent/FotoME.JPG';
 import eventCard3 from './FotoEvent/FotoMenefest.jpg';
 import eventCard4 from './FotoEvent/FotoYES!.jpg';
-import eventsBg from './Background/BackgroundAbout.jpg';
+import eventsBg from './Background/HeroAbout.jpg';
 
 // ── Articles / Gallery (Fallback to old for now or use backgrounds) ──
-import article1 from './Background/BackgroundAbout.jpg';
+import article1 from './Background/HeroAbout.jpg';
 import article2 from './Background/BackgroundMain.jpg';
-import article3 from './Background/BackgroundAbout.jpg';
+import article3 from './Background/HeroAbout.jpg';
 
 import gallery1 from './Background/BackgroundMain.jpg';
-import gallery2 from './Background/BackgroundAbout.jpg';
+import gallery2 from './Background/HeroAbout.jpg';
 import gallery3 from './Background/BackgroundMain.jpg';
-import gallery4 from './Background/BackgroundAbout.jpg';
+import gallery4 from './Background/HeroAbout.jpg';
 import gallery5 from './Background/BackgroundMain.jpg';
-import gallery6 from './Background/BackgroundAbout.jpg';
+import gallery6 from './Background/HeroAbout.jpg';
 
 // ── Upcoming / News ────────────────────────────────────────────────
 import upcoming1 from './FotoEvent/FotoCI.jpg';

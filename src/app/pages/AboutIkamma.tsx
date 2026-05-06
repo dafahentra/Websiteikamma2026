@@ -77,8 +77,8 @@ function AboutHero() {
   );
 
   return (
-    <div ref={containerRef} className="relative w-full h-[140vh] bg-white">
-      <div className="sticky top-0 w-full h-screen bg-white overflow-hidden">
+    <div ref={containerRef} className="relative w-full h-[140vh] bg-transparent">
+      <div className="sticky top-0 w-full h-screen bg-transparent overflow-hidden">
 
         {/* Background Marquee Text - 2 Sliders */}
         <motion.div
@@ -118,7 +118,7 @@ function AboutHero() {
             }}
           >
             <img
-              src={ABOUT_BACKGROUND}
+              src={SCRAPBOOK_PHOTOS[8]}
               className="w-full h-full object-cover"
               alt="FEB UGM"
             />
@@ -358,11 +358,20 @@ export function AboutIkamma() {
 
   return (
     <div className="min-h-screen bg-white text-[#081C36] flex flex-col relative overflow-x-hidden">
+      {/* Global Background Image */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <img 
+          src={ABOUT_BACKGROUND} 
+          alt="Background" 
+          className="w-full h-full object-cover opacity-10"
+        />
+      </div>
+
       <Navbar />
 
       <AboutHero />
 
-      <main className="flex-grow relative z-10 max-w-[1400px] mx-auto w-full px-6 md:px-12 bg-white">
+      <main className="flex-grow relative z-10 max-w-[1400px] mx-auto w-full px-6 md:px-12 bg-transparent">
 
         {/* Info Block */}
         <motion.div

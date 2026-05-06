@@ -460,13 +460,16 @@ export function Hero() {
           <div className="absolute inset-0 z-0">
             <video
               ref={videoRef}
-              src={HERO_IMAGE}
               autoPlay
               loop
               muted
               playsInline
+              preload="auto"
               className="w-full h-full object-cover pointer-events-none"
-            />
+            >
+              <source src={HERO_IMAGE} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
             <motion.div
               className="absolute inset-0 bg-white"
               style={{ opacity: whiteLayerOpacity }}

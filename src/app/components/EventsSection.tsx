@@ -146,8 +146,8 @@ export function EventsSection() {
                 className="text-[#0C2340] text-4xl md:text-5xl flex items-center gap-3"
               >
                 <span className="text-[#081C36]">—</span>
-                <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
-                <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Notable Events</span>
+                <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Notable</span>
+                <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Events</span>
               </motion.h2>
             </div>
 

@@ -181,8 +181,8 @@ export function NewsSection() {
             className="text-[#081C36] text-4xl md:text-5xl flex items-center gap-3 mb-4"
           >
             <span className="text-[#081C36]">—</span>
-            <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">See</span>
-            <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">What's News</span>
+            <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Latest</span>
+            <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Updates</span>
           </motion.h2>
 
           <motion.div

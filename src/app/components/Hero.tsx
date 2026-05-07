@@ -226,6 +226,7 @@ export function Hero() {
   });
   const maskOpacity = useTransform(progress, [0.0, 0.05], [0, 1]);
   const captionOpacity = useTransform(progress, [0.0, 0.05], [1, 0]);
+  const scrollIndicatorOpacity = useTransform(progress, [0.0, 0.03], [1, 0]);
 
   // Slide-up exit: after zoom-in finishes, mask slides up and out of view
   const maskY = useTransform(progress, [tP1End, tP3End], ["0vh", "-60vh"]);
@@ -519,6 +520,19 @@ export function Hero() {
             </svg>
           </motion.div>
 
+        </motion.div>
+ 
+        {/* === Scroll Indicator === */}
+        <motion.div 
+          className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-3 pointer-events-none"
+          style={{ opacity: scrollIndicatorOpacity }}
+        >
+          <span className="text-white/50 text-[9px] md:text-[11px] font-inter tracking-[0.3em] uppercase">Keep Scrolling</span>
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-px h-8 md:h-14 bg-gradient-to-b from-white/50 to-transparent"
+          />
         </motion.div>
 
       </div>

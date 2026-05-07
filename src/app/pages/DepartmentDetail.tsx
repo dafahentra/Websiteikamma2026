@@ -41,13 +41,7 @@ export function DepartmentDetail() {
   const parallaxXLeft = useTransform(scrollYProgress, [0, 0.2], [0, 40]);
   const parallaxXRight = useTransform(scrollYProgress, [0, 0.2], [0, -40]);
 
-  // About section parallax
-  const aboutRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: aboutScrollY } = useScroll({
-    target: aboutRef,
-    offset: ["start end", "end start"]
-  });
-  const aboutParallaxY = useTransform(aboutScrollY, [0, 1], [60, -60]);
+
 
   // Group Photo Parallax
   const groupPhotoRef = useRef<HTMLElement>(null);
@@ -167,29 +161,20 @@ export function DepartmentDetail() {
       </section>
 
       {/* 3. About Section */}
-      <section ref={aboutRef} className="py-24 px-6 lg:px-12 max-w-[1400px] mx-auto">
+      <section className="py-24 px-6 lg:px-12 max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] gap-12 lg:gap-16 items-center">
           {/* Left: Decorative Elements */}
           <motion.div
             className="relative flex justify-center lg:justify-start"
-            style={{ y: aboutParallaxY }}
           >
             <div className="relative w-full max-w-[480px] aspect-video mb-12 lg:mb-0">
               {/* Main Photo (16:9) */}
               <motion.div
-                className="absolute top-0 right-0 w-[85%] aspect-video overflow-hidden rounded-xl"
+                className="absolute inset-0 overflow-hidden rounded-xl"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.4 }}
               >
                 <img src={department.meetingImg} alt="Meeting" className="w-full h-full object-cover shadow-2xl" />
-              </motion.div>
-              {/* Secondary Photo (4:5) */}
-              <motion.div
-                className="absolute left-0 top-[30%] w-[35%] aspect-[4/5] overflow-hidden rounded-lg"
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.4 }}
-              >
-                <img src={department.activityImg} alt="Student Activity" className="w-full h-full object-cover shadow-2xl" />
               </motion.div>
               {/* Logo Overlay */}
               <motion.div

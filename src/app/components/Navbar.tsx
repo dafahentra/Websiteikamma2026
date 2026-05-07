@@ -80,9 +80,9 @@ const links: NavLink[] = [
       {
         label: 'Bank Soal',
         subDropdown: [
-          { label: 'IUP', href: '/#bank-soal-iup' },
-          { label: 'Reguler', href: '/#bank-soal-reguler' },
-          { label: 'Textbook', href: '/#bank-soal-textbook' },
+          { label: 'IUP', href: 'https://drive.google.com/drive/u/0/mobile/folders/0B0eWO0cAVzQgMXVJMVZQMmdkdEE/0B0eWO0cAVzQgMlhiOEZXTHhpZkk?resourcekey=0-feOoMbPGMCYvbTfdP-LQNQ&sort=13&direction=a' },
+          { label: 'Reguler', href: 'https://drive.google.com/drive/u/0/mobile/folders/0B0eWO0cAVzQgMXVJMVZQMmdkdEE/1iTM_xBzKciLqj-ZzYMJST_igHWYM3rF1?sort=13&direction=a' },
+          { label: 'Textbook', href: 'https://drive.google.com/drive/u/0/mobile/folders/0B0eWO0cAVzQgMXVJMVZQMmdkdEE/0B2ZM_IB3heEWMTFZeG1fbW5FcFk?resourcekey=0-SGgLIyyuyZdxZm_oVLoo-g&sort=13&direction=a' },
         ]
       },
       {
@@ -166,6 +166,8 @@ function DesktopDropdownItem({ item, isLight }: { item: DropdownItem; isLight: b
     >
       <a
         href={hasSub ? undefined : item.href}
+        target={(!hasSub && item.href?.startsWith('http')) ? "_blank" : undefined}
+        rel={(!hasSub && item.href?.startsWith('http')) ? "noopener noreferrer" : undefined}
         className={`flex items-center justify-between px-5 py-2.5 transition-all duration-150 whitespace-nowrap ${isLight ? 'text-black/70 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
         style={{ fontSize: '13.5px', textDecoration: 'none', cursor: hasSub ? 'default' : 'pointer' }}
         onClick={hasSub ? (e) => e.preventDefault() : undefined}
@@ -199,6 +201,8 @@ function DesktopDropdownItem({ item, isLight }: { item: DropdownItem; isLight: b
                 <li key={sub.href}>
                   <a
                     href={sub.href}
+                    target={sub.href.startsWith('http') ? "_blank" : undefined}
+                    rel={sub.href.startsWith('http') ? "noopener noreferrer" : undefined}
                     className={`block px-5 py-2.5 transition-all duration-150 whitespace-nowrap ${isLight ? 'text-black/70 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
                     style={{ fontSize: '13.5px', textDecoration: 'none' }}
                   >
@@ -352,6 +356,8 @@ function MobileAccordionItem({ item, onClose, isLight }: { item: DropdownItem; o
       >
         <a
           href={hasSub ? undefined : item.href}
+          target={(!hasSub && item.href?.startsWith('http')) ? "_blank" : undefined}
+          rel={(!hasSub && item.href?.startsWith('http')) ? "noopener noreferrer" : undefined}
           onClick={hasSub ? (e) => { e.preventDefault(); } : onClose}
           className={`flex-1 flex items-center gap-3 pl-12 py-[10px] transition-all duration-150 ${isLight ? 'text-black/60 group-hover:text-black' : 'text-white/50 group-hover:text-white/90'}`}
           style={{ fontSize: '13.5px' }}
@@ -384,6 +390,8 @@ function MobileAccordionItem({ item, onClose, isLight }: { item: DropdownItem; o
               <li key={sub.href}>
                 <a
                   href={sub.href}
+                  target={sub.href.startsWith('http') ? "_blank" : undefined}
+                  rel={sub.href.startsWith('http') ? "noopener noreferrer" : undefined}
                   onClick={onClose}
                   className={`block pl-16 pr-4 py-2 transition-all duration-150 rounded-full ${isLight ? 'text-black/50 hover:text-black/90 hover:bg-black/5' : 'text-white/40 hover:text-white/80 hover:bg-white/5'}`}
                   style={{ fontSize: '12.5px' }}

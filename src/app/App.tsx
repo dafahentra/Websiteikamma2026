@@ -25,6 +25,7 @@ const ArticleDetailPage = lazy(() => import('./pages/ArticleDetailPage').then(m 
 const EventsPage = lazy(() => import('./pages/EventsPage').then(m => ({ default: m.EventsPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
 const InfoMahasiswaPage = lazy(() => import('./pages/InfoMahasiswaPage').then(m => ({ default: m.InfoMahasiswaPage })));
+const AlumniDatabase = lazy(() => import('./pages/AlumniDatabase').then(m => ({ default: m.AlumniDatabase })));
 
 import ScrollToTop from './components/ScrollToTop';
 
@@ -60,6 +61,7 @@ export default function App() {
           <Route path="/events" element={<EventsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/info-mahasiswa" element={<InfoMahasiswaPage />} />
+          <Route path="/alumni-database" element={<AlumniDatabase />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLoginPage />} />

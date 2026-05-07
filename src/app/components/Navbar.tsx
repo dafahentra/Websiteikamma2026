@@ -97,7 +97,7 @@ const links: NavLink[] = [
         label: 'Alumni Database',
         subDropdown: [
           { label: 'Register', href: '/#alumni-register' },
-          { label: 'Database', href: '/#alumni-database' },
+          { label: 'Database', href: '/alumni-database' },
         ]
       },
     ],

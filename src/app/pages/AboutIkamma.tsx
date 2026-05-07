@@ -138,21 +138,15 @@ function AboutHero() {
 
 const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo: string }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
 
-  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 };
-  const imageX = useSpring(mouseX, springConfig);
-  const imageY = useSpring(mouseY, springConfig);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    mouseX.set(e.clientX);
-    mouseY.set(e.clientY);
-  };
 
   const RowContent = (
-    <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 py-4 md:py-8 flex items-center justify-between gap-3 md:gap-4">
-      <h3 className="font-inter font-bold text-base md:text-3xl text-[#081C36] flex-1 leading-tight">{item.name}</h3>
+    <div 
+      className={`w-full max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between gap-3 md:gap-4 transition-all duration-700 ease-in-out ${
+        isHovered ? "py-14 md:py-32" : "py-4 md:py-8"
+      }`}
+    >
+      <h3 className={`font-inter font-bold text-base md:text-3xl text-[#081C36] flex-1 leading-tight transition-transform duration-700 ${isHovered ? 'scale-105 origin-left' : 'scale-100'}`}>{item.name}</h3>
       <div className="flex items-center gap-4 md:gap-10 shrink-0 relative z-10">
         <span className="px-3 py-1 md:px-8 md:py-2 rounded-full bg-[#081C36] text-white font-inter text-[10px] md:text-base font-medium min-w-[70px] md:min-w-[120px] text-center">
           {item.type}
@@ -170,43 +164,41 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="w-full border-b border-[#081C36]/15 group md:hover:bg-white/5 transition-colors cursor-pointer relative"
+      className="w-full border-b border-[#081C36]/15 transition-colors cursor-pointer relative overflow-hidden"
       onMouseEnter={() => {
         if (window.innerWidth >= 1024) setIsHovered(true);
       }}
       onMouseLeave={() => {
         if (window.innerWidth >= 1024) setIsHovered(false);
       }}
-      onMouseMove={(e) => {
-        if (window.innerWidth >= 1024) handleMouseMove(e);
-      }}
     >
+      {/* Background Image Slide Reveal - Only active on Desktop via isHovered */}
+      <motion.div
+        className="absolute inset-0 z-0 pointer-events-none hidden md:block"
+        initial={{ x: "100%", opacity: 0 }}
+        animate={{ 
+          x: isHovered ? "0%" : "40%", 
+          opacity: isHovered ? 1 : 0 
+        }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* We use a gradient overlay to ensure text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-transparent z-10" />
+        <img
+          src={photo}
+          alt={item.name}
+          className={`w-full h-full object-cover transition-all duration-700 ${isHovered ? 'grayscale-0' : 'grayscale-[0.5]'}`}
+        />
+      </motion.div>
+
+      <div className="relative z-10">
       {item.href ? (
         <Link to={item.href} className="block w-full">
           {RowContent}
         </Link>
       ) : RowContent}
 
-      {/* Floating Image Portal/Overlay - Desktop Only */}
-      <motion.div
-        className="fixed top-0 left-0 w-[260px] md:w-[400px] aspect-video overflow-hidden pointer-events-none z-50 rounded-2xl md:rounded-[2rem] border-4 border-white shadow-2xl hidden md:block"
-        style={{
-          x: imageX,
-          y: imageY,
-          opacity: isHovered ? 1 : 0,
-          translateX: "-50%",
-          translateY: "-50%"
-        }}
-        transition={{
-          opacity: { duration: 0.2 }
-        }}
-      >
-        <img
-          src={photo}
-          alt={item.name}
-          className="w-full h-full object-cover"
-        />
-      </motion.div>
+      </div>
     </motion.div>
   );
 };

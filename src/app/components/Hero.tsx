@@ -348,7 +348,7 @@ export function Hero() {
 
         {/* === PHASE 6: Content === */}
         <motion.div
-          className="absolute inset-0 z-50 flex flex-col justify-start md:justify-center w-full pt-[80px] md:pt-[110px] lg:pt-[130px] pb-[4vh] md:pb-[6vh] text-left"
+          className="absolute inset-0 z-50 flex flex-col justify-start md:justify-center w-full pt-[100px] md:pt-[130px] lg:pt-[150px] pb-[4vh] md:pb-[6vh] text-left"
           style={{
             opacity: contentOpacity,
             y: contentY,
@@ -414,7 +414,7 @@ export function Hero() {
           </div>
 
           {/* Spacing adjusted to prevent logos from being cut off by the curved divider */}
-          <div className="mt-4 md:mt-[30px] w-full">
+          <div className="mt-4 md:mt-[30px] w-full mb-[80px]">
             <h3 className="text-white text-3xl md:text-5xl font-bold text-center mb-3 md:mb-4 flex items-center justify-center gap-2 md:gap-4">
               <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Our</span>
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>

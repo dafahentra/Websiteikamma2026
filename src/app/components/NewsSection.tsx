@@ -141,12 +141,12 @@ export function NewsSection() {
   // Locomotive-style background parallax (moves slower than content)
   const bgParallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
-  // Desktop: 4 columns of 3
+  // Desktop: 4 columns of 3 (Left-to-right order)
   const colsDesktop = [
-    items.slice(0, 3),
-    items.slice(3, 6),
-    items.slice(6, 9),
-    items.slice(9, 12),
+    items.filter((_, i) => i % 4 === 0),
+    items.filter((_, i) => i % 4 === 1),
+    items.filter((_, i) => i % 4 === 2),
+    items.filter((_, i) => i % 4 === 3),
   ];
 
   // Mobile: 2 columns of 6

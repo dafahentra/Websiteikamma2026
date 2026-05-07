@@ -52,7 +52,7 @@ function AboutHero() {
 
   // Keep photo perfectly centered vertically
   const photoY = useTransform(progress, [0, 1], ["0vh", "0vh"]);
-  const photoRadius = useTransform(progress, [0, 0.6], ["0px", "32px"]); // Subtle rounded corners for a premium feel
+  const photoRadius = useTransform(progress, [0, 0.6], ["0px", "0px"]); // Maintaining sharp corners per user request
 
   // Overlay fade in (tambalan warna putih) - happens simultaneously with scale
   const overlayOpacity = useTransform(progress, [0, 0.8], [0, 0.35]);

@@ -66,6 +66,12 @@ export interface WorkProgram {
   id: number;
   title: string;
   img: string;
+  description: string;
+}
+
+export interface Staff {
+  name: string;
+  img?: string;
 }
 
 export interface DepartmentData {
@@ -81,6 +87,7 @@ export interface DepartmentData {
   meetingImg: string;
   activityImg: string;
   programs: WorkProgram[];
+  staffs: Staff[];
 }
 
 export const departmentsData: Record<string, DepartmentData> = {
@@ -97,16 +104,27 @@ export const departmentsData: Record<string, DepartmentData> = {
     meetingImg: MeetingHRBB,
     activityImg: ActivityHRBB,
     programs: [
-      { id: 1, title: "School Of IKAMMA", img: GroupHRBB },
-      { id: 2, title: "Open Recruitment", img: GroupHRBB },
-      { id: 3, title: "Sertijab X IKAMMA Orientation Day", img: GroupHRBB },
-      { id: 4, title: "Internal Upgrading", img: GroupHRBB },
-      { id: 5, title: "IKAMMA Upgrading Program", img: GroupHRBB },
-      { id: 6, title: "Magang IKAMMA", img: GroupHRBB },
-      { id: 7, title: "IKAMMA Connect", img: GroupHRBB },
-      { id: 8, title: "Monthly Appreciation Post", img: GroupHRBB },
-      { id: 9, title: "Birthday Calendar", img: GroupHRBB },
-      { id: 10, title: "Farewell IKAMMA", img: GroupHRBB },
+      { id: 1, title: "School Of IKAMMA", img: GroupHRBB, description: "Program kerja ini berfokus pada pembekalan dasar mengenai organisasi IKAMMA bagi calon pengurus baru." },
+      { id: 2, title: "Open Recruitment", img: GroupHRBB, description: "Proses rekrutmen terbuka untuk menjaring mahasiswa terbaik yang ingin bergabung menjadi bagian dari IKAMMA." },
+      { id: 3, title: "Sertijab X IKAMMA Orientation Day", img: GroupHRBB, description: "Acara serah terima jabatan sekaligus hari orientasi untuk memperkenalkan budaya kerja di IKAMMA." },
+      { id: 4, title: "Internal Upgrading", img: GroupHRBB, description: "Kegiatan peningkatan kapasitas internal pengurus untuk mempererat hubungan dan meningkatkan skill." },
+      { id: 5, title: "IKAMMA Upgrading Program", img: GroupHRBB, description: "Program pengembangan berkala untuk memastikan seluruh pengurus tetap kompeten di bidangnya." },
+      { id: 6, title: "Magang IKAMMA", img: GroupHRBB, description: "Wadah bagi mahasiswa untuk merasakan langsung pengalaman bekerja di dalam organisasi IKAMMA." },
+      { id: 7, title: "IKAMMA Connect", img: GroupHRBB, description: "Program untuk menjaga konektivitas dan komunikasi antar anggota IKAMMA di berbagai angkatan." },
+      { id: 8, title: "Monthly Appreciation Post", img: GroupHRBB, description: "Apresiasi bulanan bagi pengurus yang menunjukkan kinerja luar biasa dan dedikasi tinggi." },
+      { id: 9, title: "Birthday Calendar", img: GroupHRBB, description: "Perayaan hari ulang tahun anggota sebagai bentuk kepedulian dan kebersamaan dalam organisasi." },
+      { id: 10, title: "Farewell IKAMMA", img: GroupHRBB, description: "Acara perpisahan untuk mengapresiasi perjalanan pengurus di akhir masa jabatan." },
+    ],
+    staffs: [
+      { name: "Andi Wijaya" },
+      { name: "Budi Santoso" },
+      { name: "Citra Lestari" },
+      { name: "Dedi Kurniawan" },
+      { name: "Eka Putri" },
+      { name: "Feri Setiawan" },
+      { name: "Gita Amalia" },
+      { name: "Hana Pertiwi" },
+      { name: "Iwan Fals" },
     ]
   },
   'hr-monitoring': {
@@ -122,9 +140,20 @@ export const departmentsData: Record<string, DepartmentData> = {
     meetingImg: MeetingHRM,
     activityImg: ActivityHRM,
     programs: [
-      { id: 11, title: "Appraisal Form", img: GroupHRM },
-      { id: 12, title: "IKAMMA Evaluation & Appreciation Day", img: GroupHRM },
-      { id: 13, title: "Staff of The Month", img: GroupHRM },
+      { id: 11, title: "Appraisal Form", img: GroupHRM, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 12, title: "IKAMMA Evaluation & Appreciation Day", img: GroupHRM, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 13, title: "Staff of The Month", img: GroupHRM, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+    ],
+    staffs: [
+      { name: "Fajar Pratama" },
+      { name: "Gita Permata" },
+      { name: "Hadi Saputra" },
+      { name: "Indah Sari" },
+      { name: "Joko Susilo" },
+      { name: "Kartika Sari" },
+      { name: "Luthfi Aziz" },
+      { name: "Mira Santika" },
+      { name: "Naufal Abdi" },
     ]
   },
   'mm': {
@@ -140,10 +169,21 @@ export const departmentsData: Record<string, DepartmentData> = {
     meetingImg: MeetingMM,
     activityImg: ActivityMM,
     programs: [
-      { id: 14, title: "School of MM", img: GroupMM },
-      { id: 15, title: "Social Media", img: GroupMM },
-      { id: 16, title: "Creative Production", img: GroupMM },
-      { id: 17, title: "Website IKAMMA", img: GroupMM },
+      { id: 14, title: "School of MM", img: GroupMM, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 15, title: "Social Media", img: GroupMM, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 16, title: "Creative Production", img: GroupMM, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 17, title: "Website IKAMMA", img: GroupMM, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+    ],
+    staffs: [
+      { name: "Kurnia Illahi" },
+      { name: "Laras Hati" },
+      { name: "Mulyadi" },
+      { name: "Nina Kartika" },
+      { name: "Oscar Wijaya" },
+      { name: "Putu Gede" },
+      { name: "Qoirul Anam" },
+      { name: "Rizky Billar" },
+      { name: "Siti Nurhaliza" },
     ]
   },
   'advance': {
@@ -159,9 +199,20 @@ export const departmentsData: Record<string, DepartmentData> = {
     meetingImg: MeetingAdvance,
     activityImg: ActivityAdvance,
     programs: [
-      { id: 18, title: "Kesekretariatan", img: GroupAdvance },
-      { id: 19, title: "Kebendaharaan", img: GroupAdvance },
-      { id: 20, title: "Kerumahtanggaan", img: GroupAdvance },
+      { id: 18, title: "Kesekretariatan", img: GroupAdvance, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 19, title: "Kebendaharaan", img: GroupAdvance, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 20, title: "Kerumahtanggaan", img: GroupAdvance, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+    ],
+    staffs: [
+      { name: "Putra Bangsa" },
+      { name: "Qory Sandi" },
+      { name: "Rina Melati" },
+      { name: "Sutan Syahrir" },
+      { name: "Tania Putri" },
+      { name: "Ucok Baba" },
+      { name: "Vicky Prasetyo" },
+      { name: "Wilona Natasha" },
+      { name: "Xander Cage" },
     ]
   },
   'internal': {
@@ -177,11 +228,22 @@ export const departmentsData: Record<string, DepartmentData> = {
     meetingImg: MeetingInternal,
     activityImg: ActivityInternal,
     programs: [
-      { id: 21, title: "SOERTI", img: GroupInternal },
-      { id: 22, title: "PAAM", img: GroupInternal },
-      { id: 23, title: "Debat Internal", img: GroupInternal },
-      { id: 24, title: "I-CARE Volunteer", img: GroupInternal },
-      { id: 25, title: "M-WEEK", img: GroupInternal },
+      { id: 21, title: "SOERTI", img: GroupInternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 22, title: "PAAM", img: GroupInternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 23, title: "Debat Internal", img: GroupInternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 24, title: "I-CARE Volunteer", img: GroupInternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 25, title: "M-WEEK", img: GroupInternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+    ],
+    staffs: [
+      { name: "Umar Bakri" },
+      { name: "Vina Panduwinata" },
+      { name: "Wawan Hermawan" },
+      { name: "Xena War" },
+      { name: "Yulia Rahman" },
+      { name: "Zaskia Gothic" },
+      { name: "Anang Hermansyah" },
+      { name: "Bunga Citra" },
+      { name: "Cakra Khan" },
     ]
   },
   'external': {
@@ -197,12 +259,23 @@ export const departmentsData: Record<string, DepartmentData> = {
     meetingImg: MeetingExternal,
     activityImg: ActivityExternal,
     programs: [
-      { id: 26, title: "Partnership", img: GroupExternal },
-      { id: 27, title: "Terima Kunjungan", img: GroupExternal },
-      { id: 28, title: "Company Visit", img: GroupExternal },
-      { id: 29, title: "iNEXT", img: GroupExternal },
-      { id: 30, title: "IKVIS", img: GroupExternal },
-      { id: 31, title: "IKAMMA Alumni Database", img: GroupExternal },
+      { id: 26, title: "Partnership", img: GroupExternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 27, title: "Terima Kunjungan", img: GroupExternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 28, title: "Company Visit", img: GroupExternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 29, title: "iNEXT", img: GroupExternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 30, title: "IKVIS", img: GroupExternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 31, title: "IKAMMA Alumni Database", img: GroupExternal, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+    ],
+    staffs: [
+      { name: "Zidan Ibrahim" },
+      { name: "Ahmad Dhani" },
+      { name: "Bella Saphira" },
+      { name: "Chandra Wijaya" },
+      { name: "Dina Lorenza" },
+      { name: "Eros Djarot" },
+      { name: "Fifi Young" },
+      { name: "Gesang" },
+      { name: "Hamka" },
     ]
   },
   'indev': {
@@ -218,9 +291,20 @@ export const departmentsData: Record<string, DepartmentData> = {
     meetingImg: MeetingIndev,
     activityImg: ActivityIndev,
     programs: [
-      { id: 32, title: "Management Facilitator", img: GroupIndev },
-      { id: 33, title: "Career Insight", img: GroupIndev },
-      { id: 34, title: "Ready", img: GroupIndev },
+      { id: 32, title: "Management Facilitator", img: GroupIndev, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 33, title: "Career Insight", img: GroupIndev, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 34, title: "Ready", img: GroupIndev, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+    ],
+    staffs: [
+      { name: "Edo Kondologit" },
+      { name: "Ferry Irawan" },
+      { name: "Gading Marten" },
+      { name: "Hesti Purwadinata" },
+      { name: "Ivan Gunawan" },
+      { name: "Jajang C Noer" },
+      { name: "Katon Bagaskara" },
+      { name: "Lia Waode" },
+      { name: "Mucle" },
     ]
   },
   'entre': {
@@ -236,8 +320,19 @@ export const departmentsData: Record<string, DepartmentData> = {
     meetingImg: MeetingEntre,
     activityImg: ActivityEntre,
     programs: [
-      { id: 35, title: "YES!", img: GroupEntre },
-      { id: 36, title: "E-Club", img: GroupEntre },
+      { id: 35, title: "YES!", img: GroupEntre, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 36, title: "E-Club", img: GroupEntre, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+    ],
+    staffs: [
+      { name: "Julia Perez" },
+      { name: "Krisdayanti" },
+      { name: "Luna Maya" },
+      { name: "Maia Estianty" },
+      { name: "Nagita Slavina" },
+      { name: "Olla Ramlan" },
+      { name: "Pevita Pearce" },
+      { name: "Quentin" },
+      { name: "Raisa" },
     ]
   },
   'sparta': {
@@ -253,10 +348,21 @@ export const departmentsData: Record<string, DepartmentData> = {
     meetingImg: MeetingSparta,
     activityImg: ActivitySparta,
     programs: [
-      { id: 37, title: "SPRITE", img: GroupSparta },
-      { id: 38, title: "POSKAM", img: GroupSparta },
-      { id: 39, title: "Management's Festival", img: GroupSparta },
-      { id: 40, title: "Gadjah Mada Super Cup", img: GroupSparta },
+      { id: 37, title: "SPRITE", img: GroupSparta, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 38, title: "POSKAM", img: GroupSparta, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 39, title: "Management's Festival", img: GroupSparta, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+      { id: 40, title: "Gadjah Mada Super Cup", img: GroupSparta, description: "Program kerja ini dirancang untuk mendukung visi dan misi IKAMMA melalui kegiatan yang terstruktur dan berdampak bagi mahasiswa." },
+    ],
+    staffs: [
+      { name: "Olla Ramlan" },
+      { name: "Prilly Latuconsina" },
+      { name: "Raffi Ahmad" },
+      { name: "Syahrini" },
+      { name: "Titi DJ" },
+      { name: "Ussy Sulistiawaty" },
+      { name: "Vidi Aldiano" },
+      { name: "Widyawati" },
+      { name: "Yuni Shara" },
     ]
   }
 };

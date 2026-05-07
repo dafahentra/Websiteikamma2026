@@ -1,10 +1,10 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import LogoPutihRaw from '../../assets/LogoIKAMMA/LogoPutih.svg?raw';
-import { departmentsData } from '../../data/departments';
+import { departmentsData, WorkProgram } from '../../data/departments';
 
 // Extract SVG inner paths for the background logo
 const svgInner = LogoPutihRaw
@@ -30,6 +30,20 @@ export function DepartmentDetail() {
   const { slug } = useParams();
   const department = slug ? departmentsData[slug] : null;
   const { pathname } = useLocation();
+ 
+  const [selectedProgram, setSelectedProgram] = useState<WorkProgram | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+ 
+  const openModal = (program: WorkProgram) => {
+    setSelectedProgram(program);
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+ 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = 'auto';
+  };
 
   // Scroll to top on route change
   useEffect(() => {
@@ -159,8 +173,49 @@ export function DepartmentDetail() {
           <div className="absolute inset-0 bg-[#0C2340]/40" />
         </div>
       </section>
+ 
+      <section className="py-24 px-6 lg:px-12 bg-white">
+        <div className="max-w-[1600px] mx-auto">
+          <h2 className="text-4xl md:text-5xl mb-16 flex items-center gap-4">
+            <div className="w-10 h-1.5 md:w-12 md:h-2 bg-[#081C36] rounded-full" />
+            <span><span className="font-caslon-italic font-bold" style={{ fontFamily: "'Libre Caslon Text', serif" }}>Our</span> <span className="font-inter font-bold" style={{ fontFamily: "'Inter', sans-serif" }}>Staff</span></span>
+          </h2>
+ 
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 md:gap-8">
+            {department.staffs.map((staff, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+                className="group flex flex-col items-center"
+              >
+                <div className="w-full aspect-[3/4] bg-white overflow-hidden mb-4 relative group-hover:-translate-y-2 transition-all duration-500">
+                  {staff.img ? (
+                    <img src={staff.img} alt={staff.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-[#081C36]/5 flex items-center justify-center p-8">
+                       <IkammaLogo className="w-full h-auto opacity-10 grayscale" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-[#081C36]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
+                <h3 className="text-[#081C36] font-bold text-center text-sm md:text-base lg:text-lg font-inter px-2 line-clamp-2">{staff.name}</h3>
+                <p className="text-[#081C36]/50 text-[10px] md:text-xs uppercase tracking-widest mt-1">Staff</p>
+              </motion.div>
+            ))}
+          </div>
+ 
+          {department.staffs.length === 0 && (
+            <div className="py-20 text-center border-2 border-dashed border-[#081C36]/10 rounded-3xl">
+              <p className="text-[#081C36]/40 font-inter italic text-lg">Staff data will be updated soon.</p>
+            </div>
+          )}
+        </div>
+      </section>
 
-      {/* 3. About Section */}
+      {/* 4. About Section */}
       <section className="py-24 px-6 lg:px-12 max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] gap-12 lg:gap-16 items-center">
           {/* Left: Decorative Elements */}
@@ -212,7 +267,7 @@ export function DepartmentDetail() {
         </div>
       </section>
 
-      {/* 4. Program Kerja Section */}
+      {/* 5. Program Kerja Section */}
       <section className="py-24 px-6 lg:px-12 bg-transparent">
         <div className="max-w-[1400px] mx-auto">
           <h2 className="text-4xl md:text-5xl mb-16 flex items-center gap-4">
@@ -229,6 +284,7 @@ export function DepartmentDetail() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: (idx % 2) * 0.1 }}
                 whileHover={{ scale: 1.02, x: 6 }}
+                onClick={() => openModal(program)}
                 className="flex items-center gap-4 group cursor-pointer"
               >
                 <div className="flex items-center gap-3 min-w-[40px]">
@@ -248,7 +304,69 @@ export function DepartmentDetail() {
         </div>
       </section>
 
+
+
       <Footer />
+ 
+      {/* 6. Program Modal */}
+      <AnimatePresence>
+        {isModalOpen && selectedProgram && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeModal}
+              className="absolute inset-0 bg-[#081C36]/80 backdrop-blur-md"
+            />
+            
+            {/* Modal Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-4xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col md:flex-row"
+            >
+              {/* Image Side */}
+              <div className="w-full md:w-1/2 h-64 md:h-auto relative overflow-hidden">
+                <img 
+                  src={selectedProgram.img} 
+                  alt={selectedProgram.title} 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#081C36]/40 to-transparent" />
+              </div>
+
+              {/* Text Side */}
+              <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative">
+                {/* Close Button */}
+                <button 
+                  onClick={closeModal}
+                  className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#081C36]/5 flex items-center justify-center hover:bg-[#081C36]/10 transition-colors group"
+                >
+                  <svg className="w-5 h-5 text-[#081C36] group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+
+                <p className="text-[#081C36]/50 text-xs uppercase tracking-widest mb-2 font-inter">Program Kerja</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#081C36] mb-6 font-inter leading-tight">
+                  {selectedProgram.title}
+                </h2>
+                <div className="w-12 h-1.5 bg-[#081C36] rounded-full mb-8" />
+                <p className="text-[#081C36]/70 text-lg leading-relaxed font-inter">
+                  {selectedProgram.description}
+                </p>
+
+                <div className="mt-12">
+                   <IkammaLogo className="w-16 h-auto opacity-5" />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

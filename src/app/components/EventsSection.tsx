@@ -15,13 +15,15 @@ const EVENT_ITEMS = [
   { photo: EVENT_PHOTOS[1], logo: LOGO2 },
   { photo: EVENT_PHOTOS[2], logo: LOGO3 },
   { photo: EVENT_PHOTOS[3], logo: LOGO4 },
+  { photo: EVENT_PHOTOS[0], logo: LOGO1 }, // Placeholder for 5th item
 ];
 
 const POSITIONS = [
   { x: 0, y: 0, rotate: 0, scale: 1, zIndex: 10, brightness: 1 },         // 0: Center (Active)
-  { x: 220, y: 15, rotate: 8, scale: 0.85, zIndex: 5, brightness: 0.7 },  // 1: Right
-  { x: 0, y: -20, rotate: 0, scale: 0.75, zIndex: 1, brightness: 0.4 },   // 2: Back (Hidden/Folded)
-  { x: -220, y: 15, rotate: -8, scale: 0.85, zIndex: 5, brightness: 0.7 },// 3: Left
+  { x: 220, y: 15, rotate: 10, scale: 0.85, zIndex: 8, brightness: 0.8 }, // 1: Right 1
+  { x: 400, y: 40, rotate: 20, scale: 0.70, zIndex: 5, brightness: 0.5 }, // 2: Right 2 (Far)
+  { x: -400, y: 40, rotate: -20, scale: 0.70, zIndex: 5, brightness: 0.5 },// 3: Left 2 (Far)
+  { x: -220, y: 15, rotate: -10, scale: 0.85, zIndex: 8, brightness: 0.8 },// 4: Left 1
 ];
 
 interface CarouselCardProps {
@@ -33,7 +35,7 @@ interface CarouselCardProps {
 }
 
 function CarouselCard({ index, activeIndex, item, unfoldProgress, onClick, xFactor }: CarouselCardProps & { xFactor: number }) {
-  const posIndex = (index - activeIndex + 4) % 4;
+  const posIndex = (index - activeIndex + 5) % 5;
   const target = { ...POSITIONS[posIndex], x: POSITIONS[posIndex].x * xFactor };
 
   // Motion values for the targets (state-driven)

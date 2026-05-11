@@ -321,7 +321,7 @@ export function AboutIkamma() {
           </div>
         </div>
         <h3 className="font-inter font-bold text-xl md:text-2xl text-[#081C36] mb-2">{member.name}</h3>
-        <p className="font-inter text-base md:text-lg text-[#081C36] max-w-[150px] leading-tight font-medium whitespace-pre-line">
+        <p className="font-inter text-base md:text-lg text-sky-500 italic max-w-[150px] leading-tight font-medium whitespace-pre-line">
           {member.role}
         </p>
       </>
@@ -363,14 +363,14 @@ export function AboutIkamma() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "0px 0px -100px 0px" }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col items-center text-center max-w-[800px] mx-auto pb-32 relative z-20"
+          className="flex flex-col items-center text-center max-w-[800px] mx-auto pb-16 relative z-20"
           style={{ marginTop: 'calc(50px - 27.5vh)' }} // Precisely 50px gap below the 45vh centered photo
         >
-          <IkammaLogo className="w-24 md:w-32 mb-8 text-[#081C36] drop-shadow-md" />
-          <p className="text-[#081C36]/80 text-sm md:text-base leading-relaxed mb-4 font-inter font-light drop-shadow-md">
+          <IkammaLogo className="w-32 md:w-44 mb-10 text-[#081C36] drop-shadow-sm" />
+          <p className="text-[#081C36]/85 text-base md:text-lg leading-relaxed mb-6 font-inter font-semibold drop-shadow-sm">
             Ikatan Keluarga Mahasiswa Manajemen (IKAMMA) FEB UGM merupakan sebuah organisasi himpunan mahasiswa Jurusan Manajemen Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
           </p>
-          <p className="text-[#081C36]/80 text-sm md:text-base leading-relaxed font-inter font-light drop-shadow-md">
+          <p className="text-[#081C36]/85 text-base md:text-lg leading-relaxed font-inter font-semibold drop-shadow-sm">
             IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan
           </p>
         </motion.div>
@@ -381,7 +381,7 @@ export function AboutIkamma() {
             <div className="flex flex-wrap items-center justify-end gap-3 md:gap-5 text-4xl md:text-6xl lg:text-7xl text-right">
               <span className="text-[#081C36]/50 font-inter font-light">—</span>
               <span className="font-inter font-bold">Kabinet</span>
-              <span className="font-caslon-italic text-[#081C36]">Arsanakala</span>
+              <span className="font-caslon-bold-italic text-[#081C36]">Arsanakala</span>
             </div>
           </div>
 
@@ -393,7 +393,7 @@ export function AboutIkamma() {
                 <span className="text-[#081C36] font-inter text-xl md:text-2xl">01</span>
                 <span className="text-[#081C36]/50 text-xl">—</span>
                 <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#081C36]">
-                  <span className="font-caslon-italic">Filosofi</span> <span className="font-inter font-bold">Logo</span>
+                  <span className="font-caslon-bold-italic">Filosofi</span> <span className="font-inter font-bold">Logo</span>
                 </h2>
               </div>
 
@@ -409,10 +409,10 @@ export function AboutIkamma() {
                       transition={{ duration: 0.4 }}
                     >
                       <div className="mb-4 flex items-end gap-3">
-                        <h3 className="font-inter font-bold text-4xl md:text-5xl text-[#081C36]">Arsanakala</h3>
+                        <h3 className="font-caslon-bold-italic text-4xl md:text-5xl text-[#081C36]">Arsanakala</h3>
                         <span className="font-inter font-light text-2xl md:text-3xl text-[#081C36]/40 pb-1">[Ar·sa·na·ka·la]</span>
                       </div>
-                      <p className="font-inter text-xl md:text-2xl leading-relaxed text-[#081C36] max-w-lg font-medium">
+                      <p className="font-inter text-base md:text-lg leading-relaxed text-sky-500 max-w-lg font-semibold">
                         Kehendak dan daya cipta yang tumbuh seirama, seiring waktu untuk mewujudkan cita.
                       </p>
                     </motion.div>
@@ -428,7 +428,7 @@ export function AboutIkamma() {
                         <h3 className="font-inter font-bold text-3xl md:text-5xl">{PHILOSOPHY_DATA[activePhilo].title}</h3>
                         <span className="font-inter font-light text-xl md:text-2xl text-[#081C36]/40 pb-1">{PHILOSOPHY_DATA[activePhilo].pron}</span>
                       </div>
-                      <p className="font-inter text-lg md:text-xl leading-relaxed text-[#081C36]/70 max-w-lg">
+                      <p className="font-inter text-base md:text-lg leading-relaxed text-sky-500 max-w-lg font-semibold">
                         {PHILOSOPHY_DATA[activePhilo].desc}
                       </p>
                     </motion.div>
@@ -553,7 +553,7 @@ export function AboutIkamma() {
                   className={`w-full border-b border-[#081C36]/15 group md:hover:bg-[#081C36]/[0.03] transition-colors cursor-pointer flex justify-center ${isLastOdd ? 'md:col-span-2' : ''} ${hasBorderR ? 'md:border-r border-[#081C36]/15' : ''}`}
                 >
                   <div className={`w-full max-w-[700px] flex flex-col items-center justify-center text-center gap-2 md:gap-4 py-8 md:py-12 px-6 md:px-12 ${isLastOdd ? 'md:max-w-[1000px]' : ''}`}>
-                    <span className="text-[#081C36] font-inter font-bold text-xl md:text-2xl shrink-0">0{i + 1}</span>
+                    <span className="text-sky-500 font-inter font-bold text-2xl md:text-4xl shrink-0">0{i + 1}</span>
                     <p className="font-inter text-base md:text-lg leading-relaxed text-[#081C36]" dangerouslySetInnerHTML={{ __html: text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-inter font-bold italic text-[#081C36]">$1</strong>') }} />
                   </div>
                 </motion.div>
@@ -572,7 +572,7 @@ export function AboutIkamma() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 max-w-6xl mx-auto">
             {[
               { title: 'Kekeluargaan', desc: 'Menjunjung tinggi rasa kebersamaan, saling menghargai, dan kepedulian antaranggota.', icon: Users },
               { title: 'Profesionalitas', desc: 'Menjalankan setiap peran dan tanggung jawab secara disiplin, tepat waktu, dan bertanggung jawab.', icon: Briefcase },
@@ -583,13 +583,13 @@ export function AboutIkamma() {
               return (
                 <div
                   key={i}
-                  className="flex flex-col items-center text-center"
+                  className="flex flex-col items-center text-center group"
                 >
-                  <div className="w-20 h-20 md:w-28 md:h-28 mb-4 flex items-center justify-center">
-                    <Icon className="w-full h-full text-[#081C36]" strokeWidth={1.5} />
+                  <div className="w-24 h-24 md:w-32 md:h-32 mb-6 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                    <Icon className="w-full h-full text-[#081C36]" strokeWidth={1} />
                   </div>
-                  <h3 className="font-inter font-bold text-lg md:text-xl mb-2 text-[#081C36]">{value.title}</h3>
-                  <p className="font-inter text-xs md:text-sm text-[#081C36]/60 leading-relaxed">
+                  <h3 className="font-inter font-bold text-xl md:text-2xl mb-3 text-[#081C36]">{value.title}</h3>
+                  <p className="font-inter text-sm md:text-base text-[#081C36]/70 leading-relaxed max-w-[240px]">
                     {value.desc}
                   </p>
                 </div>

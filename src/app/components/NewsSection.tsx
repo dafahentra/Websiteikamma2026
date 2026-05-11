@@ -156,7 +156,7 @@ export function NewsSection() {
   ];
 
   return (
-    <section ref={sectionRef} className="relative w-full py-24 bg-white text-[#081C36] overflow-hidden">
+    <section ref={sectionRef} className="relative w-full pt-24 pb-12 bg-white text-[#081C36] overflow-hidden">
       {/* Invisible SVG for clip-path */}
       <svg width="0" height="0" className="absolute">
         <defs>

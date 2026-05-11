@@ -29,7 +29,7 @@ const DotPattern = ({ className }: { className: string }) => (
 import { ARTICLES_PAGE_PHOTOS, ARTICLES_PAGE_HERO } from '../../assets/photos';
 
 /* ── Sample Data ─────────────────────────────────────────────────── */
-const CATEGORIES = ['All Topics', 'Research & Study', 'Sparta Info Terkini', 'News', 'Announcement'];
+const CATEGORIES = ['All Topics', 'Research & Study', 'Sparta Info Terkini', 'News', 'Entrepreneurs insights & values'];
 
 export function ArticlesPage() {
   const { pathname } = useLocation();
@@ -158,8 +158,8 @@ export function ArticlesPage() {
 
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
           {visible.map((article, i) => (
-            <Link 
-              key={article.id} 
+            <Link
+              key={article.id}
               to={`/articles/${article.id}`}
               className="contents"
             >

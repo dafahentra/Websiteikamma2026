@@ -14,6 +14,8 @@ import { AdminEventForm } from '../admin/events/AdminEventForm';
 import { AdminEventContacts } from '../admin/events/AdminEventContacts';
 import { AdminInfoList } from '../admin/info-mahasiswa/AdminInfoList';
 import { AdminInfoForm } from '../admin/info-mahasiswa/AdminInfoForm';
+import { AdminAlumniList } from '../admin/alumni/AdminAlumniList';
+import { AdminAlumniForm } from '../admin/alumni/AdminAlumniForm';
 import { AdminSettings } from '../admin/AdminSettings';
 
 // Lazy Load Public Pages for better performance
@@ -82,6 +84,10 @@ export default function App() {
             <Route path="info-mahasiswa" element={<AdminInfoList />} />
             <Route path="info-mahasiswa/new" element={<AdminInfoForm />} />
             <Route path="info-mahasiswa/edit/:id" element={<AdminInfoForm />} />
+
+            <Route path="alumni" element={<AdminAlumniList />} />
+            <Route path="alumni/new" element={<AdminAlumniForm />} />
+            <Route path="alumni/edit/:id" element={<AdminAlumniForm />} />
           </Route>
         </Routes>
       </Suspense>

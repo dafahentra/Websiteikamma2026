@@ -13,7 +13,7 @@ export const AdminArticleForm = () => {
 
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     category: 'Research & Study',
     title: '',
@@ -30,15 +30,15 @@ export const AdminArticleForm = () => {
   const formatDateForInput = (dateStr: string) => {
     if (!dateStr) return '';
     if (dateStr.includes('-') && dateStr.split('-').length === 3) return dateStr;
-    
+
     const parts = dateStr.split(' ');
     if (parts.length !== 3) return dateStr;
-    
+
     const day = parts[0].padStart(2, '0');
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
     const monthIndex = months.indexOf(parts[1]);
     if (monthIndex === -1) return dateStr;
-    
+
     const month = (monthIndex + 1).toString().padStart(2, '0');
     return `${parts[2]}-${month}-${day}`;
   };
@@ -50,7 +50,7 @@ export const AdminArticleForm = () => {
     try {
       const date = new Date(dateStr);
       if (isNaN(date.getTime())) return dateStr;
-      
+
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
       return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
     } catch (e) {
@@ -97,7 +97,7 @@ export const AdminArticleForm = () => {
           const response = await fetch(src);
           const blob = await response.blob();
           const file = new File([blob], `inline-${Date.now()}.webp`, { type: 'image/webp' });
-          
+
           const optimizedBlob = await convertToWebP(file, { maxWidth: 1000, maxHeight: 1000, quality: 0.5 });
           const fileName = `content-${Date.now()}-${Math.random().toString(36).substring(7)}.webp`;
           const optimizedFile = new File([optimizedBlob], fileName, { type: 'image/webp' });
@@ -111,7 +111,7 @@ export const AdminArticleForm = () => {
           const { data } = supabase.storage.from('article-images').getPublicUrl(fileName);
           img.setAttribute('src', data.publicUrl);
           hasChanged = true;
-          
+
           URL.revokeObjectURL(src);
         } catch (err) {
           console.error('Failed to upload inline image:', err);
@@ -136,16 +136,16 @@ export const AdminArticleForm = () => {
 
     // 1. Upload inline images from editor content first
     const updatedContent = await uploadInlineImages(formData.content);
-    
+
     let image_url = previewUrl;
 
     if (imageFile) {
       try {
         // Extreme optimization for article banners to ensure minimal file size
-        const webpBlob = await convertToWebP(imageFile, { 
-          maxWidth: 1000, 
-          maxHeight: 600, 
-          quality: 0.5 
+        const webpBlob = await convertToWebP(imageFile, {
+          maxWidth: 1000,
+          maxHeight: 600,
+          quality: 0.5
         });
         const fileName = `${Math.random()}.webp`;
         const filePath = `${fileName}`;
@@ -184,8 +184,8 @@ export const AdminArticleForm = () => {
     }
 
     const plainTextContent = formData.content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ');
-    const autoDescription = plainTextContent.length > 200 
-      ? plainTextContent.substring(0, 200) + '...' 
+    const autoDescription = plainTextContent.length > 200
+      ? plainTextContent.substring(0, 200) + '...'
       : plainTextContent;
 
     // Validate required fields manually
@@ -245,7 +245,7 @@ export const AdminArticleForm = () => {
   return (
     <div className="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-sm border border-gray-200">
       <div className="flex items-center gap-4 mb-6">
-        <button 
+        <button
           onClick={() => navigate('/admin/articles')}
           className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-50 hover:text-blue-600 text-gray-600 transition-all focus:outline-none"
           title="Kembali"
@@ -254,39 +254,39 @@ export const AdminArticleForm = () => {
         </button>
         <h1 className="text-2xl font-bold">{isEdit ? 'Edit Artikel' : 'Tambah Artikel'}</h1>
       </div>
-      
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium mb-1">Kategori *</label>
-          <select 
-            value={formData.category} 
-            onChange={(e) => setFormData({...formData, category: e.target.value})}
+          <select
+            value={formData.category}
+            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
             className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
             required
           >
             <option value="Research & Study">Research & Study</option>
             <option value="Sparta Info Terkini">Sparta Info Terkini</option>
             <option value="News">News</option>
-            <option value="Announcement">Announcement</option>
+            <option value="Entrepreneurs insights & values">Entrepreneurs insights & values</option>
           </select>
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-1">Judul *</label>
-          <input 
-            type="text" 
-            value={formData.title} 
-            onChange={(e) => setFormData({...formData, title: e.target.value})}
+          <input
+            type="text"
+            value={formData.title}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
-            required 
+            required
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-1">Konten Lengkap Artikel *</label>
-          <NovelEditor 
-            content={formData.content} 
-            onChange={(value: string) => setFormData({...formData, content: value})}
+          <NovelEditor
+            content={formData.content}
+            onChange={(value: string) => setFormData({ ...formData, content: value })}
             minHeight="600px"
           />
         </div>
@@ -294,45 +294,45 @@ export const AdminArticleForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Penulis *</label>
-            <input 
-              type="text" 
-              value={formData.author} 
-              onChange={(e) => setFormData({...formData, author: e.target.value})}
+            <input
+              type="text"
+              value={formData.author}
+              onChange={(e) => setFormData({ ...formData, author: e.target.value })}
               className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
-              required 
+              required
             />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Editor</label>
-            <input 
-              type="text" 
-              value={formData.editor} 
-              onChange={(e) => setFormData({...formData, editor: e.target.value})}
+            <input
+              type="text"
+              value={formData.editor}
+              onChange={(e) => setFormData({ ...formData, editor: e.target.value })}
               className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               placeholder="Opsional"
             />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Tanggal Diposting *</label>
-            <input 
-              type="date" 
-              value={formatDateForInput(formData.date)} 
-              onChange={(e) => setFormData({...formData, date: e.target.value})}
+            <input
+              type="date"
+              value={formatDateForInput(formData.date)}
+              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
               className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
-              required 
+              required
             />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Estimasi Waktu Baca *</label>
-            <select 
-              value={formData.read_time} 
-              onChange={(e) => setFormData({...formData, read_time: e.target.value})}
+            <select
+              value={formData.read_time}
+              onChange={(e) => setFormData({ ...formData, read_time: e.target.value })}
               className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required
             >
               <option value="">Pilih waktu baca</option>
               {[...Array(15)].map((_, i) => (
-                <option key={i+1} value={`${i+1} min read`}>{i+1} min read</option>
+                <option key={i + 1} value={`${i + 1} min read`}>{i + 1} min read</option>
               ))}
             </select>
           </div>
@@ -342,15 +342,15 @@ export const AdminArticleForm = () => {
           <label className="block text-sm font-medium mb-2">Gambar Banner</label>
           <div className="space-y-4">
             <div className="relative">
-              <input 
-                type="file" 
+              <input
+                type="file"
                 id="banner-upload"
-                accept="image/*" 
+                accept="image/*"
                 onChange={handleFileChange}
                 className="hidden"
               />
               <div className="flex items-center gap-3">
-                <label 
+                <label
                   htmlFor="banner-upload"
                   className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 hover:border-blue-400 transition-all shadow-sm group"
                 >
@@ -363,7 +363,7 @@ export const AdminArticleForm = () => {
                 </label>
 
                 {(imageFile || previewUrl) && (
-                  <button 
+                  <button
                     type="button"
                     onClick={() => {
                       setImageFile(null);
@@ -381,7 +381,7 @@ export const AdminArticleForm = () => {
                 )}
               </div>
             </div>
-            
+
             {previewUrl && (
               <div className="relative inline-block group w-full max-w-md">
                 <img src={previewUrl} alt="Preview" className="w-full h-48 object-cover rounded-xl border-2 border-gray-100 shadow-md transition-transform group-hover:scale-[1.01]" />
@@ -394,15 +394,15 @@ export const AdminArticleForm = () => {
         </div>
 
         <div className="flex justify-end gap-3 pt-4 border-t">
-          <button 
-            type="button" 
+          <button
+            type="button"
             onClick={() => navigate('/admin/articles')}
             className="px-4 py-2 border rounded text-gray-600 hover:bg-gray-50"
           >
             Batal
           </button>
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={saving}
             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 flex items-center gap-2"
           >

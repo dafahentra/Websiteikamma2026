@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { Search, Filter, Download, ChevronRight, ChevronLeft, Mail, Linkedin } from 'lucide-react';
+import { Search, Filter, Download, ChevronRight, ChevronLeft, Mail, Linkedin, Phone } from 'lucide-react';
+
+import { supabase } from '../../lib/supabase';
 
 interface Alumni {
   id: number;
@@ -14,68 +16,43 @@ interface Alumni {
   location: string;
   linkedin?: string;
   email?: string;
+  phone?: string;
 }
 
-const ALUMNI_DATA: Alumni[] = [
-  { id: 1, name: "Aditya Pratama", batch: "2018", major: "Manajemen", company: "Google Indonesia", position: "Product Manager", location: "Jakarta", linkedin: "#", email: "aditya@example.com" },
-  { id: 2, name: "Bunga Citra", batch: "2017", major: "Manajemen", company: "Unilever", position: "Brand Manager", location: "Jakarta", linkedin: "#" },
-  { id: 3, name: "Chandra Wijaya", batch: "2019", major: "Manajemen", company: "Shopee", position: "Data Analyst", location: "Singapore", linkedin: "#", email: "chandra@example.com" },
-  { id: 4, name: "Dina Lorenza", batch: "2016", major: "Manajemen", company: "Gojek", position: "Operations Manager", location: "Jakarta", linkedin: "#" },
-  { id: 5, name: "Eka Putra", batch: "2020", major: "Manajemen", company: "Boston Consulting Group", position: "Associate Consultant", location: "Jakarta", linkedin: "#" },
-  { id: 6, name: "Fajar Nugraha", batch: "2015", major: "Manajemen", company: "Bank Indonesia", position: "Economist", location: "Jakarta", linkedin: "#" },
-  { id: 7, name: "Gita Permata", batch: "2018", major: "Manajemen", company: "Tokopedia", position: "Marketing Specialist", location: "Jakarta", linkedin: "#" },
-  { id: 8, name: "Hadi Saputra", batch: "2017", major: "Manajemen", company: "McKinsey & Company", position: "Engagement Manager", location: "Jakarta", linkedin: "#" },
-  { id: 9, name: "Indah Sari", batch: "2019", major: "Manajemen", company: "Traveloka", position: "UX Researcher", location: "Jakarta", linkedin: "#" },
-  { id: 10, name: "Joko Susilo", batch: "2016", major: "Manajemen", company: "Pertamina", position: "Business Development", location: "Balikpapan", linkedin: "#" },
-  { id: 11, name: "Kartika Sari", batch: "2020", major: "Manajemen", company: "P&G", position: "Key Account Manager", location: "Jakarta", linkedin: "#" },
-  { id: 12, name: "Luthfi Aziz", batch: "2018", major: "Manajemen", company: "Bain & Company", position: "Senior Associate", location: "Jakarta", linkedin: "#" },
-  { id: 13, name: "Mira Santika", batch: "2017", major: "Manajemen", company: "Danone", position: "Supply Chain Manager", location: "Jakarta", linkedin: "#" },
-  { id: 14, name: "Naufal Abdi", batch: "2019", major: "Manajemen", company: "Grab", position: "Growth Lead", location: "Kuala Lumpur", linkedin: "#" },
-  { id: 15, name: "Olla Ramlan", batch: "2016", major: "Manajemen", company: "L'Oreal", position: "Social Media Manager", location: "Jakarta", linkedin: "#" },
-  { id: 16, name: "Putra Bangsa", batch: "2020", major: "Manajemen", company: "Amazon Web Services", position: "Solutions Architect", location: "Sydney", linkedin: "#" },
-  { id: 17, name: "Qory Sandi", batch: "2018", major: "Manajemen", company: "Deloitte", position: "Audit Senior", location: "Jakarta", linkedin: "#" },
-  { id: 18, name: "Rina Melati", batch: "2017", major: "Manajemen", company: "Nestle", position: "Quality Assurance", location: "Pasuruan", linkedin: "#" },
-  { id: 19, name: "Sutan Syahrir", batch: "2019", major: "Manajemen", company: "Microsoft", position: "Account Executive", location: "Jakarta", linkedin: "#" },
-  { id: 20, name: "Tania Putri", batch: "2016", major: "Manajemen", company: "Astra International", position: "Management Trainee", location: "Jakarta", linkedin: "#" },
-  { id: 21, name: "Umar Bakri", batch: "2020", major: "Manajemen", company: "KPMG", position: "Tax Consultant", location: "Jakarta", linkedin: "#" },
-  { id: 22, name: "Vina Panduwinata", batch: "2018", major: "Manajemen", company: "Telkomsel", position: "Digital Strategy", location: "Jakarta", linkedin: "#" },
-  { id: 23, name: "Wawan Hermawan", batch: "2017", major: "Manajemen", company: "PwC", position: "Deals Manager", location: "Jakarta", linkedin: "#" },
-  { id: 24, name: "Xena War", batch: "2019", major: "Manajemen", company: "TikTok", position: "Creator Strategist", location: "Jakarta", linkedin: "#" },
-  { id: 25, name: "Yulia Rahman", batch: "2016", major: "Manajemen", company: "Indofood", position: "Area Sales Manager", location: "Medan", linkedin: "#" },
-  { id: 26, name: "Zaskia Gothic", batch: "2020", major: "Manajemen", company: "Blibli", position: "Category Manager", location: "Jakarta", linkedin: "#" },
-  { id: 27, name: "Anang Hermansyah", batch: "2018", major: "Manajemen", company: "EY Indonesia", position: "Strategy Consultant", location: "Jakarta", linkedin: "#" },
-  { id: 28, name: "Bunga Citra", batch: "2017", major: "Manajemen", company: "HM Sampoerna", position: "Financial Analyst", location: "Surabaya", linkedin: "#" },
-  { id: 29, name: "Cakra Khan", batch: "2019", major: "Manajemen", company: "Bukalapak", position: "Product Designer", location: "Jakarta", linkedin: "#" },
-  { id: 30, name: "Dina Lorenza", batch: "2016", major: "Manajemen", company: "CIMB Niaga", position: "Relationship Manager", location: "Jakarta", linkedin: "#" },
-  { id: 31, name: "Edo Kondologit", batch: "2020", major: "Manajemen", company: "DBS Bank", position: "Wealth Management", location: "Jakarta", linkedin: "#" },
-  { id: 32, name: "Ferry Irawan", batch: "2018", major: "Manajemen", company: "Standard Chartered", position: "Risk Compliance", location: "Jakarta", linkedin: "#" },
-  { id: 33, name: "Gading Marten", batch: "2017", major: "Manajemen", company: "OVO", position: "Partnership Lead", location: "Jakarta", linkedin: "#" },
-  { id: 34, name: "Hesti Purwadinata", batch: "2019", major: "Manajemen", company: "LinkAja", position: "Product Lead", location: "Jakarta", linkedin: "#" },
-  { id: 35, name: "Ivan Gunawan", batch: "2016", major: "Manajemen", company: "Sinar Mas Land", position: "Real Estate Manager", location: "Tangerang", linkedin: "#" },
-  { id: 36, name: "Jajang C Noer", batch: "2020", major: "Manajemen", company: "Agoda", position: "Market Manager", location: "Bangkok", linkedin: "#" },
-  { id: 37, name: "Katon Bagaskara", batch: "2018", major: "Manajemen", company: "Visa Indonesia", position: "Client Support", location: "Jakarta", linkedin: "#" },
-  { id: 38, name: "Lia Waode", batch: "2017", major: "Manajemen", company: "Mastercard", position: "Account Manager", location: "Jakarta", linkedin: "#" },
-  { id: 39, name: "Mucle", batch: "2019", major: "Manajemen", company: "AirAsia", position: "Revenue Management", location: "Jakarta", linkedin: "#" },
-  { id: 40, name: "Nagita Slavina", batch: "2016", major: "Manajemen", company: "Rans Entertainment", position: "CEO", location: "Jakarta", linkedin: "#" },
-  { id: 41, name: "Olla Ramlan", batch: "2020", major: "Manajemen", company: "Zilingo", position: "Sourcing Manager", location: "Jakarta", linkedin: "#" },
-  { id: 42, name: "Prilly Latuconsina", batch: "2018", major: "Manajemen", company: "Bellyto", position: "Founder", location: "Jakarta", linkedin: "#" },
-  { id: 43, name: "Raffi Ahmad", batch: "2017", major: "Manajemen", company: "Rans Corp", position: "Chairman", location: "Jakarta", linkedin: "#" },
-  { id: 44, name: "Syahrini", batch: "2019", major: "Manajemen", company: "Princess Syahrini Ent.", position: "Owner", location: "Jakarta", linkedin: "#" },
-  { id: 45, name: "Titi DJ", batch: "2016", major: "Manajemen", company: "Music Bank", position: "Talent Manager", location: "Jakarta", linkedin: "#" },
-  { id: 46, name: "Ussy Sulistiawaty", batch: "2020", major: "Manajemen", company: "Ussy Cosmetics", position: "Director", location: "Jakarta", linkedin: "#" },
-  { id: 47, name: "Vidi Aldiano", batch: "2018", major: "Manajemen", company: "VA Management", position: "Manager", location: "Jakarta", linkedin: "#" },
-  { id: 48, name: "Widyawati", batch: "2017", major: "Manajemen", company: "Senior Living", position: "Consultant", location: "Jakarta", linkedin: "#" },
-  { id: 49, name: "Yuni Shara", batch: "2019", major: "Manajemen", company: "Yuni Corp", position: "Principal", location: "Jakarta", linkedin: "#" },
-  { id: 50, name: "Zidan Ibrahim", batch: "2016", major: "Manajemen", company: "Tako", position: "Social Media Specialist", location: "Jakarta", linkedin: "#" },
-];
+// Initial fallback data (Removed dummy data)
+
 
 export function AlumniDatabase() {
+  const [alumniData, setAlumniData] = useState<Alumni[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterBatch, setFilterBatch] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  const filteredAlumni = ALUMNI_DATA.filter(alumni => {
+  useEffect(() => {
+    fetchAlumni();
+  }, []);
+
+  const fetchAlumni = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('alumni')
+        .select('*')
+        .order('batch', { ascending: false });
+
+      if (error) throw error;
+      setAlumniData(data || []);
+    } catch (err) {
+      console.error('Error fetching alumni:', err);
+      setAlumniData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredAlumni = alumniData.filter(alumni => {
     const matchesSearch = alumni.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                          alumni.company.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesBatch = filterBatch === "All" || alumni.batch === filterBatch;
@@ -240,7 +217,16 @@ export function AlumniDatabase() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#081C36]/5">
-                {currentItems.map((alumni) => (
+                {loading ? (
+                  <tr>
+                    <td colSpan={4} className="px-8 py-20 text-center">
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="w-8 h-8 border-4 border-[#081C36]/10 border-t-[#081C36] rounded-full animate-spin"></div>
+                        <p className="text-[#081C36]/40 font-inter animate-pulse">Memuat data alumni...</p>
+                      </div>
+                    </td>
+                  </tr>
+                ) : currentItems.map((alumni) => (
                   <motion.tr 
                     key={alumni.id}
                     initial={{ opacity: 0 }}
@@ -283,6 +269,17 @@ export function AlumniDatabase() {
                             <Linkedin className="w-4 h-4" strokeWidth={1.5} />
                           </a>
                         )}
+                        {alumni.phone && (
+                          <a 
+                            href={`https://wa.me/${alumni.phone.replace(/\D/g, '')}`} 
+                            target="_blank" 
+                            rel="noreferrer" 
+                            className="w-9 h-9 rounded-full flex items-center justify-center text-[#081C36]/40 hover:text-[#25D366] hover:bg-[#25D366]/5 transition-all duration-300"
+                            title="WhatsApp"
+                          >
+                            <Phone className="w-4 h-4" strokeWidth={1.5} />
+                          </a>
+                        )}
                         {alumni.email && (
                           <a 
                             href={`mailto:${alumni.email}`} 
@@ -302,9 +299,13 @@ export function AlumniDatabase() {
               </tbody>
             </table>
             
-            {filteredAlumni.length === 0 && (
+            {filteredAlumni.length === 0 && !loading && (
               <div className="py-20 text-center">
-                <p className="text-[#081C36]/40 font-inter italic">Tidak ada alumni yang sesuai dengan pencarian Anda.</p>
+                <p className="text-[#081C36]/40 font-inter italic">
+                  {searchTerm || filterBatch !== "All" 
+                    ? "Tidak ada alumni yang sesuai dengan pencarian Anda." 
+                    : "Belum ada data alumni di database."}
+                </p>
               </div>
             )}
           </div>

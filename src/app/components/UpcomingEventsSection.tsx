@@ -12,7 +12,15 @@ interface Event {
   month_year: string;
   image_url: string;
   type: string;
+  description: string;
 }
+
+const getTeaser = (html: string) => {
+  if (!html) return '';
+  // Remove HTML tags and replace with space, then trim and collapse multiple spaces
+  const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  return text.length > 100 ? text.substring(0, 100) + '...' : text;
+};
 
 export function UpcomingEventsSection() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -40,7 +48,7 @@ export function UpcomingEventsSection() {
   if (loading || events.length === 0) return null;
 
   return (
-    <section className="relative w-full py-24 bg-white text-[#081C36]">
+    <section className="relative w-full pt-12 pb-24 bg-white text-[#081C36]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
 
         {/* Header */}
@@ -91,21 +99,22 @@ export function UpcomingEventsSection() {
               </div>
 
               {/* Text Content */}
-              <h3 className="text-2xl font-semibold text-[#081C36] mb-4 line-clamp-2 min-h-[64px]">
+              <h3 className="text-xl md:text-2xl font-bold text-[#081C36] mb-2 line-clamp-1">
                 {event.title}
               </h3>
 
+              <p className="text-[#081C36]/60 text-sm font-inter line-clamp-2 mb-4 min-h-[40px]">
+                {getTeaser(event.description)}
+              </p>
+
               <div className="flex flex-col gap-2 mt-auto">
-                <div className="flex items-center gap-2 text-[#081C36]/60">
-                  <MapPin size={18} className="text-[#081C36]" />
-                  <span className="text-sm font-medium">{event.location}</span>
+                <div className="flex items-center gap-2 text-[#081C36]/50">
+                  <MapPin size={16} className="text-[#081C36]" />
+                  <span className="text-xs md:text-sm font-medium">{event.location}</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#081C36]/60">
-                  <MapPin size={18} className="invisible" /> {/* Spacer to match alignment */}
-                  <div className="flex items-center gap-2">
-                    <Clock size={18} className="text-[#081C36]" />
-                    <span className="text-sm font-medium">{event.time}</span>
-                  </div>
+                <div className="flex items-center gap-2 text-[#081C36]/50">
+                  <Clock size={16} className="text-[#081C36]" />
+                  <span className="text-xs md:text-sm font-medium">{event.time}</span>
                 </div>
               </div>
             </motion.div>

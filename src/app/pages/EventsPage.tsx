@@ -35,6 +35,13 @@ export function EventsPage() {
   const [events, setEvents] = useState<any[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
 
+  const getTeaser = (html: string) => {
+    if (!html) return '';
+    // Remove HTML tags and replace with space, then trim and collapse multiple spaces
+    const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    return text.length > 100 ? text.substring(0, 100) + '...' : text;
+  };
+
   const ongoingEvents = events.filter(e => {
     if (e.type === 'past') return false;
     const now = new Date();
@@ -210,9 +217,12 @@ export function EventsPage() {
               </div>
 
               {/* Content */}
-              <h3 className="text-base md:text-xl font-inter font-bold mb-2 md:mb-3 line-clamp-2 min-h-[48px] md:min-h-[56px] group-hover:text-[#081C36] transition-colors duration-300">
+              <h3 className="text-base md:text-xl font-inter font-bold mb-1 group-hover:text-[#081C36] transition-colors duration-300 line-clamp-1">
                 {event.title}
               </h3>
+              <p className="text-[#081C36]/50 text-[10px] md:text-xs font-inter line-clamp-2 mb-3 md:mb-4">
+                {getTeaser(event.description)}
+              </p>
 
               <div className="flex flex-col gap-1 md:gap-2 mt-auto">
                 <div className="flex items-center gap-1.5 md:gap-2 text-[#081C36]/50">
@@ -273,9 +283,12 @@ export function EventsPage() {
               </div>
 
               {/* Title */}
-              <h3 className="text-sm md:text-xl font-inter font-bold mb-1.5 md:mb-3 group-hover:text-[#081C36] transition-colors duration-300 line-clamp-2">
+              <h3 className="text-sm md:text-xl font-inter font-bold mb-1 group-hover:text-[#081C36] transition-colors duration-300 line-clamp-1">
                 {event.title}
               </h3>
+              <p className="text-[#081C36]/50 text-[10px] md:text-xs font-inter line-clamp-2 mb-3 md:mb-4">
+                {getTeaser(event.description)}
+              </p>
 
               {/* Meta */}
               <div className="mt-auto flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-4 text-[#081C36]/40 text-xs md:text-sm font-inter">

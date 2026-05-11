@@ -76,7 +76,7 @@ const links: NavLink[] = [
     icon: BookOpen,
     dropdown: [
       { label: 'Artikel', href: '/articles' },
-      { label: 'Aspirasi Manajemen', href: '/#aspirasi' },
+      { label: 'Aspirasi Mahasiswa', href: 'https://docs.google.com/forms/d/e/1FAIpQLSeeUpFXQMAkwWZwFN4HGlnO-3l8szFqz7v0nKSwDvJT_Lw5EQ/viewform?usp=publish-editor' },
       {
         label: 'Bank Soal',
         subDropdown: [
@@ -96,7 +96,7 @@ const links: NavLink[] = [
       {
         label: 'Alumni Database',
         subDropdown: [
-          { label: 'Register', href: '/#alumni-register' },
+          { label: 'Register', href: 'https://docs.google.com/forms/d/e/1FAIpQLSc8LgfcD489UBhTVqcQzRCBMqCpKe5H9hyp0rqZSWVWkbrsxw/viewform?usp=sharing&ouid=104485480134326130647' },
           { label: 'Database', href: '/alumni-database' },
         ]
       },

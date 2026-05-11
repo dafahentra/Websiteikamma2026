@@ -7,6 +7,26 @@ import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 import { SCRAPBOOK_PHOTOS, ABOUT_BACKGROUND } from '../../assets/photos';
 import { supabase } from "../../lib/supabase";
 
+import antamLogo from "../../assets/logopartner/LogoAntam.png";
+import bniLogo from "../../assets/logopartner/LogoBNI.png";
+import ekisLogo from "../../assets/logopartner/LogoEkis.png";
+import lpsLogo from "../../assets/logopartner/LogoLPS.png";
+import marketeersLogo from "../../assets/logopartner/LogoMarketeers.png";
+import paragonLogo from "../../assets/logopartner/LogoParagon.png";
+import sarirotiLogo from "../../assets/logopartner/LogoSariRoti.png";
+import telkomLogo from "../../assets/logopartner/LogoTelkom.png";
+
+const partnerLogos = [
+  antamLogo,
+  bniLogo,
+  ekisLogo,
+  lpsLogo,
+  marketeersLogo,
+  paragonLogo,
+  sarirotiLogo,
+  telkomLogo
+];
+
 const BACKGROUND_IMAGE = ABOUT_BACKGROUND;
 
 const svgInner = LogoPutihRaw
@@ -229,8 +249,8 @@ export function AboutSection() {
               <h3 className="text-white text-xl md:text-3xl font-bold text-center mb-4 md:mb-8">Our Partners</h3>
               <div className="w-full overflow-hidden flex whitespace-nowrap">
                 <div className="flex gap-8 md:gap-16 items-center animate-marquee">
-                  {[...Array(20)].map((_, i) => (
-                    <IkammaLogo key={i} className="w-16 h-16 md:w-24 md:h-24 object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                  {[...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
+                    <img key={i} src={logo} alt={`Partner Logo ${i}`} className="h-12 md:h-20 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
                   ))}
                 </div>
               </div>

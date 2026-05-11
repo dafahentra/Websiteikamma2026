@@ -2,10 +2,11 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
-import LOGO1 from '../../assets/LogoEvent/ManagementEvent.png';
-import LOGO2 from '../../assets/LogoEvent/CareerInsight.png';
-import LOGO3 from '../../assets/LogoEvent/Menefest.png';
-import LOGO4 from '../../assets/LogoEvent/Yes!.png';
+import LOGO1 from '../../assets/LogoEvent/LogoME.png';
+import LOGO2 from '../../assets/LogoEvent/LogoCI.png';
+import LOGO3 from '../../assets/LogoEvent/LogoMenefest.png';
+import LOGO4 from '../../assets/LogoEvent/LogoYES!.png';
+import LOGO5 from '../../assets/LogoEvent/LogoGMSC.png'
 
 import { EVENT_PHOTOS, EVENTS_BG } from "../../assets/photos";
 const BACKGROUND_IMAGE = EVENTS_BG;
@@ -15,7 +16,7 @@ const EVENT_ITEMS = [
   { photo: EVENT_PHOTOS[1], logo: LOGO2 },
   { photo: EVENT_PHOTOS[2], logo: LOGO3 },
   { photo: EVENT_PHOTOS[3], logo: LOGO4 },
-  { photo: EVENT_PHOTOS[0], logo: LOGO1 }, // Placeholder for 5th item
+  { photo: EVENT_PHOTOS[4], logo: LOGO5 }, // Placeholder for 5th item
 ];
 
 const POSITIONS = [

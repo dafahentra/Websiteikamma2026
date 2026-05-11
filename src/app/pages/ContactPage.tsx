@@ -271,16 +271,6 @@ export function ContactPage() {
                   >
                     <input type="hidden" name="form-name" value={formData.enquiry === 'Media Partnership' ? 'contact-media' : 'contact-external'} />
                     
-                    {submitted && (
-                      <motion.div 
-                        initial={{ opacity: 0, y: -10 }} 
-                        animate={{ opacity: 1, y: 0 }} 
-                        className="bg-[#002444]/10 border border-[#002444]/30 text-[#002444] px-4 py-3 rounded-xl text-sm font-inter"
-                      >
-                        ✓ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda melalui email.
-                      </motion.div>
-                    )}
-                    
                     <div className="grid sm:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-[#002444]/50 text-sm font-inter mb-2">Name</label>
@@ -380,6 +370,17 @@ export function ContactPage() {
                         className="w-full px-0 py-3 bg-transparent border-b border-[#002444]/15 text-[#002444] placeholder-[#002444]/30 focus:outline-none focus:border-[#002444] transition-colors resize-none text-sm font-inter" 
                       />
                     </div>
+                    
+                    {submitted && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: -10 }} 
+                        animate={{ opacity: 1, y: 0 }} 
+                        className="bg-[#002444]/10 border border-[#002444]/30 text-[#002444] px-4 py-3 rounded-xl text-sm font-inter text-center"
+                      >
+                        ✓ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda melalui email.
+                      </motion.div>
+                    )}
+
                     <div className="flex justify-end pt-4">
                       <motion.button 
                         type="submit" 

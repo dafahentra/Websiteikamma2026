@@ -11,6 +11,26 @@ import { supabase } from "../../lib/supabase";
 
 import { SCRAPBOOK_PHOTOS, HERO_BG } from "../../assets/photos";
 
+import antamLogo from "../../assets/logopartner/LogoAntam.png";
+import bniLogo from "../../assets/logopartner/LogoBNI.png";
+import ekisLogo from "../../assets/logopartner/LogoEkis.png";
+import lpsLogo from "../../assets/logopartner/LogoLPS.png";
+import marketeersLogo from "../../assets/logopartner/LogoMarketeers.png";
+import paragonLogo from "../../assets/logopartner/LogoParagon.png";
+import sarirotiLogo from "../../assets/logopartner/LogoSariRoti.png";
+import telkomLogo from "../../assets/logopartner/LogoTelkom.png";
+
+const partnerLogos = [
+  antamLogo,
+  bniLogo,
+  ekisLogo,
+  lpsLogo,
+  marketeersLogo,
+  paragonLogo,
+  sarirotiLogo,
+  telkomLogo
+];
+
 const BACKGROUND_IMAGE = HERO_BG;
 
 // A massive scrolling area to accommodate the grand unified sequence
@@ -429,8 +449,8 @@ export function Hero() {
                 style={{ willChange: "transform" }}
               >
                 {/* We render 12 logos twice (24 total) to create a perfect, seamless endless loop! */}
-                {[...Array(24)].map((_, i) => (
-                  <IkammaLogo key={i} className="w-16 h-16 md:w-24 md:h-24 object-contain opacity-80 hover:opacity-100 transition-opacity flex-shrink-0" />
+                {[...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
+                  <img key={i} src={logo} alt={`Partner Logo ${i}`} className="h-12 md:h-20 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity flex-shrink-0" />
                 ))}
               </motion.div>
             </div>
@@ -521,9 +541,9 @@ export function Hero() {
           </motion.div>
 
         </motion.div>
- 
+
         {/* === Scroll Indicator === */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4 pointer-events-none"
           style={{ opacity: scrollIndicatorOpacity }}
         >

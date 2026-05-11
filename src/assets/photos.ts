@@ -8,9 +8,9 @@
  */
 
 // ── Hero / Intro / Backgrounds ──────────────────────────────────────
-import heroMain from './Background/BackgroundMain.jpg';
-import aboutBg from './Background/HeroAbout.jpg';
-import heroSectionBg from './Background/BackgroundMain.jpg';
+import heroMain from './Background/BackgroundMain.png';
+import aboutBg from './Background/BackgroundMain.png';
+import heroSectionBg from './Background/BackgroundMain.png';
 
 // ── Scrapbook Photos (Flying Photos) ────────────────────────────────
 import scrapbook1 from './FlyingPhoto/Flyingphoto1.JPG';
@@ -52,11 +52,12 @@ import LogoEntre from './LogoBirDept/ENTRE.svg';
 import LogoSparta from './LogoBirDept/SPARTA.svg';
 
 // ── Events ──────────────────────────────────────────────────────────
-import eventCard1 from './FotoEvent/FotoME.jpg';
-import eventCard2 from './FotoEvent/FotoCI.JPG';
-import eventCard3 from './FotoEvent/FotoMenefest.jpg';
-import eventCard4 from './FotoEvent/FotoYES!.jpg';
-import eventsBg from './Background/HeroAbout.jpg';
+import eventCard1 from './FotoEvent/FotoME.png';
+import eventCard2 from './FotoEvent/FotoCI.png';
+import eventCard3 from './FotoEvent/FotoMenefest.png';
+import eventCard4 from './FotoEvent/FotoYES.png';
+import eventCard5 from './FotoEvent/FotoGMSC.png';
+import eventsBg from './Background/BackgroundNotableEvent.png';
 
 // ── Articles / Gallery (Fallback to old for now or use backgrounds) ──
 import article1 from './Background/HeroAbout.jpg';
@@ -71,9 +72,9 @@ import gallery5 from './Background/BackgroundMain.jpg';
 import gallery6 from './Background/HeroAbout.jpg';
 
 // ── Upcoming / News ────────────────────────────────────────────────
-import upcoming1 from './FotoEvent/FotoCI.jpg';
-import upcoming2 from './FotoEvent/FotoME.JPG';
-import upcoming3 from './FotoEvent/FotoMenefest.jpg';
+import upcoming1 from './FotoEvent/FotoCI.png';
+import upcoming2 from './FotoEvent/FotoME.png';
+import upcoming3 from './FotoEvent/FotoMenefest.png';
 
 import newsBg from './Background/BackgroundMain.jpg';
 
@@ -95,7 +96,7 @@ export const LOGO_BIRDEP: string[] = [
   LogoAdvance, LogoEntre, LogoExternal, LogoHRBB, LogoHRM, LogoIndev, LogoInternal, LogoMM, LogoSparta
 ];
 
-export const EVENT_PHOTOS: string[] = [eventCard1, eventCard2, eventCard3, eventCard4];
+export const EVENT_PHOTOS: string[] = [eventCard1, eventCard2, eventCard3, eventCard4, eventCard5];
 export const EVENTS_BG = eventsBg;
 
 export const ARTICLE_PHOTOS: string[] = [article1, article2, article3];
@@ -113,8 +114,8 @@ export const NEWS_BG = newsBg;
 export const NEWS_PLACEHOLDER_PHOTOS: string[] = SCRAPBOOK_PHOTOS;
 
 export const EVENTS_PAGE_HERO = aboutBg;
-export const EVENTS_PAGE_ONGOING: string[] = [eventCard1, eventCard2, eventCard3];
-export const EVENTS_PAGE_PAST: string[] = [eventCard1, eventCard2, eventCard3, eventCard4];
+export const EVENTS_PAGE_ONGOING: string[] = [eventCard1, eventCard2, eventCard3, eventCard4, eventCard5];
+export const EVENTS_PAGE_PAST: string[] = [eventCard1, eventCard2, eventCard3, eventCard4, eventCard5];
 
 export const ARTICLES_PAGE_HERO = aboutBg;
 export const ARTICLES_PAGE_PHOTOS: string[] = [article1, article2, article3];

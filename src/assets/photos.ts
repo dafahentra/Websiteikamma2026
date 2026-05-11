@@ -30,15 +30,15 @@ import scrapbook14 from './FlyingPhoto/FlyingPhoto14.jpg';
 import scrapbook15 from './FlyingPhoto/FlyingPhoto15.jpg';
 
 // ── Department Groups ──────────────────────────────────────────────
-import PotoHRBB from './BirDepDetail/Group/HRBBGroup.jpg';
-import PotoHRM from './BirDepDetail/Group/HRMGroup.JPG';
-import PotoAdvance from './BirDepDetail/Group/AdvanceGroup.JPG';
-import PotoMM from './BirDepDetail/Group/MMGroup.jpeg';
-import PotoInternal from './BirDepDetail/Group/IntGroup.JPG';
-import PotoExternal from './BirDepDetail/Group/ExtGroup.jpg';
-import PotoIndev from './BirDepDetail/Group/IndevGroup.jpeg';
-import PotoEntre from './BirDepDetail/Group/EntreGroup.jpeg';
-import PotoSparta from './BirDepDetail/Group/SpartaGroup.jpeg';
+import PotoHRBB from './BirDepDetail/Group/HRBBGroup.webp';
+import PotoHRM from './BirDepDetail/Group/HRMGroup.webp';
+import PotoAdvance from './BirDepDetail/Group/AdvanceGroup.webp';
+import PotoMM from './BirDepDetail/Group/MMGroup.webp';
+import PotoInternal from './BirDepDetail/Group/IntGroup.webp';
+import PotoExternal from './BirDepDetail/Group/ExtGroup.webp';
+import PotoIndev from './BirDepDetail/Group/IndevGroup.webp';
+import PotoEntre from './BirDepDetail/Group/EntreGroup.webp';
+import PotoSparta from './BirDepDetail/Group/SpartaGroup.webp';
 
 // ── Logos ───────────────────────────────────────────────────────────
 import LogoHRM from './LogoBirDept/HRM.svg';
@@ -52,31 +52,31 @@ import LogoEntre from './LogoBirDept/ENTRE.svg';
 import LogoSparta from './LogoBirDept/SPARTA.svg';
 
 // ── Events ──────────────────────────────────────────────────────────
-import eventCard1 from './FotoEvent/FotoME.png';
-import eventCard2 from './FotoEvent/FotoCI.png';
-import eventCard3 from './FotoEvent/FotoMenefest.png';
-import eventCard4 from './FotoEvent/FotoYES.png';
-import eventCard5 from './FotoEvent/FotoGMSC.png';
+import eventCard1 from './FotoEvent/FotoME.webp';
+import eventCard2 from './FotoEvent/FotoCI.webp';
+import eventCard3 from './FotoEvent/FotoMenefest.webp';
+import eventCard4 from './FotoEvent/FotoYES.webp';
+import eventCard5 from './FotoEvent/FotoGMSC.webp';
 import eventsBg from './Background/BackgroundNotableEvent.png';
 
 // ── Articles / Gallery (Fallback to old for now or use backgrounds) ──
 import article1 from './Background/HeroAbout.jpg';
-import article2 from './Background/BackgroundMain.jpg';
+import article2 from './Background/BackgroundMain.png';
 import article3 from './Background/HeroAbout.jpg';
 
-import gallery1 from './Background/BackgroundMain.jpg';
+import gallery1 from './Background/HeroAbout.jpg';
 import gallery2 from './Background/HeroAbout.jpg';
-import gallery3 from './Background/BackgroundMain.jpg';
+import gallery3 from './Background/HeroAbout.jpg';
 import gallery4 from './Background/HeroAbout.jpg';
-import gallery5 from './Background/BackgroundMain.jpg';
+import gallery5 from './Background/HeroAbout.jpg';
 import gallery6 from './Background/HeroAbout.jpg';
 
 // ── Upcoming / News ────────────────────────────────────────────────
-import upcoming1 from './FotoEvent/FotoCI.png';
-import upcoming2 from './FotoEvent/FotoME.png';
-import upcoming3 from './FotoEvent/FotoMenefest.png';
+import upcoming1 from './FotoEvent/FotoCI.webp';
+import upcoming2 from './FotoEvent/FotoME.webp';
+import upcoming3 from './FotoEvent/FotoMenefest.webp';
 
-import newsBg from './Background/BackgroundMain.jpg';
+import newsBg from './Background/BackgroundMain.png';
 
 // ═══════════════════════════════════════════════════════════════════
 // EXPORTS

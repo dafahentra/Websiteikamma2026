@@ -19,26 +19,26 @@ import SpartaManager from '../assets/FotoPengurus/SpartaManager.png';
 import SpartaViceManager from '../assets/FotoPengurus/SpartaViceManager.png';
 
 // ── Group Photos ────────────────────────────────────────────────────
-import GroupHRM from '../assets/BirDepDetail/Group/HRMGroup.JPG';
-import GroupHRBB from '../assets/BirDepDetail/Group/HRBBGroup.jpg';
-import GroupAdvance from '../assets/BirDepDetail/Group/AdvanceGroup.JPG';
-import GroupMM from '../assets/BirDepDetail/Group/MMGroup.jpeg';
-import GroupInternal from '../assets/BirDepDetail/Group/IntGroup.JPG';
-import GroupExternal from '../assets/BirDepDetail/Group/ExtGroup.jpg';
-import GroupIndev from '../assets/BirDepDetail/Group/IndevGroup.jpeg';
-import GroupEntre from '../assets/BirDepDetail/Group/EntreGroup.jpeg';
-import GroupSparta from '../assets/BirDepDetail/Group/SpartaGroup.jpeg';
+import GroupHRM from '../assets/BirDepDetail/Group/HRMGroup.webp';
+import GroupHRBB from '../assets/BirDepDetail/Group/HRBBGroup.webp';
+import GroupAdvance from '../assets/BirDepDetail/Group/AdvanceGroup.webp';
+import GroupMM from '../assets/BirDepDetail/Group/MMGroup.webp';
+import GroupInternal from '../assets/BirDepDetail/Group/IntGroup.webp';
+import GroupExternal from '../assets/BirDepDetail/Group/ExtGroup.webp';
+import GroupIndev from '../assets/BirDepDetail/Group/IndevGroup.webp';
+import GroupEntre from '../assets/BirDepDetail/Group/EntreGroup.webp';
+import GroupSparta from '../assets/BirDepDetail/Group/SpartaGroup.webp';
 
 // ── Meeting Photos ──────────────────────────────────────────────────
-import MeetingHRM from '../assets/BirDepDetail/Meeting/HRMMeeting.jpg';
-import MeetingHRBB from '../assets/BirDepDetail/Meeting/HRBBMeeting.jpg';
-import MeetingAdvance from '../assets/BirDepDetail/Meeting/AdvanceMeeting.jpg';
-import MeetingMM from '../assets/BirDepDetail/Meeting/MMMeeting.jpeg';
-import MeetingInternal from '../assets/BirDepDetail/Meeting/IntMeeting.JPG';
-import MeetingExternal from '../assets/BirDepDetail/Meeting/ExtMeeting.jpg';
-import MeetingIndev from '../assets/BirDepDetail/Meeting/IndevMeeting.jpeg';
-import MeetingEntre from '../assets/BirDepDetail/Meeting/EntreMeeting.jpeg';
-import MeetingSparta from '../assets/BirDepDetail/Meeting/SpartaMeeting.JPEG';
+import MeetingHRM from '../assets/BirDepDetail/Meeting/HRMMeeting.webp';
+import MeetingHRBB from '../assets/BirDepDetail/Meeting/HRBBMeeting.webp';
+import MeetingAdvance from '../assets/BirDepDetail/Meeting/AdvanceMeeting.webp';
+import MeetingMM from '../assets/BirDepDetail/Meeting/MMMeeting.webp';
+import MeetingInternal from '../assets/BirDepDetail/Meeting/IntMeeting.webp';
+import MeetingExternal from '../assets/BirDepDetail/Meeting/ExtMeeting.webp';
+import MeetingIndev from '../assets/BirDepDetail/Meeting/IndevMeeting.webp';
+import MeetingEntre from '../assets/BirDepDetail/Meeting/EntreMeeting.webp';
+import MeetingSparta from '../assets/BirDepDetail/Meeting/SpartaMeeting.webp';
 
 // ── Activity Photos ─────────────────────────────────────────────────
 import ActivityHRM from '../assets/BirDepDetail/Activity/HRMActivity.JPG';

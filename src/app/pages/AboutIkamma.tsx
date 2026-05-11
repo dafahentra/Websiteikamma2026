@@ -143,7 +143,7 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
   const RowContent = (
     <div 
       className={`w-full max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between gap-3 md:gap-4 transition-all duration-700 ease-in-out ${
-        isHovered ? "py-14 md:py-32" : "py-4 md:py-8"
+        isHovered ? "py-24 md:py-48" : "py-4 md:py-8"
       }`}
     >
       <h3 className={`font-inter font-bold text-base md:text-3xl text-[#002444] flex-1 leading-tight transition-transform duration-700 ${isHovered ? 'scale-105 origin-left' : 'scale-100'}`}>{item.name}</h3>
@@ -187,7 +187,7 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
         <img
           src={photo}
           alt={item.name}
-          className={`w-full h-full object-cover transition-all duration-700 ${isHovered ? 'grayscale-0' : 'grayscale-[0.5]'}`}
+          className={`w-full h-full object-cover object-[center_25%] transition-all duration-700 ${isHovered ? 'grayscale-0' : 'grayscale-[0.5]'}`}
         />
       </motion.div>
 

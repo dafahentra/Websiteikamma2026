@@ -8,5 +8,4 @@
   status = 200
 
 [forms]
-  # Enables Netlify Forms
   enabled = true

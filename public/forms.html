@@ -6,11 +6,18 @@
     <title>Netlify Forms Hook</title>
 </head>
 <body>
-    <!-- 
-      This file is hidden and only used by Netlify's build bot 
-      to detect the form for React/Vite SPAs.
-    -->
-    <form name="contact-ikamma" data-netlify="true" hidden>
+    <!-- Form untuk External Enquiry -->
+    <form name="contact-external" data-netlify="true" hidden>
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <input type="tel" name="phone" />
+        <input type="text" name="enquiry" />
+        <input type="text" name="subject" />
+        <textarea name="message"></textarea>
+    </form>
+
+    <!-- Form untuk Media Partnership -->
+    <form name="contact-media" data-netlify="true" hidden>
         <input type="text" name="name" />
         <input type="email" name="email" />
         <input type="tel" name="phone" />

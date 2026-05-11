@@ -115,8 +115,14 @@ export function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Determine which form to submit to based on enquiry
+    const formName = formData.enquiry === 'Media Partnership' ? 'contact-media' : 'contact-external';
+    
     const myForm = e.target as HTMLFormElement;
     const formDataObj = new FormData(myForm);
+    
+    // Ensure the form-name matches our dynamic choice
+    formDataObj.set("form-name", formName);
     
     try {
       await fetch("/", {
@@ -257,13 +263,13 @@ export function ContactPage() {
                 </div>
                 <div className="bg-white p-6 sm:p-8 md:p-14 overflow-hidden">
                   <form 
-                    name="contact-ikamma"
+                    name={formData.enquiry === 'Media Partnership' ? 'contact-media' : 'contact-external'}
                     method="POST"
                     data-netlify="true"
                     onSubmit={handleSubmit} 
                     className="space-y-6 h-full flex flex-col"
                   >
-                    <input type="hidden" name="form-name" value="contact-ikamma" />
+                    <input type="hidden" name="form-name" value={formData.enquiry === 'Media Partnership' ? 'contact-media' : 'contact-external'} />
                     
                     {submitted && (
                       <motion.div 

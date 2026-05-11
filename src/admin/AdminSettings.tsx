@@ -163,7 +163,7 @@ export const AdminSettings = () => {
                 value={settings.phone_contact} 
                 onChange={(e) => setSettings({...settings, phone_contact: e.target.value})}
                 className="w-full p-2 border rounded"
-                placeholder="+62..."
+                placeholder="62812..."
               />
             </div>
           </div>

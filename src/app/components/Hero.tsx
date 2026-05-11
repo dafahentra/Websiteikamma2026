@@ -364,15 +364,15 @@ export function Hero() {
               {/* Left Column */}
               <div className="flex flex-col text-left">
                 <h2 className="text-white text-3xl md:text-5xl flex items-center justify-start gap-3 mb-4 md:mb-8">
-                  <span className="text-white">—</span>
-                  <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">What is</span>
-                  <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">IKAMMA</span>
+                  <span className="text-white -mt-1">—</span>
+                  <span className="font-caslon-bold-italic">What</span>
+                  <span className="font-inter font-bold">is IKAMMA</span>
                 </h2>
                 <div className="text-white/90 space-y-3 md:space-y-6">
-                  <p className="text-sm md:text-lg leading-relaxed">
+                  <p className="text-sm md:text-lg leading-relaxed text-justify">
                     <span className="font-bold italic">Ikatan Keluarga Mahasiswa Manajemen (IKAMMA)</span> merupakan sebuah organisasi himpunan mahasiswa Program Studi Manajemen di Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
                   </p>
-                  <p className="text-sm md:text-lg leading-relaxed hidden sm:block">
+                  <p className="text-sm md:text-lg leading-relaxed text-justify hidden sm:block">
                     IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
                   </p>
                   <div className="pt-1 md:-mt-[25px] flex justify-start">
@@ -388,7 +388,7 @@ export function Hero() {
                 <h2 className="text-white text-3xl md:text-5xl flex items-center justify-end gap-2 sm:gap-3 mb-2 md:mb-8">
                   <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Company</span>
                   <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Profile</span>
-                  <span className="text-white">—</span>
+                  <span className="text-white font-inter font-bold -mt-1">—</span>
                 </h2>
                 <div className="w-full max-w-md ml-auto">
                   {/* Embedded YouTube Player */}
@@ -524,14 +524,14 @@ export function Hero() {
  
         {/* === Scroll Indicator === */}
         <motion.div 
-          className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-3 pointer-events-none"
+          className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4 pointer-events-none"
           style={{ opacity: scrollIndicatorOpacity }}
         >
-          <span className="text-white/50 text-[9px] md:text-[11px] font-inter tracking-[0.3em] uppercase">Keep Scrolling</span>
+          <span className="text-white/60 text-[11px] md:text-sm font-inter tracking-[0.4em] uppercase font-medium">Keep Scrolling</span>
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 12, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-px h-8 md:h-14 bg-gradient-to-b from-white/50 to-transparent"
+            className="w-px h-12 md:h-20 bg-gradient-to-b from-white/60 to-transparent"
           />
         </motion.div>
 

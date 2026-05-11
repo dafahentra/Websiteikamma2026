@@ -3,22 +3,22 @@
 :root {
   --font-size: 16px;
   --background: #ffffff;
-  --foreground: #06244A;
+  --foreground: #002444;
   --card: #ffffff;
-  --card-foreground: #06244A;
+  --card-foreground: #002444;
   --popover: #ffffff;
-  --popover-foreground: #06244A;
-  --primary: #06244A;
+  --popover-foreground: #002444;
+  --primary: #002444;
   --primary-foreground: #ffffff;
-  --secondary: #7684AD;
+  --secondary: #86A0D3;
   --secondary-foreground: #ffffff;
-  --muted: #ececf0;
-  --muted-foreground: #7684AD;
-  --accent: #081C36;
+  --muted: #f5f7fa;
+  --muted-foreground: #86A0D3;
+  --accent: #002444;
   --accent-foreground: #ffffff;
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.1);
+  --border: rgba(0, 36, 68, 0.1);
   --input: transparent;
   --input-background: #f3f3f5;
   --switch-background: #cbced4;
@@ -131,13 +131,12 @@
   /* Global letter-spacing for fonts */
   .font-inter,
   [style*="Inter"] {
-    letter-spacing: -0.05em;
+    /* Normal spacing for better thickness perception */
   }
 
   .font-caslon-italic,
   .font-caslon,
   [style*="Libre Caslon"] {
-    letter-spacing: -0.03em;
   }
 
   /**

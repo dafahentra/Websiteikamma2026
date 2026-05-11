@@ -89,7 +89,9 @@ export function Footer() {
 
           {/* Column 1: Brand Identity */}
           <div className="col-span-2 lg:col-span-4 flex flex-col md:flex-row items-center md:items-center text-center md:text-left gap-6 w-fit mx-auto lg:mx-0">
-            <img src={Logo} alt="IKAMMA Logo" className="w-20 md:w-24 lg:w-28 object-contain" />
+            <div className="flex-shrink-0 -mt-1">
+              <img src={Logo} alt="IKAMMA Logo" className="w-20 md:w-24 lg:w-28 object-contain" />
+            </div>
             <div className="flex flex-col gap-0.5">
               <h3 className="font-bold text-base md:text-lg text-[#081C36] leading-tight">
                 Ikatan Keluarga Mahasiswa Manajemen
@@ -141,7 +143,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href={`https://wa.me/${(settings?.phone_contact || '+6281256720013').replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-[#081C36]/60 hover:text-[#081C36] transition-all">
+                <a href={`https://wa.me/${(settings?.phone_contact || '+6281256720013').replace(/\D/g, '').replace(/^0/, '62').replace(/^8/, '628')}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-[#081C36]/60 hover:text-[#081C36] transition-all">
                   <div className="flex items-center justify-center w-5 h-5 group-hover:scale-110 transition-transform">
                     <WhatsAppIcon size={14} />
                   </div>

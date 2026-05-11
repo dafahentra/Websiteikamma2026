@@ -1,12 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Libre+Caslon+Text:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700;1,800&display=swap');
 
 /* ─── Font Utama: Inter ────────────────────────────────────────── */
 * {
   font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  /* Default Regular */
 }
 
-/* ─── Font Sekunder: Libre Caslon Text Normal ─────────────────────
-   Digunakan untuk heading, judul section, display text            */
+/* ─── Libre Caslon Text Classification ────────────────────────── */
 h1,
 h2,
 h3,
@@ -16,39 +17,58 @@ h6,
 .font-caslon {
   font-family: 'Libre Caslon Text', serif;
   font-style: normal;
+}
+
+.font-caslon-regular {
   font-weight: 400;
 }
 
-/* ─── Libre Caslon Text Bold ────────────────────────────────────── */
-strong,
-b,
-.font-caslon-bold {
-  font-family: 'Libre Caslon Text', serif !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
+.font-caslon-semibold {
+  font-weight: 600;
 }
 
-.font-caslon-italic {
-  font-family: 'Libre Caslon Text', serif !important;
-  font-style: italic !important;
-  font-weight: 400 !important;
+.font-caslon-bold {
+  font-weight: 700;
+}
+
+.font-caslon-extrabold {
+  font-weight: 800;
 }
 
 .font-caslon-bold-italic {
   font-family: 'Libre Caslon Text', serif !important;
-  font-style: italic !important;
   font-weight: 700 !important;
+  font-style: italic !important;
 }
 
-/* ─── Utility override ────────────────────────────────────────── */
+/* ─── Inter Classification ────────────────────────────────────── */
 .font-inter {
   font-family: 'Inter', sans-serif !important;
-  font-style: normal !important;
 }
 
-/* Force Inter for hero elements that need it despite h1 Caslon override */
-.font-inter-display {
-  font-family: 'Inter', sans-serif !important;
-  font-style: italic !important;
-  font-weight: 900 !important;
+.font-inter-regular {
+  font-weight: 400;
+}
+
+.font-inter-medium {
+  font-weight: 500;
+}
+
+.font-inter-semibold {
+  font-weight: 600;
+}
+
+.font-inter-bold {
+  font-weight: 700;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+/* ─── Global Weight Overrides ────────────────────────────────── */
+strong,
+b {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
 }

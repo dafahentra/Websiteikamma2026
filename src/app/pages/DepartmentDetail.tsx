@@ -68,7 +68,7 @@ export function DepartmentDetail() {
 
   if (!department) {
     return (
-      <div className="min-h-screen bg-white text-[#081C36] flex items-center justify-center">
+      <div className="min-h-screen bg-white text-[#002444] flex items-center justify-center">
         <Navbar />
         <h1 className="text-2xl">Department Not Found</h1>
       </div>
@@ -76,28 +76,36 @@ export function DepartmentDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-[#081C36] overflow-hidden">
+    <div className="min-h-screen bg-white text-[#002444] overflow-hidden">
       <Navbar />
 
       {/* 1. Hero Section: Welcome & Leaders */}
       <section className="relative w-full min-h-[102vh] flex flex-col items-center pt-[15vh] px-6 lg:px-12 pb-0">
+
         {/* Title Container */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center w-full z-20 mb-8"
+          className="text-center w-full z-20 mb-8 relative"
         >
-          <p className="text-[#081C36] font-inter font-medium mb-4 uppercase tracking-widest text-xs md:text-sm">Welcome to</p>
-          <h1 className="text-4xl sm:text-5xl md:text-[6vw] lg:text-[7vw] font-inter tracking-tighter max-w-[90vw] text-[#081C36] leading-[0.85] text-center mx-auto" style={{ fontWeight: 800 }}>
+          <p className="text-[#002444] font-inter font-medium mb-4 uppercase tracking-widest text-xs md:text-sm">Welcome to</p>
+          <h1 className="text-4xl sm:text-5xl md:text-[6vw] lg:text-[7vw] font-inter tracking-tighter max-w-[90vw] text-[#002444] leading-[0.85] text-center mx-auto" style={{ fontWeight: 800 }}>
             {department.name}
           </h1>
         </motion.div>
 
+        {/* Center Logo Branding (Static, Behind Leaders) */}
+        <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-0 w-64 h-64 md:w-[500px] md:h-[500px] mb-8 md:mb-12 flex items-center justify-center pointer-events-none opacity-[0.12]">
+          <img
+            src={department.logo}
+            alt={`${department.name} Logo`}
+            className="w-full h-full object-contain"
+          />
+        </div>
+
         {/* Leaders Layout - Stable fixed heights, pushed to bottom */}
-        <div className="relative w-full flex flex-row justify-between items-end h-[320px] md:h-[500px] max-w-[1800px] mx-auto px-0 shrink-0 mt-auto">
-
-
+        <div className="relative w-full flex flex-row justify-between items-end h-[320px] md:h-[500px] max-w-[1800px] mx-auto px-0 shrink-0 mt-auto z-10">
 
           {/* Manager (Left) */}
           <motion.div
@@ -126,33 +134,15 @@ export function DepartmentDetail() {
                   rel="noopener noreferrer"
                   className="hover:text-blue-600 transition-colors duration-300 flex items-center gap-2 group/link"
                 >
-                  <h3 className="text-sm sm:text-base md:text-3xl lg:text-4xl font-inter md:whitespace-nowrap drop-shadow-md text-[#081C36] leading-tight" style={{ fontWeight: 800 }}>{department.manager}</h3>
+                  <h3 className="text-sm sm:text-base md:text-3xl lg:text-4xl font-inter md:whitespace-nowrap drop-shadow-md text-[#002444] leading-tight" style={{ fontWeight: 800 }}>{department.manager}</h3>
                   {department.managerLinkedIn && (
-                    <ArrowUpRight size={18} className="text-[#081C36]/40 group-hover/link:text-blue-600 transition-colors shrink-0" />
+                    <ArrowUpRight size={18} className="text-[#002444]/40 group-hover/link:text-blue-600 transition-colors shrink-0" />
                   )}
                 </a>
-                <p className="text-[#081C36]/70 text-[8px] sm:text-[9px] md:text-lg lg:text-xl font-medium drop-shadow-md">Manager</p>
+                <p className="text-[#002444]/70 text-[8px] sm:text-[9px] md:text-lg lg:text-xl font-medium drop-shadow-md">Manager</p>
               </motion.div>
             </div>
           </motion.div>
-
-          {/* Center Logo Branding */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="absolute left-1/2 bottom-0 -translate-x-1/2 z-20 w-48 h-48 md:w-[450px] md:h-[450px] mb-8 md:mb-12 flex items-center justify-center pointer-events-none"
-          >
-            <motion.img
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              src={department.logo}
-              alt={`${department.name} Logo`}
-              className="w-full h-full object-contain"
-            />
-          </motion.div>
-
-          {/* Vice Manager (Right) */}
           <motion.div
             className="flex items-end z-10 relative w-[50%] md:w-[45%] justify-end h-full -mr-[130px] md:-mr-[194px] lg:-mr-[226px]"
           >
@@ -170,12 +160,12 @@ export function DepartmentDetail() {
                   rel="noopener noreferrer"
                   className="hover:text-blue-600 transition-colors duration-300 flex items-center gap-2 group/link"
                 >
-                  <h3 className="text-sm sm:text-base md:text-3xl lg:text-4xl font-inter md:whitespace-nowrap drop-shadow-md text-[#081C36] leading-tight" style={{ fontWeight: 800 }}>{department.viceManager}</h3>
+                  <h3 className="text-sm sm:text-base md:text-3xl lg:text-4xl font-inter md:whitespace-nowrap drop-shadow-md text-[#002444] leading-tight" style={{ fontWeight: 800 }}>{department.viceManager}</h3>
                   {department.viceManagerLinkedIn && (
-                    <ArrowUpRight size={18} className="text-[#081C36]/40 group-hover/link:text-blue-600 transition-colors shrink-0" />
+                    <ArrowUpRight size={18} className="text-[#002444]/40 group-hover/link:text-blue-600 transition-colors shrink-0" />
                   )}
                 </a>
-                <p className="text-[#081C36]/70 text-[8px] sm:text-[9px] md:text-lg lg:text-xl font-medium drop-shadow-md">Vice Manager</p>
+                <p className="text-[#002444]/70 text-[8px] sm:text-[9px] md:text-lg lg:text-xl font-medium drop-shadow-md">Vice Manager</p>
               </motion.div>
               <motion.img
                 style={{ x: parallaxXRight }}
@@ -231,15 +221,15 @@ export function DepartmentDetail() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-[#081C36] text-3xl md:text-4xl lg:text-5xl flex items-center gap-3 mb-8">
-              <span className="font-bold">—</span>
+            <h2 className="text-[#002444] text-3xl md:text-4xl lg:text-5xl flex items-center gap-3 mb-8">
+              <span className="font-inter font-bold -mt-1">—</span>
               <span>
-                <span className="font-caslon-bold-italic">About</span> <span className="font-inter font-bold">{department.name}</span>
+                <span className="font-caslon-bold-italic">About</span> <span className="font-inter font-bold text-[#002444]">{department.name}</span>
               </span>
             </h2>
             <p
               className="text-sky-500 text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl text-justify font-semibold"
-              dangerouslySetInnerHTML={{ __html: department.description.replace(/\*\*(.*?)\*\*/g, '<span class="text-[#081C36] font-bold font-inter">$1</span>') }}
+              dangerouslySetInnerHTML={{ __html: department.description.replace(/\*\*(.*?)\*\*/g, '<span class="text-[#002444] font-bold font-inter">$1</span>') }}
             />
           </motion.div>
         </div>
@@ -248,9 +238,9 @@ export function DepartmentDetail() {
       {/* 4. Our Staff Section */}
       <section className="py-24 px-6 lg:px-12 bg-white">
         <div className="max-w-[1600px] mx-auto">
-          <h2 className="text-[#081C36] text-4xl md:text-5xl mb-16 flex items-center gap-3">
-            <span className="font-bold">—</span>
-            <span><span className="font-caslon-bold-italic">Our</span> <span className="font-inter font-bold">Staff</span></span>
+          <h2 className="text-[#002444] text-4xl md:text-5xl mb-16 flex items-center gap-3">
+            <span className="font-inter font-bold -mt-1">—</span>
+            <span><span className="font-caslon-bold-italic">Our</span> <span className="font-inter font-bold text-[#002444]">Staff</span></span>
           </h2>
  
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 md:gap-8">
@@ -273,15 +263,15 @@ export function DepartmentDetail() {
                   )}
                   <div className="absolute inset-0 bg-[#081C36]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                <h3 className="text-[#081C36] font-bold text-center text-sm md:text-base lg:text-lg font-inter px-2 line-clamp-2">{staff.name}</h3>
-                <p className="text-[#081C36]/50 text-[10px] md:text-xs uppercase tracking-widest mt-1">Staff</p>
+                <h3 className="text-[#002444] font-inter-bold text-center text-sm md:text-base lg:text-lg font-inter px-2 line-clamp-2">{staff.name}</h3>
+                <p className="text-[#86A0D3] font-inter italic text-sm md:text-base lg:text-lg mt-1">staff</p>
               </motion.div>
             ))}
           </div>
  
           {department.staffs.length === 0 && (
             <div className="py-20 text-center border-2 border-dashed border-[#081C36]/10 rounded-3xl">
-              <p className="text-[#081C36]/40 font-inter italic text-lg">Staff data will be updated soon.</p>
+              <p className="text-[#002444]/40 font-inter italic text-lg">Staff data will be updated soon.</p>
             </div>
           )}
         </div>
@@ -290,9 +280,9 @@ export function DepartmentDetail() {
       {/* 5. Program Kerja Section */}
       <section className="py-24 px-6 lg:px-12 bg-transparent">
         <div className="max-w-[1400px] mx-auto">
-          <h2 className="text-[#081C36] text-4xl md:text-5xl mb-16 flex items-center gap-3">
-            <span className="font-bold">—</span>
-            <span><span className="font-caslon-bold-italic">Program</span> <span className="font-inter font-bold">Kerja</span></span>
+          <h2 className="text-[#002444] text-4xl md:text-5xl mb-16 flex items-center gap-3">
+            <span className="font-inter font-bold -mt-1">—</span>
+            <span><span className="font-caslon-bold-italic">Program</span> <span className="font-inter font-bold text-[#002444]">Kerja</span></span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
@@ -309,11 +299,11 @@ export function DepartmentDetail() {
               >
                 <div className="flex items-center gap-3 min-w-[50px]">
                   <span className="text-sky-500 font-inter font-bold text-2xl group-hover:scale-110 transition-transform duration-300">{idx + 1}</span>
-                  <span className="text-sky-500/30 font-inter text-2xl font-bold">—</span>
+                  <span className="text-sky-500/30 font-inter font-bold -mt-1">—</span>
                 </div>
  
                 <div className="relative flex-1 h-16 md:h-20 overflow-hidden bg-sky-500/5 rounded-xl border border-sky-500/10 group-hover:bg-sky-500/10 group-hover:border-sky-500/30 transition-all duration-500 flex items-center justify-center">
-                  <div className="text-[#081C36] font-inter font-bold text-base md:text-xl px-6 text-center">{program.title}</div>
+                  <div className="text-[#002444] font-inter font-inter-bold text-base md:text-xl px-6 text-center">{program.title}</div>
                 </div>
               </motion.div>
             ))}

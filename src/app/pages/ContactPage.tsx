@@ -112,15 +112,30 @@ export function ContactPage() {
     { icon: TikTokIcon, label: 'TikTok', href: settings?.tiktok_url || 'https://tiktok.com/@ikamma.ugm' },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
-    setFormData({ name: '', email: '', phone: '', enquiry: '', subject: '', message: '' });
+    
+    const myForm = e.target as HTMLFormElement;
+    const formDataObj = new FormData(myForm);
+    
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formDataObj as any).toString(),
+      });
+      
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 5000);
+      setFormData({ name: '', email: '', phone: '', enquiry: '', subject: '', message: '' });
+    } catch (error) {
+      console.error("Form submission error:", error);
+      alert("Something went wrong! Please try again later.");
+    }
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#081C36] overflow-x-hidden">
+    <div className="min-h-screen bg-white text-[#002444] overflow-x-hidden">
       <Navbar />
 
       {/* Hero */}
@@ -135,7 +150,7 @@ export function ContactPage() {
             <span style={{ fontFamily: "'Libre Caslon Text', serif" }} className="italic font-bold">Contact</span>
             <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Us</span>
           </h1>
-          <p className="text-[#081C36]/50 text-lg md:text-xl font-inter max-w-2xl mx-auto">
+          <p className="text-[#002444]/50 text-lg md:text-xl font-inter max-w-2xl mx-auto">
             Any question or remarks? Just write us a message!
           </p>
         </motion.div>
@@ -147,19 +162,19 @@ export function ContactPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex justify-center mt-10"
         >
-          <div className="flex bg-[#081C36]/[0.05] border border-[#081C36]/10 p-1.5 rounded-full relative">
+          <div className="flex bg-[#002444]/[0.05] border border-[#002444]/10 p-1.5 rounded-full relative">
             {TABS.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`relative px-6 md:px-10 py-2 rounded-full text-sm font-inter font-bold transition-colors duration-300 z-10 ${
-                  activeTab === tab.id ? 'text-white' : 'text-[#081C36]/50 hover:text-[#081C36]'
+                  activeTab === tab.id ? 'text-white' : 'text-[#002444]/50 hover:text-[#002444]'
                 }`}
               >
                 {activeTab === tab.id && (
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute inset-0 bg-[#081C36] rounded-full shadow-lg shadow-[#081C36]/20"
+                    className="absolute inset-0 bg-[#002444] rounded-full shadow-lg shadow-[#002444]/20"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
@@ -183,23 +198,49 @@ export function ContactPage() {
             >
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] rounded-3xl overflow-hidden shadow-xl shadow-black/10 min-h-[600px] w-full box-border">
                 <div className="relative bg-[#f5f7fa] p-6 sm:p-8 md:p-14 flex flex-col justify-between overflow-hidden">
-                  <div className="absolute top-0 right-0 w-48 h-48 bg-[#081C36]/5 rounded-full blur-xl pointer-events-none translate-x-1/4 -translate-y-1/4" />
-                  <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#081C36]/3 rounded-full pointer-events-none translate-x-1/3 translate-y-1/3" />
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-[#002444]/5 rounded-full blur-xl pointer-events-none translate-x-1/4 -translate-y-1/4" />
+                  <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#002444]/3 rounded-full pointer-events-none translate-x-1/3 translate-y-1/3" />
                   <div className="relative z-10">
                     <h2 className="text-3xl md:text-4xl font-inter font-bold mb-4">Contact Information</h2>
-                    <p className="text-[#081C36]/60 text-base font-inter leading-relaxed mb-12 max-w-md">Should you have any question or concern, you can reach us by filling out the contact form, finding us on social networks, or you can personal email us at:</p>
+                    <p className="text-[#002444]/60 text-base font-inter leading-relaxed mb-12 max-w-md">Should you have any question or concern, you can reach us by filling out the contact form, finding us on social networks, or you can personal email us at:</p>
                     <div className="space-y-8">
-                      <div className="flex items-center gap-4 md:gap-5">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0"><Phone size={18} className="text-[#081C36] md:w-5 md:h-5" /></div>
-                        <span className="font-inter text-base md:text-lg text-[#081C36]">{settings?.phone_contact || '+62 812-3456-7890'}</span>
+                      <div className="space-y-6">
+                        <a 
+                          href="https://wa.me/6282111400126" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-4 md:gap-5"
+                        >
+                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#002444]/10 flex items-center justify-center shrink-0">
+                            <Phone size={18} className="text-[#002444] md:w-5 md:h-5" />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="font-inter text-[10px] font-bold text-[#002444]/40 uppercase tracking-widest mb-1">Partnership (External)</span>
+                            <span className="font-inter text-base md:text-lg text-[#002444]">+62 821 1140 0126</span>
+                          </div>
+                        </a>
+                        <a 
+                          href="https://wa.me/6281228244549" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-4 md:gap-5"
+                        >
+                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#002444]/10 flex items-center justify-center shrink-0">
+                            <Phone size={18} className="text-[#002444] md:w-5 md:h-5" />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="font-inter text-[10px] font-bold text-[#002444]/40 uppercase tracking-widest mb-1">Media Partner</span>
+                            <span className="font-inter text-base md:text-lg text-[#002444]">+62 812 2824 4549</span>
+                          </div>
+                        </a>
                       </div>
                       <div className="flex items-center gap-4 md:gap-5">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0"><Mail size={18} className="text-[#081C36] md:w-5 md:h-5" /></div>
-                        <span className="font-inter text-base md:text-lg text-[#081C36] break-all">{settings?.email_contact || 'ikamma@feb.ugm.ac.id'}</span>
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#002444]/10 flex items-center justify-center shrink-0"><Mail size={18} className="text-[#002444] md:w-5 md:h-5" /></div>
+                        <span className="font-inter text-base md:text-lg text-[#002444] break-all">{settings?.email_contact || 'ikamma@feb.ugm.ac.id'}</span>
                       </div>
                       <div className="flex items-start gap-4 md:gap-5">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#081C36]/10 flex items-center justify-center shrink-0 mt-0.5"><MapPin size={18} className="text-[#081C36] md:w-5 md:h-5" /></div>
-                        <div className="font-inter text-sm md:text-base text-[#081C36]/70 leading-relaxed">Gedung FEB UGM<br />Jl. Sosio Humaniora No.1, Bulaksumur<br />Yogyakarta 55281</div>
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#002444]/10 flex items-center justify-center shrink-0 mt-0.5"><MapPin size={18} className="text-[#002444] md:w-5 md:h-5" /></div>
+                        <div className="font-inter text-sm md:text-base text-[#002444]/70 leading-relaxed">Gedung FEB UGM<br />Jl. Sosio Humaniora No.1, Bulaksumur<br />Yogyakarta 55281</div>
                       </div>
                     </div>
                   </div>
@@ -208,30 +249,141 @@ export function ContactPage() {
                       {SOCIAL_ICONS.map((social) => {
                         const Icon = social.icon;
                         return (
-                           <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#081C36]/[0.04] flex items-center justify-center transition-colors duration-300" title={social.label}><Icon size={16} /></a>
+                           <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#002444]/[0.04] flex items-center justify-center transition-colors duration-300" title={social.label}><Icon size={16} /></a>
                         );
                       })}
                     </div>
                   </div>
                 </div>
                 <div className="bg-white p-6 sm:p-8 md:p-14 overflow-hidden">
-                  <form onSubmit={handleSubmit} className="space-y-6 h-full flex flex-col">
-                    {submitted && <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="bg-[#081C36]/10 border border-[#081C36]/30 text-[#081C36] px-4 py-3 rounded-xl text-sm font-inter">✓ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.</motion.div>}
+                  <form 
+                    name="contact-ikamma"
+                    method="POST"
+                    data-netlify="true"
+                    onSubmit={handleSubmit} 
+                    className="space-y-6 h-full flex flex-col"
+                  >
+                    <input type="hidden" name="form-name" value="contact-ikamma" />
+                    
+                    {submitted && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: -10 }} 
+                        animate={{ opacity: 1, y: 0 }} 
+                        className="bg-[#002444]/10 border border-[#002444]/30 text-[#002444] px-4 py-3 rounded-xl text-sm font-inter"
+                      >
+                        ✓ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda melalui email.
+                      </motion.div>
+                    )}
+                    
                     <div className="grid sm:grid-cols-2 gap-6">
-                      <div><label className="block text-[#081C36]/50 text-sm font-inter mb-2">Name</label><input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required placeholder="John Doe" className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter" /></div>
-                      <div><label className="block text-[#081C36]/50 text-sm font-inter mb-2">Email</label><input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required placeholder="johndoe@example.com" className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter" /></div>
-                    </div>
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      <div><label className="block text-[#081C36]/50 text-sm font-inter mb-2">Phone Number</label><input type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="+62" className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter" /></div>
-                      <div className="relative">
-                        <label className="block text-[#081C36]/50 text-sm font-inter mb-2">Type of Enquiry</label>
-                        <button type="button" onClick={() => setDropdownOpen(!dropdownOpen)} className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 text-left focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter flex items-center justify-between"><span className={formData.enquiry ? 'text-[#081C36]' : 'text-[#081C36]/30'}>{formData.enquiry || 'Select type'}</span><ChevronDown size={16} className={`text-[#081C36]/40 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} /></button>
-                        <AnimatePresence>{dropdownOpen && (<motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.15 }} className="absolute top-full left-0 right-0 mt-1 z-20 rounded-xl overflow-hidden border border-[#081C36]/10 shadow-lg" style={{ background: 'rgba(255, 255, 255, 0.98)', backdropFilter: 'blur(20px)' }}>{ENQUIRY_TYPES.map((type) => (<button key={type} type="button" onClick={() => { setFormData({ ...formData, enquiry: type }); setDropdownOpen(false); }} className={`w-full text-left px-4 py-3 text-sm font-inter transition-colors duration-150 ${formData.enquiry === type ? 'bg-[#081C36]/10 text-[#081C36] font-semibold' : 'text-[#081C36]/60 hover:bg-[#081C36]/5 hover:text-[#081C36]'}`}>{type}</button>))}</motion.div>)}</AnimatePresence>
+                      <div>
+                        <label className="block text-[#002444]/50 text-sm font-inter mb-2">Name</label>
+                        <input 
+                          type="text" 
+                          name="name"
+                          value={formData.name} 
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+                          required 
+                          placeholder="John Doe" 
+                          className="w-full px-0 py-3 bg-transparent border-b border-[#002444]/15 text-[#002444] placeholder-[#002444]/30 focus:outline-none focus:border-[#002444] transition-colors text-sm font-inter" 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[#002444]/50 text-sm font-inter mb-2">Email</label>
+                        <input 
+                          type="email" 
+                          name="email"
+                          value={formData.email} 
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
+                          required 
+                          placeholder="johndoe@example.com" 
+                          className="w-full px-0 py-3 bg-transparent border-b border-[#002444]/15 text-[#002444] placeholder-[#002444]/30 focus:outline-none focus:border-[#002444] transition-colors text-sm font-inter" 
+                        />
                       </div>
                     </div>
-                    <div><label className="block text-[#081C36]/50 text-sm font-inter mb-2">Subject</label><input type="text" value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} placeholder="What's this about?" className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors text-sm font-inter" /></div>
-                    <div className="flex-1"><label className="block text-[#081C36]/50 text-sm font-inter mb-2">Message</label><textarea value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} required rows={4} placeholder="Write Your Message Here..." className="w-full px-0 py-3 bg-transparent border-b border-[#081C36]/15 text-[#081C36] placeholder-[#081C36]/30 focus:outline-none focus:border-[#081C36] transition-colors resize-none text-sm font-inter" /></div>
-                    <div className="flex justify-end pt-4"><motion.button type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="bg-[#081C36] hover:bg-[#0a2545] text-white px-10 py-3.5 rounded-xl transition-all duration-300 flex items-center gap-2 font-inter font-semibold shadow-lg shadow-[#081C36]/20 hover:shadow-xl hover:shadow-[#081C36]/30">Send Message <Send size={16} /></motion.button></div>
+                    
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-[#002444]/50 text-sm font-inter mb-2">Phone Number</label>
+                        <input 
+                          type="tel" 
+                          name="phone"
+                          value={formData.phone} 
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })} 
+                          placeholder="+62" 
+                          className="w-full px-0 py-3 bg-transparent border-b border-[#002444]/15 text-[#002444] placeholder-[#002444]/30 focus:outline-none focus:border-[#002444] transition-colors text-sm font-inter" 
+                        />
+                      </div>
+                      <div className="relative">
+                        <label className="block text-[#002444]/50 text-sm font-inter mb-2">Type of Enquiry</label>
+                        <input type="hidden" name="enquiry" value={formData.enquiry} />
+                        <button 
+                          type="button" 
+                          onClick={() => setDropdownOpen(!dropdownOpen)} 
+                          className="w-full px-0 py-3 bg-transparent border-b border-[#002444]/15 text-[#002444] placeholder-[#002444]/30 text-left focus:outline-none focus:border-[#002444] transition-colors text-sm font-inter flex items-center justify-between"
+                        >
+                          <span className={formData.enquiry ? 'text-[#002444]' : 'text-[#002444]/30'}>{formData.enquiry || 'Select type'}</span>
+                          <ChevronDown size={16} className={`text-[#002444]/40 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+                        </button>
+                        <AnimatePresence>
+                          {dropdownOpen && (
+                            <motion.div 
+                              initial={{ opacity: 0, y: -5 }} 
+                              animate={{ opacity: 1, y: 0 }} 
+                              exit={{ opacity: 0, y: -5 }} 
+                              transition={{ duration: 0.15 }} 
+                              className="absolute top-full left-0 right-0 mt-1 z-20 rounded-xl overflow-hidden border border-[#002444]/10 shadow-lg" 
+                              style={{ background: 'rgba(255, 255, 255, 0.98)', backdropFilter: 'blur(20px)' }}
+                            >
+                              {ENQUIRY_TYPES.map((type) => (
+                                <button 
+                                  key={type} 
+                                  type="button" 
+                                  onClick={() => { setFormData({ ...formData, enquiry: type }); setDropdownOpen(false); }} 
+                                  className={`w-full text-left px-4 py-3 text-sm font-inter transition-colors duration-150 ${formData.enquiry === type ? 'bg-[#002444]/10 text-[#002444] font-semibold' : 'text-[#002444]/60 hover:bg-[#002444]/5 hover:text-[#002444]'}`}
+                                >
+                                  {type}
+                                </button>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-[#002444]/50 text-sm font-inter mb-2">Subject</label>
+                      <input 
+                        type="text" 
+                        name="subject"
+                        value={formData.subject} 
+                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })} 
+                        placeholder="What's this about?" 
+                        className="w-full px-0 py-3 bg-transparent border-b border-[#002444]/15 text-[#002444] placeholder-[#002444]/30 focus:outline-none focus:border-[#002444] transition-colors text-sm font-inter" 
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-[#002444]/50 text-sm font-inter mb-2">Message</label>
+                      <textarea 
+                        name="message"
+                        value={formData.message} 
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })} 
+                        required 
+                        rows={4} 
+                        placeholder="Write Your Message Here..." 
+                        className="w-full px-0 py-3 bg-transparent border-b border-[#002444]/15 text-[#002444] placeholder-[#002444]/30 focus:outline-none focus:border-[#002444] transition-colors resize-none text-sm font-inter" 
+                      />
+                    </div>
+                    <div className="flex justify-end pt-4">
+                      <motion.button 
+                        type="submit" 
+                        whileHover={{ scale: 1.02 }} 
+                        whileTap={{ scale: 0.98 }} 
+                        className="bg-[#002444] hover:bg-[#0a2545] text-white px-10 py-3.5 rounded-xl transition-all duration-300 flex items-center gap-2 font-inter font-semibold shadow-lg shadow-[#002444]/20 hover:shadow-xl hover:shadow-[#002444]/30"
+                      >
+                        Send Message <Send size={16} />
+                      </motion.button>
+                    </div>
                   </form>
                 </div>
               </div>

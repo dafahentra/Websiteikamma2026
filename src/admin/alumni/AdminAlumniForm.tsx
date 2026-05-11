@@ -79,8 +79,8 @@ export const AdminAlumniForm = () => {
     }
 
     if (error) {
-      toast.error(isEdit ? 'Gagal memperbarui data' : 'Gagal menambah data');
-      console.error(error);
+      toast.error(isEdit ? `Gagal memperbarui: ${error.message}` : `Gagal menambah: ${error.message}`);
+      console.error('Supabase Error:', error);
     } else {
       toast.success(isEdit ? 'Data berhasil diperbarui' : 'Data berhasil ditambah');
       navigate('/admin/alumni');
@@ -231,7 +231,7 @@ export const AdminAlumniForm = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="Contoh: 08123456789"
+                placeholder="Contoh: 628123456789"
                 className="w-full h-11 px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               />
             </div>

@@ -271,7 +271,7 @@ export function AlumniDatabase() {
                         )}
                         {alumni.phone && (
                           <a 
-                            href={`https://wa.me/${alumni.phone.replace(/\D/g, '')}`} 
+                            href={`https://wa.me/${alumni.phone.replace(/\D/g, '').replace(/^0/, '62').replace(/^8/, '628')}`} 
                             target="_blank" 
                             rel="noreferrer" 
                             className="w-9 h-9 rounded-full flex items-center justify-center text-[#081C36]/40 hover:text-[#25D366] hover:bg-[#25D366]/5 transition-all duration-300"

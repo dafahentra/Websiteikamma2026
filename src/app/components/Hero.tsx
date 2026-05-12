@@ -438,11 +438,11 @@ export function Hero() {
               <span style={{ fontFamily: "'Inter', sans-serif" }} className="font-bold">Partners</span>
             </h3>
             {/* Infinite Marquee Container */}
-            <div className="w-full overflow-hidden flex whitespace-nowrap">
+            <div className="w-full overflow-hidden flex whitespace-nowrap" style={{ contain: 'layout style paint' }}>
               <div className="flex gap-8 md:gap-16 items-center animate-marquee">
-                {/* We render 12 logos twice (24 total) to create a perfect, seamless endless loop! */}
-                {[...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
-                  <img key={i} src={logo} alt={`Partner Logo ${i}`} loading="eager" className="h-16 md:h-28 w-auto object-contain opacity-100 flex-shrink-0" />
+                {/* We render logos twice to create a seamless endless loop */}
+                {[...partnerLogos, ...partnerLogos].map((logo, i) => (
+                  <img key={i} src={logo} alt={`Partner Logo ${i}`} loading="eager" decoding="async" className="h-16 md:h-28 w-auto object-contain opacity-100 flex-shrink-0" />
                 ))}
               </div>
             </div>

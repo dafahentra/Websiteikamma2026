@@ -31,16 +31,16 @@ export function DepartmentDetail() {
   const { slug } = useParams();
   const department = slug ? departmentsData[slug] : null;
   const { pathname } = useLocation();
- 
+
   const [selectedProgram, setSelectedProgram] = useState<WorkProgram | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
- 
+
   const openModal = (program: WorkProgram) => {
     setSelectedProgram(program);
     setIsModalOpen(true);
     document.body.style.overflow = 'hidden';
   };
- 
+
   const closeModal = () => {
     setIsModalOpen(false);
     document.body.style.overflow = 'auto';
@@ -64,7 +64,7 @@ export function DepartmentDetail() {
     target: groupPhotoRef,
     offset: ["start end", "end start"]
   });
-  const parallaxYGroup = useTransform(groupPhotoScrollY, [0, 1], ["-20%", "20%"]);
+  const parallaxYGroup = useTransform(groupPhotoScrollY, [0, 1], ["-35%", "5%"]);
 
   if (!department) {
     return (
@@ -128,9 +128,9 @@ export function DepartmentDetail() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <a 
-                  href={department.managerLinkedIn} 
-                  target="_blank" 
+                <a
+                  href={department.managerLinkedIn}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-blue-600 transition-colors duration-300 flex items-center gap-2 group/link"
                 >
@@ -154,9 +154,9 @@ export function DepartmentDetail() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <a 
-                  href={department.viceManagerLinkedIn} 
-                  target="_blank" 
+                <a
+                  href={department.viceManagerLinkedIn}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-blue-600 transition-colors duration-300 flex items-center gap-2 group/link"
                 >
@@ -188,51 +188,33 @@ export function DepartmentDetail() {
             style={{ y: parallaxYGroup, scale: 1.3 }}
             src={department.groupImg}
             alt="Team Group"
-            className="w-full h-full object-cover shadow-inner"
+            className="w-full h-full object-cover object-top shadow-inner"
           />
           <div className="absolute inset-0 bg-[#0C2340]/40" />
         </div>
       </section>
- 
+
       {/* 3. About Section */}
-      <section className="py-24 px-6 lg:px-12 max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] gap-12 lg:gap-16 items-center">
-          {/* Left: Decorative Elements */}
-          <motion.div
-            className="relative flex justify-center lg:justify-start"
-          >
-            <div className="relative w-full max-w-[480px] aspect-video mb-12 lg:mb-0">
-              {/* Main Photo (16:9) */}
-              <motion.div
-                className="absolute inset-0 overflow-hidden rounded-xl"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.4 }}
-              >
-                <img src={department.meetingImg} alt="Meeting" className="w-full h-full object-cover shadow-2xl" />
-              </motion.div>
-
-            </div>
-          </motion.div>
-
-          {/* Right: Text */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-[#002444] text-3xl md:text-4xl lg:text-5xl flex items-center gap-3 mb-8">
-              <span className="font-inter font-bold -mt-1">—</span>
-              <span>
-                <span className="font-caslon-bold-italic">About</span> <span className="font-inter font-bold text-[#002444]">{department.name}</span>
-              </span>
-            </h2>
-            <p
-              className="text-sky-500 text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl text-justify font-semibold"
-              dangerouslySetInnerHTML={{ __html: department.description.replace(/\*\*(.*?)\*\*/g, '<span class="text-[#002444] font-bold font-inter">$1</span>') }}
-            />
-          </motion.div>
-        </div>
+      <section className="py-24 px-6 lg:px-12 max-w-[1400px] mx-auto flex flex-col items-center text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="flex flex-col items-center"
+        >
+          <h2 className="text-[#002444] text-3xl md:text-4xl lg:text-5xl flex items-center justify-center gap-3 mb-8">
+            <span className="font-inter font-bold -mt-1">—</span>
+            <span>
+              <span className="font-caslon-bold-italic">About</span> <span className="font-inter font-bold text-[#002444]">{department.name}</span>
+            </span>
+            <span className="font-inter font-bold -mt-1">—</span>
+          </h2>
+          <p
+            className="text-sky-500 text-base md:text-lg lg:text-xl leading-relaxed max-w-4xl text-center font-semibold"
+            dangerouslySetInnerHTML={{ __html: department.description.replace(/\*\*(.*?)\*\*/g, '<span class="text-[#002444] font-bold font-inter">$1</span>') }}
+          />
+        </motion.div>
       </section>
 
       {/* 4. Our Staff Section */}
@@ -242,7 +224,7 @@ export function DepartmentDetail() {
             <span className="font-inter font-bold -mt-1">—</span>
             <span><span className="font-caslon-bold-italic">Our</span> <span className="font-inter font-bold text-[#002444]">Staff</span></span>
           </h2>
- 
+
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 md:gap-8">
             {department.staffs.map((staff, idx) => (
               <motion.div
@@ -258,7 +240,7 @@ export function DepartmentDetail() {
                     <img src={staff.img} alt={staff.name} className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full bg-[#081C36]/5 flex items-center justify-center p-8">
-                       <IkammaLogo className="w-full h-auto opacity-10 grayscale" />
+                      <IkammaLogo className="w-full h-auto opacity-10 grayscale" />
                     </div>
                   )}
                   <div className="absolute inset-0 bg-[#081C36]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -268,7 +250,7 @@ export function DepartmentDetail() {
               </motion.div>
             ))}
           </div>
- 
+
           {department.staffs.length === 0 && (
             <div className="py-20 text-center border-2 border-dashed border-[#081C36]/10 rounded-3xl">
               <p className="text-[#002444]/40 font-inter italic text-lg">Staff data will be updated soon.</p>
@@ -301,7 +283,7 @@ export function DepartmentDetail() {
                   <span className="text-sky-500 font-inter font-bold text-2xl group-hover:scale-110 transition-transform duration-300">{idx + 1}</span>
                   <span className="text-sky-500/30 font-inter font-bold -mt-1">—</span>
                 </div>
- 
+
                 <div className="relative flex-1 h-16 md:h-20 overflow-hidden bg-sky-500/5 rounded-xl border border-sky-500/10 group-hover:bg-sky-500/10 group-hover:border-sky-500/30 transition-all duration-500 flex items-center justify-center">
                   <div className="text-[#002444] font-inter font-inter-bold text-base md:text-xl px-6 text-center">{program.title}</div>
                 </div>
@@ -314,7 +296,7 @@ export function DepartmentDetail() {
 
 
       <Footer />
- 
+
       {/* 6. Program Modal */}
       <AnimatePresence>
         {isModalOpen && selectedProgram && (
@@ -327,7 +309,7 @@ export function DepartmentDetail() {
               onClick={closeModal}
               className="absolute inset-0 bg-[#081C36]/80 backdrop-blur-md"
             />
-            
+
             {/* Modal Content */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -336,7 +318,7 @@ export function DepartmentDetail() {
               className="relative w-full max-w-2xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 p-8 md:p-12 flex flex-col items-center text-center"
             >
               {/* Close Button */}
-              <button 
+              <button
                 onClick={closeModal}
                 className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#081C36]/5 flex items-center justify-center hover:bg-[#081C36]/10 transition-colors group"
               >
@@ -355,7 +337,7 @@ export function DepartmentDetail() {
               </p>
 
               <div className="mt-12">
-                 <IkammaLogo className="w-16 h-auto opacity-5" />
+                <IkammaLogo className="w-16 h-auto opacity-5" />
               </div>
             </motion.div>
           </div>

@@ -13,7 +13,7 @@ import BatangSvg from '../../assets/LogoKabinet/Batang.svg';
 import TanganSvg from '../../assets/LogoKabinet/Tangan.svg';
 import DaunSvg from '../../assets/LogoKabinet/Daun.svg';
 import BungaSvg from '../../assets/LogoKabinet/Bunga.svg';
-import HeroAbout from '../../assets/Background/HeroAbout.jpg';
+import HeroAbout from '../../assets/Background/HeroAbout.webp';
 import { Users, Briefcase, ShieldCheck, GraduationCap } from 'lucide-react';
 
 // Extract SVG inner paths
@@ -141,10 +141,9 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
 
 
   const RowContent = (
-    <div 
-      className={`w-full max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between gap-3 md:gap-4 transition-all duration-700 ease-in-out ${
-        isHovered ? "py-24 md:py-48" : "py-4 md:py-8"
-      }`}
+    <div
+      className={`w-full max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between gap-3 md:gap-4 transition-all duration-700 ease-in-out ${isHovered ? "py-24 md:py-48" : "py-4 md:py-8"
+        }`}
     >
       <h3 className={`font-inter font-bold text-base md:text-3xl text-[#002444] flex-1 leading-tight transition-transform duration-700 ${isHovered ? 'scale-105 origin-left' : 'scale-100'}`}>{item.name}</h3>
       <div className="flex items-center gap-4 md:gap-10 shrink-0 relative z-10">
@@ -176,9 +175,9 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
       <motion.div
         className="absolute inset-0 z-0 pointer-events-none hidden md:block"
         initial={{ x: "100%", opacity: 0 }}
-        animate={{ 
-          x: isHovered ? "0%" : "40%", 
-          opacity: isHovered ? 1 : 0 
+        animate={{
+          x: isHovered ? "0%" : "40%",
+          opacity: isHovered ? 1 : 0
         }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
@@ -187,16 +186,16 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
         <img
           src={photo}
           alt={item.name}
-          className={`w-full h-full object-cover object-[center_25%] transition-all duration-700 ${isHovered ? 'grayscale-0' : 'grayscale-[0.5]'}`}
+          className={`w-full h-full object-cover object-[center_18%] transition-all duration-700 ${isHovered ? 'grayscale-0' : 'grayscale-[0.5]'}`}
         />
       </motion.div>
 
       <div className="relative z-10">
-      {item.href ? (
-        <Link to={item.href} className="block w-full">
-          {RowContent}
-        </Link>
-      ) : RowContent}
+        {item.href ? (
+          <Link to={item.href} className="block w-full">
+            {RowContent}
+          </Link>
+        ) : RowContent}
 
       </div>
     </motion.div>
@@ -379,9 +378,9 @@ export function AboutIkamma() {
         <section className="mb-32 pt-16 relative">
           <div className="flex flex-col items-end justify-end mb-16 w-full">
             <div className="flex flex-wrap items-center justify-end gap-3 md:gap-5 text-4xl md:text-6xl lg:text-7xl text-right">
-               <span className="text-[#002444] font-inter font-bold -mt-1">—</span>
-               <span className="font-caslon-bold-italic text-[#002444]">Kabinet</span>
-               <span className="font-inter font-bold text-[#002444]">Arsanakala</span>
+              <span className="text-[#002444] font-inter font-bold -mt-1">—</span>
+              <span className="font-caslon-bold-italic text-[#002444]">Kabinet</span>
+              <span className="font-inter font-bold text-[#002444]">Arsanakala</span>
             </div>
           </div>
 

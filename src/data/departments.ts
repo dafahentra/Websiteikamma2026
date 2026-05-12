@@ -29,27 +29,7 @@ import GroupIndev from '../assets/BirDepDetail/Group/IndevGroup.webp';
 import GroupEntre from '../assets/BirDepDetail/Group/EntreGroup.webp';
 import GroupSparta from '../assets/BirDepDetail/Group/SpartaGroup.webp';
 
-// ── Meeting Photos ──────────────────────────────────────────────────
-import MeetingHRM from '../assets/BirDepDetail/Meeting/HRMMeeting.webp';
-import MeetingHRBB from '../assets/BirDepDetail/Meeting/HRBBMeeting.webp';
-import MeetingAdvance from '../assets/BirDepDetail/Meeting/AdvanceMeeting.webp';
-import MeetingMM from '../assets/BirDepDetail/Meeting/MMMeeting.webp';
-import MeetingInternal from '../assets/BirDepDetail/Meeting/IntMeeting.webp';
-import MeetingExternal from '../assets/BirDepDetail/Meeting/ExtMeeting.webp';
-import MeetingIndev from '../assets/BirDepDetail/Meeting/IndevMeeting.webp';
-import MeetingEntre from '../assets/BirDepDetail/Meeting/EntreMeeting.webp';
-import MeetingSparta from '../assets/BirDepDetail/Meeting/SpartaMeeting.webp';
-
-// ── Activity Photos ─────────────────────────────────────────────────
-import ActivityHRM from '../assets/BirDepDetail/Activity/HRMActivity.JPG';
-import ActivityHRBB from '../assets/BirDepDetail/Activity/HRBBActivity.jpg';
-import ActivityAdvance from '../assets/BirDepDetail/Activity/AdvanceActivity.jpg';
-import ActivityMM from '../assets/BirDepDetail/Activity/MMActivity.jpeg';
-import ActivityInternal from '../assets/BirDepDetail/Activity/IntActivity.JPG';
-import ActivityExternal from '../assets/BirDepDetail/Activity/ExtActivity.jpeg';
-import ActivityIndev from '../assets/BirDepDetail/Activity/IndevActivty.jpeg';
-import ActivityEntre from '../assets/BirDepDetail/Activity/EntreActivity.jpeg';
-import ActivitySparta from '../assets/BirDepDetail/Activity/SpartaActivity.jpg';
+// ── Logos ───────────────────────────────────────────────────────────
 
 // ── Logos ───────────────────────────────────────────────────────────
 import LogoHRM from '../assets/LogoBirDept/HRM.svg';
@@ -86,8 +66,7 @@ export interface DepartmentData {
   viceManagerImg: string;
   groupImg: string;
   logo: string;
-  meetingImg: string;
-  activityImg: string;
+  logo: string;
   programs: WorkProgram[];
   staffs: Staff[];
 }
@@ -105,8 +84,6 @@ export const departmentsData: Record<string, DepartmentData> = {
     viceManagerImg: HRBBViceManager,
     groupImg: GroupHRBB,
     logo: LogoHRBB,
-    meetingImg: MeetingHRBB,
-    activityImg: ActivityHRBB,
     programs: [
       { id: 1, title: "School of IKAMMA", img: GroupHRBB, description: "Program pengenalan IKAMMA bagi mahasiswa baru untuk memahami peran IKAMMA, struktur organisasi, budaya kerja, fungsi biro dan departemen, serta ruang kontribusi sesuai minat dan kompetensi. Program kerja ini mendukung proses onboarding yang lebih sistematis dan memudahkan adaptasi awal." },
       { id: 2, title: "Open Recruitment", img: GroupHRBB, description: "Proses rekrutmen pengurus yang bertujuan menjaring kandidat, memetakan kompetensi dan minat, serta menempatkan calon pengurus pada biro dan departemen yang sesuai. Program kerja ini menjadi fondasi awal penempatan sumber daya manusia yang tepat agar kinerja dan pengalaman berorganisasi lebih optimal." },
@@ -143,8 +120,6 @@ export const departmentsData: Record<string, DepartmentData> = {
     viceManagerImg: HRMViceManager,
     groupImg: GroupHRM,
     logo: LogoHRM,
-    meetingImg: MeetingHRM,
-    activityImg: ActivityHRM,
     programs: [
       { id: 11, title: "School of IKAMMA", img: GroupHRM, description: "Program pengenalan IKAMMA bagi mahasiswa baru untuk memahami peran IKAMMA, struktur organisasi, budaya kerja, fungsi biro dan departemen, serta ruang kontribusi sesuai minat dan kompetensi. Program kerja ini mendukung proses onboarding yang lebih sistematis dan memudahkan adaptasi awal." },
       { id: 12, title: "Open Recruitment", img: GroupHRM, description: "Proses rekrutmen pengurus yang bertujuan menjaring kandidat, memetakan kompetensi dan minat, serta menempatkan calon pengurus pada biro dan departemen yang sesuai. Program kerja ini menjadi fondasi awal penempatan sumber daya manusia yang tepat agar kinerja dan pengalaman berorganisasi lebih optimal." },
@@ -177,8 +152,6 @@ export const departmentsData: Record<string, DepartmentData> = {
     viceManagerImg: MMViceManager,
     groupImg: GroupMM,
     logo: LogoMM,
-    meetingImg: MeetingMM,
-    activityImg: ActivityMM,
     programs: [
       { id: 17, title: "School of Marketing Media", img: GroupMM, description: "Program kerja berbentuk pelatihan internal yang diselenggarakan oleh biro Marketing Media untuk memastikan arah dan kualitas konten selaras dengan nilai-nilai IKAMMA FEB UGM. Program ini sekaligus menjadi sarana pengembangan kompetensi bagi staf dalam bidang marketing dan media secara berkelanjutan." },
       { id: 18, title: "Social Media", img: GroupMM, description: "Program kerja ini menjadi sarana utama yang digunakan untuk membangun dan memperkuat branding IKAMMA sekaligus mengenalkan IKAMMA kepada publik. Program kerja ini berfokus pada pengelolaan media sosial IKAMMA (Instagram, TikTok, Twitter, dan LinkedIn) secara profesional guna membentuk persepsi positif audiens terhadap IKAMMA." },
@@ -209,8 +182,6 @@ export const departmentsData: Record<string, DepartmentData> = {
     viceManagerImg: AdvanceViceManager,
     groupImg: GroupAdvance,
     logo: LogoAdvance,
-    meetingImg: MeetingAdvance,
-    activityImg: ActivityAdvance,
     programs: [
       { id: 21, title: "Kesekretariatan", img: GroupAdvance, description: "Program kerja yang berisi pengelolaan surat-menyurat, proposal kegiatan, dan LPJ. Tugas Advance memastikan semua dokumen tersusun dengan rapi dan sistematis sesuai dengan ketentuan yang berlaku. Advance berperan sebagai pihak perantara administratif antara fakultas dan IKAMMA dalam proses koordinasi, perizinan, dan penyampaian informasi." },
       { id: 22, title: "Kebendaharaan", img: GroupAdvance, description: "Program kerja yang bertanggung jawab atas pengelolaan keuangan organisasi. Mulai dari pencatatan seluruh pemasukan dan pengeluaran, pengelolaan anggaran kegiatan, dan menyusun LPJ yang transparan. Program kerja Kebendaharaan sangat penting untuk memastikan bahwa penggunaan dana organisasi sudah sesuai dengan ketentuan dan dapat mendukung keberlanjutan seluruh program kerja di IKAMMA." },
@@ -240,8 +211,6 @@ export const departmentsData: Record<string, DepartmentData> = {
     viceManagerImg: IntViceManager,
     groupImg: GroupInternal,
     logo: LogoInternal,
-    meetingImg: MeetingInternal,
-    activityImg: ActivityInternal,
     programs: [
       { id: 24, title: "Soegeng Rawoeh to IKAMMA (SOERTI)", img: GroupInternal, description: "SOERTI merupakan program kerja dari departemen Internal yang berisi rangkaian penyambutan mahasiswa baru program studi Manajemen FEB UGM guna mempersiapkan mahasiswa baru pada kehidupan perkuliahan di Manajemen dengan memperkenalkan jurusan Manajemen, menanamkan nilai nilai IKAMMA, memilih dan mempersiapkan ketua angkatan, serta menawarkan mahasiswa baru untuk menjadi pengurus IKAMMA." },
       { id: 25, title: "Penyatuan Aspirasi dan Apresiasi Manajemen (PAAM)", img: GroupInternal, description: "Program kerja PAAM bertujuan untuk meningkatkan rasa saling memiliki dan solidaritas antar mahasiswa manajemen FEB UGM. Aspirasi dari mahasiswa manajemen akan disampaikan kepada pengurus IKAMMA. Program ini juga akan memberikan apresiasi kepada seluruh mahasiswa manajemen, baik berupa ucapan selamat ulang tahun, penghargaan kepada mahasiswa berprestasi, maupun penghargaan kelulusan." },
@@ -273,8 +242,6 @@ export const departmentsData: Record<string, DepartmentData> = {
     viceManagerImg: ExtViceManager,
     groupImg: GroupExternal,
     logo: LogoExternal,
-    meetingImg: MeetingExternal,
-    activityImg: ActivityExternal,
     programs: [
       { id: 29, title: "Partnership", img: GroupExternal, description: "Partnership merupakan program kerja yang menjadi jembatan untuk memfasilitasi segala kebutuhan organisasi dengan membuat dan merawat kerjasama yang bersifat mutual bersama stakeholder external yang berupa sebuah bisnis maupun organisasi." },
       { id: 30, title: "Terima Kunjungan", img: GroupExternal, description: "Program kerja yang memiliki tujuan untuk mewadahi studi banding antar himpunan mahasiswa untuk memperluas wawasan, melatih kemampuan komunikasi dan organisasi, serta membangun relasi dan jejaring antar organisasi universitas lain." },
@@ -307,8 +274,6 @@ export const departmentsData: Record<string, DepartmentData> = {
     viceManagerImg: IndevViceManager,
     groupImg: GroupIndev,
     logo: LogoIndev,
-    meetingImg: MeetingIndev,
-    activityImg: ActivityIndev,
     programs: [
       { id: 35, title: "Management Facilitator", img: GroupIndev, description: "Program ini bertujuan memfasilitasi seluruh mahasiswa Manajemen FEB UGM melalui penyediaan fasilitas pendukung akademik dan pengembangan karier. Fasilitas akademik meliputi tutorial persiapan ujian, competition training, serta info manajemen yang disalurkan melalui media sosial dan komunitas IKAMMA. Program ini juga mendukung pengembangan karier mahasiswa melalui career consultation, mentoring magang, dan layanan manajemen foto." },
       { id: 36, title: "Career Insight", img: GroupIndev, description: "Program kerja berbentuk event milik Departemen Intellectual and Development yang dirancang sebagai wadah bagi mahasiswa dan fresh graduate untuk menambah wawasan serta mengembangkan kompetensi yang dibutuhkan agar siap menghadapi persaingan di dunia kerja. Career Insight bekerja sama dengan berbagai perusahaan untuk memberikan ruang bagi peserta untuk memperoleh pemahaman yang lebih jelas mengenai gambaran serta peluang karir di masa depan." },
@@ -336,8 +301,6 @@ export const departmentsData: Record<string, DepartmentData> = {
     viceManagerImg: EntreViceManager,
     groupImg: GroupEntre,
     logo: LogoEntre,
-    meetingImg: MeetingEntre,
-    activityImg: ActivityEntre,
     programs: [
       { id: 38, title: "Entrepreneurs’ Club (E-Club)", img: GroupEntre, description: "Program kerja yang dirancang untuk mewadahi serta mendorong mahasiswa FEB dalam mengejar dan mengembangkan ambisi mereka di bidang kewirausahaan. Program ini dikemas sebagai sebuah learning environment yang interaktif dan aplikatif, di mana mahasiswa tidak hanya mempelajari teori kewirausahaan, tetapi juga diberikan kesempatan untuk mengimplementasikannya secara langsung." },
       { id: 39, title: "Young Entrepreneurs’ Show (YES)", img: GroupEntre, description: "Young Entrepreneurs Show (YES!) merupakan program kerja berbentuk event dari Departemen Entrepreneurship yang bertujuan untuk membuka wawasan generasi muda mengenai kewirausahaan. Pada tahun ini, YES! akan mengangkat konsep Business Sharing yang disertai dengan mini business exhibition. YES! akan mengundang entrepreneurs dan speaker yang ahli dibidangnya untuk membagikan insight seputar bisnis dalam format talkshow." },
@@ -365,8 +328,6 @@ export const departmentsData: Record<string, DepartmentData> = {
     viceManagerImg: SpartaViceManager,
     groupImg: GroupSparta,
     logo: LogoSparta,
-    meetingImg: MeetingSparta,
-    activityImg: ActivitySparta,
     programs: [
       { id: 41, title: "Pekan Olahraga dan Seni Keluarga Manajemen (POSKAM)", img: GroupSparta, description: "Program kerja ini hadir sebagai wadah pengembangan dan penyaluran minat serta bakat mahasiswa Manajemen FEB UGM di bidang olahraga dan seni. Melalui berbagai kegiatan rutin yang diselenggarakan setiap bulan, seperti futsal, basket, bulu tangkis, jamming session, dan karaoke night, POSKAM menjadi ruang bagi mahasiswa untuk berekspresi, berprestasi, sekaligus mempererat kebersamaan antar mahasiswa." },
       { id: 42, title: "Management’s Festival (MENEFEST)", img: GroupSparta, description: "Management’s Festival atau MENEFEST adalah program kerja berbentuk event yang bertujuan untuk merayakan hari ulang tahun Manajemen FEB UGM. Acara ini sendiri memiliki main event yaitu charity run, dengan dua side events yaitu talkshow, medical check up, dan bakti sosial bersama I-Care milik Departemen Internal." },

@@ -8,9 +8,9 @@
  */
 
 // ── Hero / Intro / Backgrounds ──────────────────────────────────────
-import heroMain from './Background/BackgroundMain.png';
-import aboutBg from './Background/BackgroundMain.png';
-import heroSectionBg from './Background/BackgroundMain.png';
+import heroMain from './Background/BackgroundMain.webp';
+import aboutBg from './Background/BackgroundMain.webp';
+import heroSectionBg from './Background/BackgroundMain.webp';
 
 // ── Scrapbook Photos (Flying Photos) ────────────────────────────────
 import scrapbook1 from './FlyingPhoto/Flyingphoto1.JPG';
@@ -57,26 +57,26 @@ import eventCard2 from './FotoEvent/FotoCI.webp';
 import eventCard3 from './FotoEvent/FotoMenefest.webp';
 import eventCard4 from './FotoEvent/FotoYES.webp';
 import eventCard5 from './FotoEvent/FotoGMSC.webp';
-import eventsBg from './Background/BackgroundNotableEvent.png';
+import eventsBg from './Background/BackgroundNotableEvent.webp';
 
 // ── Articles / Gallery (Fallback to old for now or use backgrounds) ──
-import article1 from './Background/HeroAbout.jpg';
-import article2 from './Background/BackgroundMain.png';
-import article3 from './Background/HeroAbout.jpg';
+import article1 from './Background/HeroAbout.webp';
+import article2 from './Background/BackgroundMain.webp';
+import article3 from './Background/HeroAbout.webp';
 
-import gallery1 from './Background/HeroAbout.jpg';
-import gallery2 from './Background/HeroAbout.jpg';
-import gallery3 from './Background/HeroAbout.jpg';
-import gallery4 from './Background/HeroAbout.jpg';
-import gallery5 from './Background/HeroAbout.jpg';
-import gallery6 from './Background/HeroAbout.jpg';
+import gallery1 from './Background/HeroAbout.webp';
+import gallery2 from './Background/HeroAbout.webp';
+import gallery3 from './Background/HeroAbout.webp';
+import gallery4 from './Background/HeroAbout.webp';
+import gallery5 from './Background/HeroAbout.webp';
+import gallery6 from './Background/HeroAbout.webp';
 
 // ── Upcoming / News ────────────────────────────────────────────────
 import upcoming1 from './FotoEvent/FotoCI.webp';
 import upcoming2 from './FotoEvent/FotoME.webp';
 import upcoming3 from './FotoEvent/FotoMenefest.webp';
 
-import newsBg from './Background/BackgroundMain.png';
+import newsBg from './Background/BackgroundMain.webp';
 
 // ═══════════════════════════════════════════════════════════════════
 // EXPORTS

@@ -7,14 +7,14 @@ import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 import { SCRAPBOOK_PHOTOS, ABOUT_BACKGROUND } from '../../assets/photos';
 import { supabase } from "../../lib/supabase";
 
-import antamLogo from "../../assets/logopartner/LogoAntam.png";
-import bniLogo from "../../assets/logopartner/LogoBNI.png";
-import ekisLogo from "../../assets/logopartner/LogoEkis.png";
-import lpsLogo from "../../assets/logopartner/LogoLPS.png";
-import marketeersLogo from "../../assets/logopartner/LogoMarketeers.png";
-import paragonLogo from "../../assets/logopartner/LogoParagon.png";
-import sarirotiLogo from "../../assets/logopartner/LogoSariRoti.png";
-import telkomLogo from "../../assets/logopartner/LogoTelkom.png";
+import antamLogo from "../../assets/logopartner/LogoAntam.webp";
+import bniLogo from "../../assets/logopartner/LogoBNI.webp";
+import ekisLogo from "../../assets/logopartner/LogoEkis.webp";
+import lpsLogo from "../../assets/logopartner/LogoLPS.webp";
+import marketeersLogo from "../../assets/logopartner/LogoMarketeers.webp";
+import paragonLogo from "../../assets/logopartner/LogoParagon.webp";
+import sarirotiLogo from "../../assets/logopartner/LogoSariRoti.webp";
+import telkomLogo from "../../assets/logopartner/LogoTelkom.webp";
 
 const partnerLogos = [
   antamLogo,
@@ -250,7 +250,7 @@ export function AboutSection() {
               <div className="w-full overflow-hidden flex whitespace-nowrap">
                 <div className="flex gap-8 md:gap-16 items-center animate-marquee">
                   {[...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
-                    <img key={i} src={logo} alt={`Partner Logo ${i}`} className="h-12 md:h-20 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                    <img key={i} src={logo} alt={`Partner Logo ${i}`} className="h-16 md:h-28 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
                   ))}
                 </div>
               </div>

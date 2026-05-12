@@ -48,7 +48,7 @@ export function UpcomingEventsSection() {
   if (loading || events.length === 0) return null;
 
   return (
-    <section className="relative w-full pt-12 pb-24 bg-white text-[#081C36]">
+    <section className="relative w-full pt-4 pb-24 bg-white text-[#081C36]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
 
         {/* Header */}

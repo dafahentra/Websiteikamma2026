@@ -17,16 +17,32 @@ function CurvedSection({ children, className, zIndexClass }: { children: React.R
     offset: ["start end", "start start"]
   });
 
-  const clipPath = useTransform(scrollYProgress, [0, 1], [
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const desktopCurve = [
     "polygon(0% 0%, 5% 0.48%, 10% 0.9%, 15% 1.28%, 20% 1.6%, 25% 1.88%, 30% 2.1%, 35% 2.28%, 40% 2.4%, 45% 2.48%, 50% 2.5%, 55% 2.48%, 60% 2.4%, 65% 2.28%, 70% 2.1%, 75% 1.88%, 80% 1.6%, 85% 1.28%, 90% 0.9%, 95% 0.48%, 100% 0%, 100% 100%, 0% 100%)",
     "polygon(0% 0%, 5% 0%, 10% 0%, 15% 0%, 20% 0%, 25% 0%, 30% 0%, 35% 0%, 40% 0%, 45% 0%, 50% 0%, 55% 0%, 60% 0%, 65% 0%, 70% 0%, 75% 0%, 80% 0%, 85% 0%, 90% 0%, 95% 0%, 100% 0%, 100% 100%, 0% 100%)"
-  ]);
+  ];
+  
+  const mobileCurve = [
+    "polygon(0% 0%, 5% 0.19%, 10% 0.36%, 15% 0.51%, 20% 0.64%, 25% 0.75%, 30% 0.84%, 35% 0.91%, 40% 0.96%, 45% 0.99%, 50% 1%, 55% 0.99%, 60% 0.96%, 65% 0.91%, 70% 0.84%, 75% 0.75%, 80% 0.64%, 85% 0.51%, 90% 0.36%, 95% 0.19%, 100% 0%, 100% 100%, 0% 100%)",
+    "polygon(0% 0%, 5% 0%, 10% 0%, 15% 0%, 20% 0%, 25% 0%, 30% 0%, 35% 0%, 40% 0%, 45% 0%, 50% 0%, 55% 0%, 60% 0%, 65% 0%, 70% 0%, 75% 0%, 80% 0%, 85% 0%, 90% 0%, 95% 0%, 100% 0%, 100% 100%, 0% 100%)"
+  ];
+
+  const clipPathDesktop = useTransform(scrollYProgress, [0, 1], desktopCurve);
+  const clipPathMobile = useTransform(scrollYProgress, [0, 1], mobileCurve);
 
   return (
     <motion.div
       ref={ref}
       className={`relative bg-white ${zIndexClass} ${className}`}
-      style={{ clipPath }}
+      style={{ clipPath: isMobile ? clipPathMobile : clipPathDesktop }}
     >
       {children}
     </motion.div>

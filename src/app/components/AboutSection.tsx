@@ -166,7 +166,7 @@ export function AboutSection() {
         </div>
 
         {/* Bottom Section: Our Partners - Moved outside max-w container for full-width */}
-        <div className="mt-8 md:mt-12 w-full pb-12 md:pb-24">
+        <div className="mt-8 md:mt-12 w-full pb-40 md:pb-24">
           <motion.h3 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

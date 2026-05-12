@@ -81,10 +81,7 @@ export function AboutSection() {
     offset: ["start end", "end start"]
   });
 
-  // Parallax effect: moves the background image down slightly as you scroll down
-  // Added useSpring for smoother performance and will-change for GPU acceleration
-  const yRaw = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const y = useSpring(yRaw, { stiffness: 400, damping: 90 });
+  // Parallax effect was removed for performance, leaving yRaw and y removed.
 
   return (
     <section id="about" ref={targetRef} className="relative w-full h-auto bg-[#081C36] overflow-hidden pt-24 md:pt-40 pb-12 md:pb-16">

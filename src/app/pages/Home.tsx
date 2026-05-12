@@ -70,7 +70,7 @@ export function Home() {
       {/* 
         About Section (What is IKAMMA)
       */}
-      <CurvedSection zIndexClass="z-30" className="-mt-[5vh]">
+      <CurvedSection zIndexClass="z-30" className="-mt-[10vh]">
         <AboutSection />
       </CurvedSection>
 
@@ -78,7 +78,7 @@ export function Home() {
         Events Section 
         Always visible as it contains the flagship carousel.
       */}
-      <CurvedSection zIndexClass="z-40" className="-mt-[5vh]">
+      <CurvedSection zIndexClass="z-40" className="-mt-[10vh]">
         <EventsSection />
       </CurvedSection>
 

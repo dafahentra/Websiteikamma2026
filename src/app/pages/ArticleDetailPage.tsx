@@ -5,6 +5,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { ArrowLeft, Clock, CalendarDays, User, Tag, ChevronRight, Facebook, MessageCircle, Share2, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 
 // Custom X (Twitter) Icon
 const XIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
@@ -127,6 +128,13 @@ export function ArticleDetailPage() {
 
   return (
     <div className="bg-white min-h-screen font-inter overflow-x-hidden">
+      <Helmet>
+        <title>{article.title} - IKAMMA FEB UGM</title>
+        <meta name="description" content={article.description?.replace(/<[^>]*>?/gm, '').substring(0, 160) || "Baca artikel selengkapnya di website IKAMMA FEB UGM."} />
+        <meta property="og:title" content={`${article.title} - IKAMMA FEB UGM`} />
+        <meta property="og:description" content={article.description?.replace(/<[^>]*>?/gm, '').substring(0, 160) || "Baca artikel selengkapnya di website IKAMMA FEB UGM."} />
+        {article.image_url && <meta property="og:image" content={article.image_url} />}
+      </Helmet>
       <Navbar />
 
       {/* ── Sector Seven Style: Premium Hero Header ────────────────── */}

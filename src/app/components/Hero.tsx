@@ -371,8 +371,7 @@ export function Hero() {
           style={{
             opacity: contentOpacity,
             y: contentY,
-            pointerEvents: contentPointerEvents,
-            willChange: "transform, opacity" // GPU Acceleration for heavy iframe and SVGs
+            pointerEvents: contentPointerEvents
           }}
         >
           {/* Main Content inside restricted width - Mobile: pt-[35px], Desktop: pt-[26px] (moved up 25px) */}
@@ -440,17 +439,12 @@ export function Hero() {
             </h3>
             {/* Infinite Marquee Container */}
             <div className="w-full overflow-hidden flex whitespace-nowrap">
-              <motion.div
-                className="flex gap-8 md:gap-16 items-center min-w-max"
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ ease: "linear", duration: 60, repeat: Infinity }}
-                style={{ willChange: "transform" }}
-              >
+              <div className="flex gap-8 md:gap-16 items-center animate-marquee">
                 {/* We render 12 logos twice (24 total) to create a perfect, seamless endless loop! */}
                 {[...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
                   <img key={i} src={logo} alt={`Partner Logo ${i}`} loading="eager" className="h-16 md:h-28 w-auto object-contain opacity-100 flex-shrink-0" />
                 ))}
-              </motion.div>
+              </div>
             </div>
           </div>
         </motion.div>

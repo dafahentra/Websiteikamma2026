@@ -77,7 +77,6 @@ export function ArticlesSection() {
                   src={article.image_url}
                   alt={article.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
                 />
               </div>
 

@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
+import { motion, useTransform, useSpring, MotionValue, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
 import LOGO1 from '../../assets/LogoEvent/LogoME.webp';
@@ -66,7 +66,7 @@ function CarouselCard({ index, activeIndex, item, unfoldProgress, onClick, xFact
   return (
     <motion.div
       onClick={onClick}
-      className="absolute w-56 h-72 md:w-72 md:h-96 overflow-hidden cursor-pointer rounded-xl bg-black will-change-transform"
+      className="absolute w-56 h-72 md:w-72 md:h-96 overflow-hidden cursor-pointer rounded-xl bg-black"
       style={{ x, y, rotate, scale, zIndex: target.zIndex }}
       animate={{
         boxShadow: isCenter
@@ -78,6 +78,8 @@ function CarouselCard({ index, activeIndex, item, unfoldProgress, onClick, xFact
       <div className="relative w-full h-full">
         <motion.img
           src={item.photo}
+          loading="eager"
+          decoding="sync"
           className="w-full h-full object-cover"
         />
         {/* Simple overlay for brightness effect instead of CSS filter */}
@@ -116,15 +118,15 @@ export function EventsSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Track scroll progress relative to this section, but map it so it finishes very fast
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 80%", "start 20%"] // Start animating when the top hits 80% of screen, finish completely by 20%
-  });
+  // Trigger unfold animation ONCE when it comes into view to prevent lag and disappearing
+  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const unfoldProgress = useSpring(0, { stiffness: 100, damping: 30 });
 
-  // Smooth out the scroll progress slightly and map it 0-1
-  const rawProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const unfoldProgress = useSpring(rawProgress, { stiffness: 100, damping: 30 });
+  useEffect(() => {
+    if (isInView) {
+      unfoldProgress.set(1);
+    }
+  }, [isInView, unfoldProgress]);
 
   return (
     <>

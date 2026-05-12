@@ -1,6 +1,7 @@
 
   import { createRoot } from "react-dom/client";
   import { BrowserRouter } from "react-router";
+  import { HelmetProvider } from "react-helmet-async";
   import App from "./app/App.tsx";
   import "./styles/index.css";
   
@@ -21,7 +22,9 @@
   }, 1500); // Ganti warna setiap 1.5 detik agar tidak terlalu cepat
 
   createRoot(document.getElementById("root")!).render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
   );

@@ -54,16 +54,16 @@ const links: NavLink[] = [
         subDropdown: [
           { label: 'HR Birdept Buddy', href: '/departemen/hrbb' },
           { label: 'HR Monitoring', href: '/departemen/hr-monitoring' },
-          { label: 'Marketing & Media', href: '/departemen/mm' },
-          { label: 'Administration & Finance', href: '/departemen/advance' },
+          { label: 'Marketing Media', href: '/departemen/mm' },
+          { label: 'Administration and Finance', href: '/departemen/advance' },
         ]
       },
       {
         label: 'Department',
         subDropdown: [
           { label: 'Internal', href: '/departemen/internal' },
-          { label: 'External', href: '/departemen/external' },
-          { label: 'Intellectual & Development', href: '/departemen/indev' },
+          { label: 'External Affairs', href: '/departemen/external' },
+          { label: 'Intellectual and Development', href: '/departemen/indev' },
           { label: 'Entrepreneurship', href: '/departemen/entre' },
           { label: 'Sport and Art Association', href: '/departemen/sparta' },
         ]
@@ -302,8 +302,8 @@ function DesktopNavItem({ link, isLight, isActive }: { link: NavLink; isLight: b
       <a
         href={link.href}
         className={`relative group flex items-center gap-1.5 transition-all duration-300 px-5 py-2 rounded-full ${isActive
-            ? 'text-white font-semibold'
-            : (isLight ? 'text-black/70 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10')
+          ? 'text-white font-semibold'
+          : (isLight ? 'text-black/70 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10')
           }`}
         style={{
           fontSize: '14px',
@@ -679,15 +679,15 @@ export function Navbar() {
                       <a
                         href={hasDropdown ? undefined : link.href}
                         className={`flex items-center gap-4 flex-1 px-4 py-3 transition-colors duration-150 ${isActive
-                            ? 'text-white font-semibold'
-                            : (isScrolled || onLightBg ? 'text-black/80 group-hover:text-black' : 'text-white/80 group-hover:text-white')
+                          ? 'text-white font-semibold'
+                          : (isScrolled || onLightBg ? 'text-black/80 group-hover:text-black' : 'text-white/80 group-hover:text-white')
                           }`}
                         style={{ fontSize: '15px' }}
                         onClick={hasDropdown ? (e) => e.preventDefault() : undefined}
                       >
                         <span className={`transition-colors ${isActive
-                            ? 'text-white'
-                            : (isScrolled || onLightBg ? 'text-black/40 group-hover:text-black/70' : 'text-white/40 group-hover:text-white/70')
+                          ? 'text-white'
+                          : (isScrolled || onLightBg ? 'text-black/40 group-hover:text-black/70' : 'text-white/40 group-hover:text-white/70')
                           }`}><Icon size={18} /></span>
                         {link.label}
                       </a>

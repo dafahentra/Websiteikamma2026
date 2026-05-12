@@ -253,7 +253,7 @@ export const departmentsData: Record<string, DepartmentData> = {
   },
   'advance': {
     slug: 'advance',
-    name: "Administration & Finance",
+    name: "Administration and Finance",
     manager: "Belta Puspa",
     managerLinkedIn: "https://www.linkedin.com/in/beltapuspawijaya/",
     viceManager: "Fikri Akbar",

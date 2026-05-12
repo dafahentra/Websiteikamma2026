@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { Navbar } from '../components/Navbar';
 import { Hero } from '../components/Hero';
+import { AboutSection } from '../components/AboutSection';
 import { EventsSection } from '../components/EventsSection';
 import { UpcomingEventsSection } from '../components/UpcomingEventsSection';
 import { NewsSection } from '../components/NewsSection';
@@ -67,33 +68,40 @@ export function Home() {
       </div>
 
       {/* 
-        Events Section (z-30) 
-        Always visible as it contains the flagship carousel.
+        About Section (What is IKAMMA)
       */}
       <CurvedSection zIndexClass="z-30" className="-mt-[5vh]">
+        <AboutSection />
+      </CurvedSection>
+
+      {/* 
+        Events Section 
+        Always visible as it contains the flagship carousel.
+      */}
+      <CurvedSection zIndexClass="z-40" className="-mt-[5vh]">
         <EventsSection />
       </CurvedSection>
 
       {/* 
-        Articles Section (z-40)
+        Articles Section
         Only rendered if articles exist.
       */}
       {hasArticles && (
-        <CurvedSection zIndexClass="z-40" className="-mt-[10vh]">
+        <CurvedSection zIndexClass="z-50" className="-mt-[10vh]">
           <ArticlesSection />
         </CurvedSection>
       )}
 
       {/* 
-        News Section (z-50 if articles are hidden, to ensure it masks Events correctly)
+        News Section
         If articles are hidden, this section takes the role of masking EventsSection.
       */}
       {!hasArticles ? (
-        <CurvedSection zIndexClass="z-40" className="-mt-[10vh]">
+        <CurvedSection zIndexClass="z-50" className="-mt-[10vh]">
           <NewsSection />
         </CurvedSection>
       ) : (
-        <div className="relative z-30 bg-white">
+        <div className="relative z-40 bg-white">
           <NewsSection />
         </div>
       )}

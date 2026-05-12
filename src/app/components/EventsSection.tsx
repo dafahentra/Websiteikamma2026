@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useTransform, useSpring, MotionValue, useInView } from "framer-motion";
+import { motion, useTransform, useSpring, useScroll, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
 import LOGO1 from '../../assets/LogoEvent/LogoME.webp';
@@ -118,15 +118,16 @@ export function EventsSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Trigger unfold animation ONCE when it comes into view to prevent lag and disappearing
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-  const unfoldProgress = useSpring(0, { stiffness: 100, damping: 30 });
+  // Scroll-driven unfold: track how far the section has scrolled into view
+  // offset: "start end" = section top hits viewport bottom, "center center" = section center hits viewport center
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "center center"],
+  });
 
-  useEffect(() => {
-    if (isInView) {
-      unfoldProgress.set(1);
-    }
-  }, [isInView, unfoldProgress]);
+  // Map scroll progress (0→1) to unfold progress (0→1) with a smooth spring
+  const rawUnfold = useTransform(scrollYProgress, [0, 0.6], [0, 1]);
+  const unfoldProgress = useSpring(rawUnfold, { stiffness: 120, damping: 30 });
 
   return (
     <>

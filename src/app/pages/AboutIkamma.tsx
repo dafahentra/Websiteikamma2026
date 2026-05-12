@@ -186,7 +186,7 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
         <img
           src={photo}
           alt={item.name}
-          className={`w-full h-full object-cover object-[center_18%] transition-all duration-700 ${isHovered ? 'grayscale-0' : 'grayscale-[0.5]'}`}
+          className={`w-full h-full object-cover object-[center_10%] transition-all duration-1000 ease-out ${isHovered ? 'grayscale-0 scale-110' : 'grayscale-[0.5] scale-100'}`}
         />
       </motion.div>
 

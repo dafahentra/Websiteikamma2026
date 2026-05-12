@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router';
+import { useLocation, useSearchParams, useNavigate } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Clock, CalendarDays, Filter, Search, X, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { createSlug } from '../../lib/slugify';
 import { INFO_MAHASISWA_PHOTOS, INFO_MAHASISWA_HERO } from '../../assets/photos';
 const MicroShape = ({ className, delay = 0, duration = 5, size = "w-20 h-20" }: { className: string, delay?: number, duration?: number, size?: string }) => (
   <motion.div
@@ -55,7 +56,7 @@ export function InfoMahasiswaPage() {
   const [activeCategory, setActiveCategory] = useState<'All' | Category>('All');
   const [activeStatus, setActiveStatus] = useState<typeof STATUS_FILTERS[number]>('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedItem, setSelectedItem] = useState<InfoItem | null>(null);
+  const navigate = useNavigate();
 
   const [infoItems, setInfoItems] = useState<InfoItem[]>([]);
   const [isMobile, setIsMobile] = useState(false);
@@ -94,9 +95,9 @@ const CATEGORIES: ('All' | Category)[] = ['All', 'Magang', 'Lomba', 'Beasiswa'];
 const STATUS_FILTERS = ['All', 'Open Now', 'Closed'] as const;
 
 const CATEGORY_COLORS: Record<Category, string> = {
-  Magang: 'bg-blue-600',
-  Lomba: 'bg-amber-500',
-  Beasiswa: 'bg-indigo-600',
+  Magang: 'bg-[#86A0D3]',
+  Lomba: 'bg-[#86A0D3]',
+  Beasiswa: 'bg-[#86A0D3]',
 };
 
   // Track window size for responsive itemsPerPage
@@ -124,15 +125,7 @@ const CATEGORY_COLORS: Record<Category, string> = {
     }
   }, [searchParams]);
 
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (selectedItem) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
-  }, [selectedItem]);
+
 
   const filtered = infoItems.filter((item) => {
     const matchCategory = activeCategory === 'All' || item.category === activeCategory;
@@ -321,7 +314,7 @@ const CATEGORY_COLORS: Record<Category, string> = {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                onClick={() => setSelectedItem(item)}
+                onClick={() => navigate('/info-mahasiswa/' + createSlug(item.title))}
                 className="group cursor-pointer flex flex-col bg-white rounded-xl md:rounded-2xl border border-[#081C36]/10 overflow-hidden hover:shadow-lg transition-all duration-300"
               >
                 {/* Poster Image */}
@@ -355,12 +348,12 @@ const CATEGORY_COLORS: Record<Category, string> = {
                       const displayStatus = isActuallyClosed ? 'closed' : item.status;
                       
                       return displayStatus === 'open' ? (
-                        <div className="flex items-center gap-1.5 bg-[#081C36]/90 backdrop-blur-sm px-3 h-7 md:px-4 md:h-10 rounded-full">
-                          <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse" />
+                        <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3 h-7 md:px-4 md:h-10 rounded-full border border-white/30 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+                          <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
                           <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
                         </div>
                       ) : (
-                        <div className="flex items-center bg-red-500/90 backdrop-blur-sm px-3 h-7 md:px-4 md:h-10 rounded-full">
+                        <div className="flex items-center bg-white/10 backdrop-blur-md px-3 h-7 md:px-4 md:h-10 rounded-full border border-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
                           <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
                         </div>
                       );
@@ -385,14 +378,10 @@ const CATEGORY_COLORS: Record<Category, string> = {
                     {item.title}
                   </h3>
 
-                  {/* Footer Meta: Organizer & Period */}
-                  <div className="flex flex-col gap-1 md:gap-2 text-[#081C36]/50 text-[9px] md:text-xs font-inter mb-3 md:mb-4">
+                  {/* Footer Meta: Organizer */}
+                  <div className="flex flex-col gap-1 md:gap-2 text-[#081C36]/50 text-xs sm:text-sm font-inter mb-3 md:mb-4">
                     <div className="flex items-center gap-1 font-semibold text-[#081C36]">
                       <span>{item.organizer}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <CalendarDays size={10} className="md:w-3 md:h-3" />
-                      <span className="line-clamp-1">{item.periodStart === item.periodEnd ? item.periodStart : `${item.periodStart} — ${item.periodEnd}`}</span>
                     </div>
                   </div>
 
@@ -481,135 +470,7 @@ const CATEGORY_COLORS: Record<Category, string> = {
         )}
       </section>
 
-      {/* ── Detail Modal ──────────────────────────────────────── */}
-      <AnimatePresence>
-        {selectedItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center px-4 py-8"
-            onClick={() => setSelectedItem(null)}
-          >
-            {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
-            {/* Modal Content */}
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 30, scale: 0.97 }}
-              transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative bg-white w-full max-w-3xl max-h-[90vh] overflow-y-auto z-10 shadow-2xl"
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedItem(null)}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center text-[#081C36] hover:bg-[#081C36] hover:text-white transition-all duration-200 shadow-md"
-              >
-                <X size={18} />
-              </button>
-
-              {/* Poster */}
-              <div className="relative w-full aspect-[16/9] overflow-hidden">
-                <img
-                  src={selectedItem.poster}
-                  alt={selectedItem.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-
-                {/* Badges on poster */}
-                <div className="absolute bottom-4 left-6 flex items-center gap-3">
-                  {(() => {
-                    const isClosed = selectedItem.deadlineDate && new Date() > new Date(selectedItem.deadlineDate + 'T23:59:59');
-                    const displayStatus = isClosed ? 'closed' : selectedItem.status;
-
-                    return displayStatus === 'open' ? (
-                      <div className="flex items-center gap-2 bg-[#081C36] px-4 h-10 rounded-full">
-                        <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                        <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center bg-red-500/90 px-4 h-10 rounded-full">
-                        <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
-                      </div>
-                    );
-                  })()}
-                  <div className={`flex items-center ${CATEGORY_COLORS[selectedItem.category]} px-4 h-10 rounded-full`}>
-                    <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">{selectedItem.category}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Body */}
-              <div className="p-8 md:p-10">
-                {/* Posted Date */}
-                <p className="text-[#081C36]/35 text-xs font-inter mb-3">
-                  Diposting {selectedItem.postedDate}
-                </p>
-
-                {/* Title */}
-                <h2 className="text-3xl md:text-4xl font-inter font-bold text-[#081C36] mb-2">
-                  {selectedItem.title}
-                </h2>
-
-                {/* Organizer */}
-                <p className="text-[#081C36]/60 text-base font-inter font-medium mb-6">
-                  oleh {selectedItem.organizer}
-                </p>
-
-                {/* Info Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 p-5 bg-[#081C36]/[0.03] rounded-xl border border-[#081C36]/10">
-                  <div className="flex items-start gap-3">
-                    <CalendarDays size={18} className="text-[#081C36] mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-xs font-inter text-[#081C36]/40 uppercase tracking-wider mb-1">Periode Pendaftaran</p>
-                      <p className="text-sm font-inter font-semibold text-[#081C36]">{selectedItem.periodStart} — {selectedItem.periodEnd}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Clock size={18} className="text-[#081C36] mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-xs font-inter text-[#081C36]/40 uppercase tracking-wider mb-1">Status</p>
-                      <p className={`text-sm font-inter font-semibold ${selectedItem.status === 'open' ? 'text-blue-600' : 'text-red-500'}`}>
-                        {selectedItem.status === 'open' ? 'Masih Dibuka' : 'Sudah Ditutup'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Description */}
-                <div className="mb-8">
-                  <h3 className="text-lg font-inter font-bold text-[#081C36] mb-3">Deskripsi</h3>
-                  <div 
-                    className="prose prose-slate max-w-none text-[#081C36]/60 text-base font-inter leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: selectedItem.fullDescription }}
-                  />
-                </div>
-
-                {/* CTA */}
-                {selectedItem.status === 'open' ? (
-                  <a
-                    href={selectedItem.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-4 bg-[#081C36] text-white font-inter font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 hover:bg-[#0a2545] transition-colors duration-300 rounded-xl"
-                  >
-                    DAFTAR SEKARANG <ExternalLink size={16} />
-                  </a>
-                ) : (
-                  <div className="w-full py-4 bg-[#081C36]/10 text-[#081C36]/40 font-inter font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 cursor-not-allowed rounded-xl">
-                    PENDAFTARAN DITUTUP
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <Footer />
     </div>

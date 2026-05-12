@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router';
 import { supabase } from '../../lib/supabase';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { createSlug } from '../../lib/slugify';
 import { ArrowLeft, Clock, CalendarDays, User, Tag, ChevronRight, Facebook, MessageCircle, Share2, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
@@ -15,7 +16,7 @@ const XIcon = ({ size = 20, className = "" }: { size?: number, className?: strin
 );
 
 export function ArticleDetailPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const [article, setArticle] = useState<any>(null);
   const [relatedArticles, setRelatedArticles] = useState<any[]>([]);
@@ -26,11 +27,11 @@ export function ArticleDetailPage() {
     const fetchArticleData = async () => {
       setLoading(true);
       
-      const { data: currentArticle } = await supabase
+      const { data } = await supabase
         .from('articles')
-        .select('*')
-        .eq('id', id)
-        .single();
+        .select('*');
+      
+      const currentArticle = data?.find((a: any) => createSlug(a.title) === slug);
       
       if (currentArticle) {
         setArticle(currentArticle);
@@ -39,7 +40,7 @@ export function ArticleDetailPage() {
           .from('articles')
           .select('*')
           .eq('category', currentArticle.category)
-          .neq('id', id)
+          .neq('id', currentArticle.id)
           .limit(4);
         
         setRelatedArticles(related || []);
@@ -48,7 +49,7 @@ export function ArticleDetailPage() {
       setLoading(false);
     };
     fetchArticleData();
-  }, [id]);
+  }, [slug]);
 
   const shareOnFacebook = () => {
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
@@ -261,8 +262,8 @@ export function ArticleDetailPage() {
               <div className="sticky top-40">
                 <div className="relative mb-12 pl-6 border-l-4 border-[#081C36]">
                   <h2 className="text-4xl text-[#081C36] tracking-tighter">
-                    <span className="font-serif italic mr-2">Berita</span>
-                    <span className="font-bold font-inter">Terkait</span>
+                    <span className="font-caslon-bold-italic mr-2">Berita</span>
+                    <span className="font-inter font-bold">Terkait</span>
                   </h2>
                 </div>
 
@@ -271,7 +272,7 @@ export function ArticleDetailPage() {
                     relatedArticles.map((item) => (
                       <Link 
                         key={item.id} 
-                        to={`/articles/${item.id}`}
+                        to={`/articles/${createSlug(item.title)}`}
                         className="group block py-2"
                       >
                         <h3 className="text-xl font-bold text-[#081C36] group-hover:text-[#081C36]/60 transition-colors leading-tight mb-3 font-inter tracking-tight">

@@ -25,8 +25,10 @@ const DepartmentDetail = lazy(() => import('./pages/DepartmentDetail').then(m =>
 const ArticlesPage = lazy(() => import('./pages/ArticlesPage').then(m => ({ default: m.ArticlesPage })));
 const ArticleDetailPage = lazy(() => import('./pages/ArticleDetailPage').then(m => ({ default: m.ArticleDetailPage })));
 const EventsPage = lazy(() => import('./pages/EventsPage').then(m => ({ default: m.EventsPage })));
+const EventDetailPage = lazy(() => import('./pages/EventDetailPage').then(m => ({ default: m.EventDetailPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
 const InfoMahasiswaPage = lazy(() => import('./pages/InfoMahasiswaPage').then(m => ({ default: m.InfoMahasiswaPage })));
+const InfoMahasiswaDetailPage = lazy(() => import('./pages/InfoMahasiswaDetailPage').then(m => ({ default: m.InfoMahasiswaDetailPage })));
 const AlumniDatabase = lazy(() => import('./pages/AlumniDatabase').then(m => ({ default: m.AlumniDatabase })));
 
 import ScrollToTop from './components/ScrollToTop';
@@ -37,8 +39,6 @@ export default function App() {
   const isAdminPath = location.pathname.startsWith('/admin');
 
   useEffect(() => {
-    // Show preloader ONLY on the home page.
-    // For admin or any other sub-pages, we skip the preloader.
     if (location.pathname !== '/') {
       setIsLoading(false);
     }
@@ -59,10 +59,12 @@ export default function App() {
           <Route path="/about" element={<AboutIkamma />} />
           <Route path="/departemen/:slug" element={<DepartmentDetail />} />
           <Route path="/articles" element={<ArticlesPage />} />
-          <Route path="/articles/:id" element={<ArticleDetailPage />} />
+          <Route path="/articles/:slug" element={<ArticleDetailPage />} />
           <Route path="/events" element={<EventsPage />} />
+          <Route path="/events/:slug" element={<EventDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/info-mahasiswa" element={<InfoMahasiswaPage />} />
+          <Route path="/info-mahasiswa/:slug" element={<InfoMahasiswaDetailPage />} />
           <Route path="/alumni-database" element={<AlumniDatabase />} />
 
           {/* Admin Routes */}

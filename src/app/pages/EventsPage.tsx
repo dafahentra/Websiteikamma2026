@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
-import { motion } from 'framer-motion';
+import { useLocation, useNavigate } from 'react-router';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Clock, CalendarDays, X, ExternalLink, ArrowRight } from 'lucide-react';
-import { AnimatePresence } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
+import { createSlug } from '../../lib/slugify';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 const MicroShape = ({ className, delay = 0, duration = 5, size = "w-20 h-20" }: { className: string, delay?: number, duration?: number, size?: string }) => (
@@ -32,8 +32,8 @@ import { EVENTS_PAGE_HERO, EVENTS_PAGE_ONGOING, EVENTS_PAGE_PAST } from '../../a
 /* ── Sample Data ─────────────────────────────────────────────────── */
 export function EventsPage() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [events, setEvents] = useState<any[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
 
   const getTeaser = (html: string) => {
     if (!html) return '';
@@ -64,15 +64,7 @@ export function EventsPage() {
     return end && now > end;
   });
 
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (selectedEvent) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
-  }, [selectedEvent]);
+
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -149,7 +141,7 @@ export function EventsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.12 }}
-              onClick={() => setSelectedEvent(event)}
+              onClick={() => navigate('/events/' + createSlug(event.title))}
               className="flex flex-col group cursor-pointer"
             >
               {/* Image Container */}
@@ -181,20 +173,20 @@ export function EventsPage() {
 
                       if (displayType === 'ongoing') {
                         return (
-                          <div className="flex items-center gap-1.5 bg-[#081C36] px-2 py-0.5 md:px-3 md:h-8 rounded-full">
-                            <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-white rounded-full animate-pulse" />
+                          <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/30 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+                            <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
                             <span className="text-white text-[9px] md:text-[10px] font-inter font-bold tracking-wider uppercase">ONGOING</span>
                           </div>
                         );
                       } else if (displayType === 'past') {
                          return (
-                          <div className="flex items-center bg-gray-500/90 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/20">
+                          <div className="flex items-center bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
                             <span className="text-white text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Past Event</span>
                           </div>
                         );
                       } else {
                         return (
-                          <div className="flex items-center bg-[#081C36]/20 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/20">
+                          <div className="flex items-center bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
                             <span className="text-white text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Upcoming</span>
                           </div>
                         );
@@ -203,7 +195,7 @@ export function EventsPage() {
                     
                     {/* Event Type / Category */}
                     {event.category && (
-                      <div className="flex items-center bg-amber-500 px-2 py-0.5 md:px-3 md:h-8 rounded-full shadow-lg">
+                      <div className="flex items-center bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-white/30">
                         <span className="text-white text-[9px] md:text-[10px] font-inter font-bold tracking-wider uppercase">{event.category}</span>
                       </div>
                     )}
@@ -269,7 +261,7 @@ export function EventsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-              onClick={() => setSelectedEvent(event)}
+              onClick={() => navigate('/events/' + createSlug(event.title))}
               className="group cursor-pointer flex flex-col"
             >
               {/* Image */}
@@ -313,164 +305,6 @@ export function EventsPage() {
         </div>
       </section>
 
-      {/* ── Detail Modal ──────────────────────────────────────── */}
-      <AnimatePresence>
-        {selectedEvent && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center px-4 py-8"
-            onClick={() => setSelectedEvent(null)}
-          >
-            {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-
-            {/* Modal Content */}
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 30, scale: 0.97 }}
-              transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative bg-white w-full max-w-3xl max-h-[90vh] overflow-y-auto z-10 shadow-2xl rounded-2xl"
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedEvent(null)}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center text-[#081C36] hover:bg-[#081C36] hover:text-white transition-all duration-200 shadow-md"
-              >
-                <X size={18} />
-              </button>
-
-              {/* Poster */}
-              <div className="relative w-full aspect-[16/9] overflow-hidden">
-                <img
-                  src={selectedEvent.image_url || (selectedEvent.type === 'upcoming' ? EVENTS_PAGE_ONGOING[0] : EVENTS_PAGE_PAST[0])}
-                  alt={selectedEvent.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-
-                <div className="absolute bottom-4 left-6 flex items-center gap-3">
-                  {(() => {
-                    const now = new Date();
-                    now.setHours(0, 0, 0, 0);
-                    const start = selectedEvent.start_date ? new Date(selectedEvent.start_date) : null;
-                    const end = selectedEvent.end_date ? new Date(selectedEvent.end_date) : null;
-                    
-                    if (start) start.setHours(0, 0, 0, 0);
-                    if (end) end.setHours(0, 0, 0, 0);
-
-                    let displayType = selectedEvent.type === 'past' ? 'past' : 'upcoming';
-                    if (selectedEvent.type !== 'past') {
-                      if (start && now >= start) displayType = 'ongoing';
-                      if (end && now > end) displayType = 'past';
-                    }
-
-                    if (displayType === 'ongoing') {
-                      return (
-                        <div className="flex items-center gap-2 bg-[#081C36] px-4 h-10 rounded-full">
-                          <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                          <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">ONGOING</span>
-                        </div>
-                      );
-                    } else if (displayType === 'past') {
-                      return (
-                        <div className="flex items-center bg-gray-500/90 px-4 h-10 rounded-full">
-                          <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">PAST EVENT</span>
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <div className="flex items-center bg-[#081C36] px-4 h-10 rounded-full">
-                          <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                          <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">UPCOMING</span>
-                        </div>
-                      );
-                    }
-                  })()}
-
-                  {/* Event Category Badge */}
-                  {selectedEvent.category && (
-                    <div className="flex items-center bg-amber-500 px-4 h-10 rounded-full shadow-lg">
-                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">{selectedEvent.category}</span>
-                    </div>
-                  )}
-
-                  {/* Location Type Badge */}
-                  {selectedEvent.location_type && (
-                    <div className="flex items-center bg-blue-600 px-4 h-10 rounded-full">
-                      <span className="text-white text-xs font-inter font-bold tracking-wider uppercase">{selectedEvent.location_type}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Body */}
-              <div className="p-8 md:p-10">
-                {/* Title */}
-                <h2 className="text-3xl md:text-4xl font-inter font-bold text-[#081C36] mb-6">
-                  {selectedEvent.title}
-                </h2>
-
-                {/* Info Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 p-5 bg-[#081C36]/[0.03] rounded-xl border border-[#081C36]/10">
-                  <div className="flex items-start gap-3">
-                    <CalendarDays size={18} className="text-[#081C36] mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-xs font-inter text-[#081C36]/40 uppercase tracking-wider mb-1">Tanggal</p>
-                      <p className="text-sm font-inter font-semibold text-[#081C36]">
-                        {selectedEvent.full_date || `${selectedEvent.event_date} ${selectedEvent.month_year}`}
-                      </p>
-                    </div>
-                  </div>
-                  {selectedEvent.time && (
-                    <div className="flex items-start gap-3">
-                      <Clock size={18} className="text-[#081C36] mt-0.5 shrink-0" />
-                      <div>
-                        <p className="text-xs font-inter text-[#081C36]/40 uppercase tracking-wider mb-1">Waktu</p>
-                        <p className="text-sm font-inter font-semibold text-[#081C36]">{selectedEvent.time}</p>
-                      </div>
-                    </div>
-                  )}
-                  <div className="flex items-start gap-3">
-                    <MapPin size={18} className="text-[#081C36] mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-xs font-inter text-[#081C36]/40 uppercase tracking-wider mb-1">Lokasi</p>
-                      <p className="text-sm font-inter font-semibold text-[#081C36]">{selectedEvent.location}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Description */}
-                {selectedEvent.description && (
-                  <div className="mb-8">
-                    <h3 className="text-lg font-inter font-bold text-[#081C36] mb-3">Deskripsi</h3>
-                    <div 
-                      className="prose prose-slate max-w-none text-[#081C36]/60 text-base font-inter leading-relaxed"
-                      dangerouslySetInnerHTML={{ __html: selectedEvent.description }}
-                    />
-                  </div>
-                )}
-
-                {/* CTA */}
-                {selectedEvent.type === 'upcoming' && selectedEvent.registration_link && (
-                  <a
-                    href={selectedEvent.registration_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-4 bg-[#081C36] text-white font-inter font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 hover:bg-[#0a2545] transition-colors duration-300 rounded-xl"
-                  >
-                    DAFTAR SEKARANG <ExternalLink size={16} />
-                  </a>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <Footer />
     </div>

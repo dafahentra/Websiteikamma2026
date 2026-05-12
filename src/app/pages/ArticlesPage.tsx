@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Clock, User } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { Navbar } from '../components/Navbar';
+import { createSlug } from '../../lib/slugify';
 import { Footer } from '../components/Footer';
 const MicroShape = ({ className, delay = 0, duration = 5, size = "w-20 h-20" }: { className: string, delay?: number, duration?: number, size?: string }) => (
   <motion.div
@@ -160,7 +161,7 @@ export function ArticlesPage() {
           {visible.map((article, i) => (
             <Link
               key={article.id}
-              to={`/articles/${article.id}`}
+              to={`/articles/${createSlug(article.title)}`}
               className="contents"
             >
               <motion.article

@@ -77,6 +77,9 @@ export function Hero() {
   const maskScale = useTransform(scrollYProgress, [0, 0.4], [80, 1]);
   const maskOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  // White overlay: fades in at the tail end of the hero scroll (0.65 → 1)
+  // so the hero dissolves seamlessly into the white About section.
+  const whiteOverlayOpacity = useTransform(scrollYProgress, [0.65, 1], [0, 1]);
 
   const togglePlayPause = () => {
     if (videoRef.current) {
@@ -164,6 +167,11 @@ export function Hero() {
             </svg>
           </motion.div>
         </motion.div>
+        {/* White fade-out overlay — dissolves hero into the About section */}
+        <motion.div
+          className="absolute inset-0 z-20 bg-white pointer-events-none"
+          style={{ opacity: whiteOverlayOpacity }}
+        />
       </div>
     </div>
   );

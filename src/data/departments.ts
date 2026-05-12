@@ -150,7 +150,6 @@ export interface DepartmentData {
   viceManagerImg: string;
   groupImg: string;
   logo: string;
-  logo: string;
   programs: WorkProgram[];
   staffs: Staff[];
 }

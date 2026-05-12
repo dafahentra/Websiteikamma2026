@@ -235,15 +235,18 @@ export function DepartmentDetail() {
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
                 className="group flex flex-col items-center w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.67rem)] md:w-[calc(25%-1.5rem)] lg:w-[calc(20%-1.6rem)]"
               >
-                <div className="w-full aspect-[3/4] bg-white overflow-hidden mb-4 relative group-hover:-translate-y-2 transition-all duration-500">
+                <div className="w-full aspect-[3/4] bg-white overflow-hidden mb-4 relative">
                   {staff.img ? (
-                    <img src={staff.img} alt={staff.name} className="w-full h-full object-cover object-top" />
+                    <img 
+                      src={staff.img} 
+                      alt={staff.name} 
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
+                    />
                   ) : (
-                    <div className="w-full h-full bg-[#081C36]/5 flex items-center justify-center p-8">
+                    <div className="w-full h-full bg-[#081C36]/5 flex items-center justify-center p-8 group-hover:scale-105 transition-transform duration-500">
                       <IkammaLogo className="w-full h-auto opacity-10 grayscale" />
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-[#081C36]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
                 <h3 className="text-[#002444] font-inter-bold text-center text-sm md:text-base lg:text-lg font-inter px-2 line-clamp-2">{staff.name}</h3>
                 <p className="text-[#86A0D3] font-caslon-semibold-italic text-sm md:text-base lg:text-lg mt-1">Staff</p>

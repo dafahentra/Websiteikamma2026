@@ -151,7 +151,7 @@ export function AboutSection() {
         </div>
 
         {/* Bottom Section: Our Partners - Moved outside max-w container for full-width */}
-        <div className="mt-8 md:mt-12 w-full pb-40 md:pb-24">
+        <div className="mt-8 md:mt-12 w-full pb-6 md:pb-24">
           <h3 className="text-white text-3xl md:text-5xl lg:text-6xl text-center mb-6 md:mb-10">
             <span className="font-caslon-bold-italic">Our</span> <span className="font-inter font-bold">Partners</span>
           </h3>

@@ -28,22 +28,19 @@ function CurvedSection({ children, className, zIndexClass }: { children: React.R
     return () => window.removeEventListener('resize', checkMobile);
   }, [isMobileMV]);
 
+  // Desktop: percentage-based curve animated via scroll.
+  // Formula: y = 8% × sin²(π × x). Symmetric, smooth bell. ~80px deep on a 1000px element.
   const desktopCurve = [
-    "polygon(0% 0%, 5% 0.48%, 10% 0.9%, 15% 1.28%, 20% 1.6%, 25% 1.88%, 30% 2.1%, 35% 2.28%, 40% 2.4%, 45% 2.48%, 50% 2.5%, 55% 2.48%, 60% 2.4%, 65% 2.28%, 70% 2.1%, 75% 1.88%, 80% 1.6%, 85% 1.28%, 90% 0.9%, 95% 0.48%, 100% 0%, 100% 100%, 0% 100%)",
-    "polygon(0% 0%, 5% 0%, 10% 0%, 15% 0%, 20% 0%, 25% 0%, 30% 0%, 35% 0%, 40% 0%, 45% 0%, 50% 0%, 55% 0%, 60% 0%, 65% 0%, 70% 0%, 75% 0%, 80% 0%, 85% 0%, 90% 0%, 95% 0%, 100% 0%, 100% 100%, 0% 100%)"
-  ];
-  
-  const mobileCurve = [
-    "polygon(0% 0%, 5% 0.19%, 10% 0.36%, 15% 0.51%, 20% 0.64%, 25% 0.75%, 30% 0.84%, 35% 0.91%, 40% 0.96%, 45% 0.99%, 50% 1%, 55% 0.99%, 60% 0.96%, 65% 0.91%, 70% 0.84%, 75% 0.75%, 80% 0.64%, 85% 0.51%, 90% 0.36%, 95% 0.19%, 100% 0%, 100% 100%, 0% 100%)",
+    "polygon(0% 0%, 5% 0.2%, 10% 0.76%, 15% 1.65%, 20% 2.76%, 25% 4%, 30% 5.23%, 35% 6.34%, 40% 7.24%, 45% 7.8%, 50% 8%, 55% 7.8%, 60% 7.24%, 65% 6.34%, 70% 5.23%, 75% 4%, 80% 2.76%, 85% 1.65%, 90% 0.76%, 95% 0.2%, 100% 0%, 100% 100%, 0% 100%)",
     "polygon(0% 0%, 5% 0%, 10% 0%, 15% 0%, 20% 0%, 25% 0%, 30% 0%, 35% 0%, 40% 0%, 45% 0%, 50% 0%, 55% 0%, 60% 0%, 65% 0%, 70% 0%, 75% 0%, 80% 0%, 85% 0%, 90% 0%, 95% 0%, 100% 0%, 100% 100%, 0% 100%)"
   ];
 
-  const clipPathDesktop = useTransform(scrollYProgress, [0, 1], desktopCurve);
-  // For mobile, use a static curve (the fully curved state) to prevent excessive repaint crashes
-  const clipPathMobile = mobileCurve[0];
-  
+  // Mobile (<768px): no curve at all — sections stack flat, no clip-path applied.
+  // Tablet/Desktop (≥768px): animated percentage-based curve via scroll.
+  const clipPathDesktopMV = useTransform(scrollYProgress, [0, 1], desktopCurve);
+
   const clipPath = useTransform(() => {
-    return isMobileMV.get() === 1 ? clipPathMobile : clipPathDesktop.get();
+    return isMobileMV.get() === 1 ? 'none' : clipPathDesktopMV.get();
   });
 
   return (
@@ -94,7 +91,8 @@ export function Home() {
       {/* 
         About Section (What is IKAMMA)
       */}
-      <CurvedSection zIndexClass="z-30" className="-mt-[10vh]">
+      {/* On mobile: sections stack flat (no margin, no curve). On tablet/desktop: curved overlap. */}
+      <CurvedSection zIndexClass="z-30" className="md:-mt-[10vh]">
         <AboutSection />
       </CurvedSection>
 
@@ -102,7 +100,7 @@ export function Home() {
         Events Section 
         Always visible as it contains the flagship carousel.
       */}
-      <CurvedSection zIndexClass="z-40" className="-mt-[10vh]">
+      <CurvedSection zIndexClass="z-40" className="md:-mt-[10vh]">
         <EventsSection />
       </CurvedSection>
 
@@ -111,7 +109,7 @@ export function Home() {
         Only rendered if articles exist.
       */}
       {hasArticles && (
-        <CurvedSection zIndexClass="z-50" className="-mt-[10vh]">
+        <CurvedSection zIndexClass="z-50" className="md:-mt-[10vh]">
           <ArticlesSection />
         </CurvedSection>
       )}
@@ -121,7 +119,7 @@ export function Home() {
         If articles are hidden, this section takes the role of masking EventsSection.
       */}
       {!hasArticles ? (
-        <CurvedSection zIndexClass="z-50" className="-mt-[10vh]">
+        <CurvedSection zIndexClass="z-50" className="md:-mt-[10vh]">
           <NewsSection />
         </CurvedSection>
       ) : (

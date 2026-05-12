@@ -8,7 +8,7 @@ import HERO_VIDEO_WEBM from "../../assets/Background/VidProf.webm";
 import LOGO from "../../assets/LogoIKAMMA/LogoPutih.svg";
 import { supabase } from "../../lib/supabase";
 
-import { SCRAPBOOK_PHOTOS, HERO_BG } from "../../assets/photos";
+import { HERO_BG } from "../../assets/photos";
 
 import antamLogo from "../../assets/logopartner/LogoAntam.webp";
 import bniLogo from "../../assets/logopartner/LogoBNI.webp";

@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
 import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 
-import { SCRAPBOOK_PHOTOS, ABOUT_BACKGROUND } from '../../assets/photos';
+import { ABOUT_BACKGROUND } from '../../assets/photos';
 import { supabase } from "../../lib/supabase";
 
 import antamLogo from "../../assets/logopartner/LogoAntam.webp";
@@ -84,7 +84,7 @@ export function AboutSection() {
   // Parallax effect was removed for performance, leaving yRaw and y removed.
 
   return (
-    <section id="about" ref={targetRef} className="relative w-full h-auto bg-[#081C36] overflow-hidden pt-24 md:pt-40 pb-12 md:pb-16">
+    <section id="about" ref={targetRef} className="relative w-full h-auto bg-[#081C36] overflow-hidden pt-24 pb-12 md:pb-16">
       {/* Static Background Photo */}
       <div className="absolute inset-0 z-0">
         <img

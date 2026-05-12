@@ -5,7 +5,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import LogoPutihRaw from '../../assets/LogoIKAMMA/LogoPutih.svg?raw';
 import LogoHitamRaw from '../../assets/LogoIKAMMA/LogoHitam.svg?raw';
-import { SCRAPBOOK_PHOTOS, DEPT_PHOTOS } from '../../assets/photos';
+import { DEPT_PHOTOS } from '../../assets/photos';
 import { departmentsData } from '../../data/departments';
 import { CORE_LEADERS, ORGANIZATION_LIST } from '../../data/team';
 import BenihSvg from '../../assets/LogoKabinet/Benih.svg';
@@ -316,7 +316,7 @@ export function AboutIkamma() {
           {/* Crescent glow at the bottom */}
           <div className="absolute inset-[-3px] rounded-full bg-gradient-to-b from-transparent via-transparent to-white/50 blur-[2px] opacity-80"></div>
           <div className="absolute inset-0 rounded-full overflow-hidden bg-transparent">
-            <img src={member.img || SCRAPBOOK_PHOTOS[8]} alt={member.name} className="w-full h-full object-cover object-top" />
+            <img src={member.img || HeroAbout} alt={member.name} className="w-full h-full object-cover object-top" />
           </div>
         </div>
         <h3 className="font-inter font-bold text-xl md:text-2xl text-[#002444] mb-2">{member.name}</h3>

@@ -39,10 +39,11 @@ function CurvedSection({ children, className, zIndexClass }: { children: React.R
   ];
 
   const clipPathDesktop = useTransform(scrollYProgress, [0, 1], desktopCurve);
-  const clipPathMobile = useTransform(scrollYProgress, [0, 1], mobileCurve);
+  // For mobile, use a static curve (the fully curved state) to prevent excessive repaint crashes
+  const clipPathMobile = mobileCurve[0];
   
   const clipPath = useTransform(() => {
-    return isMobileMV.get() === 1 ? clipPathMobile.get() : clipPathDesktop.get();
+    return isMobileMV.get() === 1 ? clipPathMobile : clipPathDesktop.get();
   });
 
   return (

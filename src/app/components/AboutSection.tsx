@@ -80,7 +80,7 @@ export function AboutSection() {
     target: targetRef,
     offset: ["start end", "end start"]
   });
-  
+
   // Parallax effect: moves the background image down slightly as you scroll down
   // Added useSpring for smoother performance and will-change for GPU acceleration
   const yRaw = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
@@ -103,53 +103,53 @@ export function AboutSection() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col gap-4 md:gap-8">
 
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-start">
-              {/* Left Column: Description */}
-              <div className="text-white/90 space-y-6">
-                {/* Aligned Heading */}
-                <h2 className="text-white text-3xl md:text-5xl mb-6">
-                  <span className="font-caslon-bold-italic">— What is</span> <span className="font-inter font-bold">IKAMMA??</span>
-                </h2>
-                <p className="text-lg leading-relaxed text-justify">
-                  <span className="font-bold italic">Ikatan Keluarga Mahasiswa Manajemen (IKAMMA)</span> merupakan sebuah organisasi himpunan mahasiswa Program Studi Manajemen di Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
-                </p>
-                <p className="text-lg leading-relaxed text-justify">
-                  IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
-                </p>
-                <div className="pt-2">
-                  <AnimatedButton href="#about-more">
-                    See More
-                  </AnimatedButton>
-                </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-start">
+            {/* Left Column: Description */}
+            <div className="text-white/90 space-y-6">
+              {/* Aligned Heading */}
+              <h2 className="text-white text-3xl md:text-5xl mb-6">
+                <span className="font-caslon-bold-italic">— What is</span> <span className="font-inter font-bold">IKAMMA??</span>
+              </h2>
+              <p className="text-lg leading-relaxed text-justify">
+                <span className="font-bold italic">Ikatan Keluarga Mahasiswa Manajemen (IKAMMA)</span> merupakan sebuah organisasi himpunan mahasiswa Program Studi Manajemen di Fakultas Ekonomika dan Bisnis Universitas Gadjah Mada yang dibentuk pada tahun 1984.
+              </p>
+              <p className="text-lg leading-relaxed text-justify">
+                IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
+              </p>
+              <div className="pt-2">
+                <AnimatedButton href="#about-more">
+                  See More
+                </AnimatedButton>
               </div>
+            </div>
 
-                <div className="w-full ml-auto lg:text-right">
-                  {/* Aligned Heading without box, forced to one line */}
-                  <h3 className="text-white text-3xl md:text-5xl mb-6 whitespace-nowrap">
-                    <span className="font-caslon-bold-italic">— Company</span> <span className="font-inter font-bold">Profile</span>
-                  </h3>
-                  <div className="w-full max-w-md ml-auto">
-                    <div className="w-full aspect-video bg-[#000d1a] rounded-[2rem] shadow-lg mb-2 relative overflow-hidden">
-                    <iframe
-                      className="w-full h-full"
-                      src={getEmbedUrl(videoUrl)}
-                      title="YouTube video player"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
+            <div className="w-full ml-auto lg:text-right">
+              {/* Aligned Heading without box, forced to one line */}
+              <h3 className="text-white text-3xl md:text-5xl mb-6 whitespace-nowrap">
+                <span className="font-caslon-bold-italic">— Company</span> <span className="font-inter font-bold">Profile</span>
+              </h3>
+              <div className="w-full max-w-md ml-auto">
+                <div className="w-full aspect-video bg-[#000d1a] rounded-[2rem] shadow-lg mb-2 relative overflow-hidden">
+                  <iframe
+                    className="w-full h-full"
+                    src={getEmbedUrl(videoUrl)}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <div className="text-right">
                   <div className="text-right">
-                    <div className="text-right">
-                      <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#081C36] transition-colors inline-flex items-center gap-2 text-sm underline underline-offset-4">
-                        Click to See Full Video <ArrowRight size={14} />
-                      </a>
-                    </div>
+                    <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#081C36] transition-colors inline-flex items-center gap-2 text-sm underline underline-offset-4">
+                      Click to See Full Video <ArrowRight size={14} />
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
         </div>
 
@@ -158,23 +158,27 @@ export function AboutSection() {
           <h3 className="text-white text-3xl md:text-5xl lg:text-6xl text-center mb-6 md:mb-10">
             <span className="font-caslon-bold-italic">Our</span> <span className="font-inter font-bold">Partners</span>
           </h3>
-          <div className="w-full overflow-hidden flex whitespace-nowrap" style={{ contain: 'layout style paint' }}>
-            <div className="flex gap-12 md:gap-24 items-center animate-marquee will-change-transform">
-              {/* Repeated 4 times - perfectly sufficient for a seamless loop and better for browser memory */}
+          <div className="w-full overflow-hidden flex whitespace-nowrap">
+            <motion.div 
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ ease: "linear", duration: 30, repeat: Infinity }}
+              className="flex items-center w-max"
+            >
               {[...Array(4)].map((_, setIdx) => (
-                partnerLogos.map((logo, i) => (
-                  <img 
-                    key={`${setIdx}-${i}`} 
-                    src={logo} 
-                    alt={`Partner Logo ${i}`} 
-                    loading="eager" 
-                    decoding="async" 
-                    className="h-16 md:h-28 w-auto object-contain flex-shrink-0" 
-                    style={{ transform: 'translateZ(0)' }}
-                  />
-                ))
+                <div key={setIdx} className="flex items-center shrink-0">
+                  {partnerLogos.map((logo, i) => (
+                    <div key={`${setIdx}-${i}`} className="pr-12 md:pr-24 shrink-0 flex items-center">
+                      <img
+                        src={logo}
+                        alt={`Partner Logo ${i}`}
+                        loading="eager"
+                        className="h-16 md:h-28 w-auto object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

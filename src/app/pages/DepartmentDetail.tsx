@@ -211,7 +211,7 @@ export function DepartmentDetail() {
             <span className="font-inter font-bold -mt-1">—</span>
           </h2>
           <p
-            className="text-sky-500 text-base md:text-lg lg:text-xl leading-relaxed max-w-4xl text-center font-semibold"
+            className="text-[#002444] text-base md:text-lg lg:text-xl leading-relaxed max-w-4xl text-center font-semibold"
             dangerouslySetInnerHTML={{ __html: department.description.replace(/\*\*(.*?)\*\*/g, '<span class="text-[#002444] font-bold font-inter">$1</span>') }}
           />
         </motion.div>
@@ -225,7 +225,7 @@ export function DepartmentDetail() {
             <span><span className="font-caslon-bold-italic">Our</span> <span className="font-inter font-bold text-[#002444]">Staff</span></span>
           </h2>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 md:gap-8">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8">
             {department.staffs.map((staff, idx) => (
               <motion.div
                 key={idx}
@@ -233,11 +233,11 @@ export function DepartmentDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
-                className="group flex flex-col items-center"
+                className="group flex flex-col items-center w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.67rem)] md:w-[calc(25%-1.5rem)] lg:w-[calc(20%-1.6rem)]"
               >
                 <div className="w-full aspect-[3/4] bg-white overflow-hidden mb-4 relative group-hover:-translate-y-2 transition-all duration-500">
                   {staff.img ? (
-                    <img src={staff.img} alt={staff.name} className="w-full h-full object-cover" />
+                    <img src={staff.img} alt={staff.name} className="w-full h-full object-cover object-top" />
                   ) : (
                     <div className="w-full h-full bg-[#081C36]/5 flex items-center justify-center p-8">
                       <IkammaLogo className="w-full h-auto opacity-10 grayscale" />
@@ -246,7 +246,7 @@ export function DepartmentDetail() {
                   <div className="absolute inset-0 bg-[#081C36]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
                 <h3 className="text-[#002444] font-inter-bold text-center text-sm md:text-base lg:text-lg font-inter px-2 line-clamp-2">{staff.name}</h3>
-                <p className="text-[#86A0D3] font-inter italic text-sm md:text-base lg:text-lg mt-1">staff</p>
+                <p className="text-[#86A0D3] font-caslon-semibold-italic text-sm md:text-base lg:text-lg mt-1">Staff</p>
               </motion.div>
             ))}
           </div>

@@ -2,11 +2,11 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
-import LOGO1 from '../../assets/LogoEvent/LogoME.png';
-import LOGO2 from '../../assets/LogoEvent/LogoCI.png';
-import LOGO3 from '../../assets/LogoEvent/LogoMenefest.png';
-import LOGO4 from '../../assets/LogoEvent/LogoYES!.png';
-import LOGO5 from '../../assets/LogoEvent/LogoGMSC.png'
+import LOGO1 from '../../assets/LogoEvent/LogoME.webp';
+import LOGO2 from '../../assets/LogoEvent/LogoCI.webp';
+import LOGO3 from '../../assets/LogoEvent/LogoMenefest.webp';
+import LOGO4 from '../../assets/LogoEvent/LogoYES!.webp';
+import LOGO5 from '../../assets/LogoEvent/LogoGMSC.webp'
 
 import { EVENT_PHOTOS, EVENTS_BG } from "../../assets/photos";
 const BACKGROUND_IMAGE = EVENTS_BG;
@@ -61,31 +61,35 @@ function CarouselCard({ index, activeIndex, item, unfoldProgress, onClick, xFact
   const scale = useTransform([tScale, unfoldProgress], (latest) => 0.8 + ((latest[0] as number) - 0.8) * (latest[1] as number));
   const brightness = useTransform([tBright, unfoldProgress], (latest) => 0.5 + ((latest[0] as number) - 0.5) * (latest[1] as number));
 
-  const filter = useTransform(brightness, (b) => `brightness(${b})`);
-
   const isCenter = posIndex === 0;
 
   return (
     <motion.div
       onClick={onClick}
-      className="absolute w-56 h-72 md:w-72 md:h-96 overflow-hidden cursor-pointer rounded-xl bg-black"
+      className="absolute w-56 h-72 md:w-72 md:h-96 overflow-hidden cursor-pointer rounded-xl bg-black will-change-transform"
       style={{ x, y, rotate, scale, zIndex: target.zIndex }}
       animate={{
         boxShadow: isCenter
-          ? "0 20px 50px rgba(0,0,0,0.4), 0 0 60px rgba(8,28,54,0.5)"
-          : "0 20px 50px rgba(0,0,0,0.4), 0 0 0px rgba(8,28,54,0)"
+          ? "0 10px 30px rgba(0,0,0,0.3)"
+          : "0 5px 15px rgba(0,0,0,0.1)"
       }}
       transition={{ duration: 0.4 }}
     >
-      <motion.img
-        src={item.photo}
-        className="w-full h-full object-cover"
-        style={{ filter }}
-        loading="lazy"
-      />
+      <div className="relative w-full h-full">
+        <motion.img
+          src={item.photo}
+          className="w-full h-full object-cover"
+        />
+        {/* Simple overlay for brightness effect instead of CSS filter */}
+        <motion.div 
+          className="absolute inset-0 bg-black pointer-events-none"
+          style={{ opacity: useTransform(brightness, [0.5, 1], [0.5, 0]) }}
+        />
+      </div>
+
       {/* Overlay Logo in the center of the photo */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <img src={item.logo} alt="Event Logo" className="w-24 md:w-32 opacity-80" loading="lazy" />
+        <img src={item.logo} alt="Event Logo" className="w-24 md:w-32 opacity-80" />
       </div>
       {/* White Inner Frame */}
       <motion.div
@@ -132,7 +136,6 @@ export function EventsSection() {
               src={BACKGROUND_IMAGE}
               alt="Background"
               className="w-full h-full object-cover"
-              loading="lazy"
             />
             <div className="absolute inset-0 bg-white/90" />
           </div>

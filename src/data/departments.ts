@@ -1,22 +1,22 @@
 // ── Foto Pengurus (Managers & Vice Managers) ────────────────────────
-import HRMManager from '../assets/FotoPengurus/HRMManager.png';
-import HRMViceManager from '../assets/FotoPengurus/HRMViceManager.png';
-import HRBBManager from '../assets/FotoPengurus/HRBBManager.png';
-import HRBBViceManager from '../assets/FotoPengurus/HRBBViceManager.png';
-import AdvanceManager from '../assets/FotoPengurus/AdvanceManager.png';
-import AdvanceViceManager from '../assets/FotoPengurus/AdvanceViceManager.png';
-import MMManager from '../assets/FotoPengurus/MMManager.png';
-import MMViceManager from '../assets/FotoPengurus/MMViceManager.png';
-import IntManager from '../assets/FotoPengurus/IntManager.png';
-import IntViceManager from '../assets/FotoPengurus/IntViceManager.png';
-import ExtManager from '../assets/FotoPengurus/ExtManager.png';
-import ExtViceManager from '../assets/FotoPengurus/ExtViceManager.png';
-import IndevManager from '../assets/FotoPengurus/IndevManager.png';
-import IndevViceManager from '../assets/FotoPengurus/IndevViceManager.png';
-import EntreManager from '../assets/FotoPengurus/EntreManager.png';
-import EntreViceManager from '../assets/FotoPengurus/EntreViceManager.png';
-import SpartaManager from '../assets/FotoPengurus/SpartaManager.png';
-import SpartaViceManager from '../assets/FotoPengurus/SpartaViceManager.png';
+import HRMManager from '../assets/FotoPengurus/HRMManager.webp';
+import HRMViceManager from '../assets/FotoPengurus/HRMViceManager.webp';
+import HRBBManager from '../assets/FotoPengurus/HRBBManager.webp';
+import HRBBViceManager from '../assets/FotoPengurus/HRBBViceManager.webp';
+import AdvanceManager from '../assets/FotoPengurus/AdvanceManager.webp';
+import AdvanceViceManager from '../assets/FotoPengurus/AdvanceViceManager.webp';
+import MMManager from '../assets/FotoPengurus/MMManager.webp';
+import MMViceManager from '../assets/FotoPengurus/MMViceManager.webp';
+import IntManager from '../assets/FotoPengurus/IntManager.webp';
+import IntViceManager from '../assets/FotoPengurus/IntViceManager.webp';
+import ExtManager from '../assets/FotoPengurus/ExtManager.webp';
+import ExtViceManager from '../assets/FotoPengurus/ExtViceManager.webp';
+import IndevManager from '../assets/FotoPengurus/IndevManager.webp';
+import IndevViceManager from '../assets/FotoPengurus/IndevViceManager.webp';
+import EntreManager from '../assets/FotoPengurus/EntreManager.webp';
+import EntreViceManager from '../assets/FotoPengurus/EntreViceManager.webp';
+import SpartaManager from '../assets/FotoPengurus/SpartaManager.webp';
+import SpartaViceManager from '../assets/FotoPengurus/SpartaViceManager.webp';
 
 // ── Group Photos ────────────────────────────────────────────────────
 import GroupHRM from '../assets/BirDepDetail/Group/HRMGroup.webp';
@@ -28,6 +28,90 @@ import GroupExternal from '../assets/BirDepDetail/Group/ExtGroup.webp';
 import GroupIndev from '../assets/BirDepDetail/Group/IndevGroup.webp';
 import GroupEntre from '../assets/BirDepDetail/Group/EntreGroup.webp';
 import GroupSparta from '../assets/BirDepDetail/Group/SpartaGroup.webp';
+
+// ── Foto Staff ─────────────────────────────────────────────────────────
+import StaffHRBB1 from '../assets/fotostaff/HRBB/ElisyaAtha.webp';
+import StaffHRBB2 from '../assets/fotostaff/HRBB/NimasAyu.webp';
+import StaffHRBB3 from '../assets/fotostaff/HRBB/KartikaApsarini.webp';
+import StaffHRBB4 from '../assets/fotostaff/HRBB/WidyaUtami.webp';
+import StaffHRBB5 from '../assets/fotostaff/HRBB/RayvaShaba.webp';
+import StaffHRBB6 from '../assets/fotostaff/HRBB/RajaHaryono.webp';
+import StaffHRBB7 from '../assets/fotostaff/HRBB/RyannReswara.webp';
+import StaffHRBB8 from '../assets/fotostaff/HRBB/NouvelleAryani.webp';
+
+import StaffHRM1 from '../assets/fotostaff/HRM/IbnuKhafi.webp';
+import StaffHRM2 from '../assets/fotostaff/HRM/ZakiHadiul.webp';
+import StaffHRM3 from '../assets/fotostaff/HRM/DevanoRafa.webp';
+import StaffHRM4 from '../assets/fotostaff/HRM/CarolinaVicky.webp';
+import StaffHRM5 from '../assets/fotostaff/HRM/SyariefDwi.webp';
+import StaffHRM6 from '../assets/fotostaff/HRM/SekarayuAlfazahra.webp';
+import StaffHRM7 from '../assets/fotostaff/HRM/BernadetteRenata.webp';
+import StaffHRM8 from '../assets/fotostaff/HRM/AqilaAnnindya.webp';
+
+import StaffMM1 from '../assets/fotostaff/MM/RaisyaFarrel.webp';
+import StaffMM2 from '../assets/fotostaff/MM/MaylanoElchasany.webp';
+import StaffMM3 from '../assets/fotostaff/MM/ZakiKusumoputro.webp';
+import StaffMM4 from '../assets/fotostaff/MM/NawwafUtsman.webp';
+import StaffMM5 from '../assets/fotostaff/MM/LarasatiHindratmoko.webp';
+import StaffMM6 from '../assets/fotostaff/MM/GhaydaKalila.webp';
+import StaffMM7 from '../assets/fotostaff/MM/VaniaNovena.webp';
+import StaffMM8 from '../assets/fotostaff/MM/IGedeDharma.webp';
+
+import StaffAdvance1 from '../assets/fotostaff/Advance/EsraNauli.webp';
+import StaffAdvance2 from '../assets/fotostaff/Advance/VincentiaDyandra.webp';
+import StaffAdvance3 from '../assets/fotostaff/Advance/DeviIrsya.webp';
+import StaffAdvance4 from '../assets/fotostaff/Advance/WilibrordusValerino.webp';
+import StaffAdvance5 from '../assets/fotostaff/Advance/NathifaNurjihan.webp';
+import StaffAdvance6 from '../assets/fotostaff/Advance/AndreArizqi.webp';
+import StaffAdvance7 from '../assets/fotostaff/Advance/RafiKhayru.webp';
+
+import StaffInter1 from '../assets/fotostaff/Inter/NadiaSafina.webp';
+import StaffInter2 from '../assets/fotostaff/Inter/KeziaAlena.webp';
+import StaffInter3 from '../assets/fotostaff/Inter/MabelleGulton.webp';
+import StaffInter4 from '../assets/fotostaff/Inter/KarinaRevyanti.webp';
+import StaffInter5 from '../assets/fotostaff/Inter/NaufalPirata.webp';
+import StaffInter6 from '../assets/fotostaff/Inter/ArviaVeda.webp';
+import StaffInter7 from '../assets/fotostaff/Inter/ChelsyaQuaneshaila.webp';
+import StaffInter8 from '../assets/fotostaff/Inter/NicholasAnderon.webp';
+
+import StaffExter1 from '../assets/fotostaff/Exter/MadeRaesa.webp';
+import StaffExter2 from '../assets/fotostaff/Exter/Al-Farabi.webp';
+import StaffExter3 from '../assets/fotostaff/Exter/ShaynaHamba.webp';
+import StaffExter4 from '../assets/fotostaff/Exter/AzkaBerlian.webp';
+import StaffExter5 from '../assets/fotostaff/Exter/SulthanAlfaiq.webp';
+import StaffExter6 from '../assets/fotostaff/Exter/DesleeSurya.webp';
+import StaffExter7 from '../assets/fotostaff/Exter/ClarissaMaurilla.webp';
+import StaffExter8 from '../assets/fotostaff/Exter/CeciliaDevina.webp';
+import StaffExter9 from '../assets/fotostaff/Exter/ReisyaLovika.webp';
+
+import StaffIndev1 from '../assets/fotostaff/Indev/LaOdeRoid.webp';
+import StaffIndev2 from '../assets/fotostaff/Indev/AndhikaVasbiant.webp';
+import StaffIndev3 from '../assets/fotostaff/Indev/RachelKemala.webp';
+import StaffIndev4 from '../assets/fotostaff/Indev/BagusNala.webp';
+import StaffIndev5 from '../assets/fotostaff/Indev/IKetutYudi.webp';
+import StaffIndev6 from '../assets/fotostaff/Indev/AnyndhaTri.webp';
+import StaffIndev7 from '../assets/fotostaff/Indev/AzkaMaulana.webp';
+import StaffIndev8 from '../assets/fotostaff/Indev/NisrynaNailla.webp';
+
+import StaffEntre1 from '../assets/fotostaff/Entre/KhanRauf.webp';
+import StaffEntre2 from '../assets/fotostaff/Entre/JoshuaNathanael.webp';
+import StaffEntre3 from '../assets/fotostaff/Entre/DivaLaksita.webp';
+import StaffEntre4 from '../assets/fotostaff/Entre/SatriyoWaradana.webp';
+import StaffEntre5 from '../assets/fotostaff/Entre/JeriAntariksa.webp';
+import StaffEntre6 from '../assets/fotostaff/Entre/MonisMboi.webp';
+import StaffEntre7 from '../assets/fotostaff/Entre/DimasAji.webp';
+import StaffEntre8 from '../assets/fotostaff/Entre/AnggitaCahaya.webp';
+
+import StaffSparta1 from '../assets/fotostaff/Sparta/DhafaRinto.webp';
+import StaffSparta2 from '../assets/fotostaff/Sparta/RahelIrena.webp';
+import StaffSparta3 from '../assets/fotostaff/Sparta/KarenAgnesia.webp';
+import StaffSparta4 from '../assets/fotostaff/Sparta/TafhanAdlan.webp';
+import StaffSparta5 from '../assets/fotostaff/Sparta/AgnesAyuValen.webp';
+import StaffSparta6 from '../assets/fotostaff/Sparta/MyieshaMatano.webp';
+import StaffSparta7 from '../assets/fotostaff/Sparta/AzaliaHumayrah.webp';
+import StaffSparta8 from '../assets/fotostaff/Sparta/ImanuelEzra.webp';
+import StaffSparta9 from '../assets/fotostaff/Sparta/AkmalAdyatma.webp';
+import StaffSparta10 from '../assets/fotostaff/Sparta/AmrinaYasmine.webp';
 
 // ── Logos ───────────────────────────────────────────────────────────
 
@@ -97,15 +181,14 @@ export const departmentsData: Record<string, DepartmentData> = {
       { id: 10, title: "Farewell IKAMMA", img: GroupHRBB, description: "Program perpisahan untuk mengapresiasi kontribusi pengurus di akhir periode." },
     ],
     staffs: [
-      { name: "Andi Wijaya" },
-      { name: "Budi Santoso" },
-      { name: "Citra Lestari" },
-      { name: "Dedi Kurniawan" },
-      { name: "Eka Putri" },
-      { name: "Feri Setiawan" },
-      { name: "Gita Amalia" },
-      { name: "Hana Pertiwi" },
-      { name: "Iwan Fals" },
+      { name: "Elisya Atha", img: StaffHRBB1 },
+      { name: "Nimas Ayu", img: StaffHRBB2 },
+      { name: "Kartika Apsarini", img: StaffHRBB3 },
+      { name: "Widya Utami", img: StaffHRBB4 },
+      { name: "Rayva Shaba", img: StaffHRBB5 },
+      { name: "Raja Haryono", img: StaffHRBB6 },
+      { name: "Ryann Reswara", img: StaffHRBB7 },
+      { name: "Nouvelle Aryani", img: StaffHRBB8 },
     ]
   },
   'hr-monitoring': {
@@ -129,15 +212,14 @@ export const departmentsData: Record<string, DepartmentData> = {
       { id: 16, title: "Staff of The Month", img: GroupHRM, description: "Program kerja yang menentukan best Staff, Manager, dan Vice Manager di setiap bulan. Program kerja Staff of The Month memiliki tujuan untuk mengapresiasi Staff, Manager, dan Vice Manager dengan performa terbaik setiap bulan serta meningkatkan motivasi dan semangat berorganisasi." },
     ],
     staffs: [
-      { name: "Fajar Pratama" },
-      { name: "Gita Permata" },
-      { name: "Hadi Saputra" },
-      { name: "Indah Sari" },
-      { name: "Joko Susilo" },
-      { name: "Kartika Sari" },
-      { name: "Luthfi Aziz" },
-      { name: "Mira Santika" },
-      { name: "Naufal Abdi" },
+      { name: "Ibnu Khafi", img: StaffHRM1 },
+      { name: "Zaki Hadiul", img: StaffHRM2 },
+      { name: "Devano Rafa", img: StaffHRM3 },
+      { name: "Carolina Vicky", img: StaffHRM4 },
+      { name: "Syarief Dwi", img: StaffHRM5 },
+      { name: "Sekarayu Alfazahra", img: StaffHRM6 },
+      { name: "Bernadette Renata", img: StaffHRM7 },
+      { name: "Aqila Annindya", img: StaffHRM8 },
     ]
   },
   'mm': {
@@ -159,15 +241,14 @@ export const departmentsData: Record<string, DepartmentData> = {
       { id: 20, title: "Website IKAMMA", img: GroupMM, description: "Program kerja yang berperan sebagai platform resmi IKAMMA FEB UGM dalam menyampaikan informasi kepada publik dan pihak eksternal. Informasi yang disajikan meliputi profil organisasi, visi misi, program kerja, bank soal IKAMMA, dan lain sebagainya. Program ini bertujuan membangun citra IKAMMA sebagai organisasi mahasiswa yang profesional." },
     ],
     staffs: [
-      { name: "Kurnia Illahi" },
-      { name: "Laras Hati" },
-      { name: "Mulyadi" },
-      { name: "Nina Kartika" },
-      { name: "Oscar Wijaya" },
-      { name: "Putu Gede" },
-      { name: "Qoirul Anam" },
-      { name: "Rizky Billar" },
-      { name: "Siti Nurhaliza" },
+      { name: "Raisya Farrel", img: StaffMM1 },
+      { name: "Maylano Elchasany", img: StaffMM2 },
+      { name: "Zaki Kusumoputro", img: StaffMM3 },
+      { name: "Nawwaf Utsman", img: StaffMM4 },
+      { name: "Larasati Hindratmoko", img: StaffMM5 },
+      { name: "Ghayda Kalila", img: StaffMM6 },
+      { name: "Vania Novena", img: StaffMM7 },
+      { name: "I Gede Dharma", img: StaffMM8 },
     ]
   },
   'advance': {
@@ -188,15 +269,13 @@ export const departmentsData: Record<string, DepartmentData> = {
       { id: 23, title: "Kerumahtanggaan", img: GroupAdvance, description: "Program kerja terkait pengelolaan inventaris dan peminjaman barang organisasi. Biro Advance memastikan seluruh kebutuhan logistik dan aset organisasi tersedia dan tercatat dengan rapi agar mempermudah penggunaan aset di masa mendatang." },
     ],
     staffs: [
-      { name: "Putra Bangsa" },
-      { name: "Qory Sandi" },
-      { name: "Rina Melati" },
-      { name: "Sutan Syahrir" },
-      { name: "Tania Putri" },
-      { name: "Ucok Baba" },
-      { name: "Vicky Prasetyo" },
-      { name: "Wilona Natasha" },
-      { name: "Xander Cage" },
+      { name: "Esra Nauli", img: StaffAdvance1 },
+      { name: "Vincentia Dyandra", img: StaffAdvance2 },
+      { name: "Devi Irsya", img: StaffAdvance3 },
+      { name: "Wilibrordus Valerino", img: StaffAdvance4 },
+      { name: "Nathifa Nurjihan", img: StaffAdvance5 },
+      { name: "Andre Arizqi", img: StaffAdvance6 },
+      { name: "Rafi Khayru", img: StaffAdvance7 },
     ]
   },
   'internal': {
@@ -219,15 +298,14 @@ export const departmentsData: Record<string, DepartmentData> = {
       { id: 28, title: "Management’s Week (M-WEEK)", img: GroupInternal, description: "Program kerja ini berupa pekan keakraban mahasiswa-mahasiswi Manajemen FEB UGM, khususnya sebagai wadah pengenalan kegiatan non-akademik kepada mahasiswa baru. Harapannya, kegiatan ini mampu mempererat pertemanan di keluarga Manajemen tanpa adanya unsur senioritas." },
     ],
     staffs: [
-      { name: "Umar Bakri" },
-      { name: "Vina Panduwinata" },
-      { name: "Wawan Hermawan" },
-      { name: "Xena War" },
-      { name: "Yulia Rahman" },
-      { name: "Zaskia Gothic" },
-      { name: "Anang Hermansyah" },
-      { name: "Bunga Citra" },
-      { name: "Cakra Khan" },
+      { name: "Nadia Safina", img: StaffInter1 },
+      { name: "Kezia Alena", img: StaffInter2 },
+      { name: "Mabelle Gulton", img: StaffInter3 },
+      { name: "Karina Revyanti", img: StaffInter4 },
+      { name: "Naufal Pirata", img: StaffInter5 },
+      { name: "Arvia Veda", img: StaffInter6 },
+      { name: "Chelsya Quaneshaila", img: StaffInter7 },
+      { name: "Nicholas Anderon", img: StaffInter8 },
     ]
   },
   'external': {
@@ -251,15 +329,15 @@ export const departmentsData: Record<string, DepartmentData> = {
       { id: 34, title: "IKAMMA Alumni Database", img: GroupExternal, description: "IKAMMA Alumni Database (IAD) adalah salah satu program kerja Departemen External yang mengelola database Alumni Manajemen FEB UGM untuk menjadi sarana penghubung antara alumni dengan mahasiswa aktif Manajemen FEB UGM, sehingga menciptakan mutual benefit untuk kedua pihak." },
     ],
     staffs: [
-      { name: "Zidan Ibrahim" },
-      { name: "Ahmad Dhani" },
-      { name: "Bella Saphira" },
-      { name: "Chandra Wijaya" },
-      { name: "Dina Lorenza" },
-      { name: "Eros Djarot" },
-      { name: "Fifi Young" },
-      { name: "Gesang" },
-      { name: "Hamka" },
+      { name: "Made Raesa", img: StaffExter1 },
+      { name: "Al-Farabi", img: StaffExter2 },
+      { name: "Shayna Hamba", img: StaffExter3 },
+      { name: "Azka Berlian", img: StaffExter4 },
+      { name: "Sulthan Alfaiq", img: StaffExter5 },
+      { name: "Deslee Surya", img: StaffExter6 },
+      { name: "Clarissa Maurilla", img: StaffExter7 },
+      { name: "Cecilia Devina", img: StaffExter8 },
+      { name: "Reisya Lovika", img: StaffExter9 },
     ]
   },
   'indev': {
@@ -280,15 +358,14 @@ export const departmentsData: Record<string, DepartmentData> = {
       { id: 37, title: "Research and Study (READY)", img: GroupIndev, description: "Program kerja yang menyediakan informasi terkini seputar persiapan karir manajemen pada bidang Marketing, Human Resources, Operations & Technology, serta Finance. Program ini menghasilkan output berupa kajian tertulis, konten feeds, dan video. READY juga menjadi wadah bagi anggota IKAMMA untuk meningkatkan keterampilan menulis melalui pelatihan khusus guna menghasilkan kajian yang lebih komprehensif. READY juga mendukung aspek akademik mahasiswa Manajemen melalui pengumpulan bank soal sebagai referensi pembelajaran dalam menghadapi ujian." },
     ],
     staffs: [
-      { name: "Edo Kondologit" },
-      { name: "Ferry Irawan" },
-      { name: "Gading Marten" },
-      { name: "Hesti Purwadinata" },
-      { name: "Ivan Gunawan" },
-      { name: "Jajang C Noer" },
-      { name: "Katon Bagaskara" },
-      { name: "Lia Waode" },
-      { name: "Mucle" },
+      { name: "La Ode Roid", img: StaffIndev1 },
+      { name: "Andhika Vasbiant", img: StaffIndev2 },
+      { name: "Rachel Kemala", img: StaffIndev3 },
+      { name: "Bagus Nala", img: StaffIndev4 },
+      { name: "I Ketut Yudi", img: StaffIndev5 },
+      { name: "Anyndha Tri", img: StaffIndev6 },
+      { name: "Azka Maulana", img: StaffIndev7 },
+      { name: "Nisryna Nailla", img: StaffIndev8 },
     ]
   },
   'entre': {
@@ -307,15 +384,14 @@ export const departmentsData: Record<string, DepartmentData> = {
       { id: 40, title: "Entrepreneurship Insight and Value (Entrive)", img: GroupEntre, description: "Program kerja yang diunggah di media sosial selama dua bulan satu kali ini berisi tentang informasi, insight, serta value terkini seputar dunia kewirausahaan dan bisnis. Melalui Entrive, mahasiswa Manajemen FEB UGM dapat memperoleh wawasan mengenai tren bisnis, pengembangan usaha, inovasi, serta berbagai pembelajaran inspiratif dari dunia entrepreneurship yang dikemas secara informatif dan menarik." },
     ],
     staffs: [
-      { name: "Julia Perez" },
-      { name: "Krisdayanti" },
-      { name: "Luna Maya" },
-      { name: "Maia Estianty" },
-      { name: "Nagita Slavina" },
-      { name: "Olla Ramlan" },
-      { name: "Pevita Pearce" },
-      { name: "Quentin" },
-      { name: "Raisa" },
+      { name: "Khan Rauf", img: StaffEntre1 },
+      { name: "Joshua Nathanael", img: StaffEntre2 },
+      { name: "Diva Laksita", img: StaffEntre3 },
+      { name: "Satriyo Waradana", img: StaffEntre4 },
+      { name: "Jeri Antariksa", img: StaffEntre5 },
+      { name: "Monis Mboi", img: StaffEntre6 },
+      { name: "Dimas Aji", img: StaffEntre7 },
+      { name: "Anggita Cahaya", img: StaffEntre8 },
     ]
   },
   'sparta': {
@@ -335,15 +411,16 @@ export const departmentsData: Record<string, DepartmentData> = {
       { id: 44, title: "Sparta Info Terkini (Sprite)", img: GroupSparta, description: "SPARTA Info Terkini atau yang biasa disebut dengan SPRITE, merupakan program kerja bulanan yang berisikan tentang informasi terkini seputar olahraga dan seni." },
     ],
     staffs: [
-      { name: "Olla Ramlan" },
-      { name: "Prilly Latuconsina" },
-      { name: "Raffi Ahmad" },
-      { name: "Syahrini" },
-      { name: "Titi DJ" },
-      { name: "Ussy Sulistiawaty" },
-      { name: "Vidi Aldiano" },
-      { name: "Widyawati" },
-      { name: "Yuni Shara" },
+      { name: "Dhafa Rinto", img: StaffSparta1 },
+      { name: "Rahel Irena", img: StaffSparta2 },
+      { name: "Karen Agnesia", img: StaffSparta3 },
+      { name: "Tafhan Adlan", img: StaffSparta4 },
+      { name: "Agnes Ayu Valen", img: StaffSparta5 },
+      { name: "Myiesha Matano", img: StaffSparta6 },
+      { name: "Azalia Humayrah", img: StaffSparta7 },
+      { name: "Imanuel Ezra", img: StaffSparta8 },
+      { name: "Akmal Adyatma", img: StaffSparta9 },
+      { name: "Amrina Yasmine", img: StaffSparta10 },
     ]
   }
 };

@@ -86,7 +86,6 @@ export function UpcomingEventsSection() {
                     src={event.image_url}
                     alt={event.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/10 transition-colors duration-300 group-hover:bg-black/20"></div>
                 </div>

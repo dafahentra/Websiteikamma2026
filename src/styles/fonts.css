@@ -41,6 +41,12 @@ h6,
   font-style: italic !important;
 }
 
+.font-caslon-semibold-italic {
+  font-family: 'Libre Caslon Text', serif !important;
+  font-weight: 600 !important;
+  font-style: italic !important;
+}
+
 /* ─── Inter Classification ────────────────────────────────────── */
 .font-inter {
   font-family: 'Inter', sans-serif !important;

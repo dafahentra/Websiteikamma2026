@@ -11,23 +11,25 @@
 import heroMain from './Background/BackgroundMain.webp';
 import aboutBg from './Background/BackgroundMain.webp';
 import heroSectionBg from './Background/BackgroundMain.webp';
+import artikelBg from './Background/BackgroundArtikel.webp';
+import infoMhsBg from './Background/BackgroundInfoMahasiswa.webp';
 
 // ── Scrapbook Photos (Flying Photos) ────────────────────────────────
-import scrapbook1 from './FlyingPhoto/Flyingphoto1.JPG';
-import scrapbook2 from './FlyingPhoto/FlyingPhoto2.JPG';
-import scrapbook3 from './FlyingPhoto/FlyingPhoto3.jpg';
-import scrapbook4 from './FlyingPhoto/FlyingPhoto4.jpg';
-import scrapbook5 from './FlyingPhoto/FlyingPhoto5.jpg';
-import scrapbook6 from './FlyingPhoto/FlyingPhoto6.jpg';
-import scrapbook7 from './FlyingPhoto/FlyingPhoto7.jpg';
-import scrapbook8 from './FlyingPhoto/FlyingPhoto8.jpg';
-import scrapbook9 from './FlyingPhoto/FlyingPhoto9.jpg';
-import scrapbook10 from './FlyingPhoto/FlyingPhoto10.jpg';
-import scrapbook11 from './FlyingPhoto/FlyingPhoto11.jpg';
-import scrapbook12 from './FlyingPhoto/FlyingPhoto12.jpg';
-import scrapbook13 from './FlyingPhoto/FlyingPhoto13.jpg';
-import scrapbook14 from './FlyingPhoto/FlyingPhoto14.jpg';
-import scrapbook15 from './FlyingPhoto/FlyingPhoto15.jpg';
+import scrapbook1 from './FlyingPhoto/Flyingphoto1.webp';
+import scrapbook2 from './FlyingPhoto/FlyingPhoto2.webp';
+import scrapbook3 from './FlyingPhoto/FlyingPhoto3.webp';
+import scrapbook4 from './FlyingPhoto/FlyingPhoto4.webp';
+import scrapbook5 from './FlyingPhoto/FlyingPhoto5.webp';
+import scrapbook6 from './FlyingPhoto/FlyingPhoto6.webp';
+import scrapbook7 from './FlyingPhoto/FlyingPhoto7.webp';
+import scrapbook8 from './FlyingPhoto/FlyingPhoto8.webp';
+import scrapbook9 from './FlyingPhoto/FlyingPhoto9.webp';
+import scrapbook10 from './FlyingPhoto/FlyingPhoto10.webp';
+import scrapbook11 from './FlyingPhoto/FlyingPhoto11.webp';
+import scrapbook12 from './FlyingPhoto/FlyingPhoto12.webp';
+import scrapbook13 from './FlyingPhoto/FlyingPhoto13.webp';
+import scrapbook14 from './FlyingPhoto/FlyingPhoto14.webp';
+import scrapbook15 from './FlyingPhoto/FlyingPhoto15.webp';
 
 // ── Department Groups ──────────────────────────────────────────────
 import PotoHRBB from './BirDepDetail/Group/HRBBGroup.webp';
@@ -113,12 +115,12 @@ export const NEWS_BG = newsBg;
 // Use some of the flying photos as placeholders for news if needed
 export const NEWS_PLACEHOLDER_PHOTOS: string[] = SCRAPBOOK_PHOTOS;
 
-export const EVENTS_PAGE_HERO = aboutBg;
+export const EVENTS_PAGE_HERO = eventsBg;
 export const EVENTS_PAGE_ONGOING: string[] = [eventCard1, eventCard2, eventCard3, eventCard4, eventCard5];
 export const EVENTS_PAGE_PAST: string[] = [eventCard1, eventCard2, eventCard3, eventCard4, eventCard5];
 
-export const ARTICLES_PAGE_HERO = aboutBg;
+export const ARTICLES_PAGE_HERO = artikelBg;
 export const ARTICLES_PAGE_PHOTOS: string[] = [article1, article2, article3];
 
-export const INFO_MAHASISWA_HERO = aboutBg;
+export const INFO_MAHASISWA_HERO = infoMhsBg;
 export const INFO_MAHASISWA_PHOTOS: string[] = [article1, article2, article3];

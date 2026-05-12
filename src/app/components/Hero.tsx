@@ -95,7 +95,6 @@ function FlyingPhoto({
         <img
           src={src}
           alt="Scrapbook Memory"
-          loading="lazy"
           decoding="async"
           className="w-full h-full object-cover"
         />
@@ -443,14 +442,14 @@ export function Hero() {
             {/* Infinite Marquee Container */}
             <div className="w-full overflow-hidden flex whitespace-nowrap">
               <motion.div
-                className="flex gap-8 md:gap-16 items-center min-w-fit pr-8 md:pr-16"
+                className="flex gap-8 md:gap-16 items-center min-w-max"
                 animate={{ x: ["0%", "-50%"] }}
-                transition={{ ease: "linear", duration: 30, repeat: Infinity }}
+                transition={{ ease: "linear", duration: 60, repeat: Infinity }}
                 style={{ willChange: "transform" }}
               >
                 {/* We render 12 logos twice (24 total) to create a perfect, seamless endless loop! */}
                 {[...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
-                  <img key={i} src={logo} alt={`Partner Logo ${i}`} className="h-16 md:h-28 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity flex-shrink-0" />
+                  <img key={i} src={logo} alt={`Partner Logo ${i}`} loading="eager" className="h-16 md:h-28 w-auto object-contain opacity-100 flex-shrink-0" />
                 ))}
               </motion.div>
             </div>

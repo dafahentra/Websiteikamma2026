@@ -1,6 +1,6 @@
-import ChairmanImg from '../assets/FotoPengurus/Chairman.png';
-import ViceChair1Img from '../assets/FotoPengurus/ViceChair1.png';
-import ViceChair2Img from '../assets/FotoPengurus/ViceChair2.png';
+import ChairmanImg from '../assets/FotoPengurus/Chairman.webp';
+import ViceChair1Img from '../assets/FotoPengurus/ViceChair1.webp';
+import ViceChair2Img from '../assets/FotoPengurus/ViceChair2.webp';
 
 export interface TeamMember {
   name: string;

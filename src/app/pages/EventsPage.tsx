@@ -137,7 +137,7 @@ export function EventsPage() {
         >
           <div className="w-10 h-1.5 md:w-12 md:h-2 bg-[#081C36] rounded-full" />
           <span>
-            <span className="font-caslon-italic">Upcoming</span> Events
+            <span className="font-caslon-bold-italic">Upcoming</span> <span className="font-inter-bold">Events</span>
           </span>
         </motion.h2>
 
@@ -257,7 +257,7 @@ export function EventsPage() {
         >
           <div className="w-10 h-1.5 md:w-12 md:h-2 bg-[#081C36] rounded-full" />
           <span>
-            <span className="font-caslon-italic">Past</span> Events
+            <span className="font-caslon-bold-italic">Past</span> <span className="font-inter-bold">Events</span>
           </span>
         </motion.h2>
 

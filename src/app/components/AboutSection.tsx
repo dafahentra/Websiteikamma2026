@@ -249,8 +249,8 @@ export function AboutSection() {
               <h3 className="text-white text-xl md:text-3xl font-bold text-center mb-4 md:mb-8">Our Partners</h3>
               <div className="w-full overflow-hidden flex whitespace-nowrap">
                 <div className="flex gap-8 md:gap-16 items-center animate-marquee">
-                  {[...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
-                    <img key={i} src={logo} alt={`Partner Logo ${i}`} className="h-16 md:h-28 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                  {[...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
+                    <img key={i} src={logo} alt={`Partner Logo ${i}`} loading="eager" className="h-16 md:h-28 w-auto object-contain opacity-100" />
                   ))}
                 </div>
               </div>

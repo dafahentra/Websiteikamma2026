@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useTransform, useSpring, MotionValue, useInView } from "framer-motion";
+import { motion, useTransform, useSpring, useScroll, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
 import LOGO1 from '../../assets/LogoEvent/LogoME.webp';
@@ -118,15 +118,17 @@ export function EventsSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Trigger unfold animation ONCE when it comes into view to prevent lag and disappearing
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-  const unfoldProgress = useSpring(0, { stiffness: 100, damping: 30 });
+  // Scroll-driven unfold: cards fan out progressively as user scrolls the section into view
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "start 0.3"] // Unfold completes when section is 30% from top
+  });
 
-  useEffect(() => {
-    if (isInView) {
-      unfoldProgress.set(1);
-    }
-  }, [isInView, unfoldProgress]);
+  // Smooth spring for natural, premium feel on the unfold
+  const unfoldProgress = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, 1], { clamp: true }),
+    { stiffness: 80, damping: 25, restDelta: 0.001 }
+  );
 
   return (
     <>

@@ -151,7 +151,7 @@ export function Hero() {
 
         {/* Scroll Indicator */}
         <motion.div 
-          className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4 pointer-events-none"
+          className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4 pointer-events-none"
           style={{ opacity: scrollIndicatorOpacity }}
         >
           <span className="text-white/60 text-[11px] md:text-sm font-inter tracking-[0.4em] uppercase font-medium">Keep Scrolling</span>

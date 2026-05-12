@@ -139,7 +139,7 @@ export function Hero() {
   useEffect(() => {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
-    setSectionHeight(mobile ? 2800 : 4000); // More scroll room for smoother transitions
+    setSectionHeight(mobile ? 2400 : 3500); // Snappier scroll on mobile, majestic on desktop
   }, []);
 
   // Responsive Timings (Optimized for high-performance feel)
@@ -194,14 +194,14 @@ export function Hero() {
 
   const { scrollY } = useScroll();
 
-  // Direct scroll-linked progress WITHOUT spring wrapper.
-  // Springs were causing frame-by-frame recalculations across all transform hooks, resulting in jitter.
-  // The extended section height (4000px) gives enough scroll distance for a naturally smooth feel.
-  const progress = useTransform(
+  // We map the scroll so that the background photo finishes scaling JUST BEFORE the container unpins.
+  // We subtract a small buffer (windowHeight * 0.15) to give the `useSpring` physics just enough time to catch up.
+  // This guarantees the photo is fully full-screen precisely as the Curved Divider peeks, without causing a noticeable delay.
+  const rawProgress = useTransform(
     scrollY,
     [
       containerTop,
-      containerTop + sectionHeight - windowHeight,
+      containerTop + sectionHeight - windowHeight - (windowHeight * 0.15),
       containerTop + sectionHeight
     ],
     [
@@ -211,6 +211,13 @@ export function Hero() {
     ],
     { clamp: true }
   );
+
+  // Apply a snappy spring physics wrapper to eliminate rigid stiffness and feel ultra-responsive
+  const progress = useSpring(rawProgress, {
+    stiffness: 150,
+    damping: 25,
+    restDelta: 0.001
+  });
 
   // Auto-pause video when scrolled out of view to save performance
   // BUT respect the user's manual pause decision

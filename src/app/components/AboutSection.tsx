@@ -166,16 +166,16 @@ export function AboutSection() {
         </div>
 
         {/* Bottom Section: Our Partners - Moved outside max-w container for full-width */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-8 md:mt-12 w-full pb-12 md:pb-24"
-        >
-          <h3 className="text-white text-3xl md:text-5xl lg:text-6xl text-center mb-6 md:mb-10">
+        <div className="mt-8 md:mt-12 w-full pb-12 md:pb-24">
+          <motion.h3 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-white text-3xl md:text-5xl lg:text-6xl text-center mb-6 md:mb-10"
+          >
             <span className="font-caslon-bold-italic">Our</span> <span className="font-inter font-bold">Partners</span>
-          </h3>
+          </motion.h3>
           <div className="w-full overflow-hidden flex whitespace-nowrap">
             <motion.div 
               animate={{ x: ["0%", "-50%"] }}
@@ -198,7 +198,7 @@ export function AboutSection() {
               ))}
             </motion.div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

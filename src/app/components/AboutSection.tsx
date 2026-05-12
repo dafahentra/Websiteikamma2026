@@ -105,13 +105,7 @@ export function AboutSection() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-start">
             {/* Left Column: Description */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6 }}
-              className="text-white/90 space-y-6"
-            >
+            <div className="text-white/90 space-y-6">
               {/* Aligned Heading */}
               <h2 className="text-white text-3xl md:text-5xl mb-6">
                 <span className="font-caslon-bold-italic">— What is</span> <span className="font-inter font-bold">IKAMMA??</span>
@@ -127,15 +121,9 @@ export function AboutSection() {
                   See More
                 </AnimatedButton>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="w-full ml-auto lg:text-right"
-            >
+            <div className="w-full ml-auto lg:text-right">
               {/* Aligned Heading without box, forced to one line */}
               <h3 className="text-white text-3xl md:text-5xl mb-6 whitespace-nowrap">
                 <span className="font-caslon-bold-italic">— Company</span> <span className="font-inter font-bold">Profile</span>
@@ -160,22 +148,16 @@ export function AboutSection() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
         </div>
 
         {/* Bottom Section: Our Partners - Moved outside max-w container for full-width */}
         <div className="mt-8 md:mt-12 w-full pb-40 md:pb-24">
-          <motion.h3 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-white text-3xl md:text-5xl lg:text-6xl text-center mb-6 md:mb-10"
-          >
+          <h3 className="text-white text-3xl md:text-5xl lg:text-6xl text-center mb-6 md:mb-10">
             <span className="font-caslon-bold-italic">Our</span> <span className="font-inter font-bold">Partners</span>
-          </motion.h3>
+          </h3>
           <div className="w-full overflow-hidden flex whitespace-nowrap">
             <motion.div 
               animate={{ x: ["0%", "-50%"] }}

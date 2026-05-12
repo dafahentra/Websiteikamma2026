@@ -10,6 +10,8 @@ import { NewsSection } from '../components/NewsSection';
 import { ArticlesSection } from '../components/ArticlesSection';
 import { Footer } from '../components/Footer';
 
+import { useMotionValue } from 'framer-motion';
+
 function CurvedSection({ children, className, zIndexClass }: { children: React.ReactNode, className?: string, zIndexClass?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -17,13 +19,14 @@ function CurvedSection({ children, className, zIndexClass }: { children: React.R
     offset: ["start end", "start start"]
   });
 
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobileMV = useMotionValue(typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 0);
+  
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => isMobileMV.set(window.innerWidth < 768 ? 1 : 0);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  }, [isMobileMV]);
 
   const desktopCurve = [
     "polygon(0% 0%, 5% 0.48%, 10% 0.9%, 15% 1.28%, 20% 1.6%, 25% 1.88%, 30% 2.1%, 35% 2.28%, 40% 2.4%, 45% 2.48%, 50% 2.5%, 55% 2.48%, 60% 2.4%, 65% 2.28%, 70% 2.1%, 75% 1.88%, 80% 1.6%, 85% 1.28%, 90% 0.9%, 95% 0.48%, 100% 0%, 100% 100%, 0% 100%)",
@@ -37,12 +40,16 @@ function CurvedSection({ children, className, zIndexClass }: { children: React.R
 
   const clipPathDesktop = useTransform(scrollYProgress, [0, 1], desktopCurve);
   const clipPathMobile = useTransform(scrollYProgress, [0, 1], mobileCurve);
+  
+  const clipPath = useTransform(() => {
+    return isMobileMV.get() === 1 ? clipPathMobile.get() : clipPathDesktop.get();
+  });
 
   return (
     <motion.div
       ref={ref}
       className={`relative bg-white ${zIndexClass} ${className}`}
-      style={{ clipPath: isMobile ? clipPathMobile : clipPathDesktop }}
+      style={{ clipPath }}
     >
       {children}
     </motion.div>

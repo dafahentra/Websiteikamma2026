@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
 import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 
-import HERO_IMAGE from "../../assets/Background/VidProf.mp4";
 import HERO_VIDEO_WEBM from "../../assets/Background/VidProf.webm";
 import LOGO from "../../assets/LogoIKAMMA/LogoPutih.svg";
 import { supabase } from "../../lib/supabase";
@@ -489,7 +488,6 @@ export function Hero() {
               className="w-full h-full object-cover pointer-events-none"
             >
               <source src={HERO_VIDEO_WEBM} type="video/webm" />
-              <source src={HERO_IMAGE} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
             <motion.div

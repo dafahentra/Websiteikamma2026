@@ -73,16 +73,16 @@ export default function App() {
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="settings" element={<AdminSettings />} />
-            
+
             <Route path="articles" element={<AdminArticlesList />} />
             <Route path="articles/new" element={<AdminArticleForm />} />
             <Route path="articles/edit/:id" element={<AdminArticleForm />} />
-            
+
             <Route path="events" element={<AdminEventsList />} />
             <Route path="events/new" element={<AdminEventForm />} />
             <Route path="events/edit/:id" element={<AdminEventForm />} />
             <Route path="event-contacts" element={<AdminEventContacts />} />
-            
+
             <Route path="info-mahasiswa" element={<AdminInfoList />} />
             <Route path="info-mahasiswa/new" element={<AdminInfoForm />} />
             <Route path="info-mahasiswa/edit/:id" element={<AdminInfoForm />} />

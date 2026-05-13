@@ -388,12 +388,79 @@ export function AboutIkamma() {
             </div>
           </div>
 
+          {/* 01: Chairs & Greetings */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-32">
+            {/* Left side - Chairs Photos */}
+            <div className="relative flex justify-center items-end h-[350px] md:h-[450px] [mask-image:linear-gradient(to_bottom,black_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_85%,transparent_100%)]">
+              {/* Vice Chair 1 */}
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="absolute left-0 bottom-0 w-[40%] z-10"
+              >
+                <img src={CORE_LEADERS[0].img} alt={CORE_LEADERS[0].name} className="w-full h-auto object-contain object-bottom drop-shadow-xl" />
+              </motion.div>
+              
+              {/* Chairman */}
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="relative w-[50%] z-20"
+              >
+                <img src={CORE_LEADERS[1].img} alt={CORE_LEADERS[1].name} className="w-full h-auto object-contain object-bottom drop-shadow-2xl scale-[1.15] origin-bottom" />
+              </motion.div>
+
+              {/* Vice Chair 2 */}
+              <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="absolute right-0 bottom-0 w-[40%] z-10"
+              >
+                <img src={CORE_LEADERS[2].img} alt={CORE_LEADERS[2].name} className="w-full h-auto object-contain object-bottom drop-shadow-xl" />
+              </motion.div>
+            </div>
+
+            {/* Right side - Greetings */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="flex flex-col justify-center"
+            >
+              <div className="mb-6 lg:mb-8 flex items-center gap-3">
+                <span className="text-[#002444] font-inter text-xl md:text-2xl">01</span>
+                <span className="text-[#002444] font-inter font-bold -mt-1 text-xl">—</span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#002444]">
+                  <span className="font-caslon-bold-italic">Welcome</span> <span className="font-inter font-bold">Message</span>
+                </h2>
+              </div>
+              <div className="relative">
+                <svg className="absolute -top-6 left-0 md:-left-6 w-10 h-10 md:w-12 md:h-12 text-[#002444]/10" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
+                <p className="font-inter text-base md:text-lg leading-relaxed text-[#002444] font-semibold italic relative z-10 pl-4">
+                  "Selamat datang di IKAMMA! Sebagai himpunan mahasiswa Manajemen FEB UGM, kami senantiasa berkomitmen untuk menjadi wadah eksplorasi, inovasi, dan kolaborasi bagi seluruh anggota. Mari bersama-sama kita melangkah seirama, mengukir prestasi, dan memberikan kebermanfaatan nyata bagi almamater, masyarakat, dan masa depan kita. IKAMMA, Jaya!"
+                </p>
+                <div className="mt-8 pl-5 md:pl-6 border-l-[4px] border-[#002444]">
+                  <h4 className="font-inter font-bold text-[#002444] text-xl md:text-2xl">{CORE_LEADERS[1].name}</h4>
+                  <p className="font-inter font-medium text-[#002444]/70 text-base md:text-lg">Chairman of IKAMMA</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* 02: Filosofi Logo */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start min-h-[500px] lg:min-h-[600px]">
             {/* Left side - Text content */}
             <div className="relative min-h-[320px] flex flex-col justify-start pt-4">
               {/* Static header - never fades */}
               <div className="mb-6 lg:mb-10 flex items-center gap-3">
-                <span className="text-[#002444] font-inter text-xl md:text-2xl">01</span>
+                <span className="text-[#002444] font-inter text-xl md:text-2xl">02</span>
                 <span className="text-[#002444] font-inter font-bold -mt-1 text-xl">—</span>
                 <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#002444]">
                   <span className="font-caslon-bold-italic">Filosofi</span> <span className="font-inter font-bold">Logo</span>
@@ -506,7 +573,7 @@ export function AboutIkamma() {
         {/* Section: Our Vision */}
         <section className="mb-32 flex flex-col items-end text-right">
           <div className="mb-8 flex items-center justify-end gap-3 w-full">
-            <span className="text-[#002444] font-inter text-xl md:text-2xl">02</span>
+            <span className="text-[#002444] font-inter text-xl md:text-2xl">03</span>
             <span className="text-[#002444] font-inter font-bold -mt-1 text-xl">—</span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#002444]">
               <span className="font-caslon-bold-italic text-[#002444]">Our</span> <span className="font-inter font-bold text-[#002444]">Vision</span>
@@ -529,7 +596,7 @@ export function AboutIkamma() {
         {/* Section: Our Mission */}
         <section className="mb-32 w-full flex flex-col">
           <div className="mb-12 flex items-center gap-3 w-full">
-            <span className="text-[#002444] font-inter text-xl md:text-2xl">03</span>
+            <span className="text-[#002444] font-inter text-xl md:text-2xl">04</span>
             <span className="text-[#002444] font-inter font-bold -mt-1 text-xl">—</span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#002444]">
               <span className="font-caslon-bold-italic text-[#002444]">Our</span> <span className="font-inter font-bold text-[#002444]">Mission</span>
@@ -568,7 +635,7 @@ export function AboutIkamma() {
         {/* Section: Core Values */}
         <section className="mb-32">
           <div className="mb-16 flex items-center justify-center gap-3">
-            <span className="text-[#002444] font-inter text-xl md:text-2xl">04</span>
+            <span className="text-[#002444] font-inter text-xl md:text-2xl">05</span>
             <span className="text-[#002444] font-inter font-bold -mt-1 text-xl">—</span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#002444]">
               <span className="font-caslon-bold-italic text-[#002444]">Core</span> <span className="font-inter font-bold text-[#002444]">Values</span>
@@ -604,7 +671,7 @@ export function AboutIkamma() {
         {/* Section: Our Team */}
         <section className="mb-32 flex flex-col items-end text-right w-full">
           <div className="mb-20 flex items-center justify-end gap-3 w-full">
-            <span className="text-[#002444] font-inter text-xl md:text-2xl">05</span>
+            <span className="text-[#002444] font-inter text-xl md:text-2xl">06</span>
             <span className="text-[#002444] font-inter font-bold -mt-1 text-xl">—</span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#002444]">
               <span className="font-caslon-bold-italic text-[#002444]">Our</span> <span className="font-inter font-bold text-[#002444]">Team</span>
@@ -670,7 +737,7 @@ export function AboutIkamma() {
         {/* Section: Our Bureau/Department */}
         <section className="w-full flex flex-col">
           <div className="mb-12 flex items-center justify-end gap-3 w-full">
-            <span className="text-[#002444] font-inter text-xl md:text-2xl">06</span>
+            <span className="text-[#002444] font-inter text-xl md:text-2xl">07</span>
             <span className="text-[#002444] font-inter font-bold -mt-1 text-xl">—</span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#002444]">
               <span className="font-caslon-bold-italic text-[#002444]">Our</span> <span className="font-inter font-bold text-[#002444]">Bureau/Department</span>

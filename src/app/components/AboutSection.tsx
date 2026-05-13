@@ -90,7 +90,7 @@ export function AboutSection() {
         <img
           src={BACKGROUND_IMAGE}
           alt="Background"
-          className="w-full h-full object-cover opacity-60"
+          className="w-full h-full object-cover opacity-60 scale-125 translate-y-[100px]"
         />
         <div className="absolute inset-0 bg-black/40" />
       </div>
@@ -114,7 +114,7 @@ export function AboutSection() {
                 IKAMMA menaungi seluruh mahasiswa Manajemen untuk meningkatkan potensi diri dan pengembangan soft skill. Hal ini dilakukan dengan mengimplementasikan empat basis nilai IKAMMA, yaitu kekeluargaan, profesionalisme, integritas, dan keilmuan.
               </p>
               <div className="pt-2">
-                <AnimatedButton href="#about-more">
+                <AnimatedButton href="/about">
                   See More
                 </AnimatedButton>
               </div>

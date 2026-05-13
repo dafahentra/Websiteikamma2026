@@ -11,17 +11,17 @@ export interface TeamMember {
 // Data Pimpinan Inti (Chairman & Vice Chairmen)
 export const CORE_LEADERS: TeamMember[] = [
   {
-    name: "Arwanda Darin R",
+    name: "Arwanda Darin",
     role: "Vice Chairman",
     img: ViceChair1Img
   },
   {
-    name: "Aurellia Lysandra M",
+    name: "Aurellia Lysandra",
     role: "Chairman",
     img: ChairmanImg
   },
   {
-    name: "Felita Sabila P",
+    name: "Felita Sabila",
     role: "Vice Chairman",
     img: ViceChair2Img
   },

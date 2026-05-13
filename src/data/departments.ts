@@ -158,7 +158,7 @@ export const departmentsData: Record<string, DepartmentData> = {
   'hrbb': {
     slug: 'hrbb',
     name: "HR Birdept Buddy",
-    manager: "Rafeyfa Amara",
+    manager: "Rafeyfa Ammara",
     managerLinkedIn: "https://www.linkedin.com/in/rafeyfa-ammara-wijaya/",
     viceManager: "Kireina Nayla",
     viceManagerLinkedIn: "https://www.linkedin.com/in/kireinayla/",

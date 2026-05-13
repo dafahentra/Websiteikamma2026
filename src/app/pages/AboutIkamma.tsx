@@ -138,8 +138,12 @@ function AboutHero() {
 
 const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo: string }) => {
   const [isHovered, setIsHovered] = useState(false);
-
-
+  let objectPositionClass = 'object-[center_10%]';
+  if (item.name === 'Administration and Finance') {
+    objectPositionClass = 'object-[center_25%]';
+  } else if (['Human Resources Birdept Buddy', 'External Affairs', 'Intellectual and Development', 'Entrepreneurship', 'Sport and Art Association'].includes(item.name)) {
+    objectPositionClass = 'object-[center_18%]';
+  }
   const RowContent = (
     <div
       className={`w-full max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between gap-3 md:gap-4 transition-all duration-700 ease-in-out ${isHovered ? "py-24 md:py-48" : "py-4 md:py-8"
@@ -186,7 +190,7 @@ const HoverImageRow = ({ item, index, photo }: { item: any, index: number, photo
         <img
           src={photo}
           alt={item.name}
-          className={`w-full h-full object-cover object-[center_10%] transition-all duration-1000 ease-out ${isHovered ? 'grayscale-0 scale-110' : 'grayscale-[0.5] scale-100'}`}
+          className={`w-full h-full object-cover ${objectPositionClass} transition-all duration-1000 ease-out ${isHovered ? 'grayscale-0 scale-110' : 'grayscale-[0.5] scale-100'}`}
         />
       </motion.div>
 
@@ -411,7 +415,7 @@ export function AboutIkamma() {
                         <h3 className="font-caslon-bold-italic text-4xl md:text-5xl text-[#002444]">Arsanakala</h3>
                         <span className="font-inter font-light text-2xl md:text-3xl text-[#002444]/40 pb-1">[Ar·sa·na·ka·la]</span>
                       </div>
-                      <p className="font-inter text-base md:text-lg leading-relaxed text-sky-500 max-w-lg font-semibold">
+                      <p className="font-inter text-base md:text-lg leading-relaxed text-[#002444] max-w-lg font-semibold">
                         Kehendak dan daya cipta yang tumbuh seirama, seiring waktu untuk mewujudkan cita.
                       </p>
                     </motion.div>
@@ -427,7 +431,7 @@ export function AboutIkamma() {
                         <h3 className="font-inter font-bold text-3xl md:text-5xl">{PHILOSOPHY_DATA[activePhilo].title}</h3>
                         <span className="font-inter font-light text-xl md:text-2xl text-[#002444]/40 pb-1">{PHILOSOPHY_DATA[activePhilo].pron}</span>
                       </div>
-                      <p className="font-inter text-base md:text-lg leading-relaxed text-sky-500 max-w-lg font-semibold">
+                      <p className="font-inter text-base md:text-lg leading-relaxed text-[#002444] max-w-lg font-semibold">
                         {PHILOSOPHY_DATA[activePhilo].desc}
                       </p>
                     </motion.div>

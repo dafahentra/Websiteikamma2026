@@ -185,10 +185,9 @@ export function DepartmentDetail() {
       <section ref={groupPhotoRef} className="w-full aspect-video overflow-hidden relative">
         <div className="w-full h-full relative">
           <motion.img
-            style={{ y: parallaxYGroup, scale: 1.3 }}
             src={department.groupImg}
             alt="Team Group"
-            className="w-full h-full object-cover object-top shadow-inner"
+            className="w-full h-full object-cover object-[center_10%] shadow-inner"
           />
           <div className="absolute inset-0 bg-[#0C2340]/40" />
         </div>

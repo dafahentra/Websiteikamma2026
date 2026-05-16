@@ -20,11 +20,22 @@ export function Home() {
         .select('*', { count: 'exact', head: true });
       setHasArticles((articleCount || 0) > 0);
 
-      const { count: eventCount } = await supabase
+      const { data: upcomingEvents } = await supabase
         .from('events')
-        .select('*', { count: 'exact', head: true })
+        .select('end_date')
         .eq('type', 'upcoming');
-      setHasUpcomingEvents((eventCount || 0) > 0);
+
+      let hasValidUpcoming = false;
+      if (upcomingEvents && upcomingEvents.length > 0) {
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        hasValidUpcoming = upcomingEvents.some(e => {
+          const end = e.end_date ? new Date(e.end_date) : null;
+          if (end) end.setHours(0, 0, 0, 0);
+          return !end || now <= end;
+        });
+      }
+      setHasUpcomingEvents(hasValidUpcoming);
     }
     checkData();
   }, []);

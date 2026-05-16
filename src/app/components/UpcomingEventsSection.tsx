@@ -32,11 +32,19 @@ export function UpcomingEventsSection() {
         .from('events')
         .select('*')
         .eq('type', 'upcoming')
-        .order('start_date', { ascending: true })
-        .limit(3);
+        .order('start_date', { ascending: true });
 
       if (data) {
-        setEvents(data);
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        
+        const validEvents = data.filter(e => {
+          const end = e.end_date ? new Date(e.end_date) : null;
+          if (end) end.setHours(0, 0, 0, 0);
+          return !end || now <= end;
+        });
+
+        setEvents(validEvents.slice(0, 3));
       }
       setLoading(false);
     };

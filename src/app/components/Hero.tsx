@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import AnimatedButton from "./AnimatedButton";
 import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 
-import HERO_VIDEO_WEBM from "../../assets/Background/VidProf.webm";
+import HERO_VIDEO_WEBM from "../../assets/Background/VidProf.mp4";
 import LOGO from "../../assets/LogoIKAMMA/LogoPutih.svg";
 import { supabase } from "../../lib/supabase";
 
@@ -112,7 +112,7 @@ export function Hero() {
         </div>
 
         {/* SVG Mask Layer */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 z-10 pointer-events-none"
           style={{ scale: maskScale, opacity: maskOpacity }}
         >
@@ -153,7 +153,7 @@ export function Hero() {
         </motion.div>
 
         {/* Scroll Indicator */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4 pointer-events-none"
           style={{ opacity: scrollIndicatorOpacity }}
         >

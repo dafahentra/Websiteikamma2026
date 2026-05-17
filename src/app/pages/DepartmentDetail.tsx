@@ -236,10 +236,10 @@ export function DepartmentDetail() {
               >
                 <div className="w-full aspect-[3/4] bg-white overflow-hidden mb-4 relative">
                   {staff.img ? (
-                    <img 
-                      src={staff.img} 
-                      alt={staff.name} 
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
+                    <img
+                      src={staff.img}
+                      alt={staff.name}
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
                     <div className="w-full h-full bg-[#081C36]/5 flex items-center justify-center p-8 group-hover:scale-105 transition-transform duration-500">
@@ -269,7 +269,7 @@ export function DepartmentDetail() {
             <span><span className="font-caslon-bold-italic">Program</span> <span className="font-inter font-bold text-[#002444]">Kerja</span></span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+          <div className="grid grid-cols-2 gap-x-3 sm:gap-x-4 md:gap-x-12 gap-y-4 md:gap-y-6">
             {department.programs.map((program, idx) => (
               <motion.div
                 key={program.id}
@@ -279,15 +279,20 @@ export function DepartmentDetail() {
                 transition={{ duration: 0.6, delay: (idx % 2) * 0.1 }}
                 whileHover={{ scale: 1.02, x: 8 }}
                 onClick={() => openModal(program)}
-                className="flex items-center gap-4 group cursor-pointer"
+                className="flex items-center gap-1 sm:gap-2 md:gap-4 group cursor-pointer"
               >
-                <div className="flex items-center gap-3 min-w-[50px]">
-                  <span className="text-sky-500 font-inter font-bold text-2xl group-hover:scale-110 transition-transform duration-300">{idx + 1}</span>
-                  <span className="text-sky-500/30 font-inter font-bold -mt-1">—</span>
+                <div className="flex items-center gap-1 md:gap-3 min-w-[16px] sm:min-w-[24px] md:min-w-[50px]">
+                  <span className="text-sky-500 font-inter font-bold text-sm sm:text-base md:text-2xl group-hover:scale-110 transition-transform duration-300">{idx + 1}</span>
+                  <span className="text-sky-500/30 font-inter font-bold -mt-1 hidden md:inline-block">—</span>
                 </div>
 
-                <div className="relative flex-1 h-16 md:h-20 overflow-hidden bg-sky-500/5 rounded-xl border border-sky-500/10 group-hover:bg-sky-500/10 group-hover:border-sky-500/30 transition-all duration-500 flex items-center justify-center">
-                  <div className="text-[#002444] font-inter font-inter-bold text-base md:text-xl px-6 text-center">{program.title}</div>
+                <div className="relative flex-1 h-12 sm:h-16 md:h-20 overflow-hidden rounded-lg md:rounded-xl border border-sky-500/10 group-hover:border-sky-500/30 transition-all duration-500 flex items-center justify-center shadow-sm group-hover:shadow-md">
+                  {/* Background Image */}
+                  <div className="absolute inset-0 bg-[#002444]">
+                    {program.img && <img src={program.img} alt={program.title} className="w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700" />}
+                    <div className="absolute inset-0 bg-[#081C36]/60 group-hover:bg-[#081C36]/40 transition-all duration-500" />
+                  </div>
+                  <div className="relative z-10 text-white font-inter font-bold text-[9px] sm:text-[11px] md:text-base lg:text-xl px-2 md:px-6 text-center leading-tight line-clamp-2 md:line-clamp-none">{program.title}</div>
                 </div>
               </motion.div>
             ))}
@@ -317,29 +322,40 @@ export function DepartmentDetail() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-2xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 p-8 md:p-12 flex flex-col items-center text-center"
+              className="relative w-full max-w-4xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col md:flex-row"
             >
               {/* Close Button */}
               <button
                 onClick={closeModal}
-                className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#081C36]/5 flex items-center justify-center hover:bg-[#081C36]/10 transition-colors group"
+                className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 rounded-full bg-black/5 flex items-center justify-center hover:bg-black/10 transition-colors group z-20"
               >
                 <svg className="w-5 h-5 text-[#081C36] group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
 
-              <p className="text-sky-500 text-xs uppercase tracking-widest mb-2 font-inter font-bold">Program Kerja</p>
-              <div className="text-3xl md:text-4xl font-inter font-bold text-[#081C36] mb-6 leading-tight">
-                {selectedProgram.title}
+              {/* Left Side: Photo */}
+              <div className="w-full md:w-2/5 h-48 md:h-auto md:min-h-[400px] relative bg-[#081C36] shrink-0">
+                {selectedProgram.img && (
+                  <img src={selectedProgram.img} alt={selectedProgram.title} className="w-full h-full object-cover" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#081C36]/20 to-transparent" />
               </div>
-              <div className="w-12 h-1.5 bg-sky-500/20 rounded-full mb-8" />
-              <p className="text-[#081C36]/70 text-lg leading-relaxed font-inter max-w-lg">
-                {selectedProgram.description}
-              </p>
 
-              <div className="mt-12">
-                <IkammaLogo className="w-16 h-auto opacity-5" />
+              {/* Right Side: Content */}
+              <div className="w-full md:w-3/5 p-6 md:p-10 flex flex-col items-start text-left">
+                <p className="text-sky-500 text-xs uppercase tracking-widest mb-2 font-inter font-bold">Program Kerja</p>
+                <div className="text-3xl md:text-4xl font-inter font-bold text-[#081C36] mb-6 leading-tight pr-8">
+                  {selectedProgram.title}
+                </div>
+                <div className="w-12 h-1.5 bg-sky-500/20 rounded-full mb-6" />
+                <p className="text-[#081C36]/70 text-base md:text-lg leading-relaxed font-inter whitespace-pre-wrap">
+                  {selectedProgram.description}
+                </p>
+
+                <div className="mt-8 md:mt-auto pt-8 flex justify-end w-full">
+                  <IkammaLogo className="w-16 h-auto opacity-5" />
+                </div>
               </div>
             </motion.div>
           </div>

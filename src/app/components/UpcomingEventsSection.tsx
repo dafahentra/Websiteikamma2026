@@ -3,6 +3,7 @@ import { MapPin, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
 import { createSlug } from "../../lib/slugify";
+import { getEventDisplayDate } from "../../lib/dateUtils";
 
 interface Event {
   id: string;
@@ -14,6 +15,8 @@ interface Event {
   image_url: string;
   type: string;
   description: string;
+  start_date?: string;
+  end_date?: string;
 }
 
 const getTeaser = (html: string) => {
@@ -101,8 +104,15 @@ export function UpcomingEventsSection() {
 
                 {/* Date Overlay */}
                 <div className="absolute bottom-0 left-0 bg-white/20 backdrop-blur-md rounded-tr-2xl flex flex-col items-center justify-center px-6 py-3 border-t border-r border-white/30">
-                  <span className="text-2xl font-bold text-white leading-none">{event.event_date}</span>
-                  <span className="text-sm font-medium text-white/90 mt-1">{event.month_year}</span>
+                  {(() => {
+                    const displayDate = getEventDisplayDate(event);
+                    return (
+                      <>
+                        <span className={`font-bold text-white leading-none text-center ${displayDate.top.length > 10 ? 'text-lg' : 'text-2xl'}`}>{displayDate.top}</span>
+                        {displayDate.bottom && <span className="text-sm font-medium text-white/90 mt-1 text-center">{displayDate.bottom}</span>}
+                      </>
+                    );
+                  })()}
                 </div>
               </div>
 

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Clock, CalendarDays, X, ExternalLink, ArrowRight } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { createSlug } from '../../lib/slugify';
+import { getEventDisplayDate } from '../../lib/dateUtils';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 const MicroShape = ({ className, delay = 0, duration = 5, size = "w-20 h-20" }: { className: string, delay?: number, duration?: number, size?: string }) => (
@@ -203,8 +204,15 @@ export function EventsPage() {
 
                 {/* Date Badge */}
                 <div className="absolute bottom-0 left-0 bg-white/20 backdrop-blur-md rounded-tr-2xl flex flex-col items-center justify-center px-4 py-2 md:px-6 md:py-3 border-t border-r border-white/30">
-                  <span className="text-lg md:text-2xl font-bold text-white leading-none font-inter">{event.event_date}</span>
-                  <span className="text-[10px] md:text-sm font-medium text-white/90 mt-0.5 md:mt-1 font-inter">{event.month_year}</span>
+                  {(() => {
+                    const displayDate = getEventDisplayDate(event);
+                    return (
+                      <>
+                        <span className={`font-bold text-white leading-none font-inter text-center ${displayDate.top.length > 10 ? 'text-sm md:text-lg' : 'text-lg md:text-2xl'}`}>{displayDate.top}</span>
+                        {displayDate.bottom && <span className="text-[10px] md:text-sm font-medium text-white/90 mt-0.5 md:mt-1 font-inter text-center">{displayDate.bottom}</span>}
+                      </>
+                    );
+                  })()}
                 </div>
               </div>
 

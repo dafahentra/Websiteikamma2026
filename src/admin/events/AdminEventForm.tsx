@@ -21,6 +21,7 @@ export const AdminEventForm = () => {
     location: '',
     time: '',
     event_date: '',
+    event_end_date: '',
     month_year: '',
     full_date: '',
     status: 'upcoming',
@@ -44,7 +45,8 @@ export const AdminEventForm = () => {
             title: data.title,
             location: data.location,
             time: data.time || '',
-            event_date: data.event_date || '',
+            event_date: data.start_date || '',
+            event_end_date: (data.end_date && data.end_date !== data.start_date) ? data.end_date : '',
             month_year: data.month_year || '',
             full_date: data.full_date || '',
             status: data.status || 'upcoming',
@@ -115,18 +117,44 @@ export const AdminEventForm = () => {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
     
     const day = start.getDate().toString();
-    const monthYear = `${months[start.getMonth()]} ${start.getFullYear().toString().substring(2)}`;
-    const full = `${months[start.getMonth()]} ${start.getDate()}, ${start.getFullYear()}`;
+    const startMonth = months[start.getMonth()];
+    const startYear = start.getFullYear().toString();
+    const startYearShort = startYear.substring(2);
+    
+    const monthYear = `${startMonth} ${startYearShort}`;
+    const full = `${startMonth} ${start.getDate()}, ${startYear}`;
 
     if (endDateStr) {
       const end = new Date(endDateStr);
       if (start.getTime() === end.getTime()) {
         return { day, monthYear, full };
       }
+      
+      const endDay = end.getDate().toString();
+      const endMonth = months[end.getMonth()];
+      const endYear = end.getFullYear().toString();
+      const endYearShort = endYear.substring(2);
+      
+      if (start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
+        return {
+          day: `${day} - ${endDay}`,
+          monthYear,
+          full: `${startMonth} ${start.getDate()} - ${end.getDate()}, ${startYear}`
+        };
+      }
+      
+      if (start.getFullYear() === end.getFullYear()) {
+        return {
+          day: `${day} ${startMonth} - ${endDay} ${endMonth}`,
+          monthYear: startYear,
+          full: `${start.getDate()} ${startMonth} - ${end.getDate()} ${endMonth}, ${startYear}`
+        };
+      }
+      
       return {
-        day: `${day} - ${end.getDate()}`,
-        monthYear,
-        full: `${months[start.getMonth()]} ${start.getDate()} - ${end.getDate()}, ${start.getFullYear()}`
+        day: `${day} ${startMonth} '${startYearShort} - ${endDay} ${endMonth} '${endYearShort}`,
+        monthYear: '',
+        full: `${start.getDate()} ${startMonth} ${startYear} - ${end.getDate()} ${endMonth} ${endYear}`
       };
     }
 
@@ -182,7 +210,7 @@ export const AdminEventForm = () => {
       }
     }
 
-    const dateInfo = formatEventDate(formData.event_date, (formData as any).event_end_date);
+    const dateInfo = formatEventDate(formData.event_date, formData.event_end_date);
 
     const payload = {
       ...formData,
@@ -192,22 +220,23 @@ export const AdminEventForm = () => {
       month_year: dateInfo.monthYear,
       full_date: dateInfo.full,
       start_date: formData.event_date,
-      end_date: (formData as any).event_end_date || formData.event_date,
+      end_date: formData.event_end_date || formData.event_date,
       status: formData.type === 'upcoming' ? formData.status : null,
       image_url,
     };
 
-    delete (payload as any).event_end_date;
+    const finalPayload = { ...payload };
+    delete (finalPayload as any).event_end_date;
 
     if (isEdit) {
-      const { error } = await supabase.from('events').update(payload).eq('id', id);
+      const { error } = await supabase.from('events').update(finalPayload).eq('id', id);
       if (error) toast.error('Gagal memperbarui event');
       else {
         toast.success('Event diperbarui');
         navigate('/admin/events');
       }
     } else {
-      const { error } = await supabase.from('events').insert([payload]);
+      const { error } = await supabase.from('events').insert([finalPayload]);
       if (error) toast.error('Gagal menyimpan event');
       else {
         toast.success('Event tersimpan');
@@ -350,8 +379,8 @@ export const AdminEventForm = () => {
             <label className="block text-sm font-medium mb-1">Tanggal Selesai (Opsional - Jika Range)</label>
             <input 
               type="date" 
-              value={(formData as any).event_end_date || ''} 
-              onChange={(e) => setFormData({...formData, event_end_date: e.target.value} as any)}
+              value={formData.event_end_date} 
+              onChange={(e) => setFormData({...formData, event_end_date: e.target.value})}
               className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
             />
           </div>

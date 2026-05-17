@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { MapPin, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
+import { createSlug } from "../../lib/slugify";
 
 interface Event {
   id: string;
@@ -84,7 +85,7 @@ export function UpcomingEventsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
               className="flex flex-col group cursor-pointer w-[80vw] min-w-[80vw] snap-center flex-shrink-0 md:w-auto md:min-w-0 md:flex-shrink"
-              onClick={() => window.location.href = `/events`}
+              onClick={() => window.location.href = `/events/${createSlug(event.title)}`}
             >
               {/* Image Container */}
               <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden mb-6 bg-[#081C36] shadow-lg transition-shadow duration-300 group-hover:shadow-xl">

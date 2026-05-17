@@ -123,7 +123,7 @@ export function DepartmentDetail() {
               />
               {/* Manager Label - Positioned near head but behind */}
               <motion.div
-                className="absolute left-[70%] md:left-full ml-[-80px] md:-ml-[90px] top-[15%] md:top-[18%] z-0 max-w-[140px] md:max-w-none -translate-y-[80px] md:translate-y-0"
+                className="absolute left-[70%] md:left-full ml-[-80px] md:-ml-[90px] top-[8%] md:top-[18%] z-0 max-w-[140px] md:max-w-none -translate-y-[80px] md:translate-y-0"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
@@ -149,7 +149,7 @@ export function DepartmentDetail() {
             <div className="h-full w-auto shrink-0 relative">
               {/* Vice Manager Label - Positioned near head but behind */}
               <motion.div
-                className="absolute right-[70%] md:right-full mr-[-80px] md:-mr-[90px] top-[15%] md:top-[18%] text-right z-0 max-w-[140px] md:max-w-none -translate-y-[80px] md:translate-y-0"
+                className="absolute right-[70%] md:right-full mr-[-80px] md:-mr-[90px] top-[8%] md:top-[18%] text-right z-0 max-w-[140px] md:max-w-none -translate-y-[80px] md:translate-y-0"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}

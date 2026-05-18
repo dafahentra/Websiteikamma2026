@@ -1,12 +1,9 @@
 import { useRef, useEffect, useState, useMemo } from "react";
-import { motion, useScroll, useTransform, useMotionTemplate, MotionValue, useSpring } from "motion/react";
-import { ArrowRight } from "lucide-react";
-import AnimatedButton from "./AnimatedButton";
+import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 
 import HERO_VIDEO_WEBM from "../../assets/Background/VidProf.webm";
-import LOGO from "../../assets/LogoIKAMMA/LogoPutih.svg";
-import { supabase } from "../../lib/supabase";
+import HERO_VIDEO_MP4 from "../../assets/Background/VidProf.mp4";
 
 import { HERO_BG } from "../../assets/photos";
 
@@ -31,9 +28,6 @@ const partnerLogos = [
 ];
 
 const BACKGROUND_IMAGE = HERO_BG;
-
-// A massive scrolling area to accommodate the grand unified sequence
-// SECTION_HEIGHT_PX removed in favor of dynamic state inside Hero component
 
 const svgInner = LogoPutihRaw
   .replace(/<\?xml[^>]*\?>/g, '')
@@ -73,13 +67,25 @@ export function Hero() {
     offset: ["start start", "end start"]
   });
 
-  // Zoom OUT from video (mask is huge) to text (mask is scale 1)
-  const maskScale = useTransform(scrollYProgress, [0, 0.4], [80, 1]);
-  const maskOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
+  // ── Performance fix: reduced scale range ──
+  // Previously 80→1, now 25→1 (mobile) / 35→1 (desktop).
+  // At scale 25, the text already far exceeds the viewport.
+  // This reduces GPU rasterization area by ~10x.
+  const maskScaleRaw = useTransform(
+    scrollYProgress,
+    [0, 0.4],
+    [isMobile ? 25 : 35, 1]
+  );
+  const maskOpacityRaw = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
-  // White overlay: fades in at the tail end of the hero scroll (0.65 → 1)
-  // so the hero dissolves seamlessly into the white About section.
   const whiteOverlayOpacity = useTransform(scrollYProgress, [0.65, 1], [0, 1]);
+
+  // ── Performance fix: spring smoothing ──
+  // Smooths scroll-driven values to prevent frame drops on mobile.
+  // High stiffness = responsive, moderate damping = no oscillation.
+  const springCfg = { stiffness: 300, damping: 40, mass: 0.2 };
+  const maskScale = useSpring(maskScaleRaw, springCfg);
+  const maskOpacity = useSpring(maskOpacityRaw, springCfg);
 
   const togglePlayPause = () => {
     if (videoRef.current) {
@@ -95,8 +101,18 @@ export function Hero() {
 
   return (
     <div ref={containerRef} className="relative w-full h-[200vh] bg-[#0C2340]">
-      <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center cursor-pointer" onClick={togglePlayPause}>
-        {/* Video Layer */}
+      <div
+        className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center cursor-pointer"
+        onClick={togglePlayPause}
+        style={{ contain: 'layout style paint' }}
+      >
+        <style>
+          {`
+            video::-webkit-media-controls { display: none !important; }
+            video::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
+          `}
+        </style>
+        {/* Video Layer — GPU-promoted with translateZ(0) */}
         <div className="absolute inset-0 z-0">
           <video
             ref={videoRef}
@@ -104,19 +120,33 @@ export function Hero() {
             loop
             muted
             playsInline
+            disablePictureInPicture
             className="w-full h-full object-cover pointer-events-none"
+            style={{ transform: 'translateZ(0)', willChange: 'transform' }}
           >
+            {/* WebM first — smaller file (4.1MB vs 7.6MB), better for mobile */}
             <source src={HERO_VIDEO_WEBM} type="video/webm" />
+            <source src={HERO_VIDEO_MP4} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
 
-        {/* SVG Mask Layer */}
+        {/* SVG Mask Layer — optimized with shapeRendering and reduced scale */}
         <motion.div
           className="absolute inset-0 z-10 pointer-events-none"
-          style={{ scale: maskScale, opacity: maskOpacity }}
+          style={{
+            scale: maskScale,
+            opacity: maskOpacity,
+            willChange: 'transform, opacity',
+            transform: 'translateZ(0)',
+          }}
         >
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="100%"
+            height="100%"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ shapeRendering: 'optimizeSpeed' }}
+          >
             <defs>
               <mask id="textMask">
                 <rect width="100%" height="100%" fill="white" />

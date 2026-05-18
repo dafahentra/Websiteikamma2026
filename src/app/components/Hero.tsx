@@ -10,9 +10,9 @@ import { HERO_BG } from "../../assets/photos";
 const BACKGROUND_IMAGE = HERO_BG;
 
 const svgInner = LogoPutihRaw
-  .replace(/<\?xml[^>]*\?>/g, '')
-  .replace(/<svg[^>]*>/g, '')
-  .replace(/<\/svg>/g, '')
+  .replace(/<\?xml[^>]*\?>/g, "")
+  .replace(/<svg[^>]*>/g, "")
+  .replace(/<\/svg>/g, "")
   .replace(/fill="[^"]*"/g, 'fill="black"')
   .trim();
 
@@ -28,19 +28,11 @@ export function Hero() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // ── iOS autoplay: nudge play() after mount ──────────────────────────────
-  // iOS Safari sometimes stalls autoplay even with muted+playsInline.
-  // Calling play() imperatively after hydration reliably starts the video.
   useEffect(() => {
     const vid = videoRef.current;
     if (!vid) return;
-    vid.muted = true; // must be set in JS too for iOS
-    const tryPlay = () => {
-      vid.play().catch(() => {
-        // silently ignore – browser policy blocked it (e.g. Low Power Mode)
-      });
-    };
-    // Attempt immediately and again on first user interaction as fallback
+    vid.muted = true;
+    const tryPlay = () => vid.play().catch(() => { });
     tryPlay();
     document.addEventListener("touchstart", tryPlay, { once: true });
     return () => document.removeEventListener("touchstart", tryPlay);
@@ -51,14 +43,6 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  // ── Mask animation ───────────────────────────────────────────────────────
-  // Key mobile perf insight: large CSS scale on an SVG causes iOS to
-  // rasterize a huge offscreen surface. Strategy:
-  //   1. Keep initial scale much lower (12 mobile / 18 desktop).
-  //   2. Drive scale with useSpring so interpolation is on the JS thread,
-  //      not layout — paired with will-change: transform for GPU promotion.
-  //   3. Start revealing opacity slightly earlier so the user sees motion
-  //      before the scale hits 1 (masks the coarser steps at high scale).
   const maskScaleRaw = useTransform(
     scrollYProgress,
     [0, 0.45],
@@ -68,26 +52,23 @@ export function Hero() {
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
   const whiteOverlayOpacity = useTransform(scrollYProgress, [0.65, 1], [0, 1]);
 
-  // Tighter spring = crisper tracking, less perceived jank
   const springCfg = { stiffness: 400, damping: 45, mass: 0.15 };
   const maskScale = useSpring(maskScaleRaw, springCfg);
   const maskOpacity = useSpring(maskOpacityRaw, springCfg);
 
   return (
     <div ref={containerRef} className="relative w-full h-[200vh] bg-[#0C2340]">
-      {/* ── Sticky viewport ──────────────────────────────────────────────── */}
       <div
         className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center"
         style={{ contain: "layout style paint" }}
       >
-        {/* Suppress ALL native video UI on every browser */}
         <style>{`
           video::-webkit-media-controls,
           video::-webkit-media-controls-panel,
           video::-webkit-media-controls-play-button,
           video::-webkit-media-controls-start-playback-button,
           video::-webkit-media-controls-overlay-play-button,
-          video::--webkit-media-controls-enclosure {
+          video::-webkit-media-controls-enclosure {
             display: none !important;
             -webkit-appearance: none !important;
             opacity: 0 !important;
@@ -95,91 +76,103 @@ export function Hero() {
           }
         `}</style>
 
-        {/* ── Video layer ─────────────────────────────────────────────────── */}
-        <div className="absolute inset-0 z-0" style={{ transform: "translateZ(0)" }}>
+        {/* z-0: solid blue base */}
+        <div className="absolute inset-0 z-0 bg-[#0C2340]" />
+
+        {/* z-10: video */}
+        <div className="absolute inset-0 z-10">
           <video
             ref={videoRef}
             autoPlay
             loop
             muted
             playsInline
-            controls={false}            // explicit false — kills native controls
+            controls={false}
             disablePictureInPicture
-            disableRemotePlayback       // prevents AirPlay icon on iOS
-            x-webkit-airplay="deny"     // belt-and-suspenders for older iOS
+            disableRemotePlayback
             className="w-full h-full object-cover pointer-events-none select-none"
-            style={{ willChange: "transform" }}
           >
             <source src={HERO_VIDEO_WEBM} type="video/webm" />
             <source src={HERO_VIDEO_MP4} type="video/mp4" />
           </video>
         </div>
 
-        {/* ── SVG mask layer ──────────────────────────────────────────────── */}
-        {/*
-          Performance notes for the mask:
-          - `transform-origin: center` is kept default (50% 50%) — no shift needed.
-          - The motion.div is GPU-promoted via will-change + translateZ.
-          - shapeRendering: "optimizeSpeed" skips anti-aliasing during animation.
-          - The SVG itself also gets translateZ so the browser creates its own
-            compositing layer separate from the motion wrapper.
-        */}
+        {/* ── z-20: SVG mask — kembali ke SVG <mask> tapi dengan rect terpisah ── */}
+        {/*                                                                        */}
+        {/* Root cause destination-out tidak jalan:                               */}
+        {/* Framer Motion inject `transform` via inline style → menciptakan        */}
+        {/* stacking context baru → isolation tidak bisa scope blend dengan benar. */}
+        {/*                                                                        */}
+        {/* Solusi final: gunakan SVG <mask> murni tanpa willChange/translateZ     */}
+        {/* pada element SVG itu sendiri. Scale/opacity dianimasikan di wrapper    */}
+        {/* div biasa (bukan motion.div langsung pada SVG).                        */}
+        {/*                                                                        */}
+        {/* SVG <mask> bekerja di dalam satu SVG context — tidak terpengaruh       */}
+        {/* stacking context dari parent HTML. Chrome stabil selama kita tidak     */}
+        {/* taruh willChange/translateZ di elemen yang sama dengan mask.           */}
         <motion.div
-          className="absolute inset-0 z-10 pointer-events-none"
+          className="absolute inset-0 z-20 pointer-events-none"
           style={{
             scale: maskScale,
             opacity: maskOpacity,
-            willChange: "transform, opacity",
-            transform: "translateZ(0)",
           }}
         >
           <svg
             width="100%"
             height="100%"
             xmlns="http://www.w3.org/2000/svg"
-            style={{
-              shapeRendering: "optimizeSpeed",
-              transform: "translateZ(0)",
-              willChange: "transform",
-            }}
+            style={{ display: "block" }}
           >
             <defs>
-              <mask id="textMask">
+              <mask id="heroMask" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
+                {/* Putih = area yang TAMPIL (biru solid) */}
                 <rect width="100%" height="100%" fill="white" />
+
+                {/* Hitam = area yang DIPOTONG (video tembus) */}
+
+                {/* Logo — tengah atas */}
+                <svg
+                  x="50%"
+                  y="50%"
+                  overflow="visible"
+                >
+                  <g
+                    transform={
+                      isMobile
+                        ? "translate(-105, -180) scale(0.28)"
+                        : "translate(-150, -240) scale(0.40)"
+                    }
+                    dangerouslySetInnerHTML={{ __html: svgInner }}
+                  />
+                </svg>
+
+                {/* Teks — tengah bawah, offset dari logo */}
                 <text
                   x="50%"
                   y="50%"
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="black"
+                  dy={isMobile ? "80" : "110"}
                   style={{
                     fontFamily: "'Inter', sans-serif",
                     fontWeight: 700,
                     fontStyle: "italic",
-                    fontSize: "clamp(2rem, 8vw, 7rem)",
+                    fontSize: isMobile ? "28px" : "clamp(2rem, 5vw, 4.5rem)",
                     letterSpacing: "-0.045em",
                   }}
                 >
                   #WeShareToInspire
                 </text>
-                <svg x="50%" y="50%" overflow="visible">
-                  <g
-                    fill="black"
-                    transform={
-                      isMobile
-                        ? "translate(-56, -146) scale(0.1495)"
-                        : "translate(-80, -221) scale(0.2136)"
-                    }
-                    dangerouslySetInnerHTML={{ __html: svgInner }}
-                  />
-                </svg>
               </mask>
             </defs>
-            <rect width="100%" height="100%" fill="#0C2340" mask="url(#textMask)" />
+
+            {/* Rect yang dikenai mask: putih → tampil biru, hitam → transparan */}
+            <rect width="100%" height="100%" fill="#0C2340" mask="url(#heroMask)" />
           </svg>
         </motion.div>
 
-        {/* ── Scroll indicator ────────────────────────────────────────────── */}
+        {/* Scroll indicator */}
         <motion.div
           className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4 pointer-events-none"
           style={{ opacity: scrollIndicatorOpacity }}
@@ -203,9 +196,9 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* ── White fade-out overlay ──────────────────────────────────────── */}
+        {/* White fade-out overlay */}
         <motion.div
-          className="absolute inset-0 z-20 bg-white pointer-events-none"
+          className="absolute inset-0 z-30 bg-white pointer-events-none"
           style={{ opacity: whiteOverlayOpacity }}
         />
       </div>

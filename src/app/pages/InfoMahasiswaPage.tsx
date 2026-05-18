@@ -362,13 +362,13 @@ const CATEGORY_COLORS: Record<Category, string> = {
                       const displayStatus = isActuallyClosed ? 'closed' : item.status;
                       
                       return displayStatus === 'open' ? (
-                        <div className="flex items-center gap-1.5 bg-[#081C36]/50 backdrop-blur-xl px-3 h-7 md:px-4 md:h-8 rounded-full border border-white/20 shadow-lg">
+                        <div className="flex items-center justify-center gap-1.5 bg-[#081C36]/50 backdrop-blur-xl px-3.5 h-7 md:px-4 md:h-8 rounded-full border border-white/20 shadow-lg">
                           <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
-                          <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
+                          <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase leading-none">OPEN</span>
                         </div>
                       ) : (
-                        <div className="flex items-center bg-[#081C36]/50 backdrop-blur-xl px-3 h-7 md:px-4 md:h-8 rounded-full border border-white/20 shadow-lg">
-                          <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
+                        <div className="flex items-center justify-center bg-[#081C36]/50 backdrop-blur-xl px-3.5 h-7 md:px-4 md:h-8 rounded-full border border-white/20 shadow-lg">
+                          <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase leading-none">CLOSED</span>
                         </div>
                       );
                     })()}
@@ -379,7 +379,7 @@ const CATEGORY_COLORS: Record<Category, string> = {
                 <div className="p-3 md:p-5 flex flex-col flex-grow">
                   {/* Header Meta: Category & Date */}
                   <div className="flex flex-wrap items-center justify-between gap-1 mb-3">
-                    <span className={`inline-flex items-center px-3 py-1 md:px-4 md:py-1.5 rounded-full text-white text-[10px] md:text-[11px] font-inter font-bold uppercase tracking-wider ${CATEGORY_COLORS[item.category]}`}>
+                    <span className={`inline-flex items-center justify-center px-3 py-1.5 md:px-4 md:py-2 rounded-full text-white text-[10px] md:text-[11px] font-inter font-bold leading-none uppercase tracking-wider ${CATEGORY_COLORS[item.category]}`}>
                       {item.category}
                     </span>
                     <span className="text-[#081C36]/50 text-[11px] md:text-xs font-inter font-medium flex items-center">
@@ -528,7 +528,7 @@ const CATEGORY_COLORS: Record<Category, string> = {
                 </div>
                 
                 <div className="px-6 md:px-10 pb-8 md:pb-10 pt-24 relative z-10 w-full pointer-events-none">
-                  <span className="inline-block bg-white/10 backdrop-blur-xl text-white px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] border border-white/30 mb-3 shadow-lg">
+                  <span className="inline-flex items-center justify-center bg-white/10 backdrop-blur-xl text-white px-4 py-1.5 rounded-full text-[10px] font-bold leading-none uppercase tracking-[0.2em] border border-white/30 mb-3 shadow-lg">
                     {selectedInfo.category || 'Info'}
                   </span>
                   <h2 className="text-2xl md:text-4xl font-bold text-white leading-tight drop-shadow-md">

@@ -111,6 +111,35 @@ export const AdminEventForm = () => {
     }
   };
 
+  const formatDateForInput = (dateStr: string) => {
+    if (!dateStr) return '';
+    
+    if (dateStr.includes('-')) {
+      const match = dateStr.match(/^(\d{4}-\d{2}-\d{2})/);
+      if (match) return match[1];
+    }
+    
+    const parts = dateStr.split(' ');
+    if (parts.length === 3) {
+      const day = parts[0].padStart(2, '0');
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      const monthIndex = months.indexOf(parts[1]);
+      if (monthIndex !== -1) {
+        const month = (monthIndex + 1).toString().padStart(2, '0');
+        return `${parts[2]}-${month}-${day}`;
+      }
+    }
+    
+    try {
+      const d = new Date(dateStr);
+      if (!isNaN(d.getTime())) {
+        return d.toISOString().split('T')[0];
+      }
+    } catch(e) {}
+    
+    return '';
+  };
+
   const formatEventDate = (dateStr: string, endDateStr?: string) => {
     if (!dateStr) return { day: '', monthYear: '', full: '' };
     const start = new Date(dateStr);
@@ -369,7 +398,7 @@ export const AdminEventForm = () => {
             <label className="block text-sm font-medium mb-1">Tanggal Mulai *</label>
             <input 
               type="date" 
-              value={formData.event_date} 
+              value={formatDateForInput(formData.event_date)} 
               onChange={(e) => setFormData({...formData, event_date: e.target.value})}
               className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               required 
@@ -379,7 +408,7 @@ export const AdminEventForm = () => {
             <label className="block text-sm font-medium mb-1">Tanggal Selesai (Opsional - Jika Range)</label>
             <input 
               type="date" 
-              value={formData.event_end_date} 
+              value={formatDateForInput(formData.event_end_date)} 
               onChange={(e) => setFormData({...formData, event_end_date: e.target.value})}
               className="w-full h-[42px] px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
             />

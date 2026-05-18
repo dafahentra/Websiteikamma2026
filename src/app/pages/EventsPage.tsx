@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Clock, CalendarDays, X, ExternalLink, ArrowRight } from 'lucide-react';
+import { MapPin, Clock, CalendarDays, X, ExternalLink, ArrowRight, ZoomIn } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { createSlug } from '../../lib/slugify';
 import { getEventDisplayDate } from '../../lib/dateUtils';
@@ -35,6 +35,8 @@ export function EventsPage() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [events, setEvents] = useState<any[]>([]);
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
+  const [zoomedImage, setZoomedImage] = useState<string | null>(null);
 
   const getTeaser = (html: string) => {
     if (!html) return '';
@@ -81,6 +83,18 @@ export function EventsPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  // Prevent scrolling when modal is open
+  useEffect(() => {
+    if (selectedEvent || zoomedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedEvent, zoomedImage]);
 
   return (
     <div className="min-h-screen bg-white text-[#081C36]">
@@ -142,7 +156,7 @@ export function EventsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.12 }}
-              onClick={() => navigate('/events/' + createSlug(event.title))}
+              onClick={() => setSelectedEvent(event)}
               className="flex flex-col group cursor-pointer"
             >
               {/* Image Container */}
@@ -174,20 +188,20 @@ export function EventsPage() {
 
                       if (displayType === 'ongoing') {
                         return (
-                          <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/30 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+                          <div className="flex items-center gap-1.5 bg-[#081C36]/50 backdrop-blur-xl px-2 py-0.5 md:px-3 h-6 md:h-8 rounded-full border border-white/20 shadow-lg">
                             <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
                             <span className="text-white text-[9px] md:text-[10px] font-inter font-bold tracking-wider uppercase">ONGOING</span>
                           </div>
                         );
                       } else if (displayType === 'past') {
                          return (
-                          <div className="flex items-center bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+                          <div className="flex items-center bg-[#081C36]/50 backdrop-blur-xl px-2 py-0.5 md:px-3 h-6 md:h-8 rounded-full border border-white/20 shadow-lg">
                             <span className="text-white text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Past Event</span>
                           </div>
                         );
                       } else {
                         return (
-                          <div className="flex items-center bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full border border-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+                          <div className="flex items-center bg-[#081C36]/50 backdrop-blur-xl px-2 py-0.5 md:px-3 h-6 md:h-8 rounded-full border border-white/20 shadow-lg">
                             <span className="text-white text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Upcoming</span>
                           </div>
                         );
@@ -196,7 +210,7 @@ export function EventsPage() {
                     
                     {/* Event Type / Category */}
                     {event.category && (
-                      <div className="flex items-center bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:h-8 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-white/30">
+                      <div className="flex items-center bg-[#081C36]/50 backdrop-blur-xl px-2 py-0.5 md:px-3 h-6 md:h-8 rounded-full shadow-lg border border-white/20">
                         <span className="text-white text-[9px] md:text-[10px] font-inter font-bold tracking-wider uppercase">{event.category}</span>
                       </div>
                     )}
@@ -269,7 +283,7 @@ export function EventsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-              onClick={() => navigate('/events/' + createSlug(event.title))}
+              onClick={() => setSelectedEvent(event)}
               className="group cursor-pointer flex flex-col"
             >
               {/* Image */}
@@ -315,6 +329,133 @@ export function EventsPage() {
 
 
       <Footer />
+
+      {/* Modal */}
+      <AnimatePresence>
+        {selectedEvent && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-12 overflow-y-auto">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedEvent(null)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-5xl bg-white rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden z-10 flex flex-col md:flex-row max-h-[90vh] md:h-[650px]"
+            >
+              <button onClick={() => setSelectedEvent(null)} className="absolute top-4 right-4 z-[60] w-10 h-10 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-md">
+                <X size={20} />
+              </button>
+              
+              {/* LEFT: Image & Title */}
+              <div 
+                className={`w-full md:w-[45%] bg-[#081C36] relative shrink-0 h-72 md:h-auto flex flex-col justify-end overflow-hidden ${selectedEvent.image_url ? 'group cursor-pointer' : ''}`}
+                onClick={() => selectedEvent.image_url && setZoomedImage(selectedEvent.image_url)}
+              >
+                {selectedEvent.image_url ? (
+                  <div className="absolute inset-0">
+                    <img src={selectedEvent.image_url} alt={selectedEvent.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/50" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#081C36] via-[#081C36]/60 to-transparent opacity-90" />
+                    
+                    {/* Hover icon */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                      <div className="bg-black/40 backdrop-blur-md p-4 rounded-full text-white shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                        <ZoomIn size={28} />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="absolute inset-0 bg-[#0C2340]" />
+                )}
+                
+                <div className="px-6 md:px-10 pb-8 md:pb-10 pt-24 relative z-10 w-full pointer-events-none">
+                  <span className="inline-block bg-white/10 backdrop-blur-xl text-white px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] border border-white/30 mb-3 shadow-lg">
+                    {selectedEvent.category || 'Event'}
+                  </span>
+                  <h2 className="text-2xl md:text-4xl font-bold text-white leading-tight drop-shadow-md">
+                    {selectedEvent.title}
+                  </h2>
+                </div>
+              </div>
+
+              {/* RIGHT: Content */}
+              <div className="w-full md:w-[55%] flex flex-col overflow-y-auto bg-white">
+                <div className="bg-gray-50 border-b border-gray-100 px-6 md:px-10 py-5 md:py-6 flex flex-wrap gap-4 md:gap-8 text-[#081C36]/80 text-sm font-medium shrink-0">
+                  <div className="flex items-center gap-2">
+                    <CalendarDays size={18} className="text-[#081C36]/50" />
+                    <span>{selectedEvent.full_date || selectedEvent.start_date || 'TBA'}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin size={18} className="text-[#081C36]/50" />
+                    <span>{selectedEvent.location || 'Location TBA'}</span>
+                  </div>
+                </div>
+                
+                <div className="p-6 md:p-10 shrink-0">
+                  <div 
+                    className="prose prose-sm md:prose-base max-w-none prose-slate prose-headings:font-inter prose-headings:font-bold prose-headings:text-[#081C36] prose-p:text-gray-700 prose-p:leading-[1.8] prose-img:rounded-xl"
+                    dangerouslySetInnerHTML={{ __html: selectedEvent.description }}
+                  />
+                  
+                  <div className="mt-8">
+                    {(selectedEvent.registration_link || selectedEvent.link) ? (
+                      selectedEvent.type === 'past' ? (
+                        <div className="w-full py-4 bg-[#081C36]/10 text-[#081C36]/40 font-inter font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 cursor-not-allowed rounded-xl border border-[#081C36]/10">
+                          EVENT SUDAH SELESAI
+                        </div>
+                      ) : (
+                        <a
+                          href={selectedEvent.registration_link || selectedEvent.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-4 bg-[#081C36] text-white font-inter font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 hover:bg-[#0a2545] transition-colors duration-300 rounded-xl shadow-lg"
+                        >
+                          DAFTAR SEKARANG <ExternalLink size={16} />
+                        </a>
+                      )
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Image Zoom Lightbox */}
+      <AnimatePresence>
+        {zoomedImage && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setZoomedImage(null)}
+              className="fixed inset-0 bg-black/95 backdrop-blur-sm cursor-zoom-out"
+            />
+            <motion.img
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              src={zoomedImage}
+              alt="Zoomed"
+              className="relative z-10 max-w-full max-h-[95vh] object-contain rounded-lg shadow-2xl pointer-events-none"
+            />
+            <button 
+              onClick={() => setZoomedImage(null)} 
+              className="absolute top-4 right-4 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-md"
+            >
+              <X size={24} />
+            </button>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

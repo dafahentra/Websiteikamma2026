@@ -188,21 +188,21 @@ export function EventsPage() {
 
                       if (displayType === 'ongoing') {
                         return (
-                          <div className="flex items-center justify-center gap-1.5 bg-[#081C36]/50 backdrop-blur-xl px-2.5 md:px-3.5 h-6 md:h-8 rounded-full border border-white/20 shadow-lg">
-                            <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.8)] shrink-0" />
-                            <span className="text-white text-[9px] md:text-[10px] font-inter font-bold leading-none tracking-wider uppercase">ONGOING</span>
+                          <div className="flex items-center gap-1.5 bg-[#081C36]/50 backdrop-blur-xl px-2 py-0.5 md:px-3 h-6 md:h-8 rounded-full border border-white/20 shadow-lg">
+                            <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
+                            <span className="text-white text-[9px] md:text-[10px] font-inter font-bold tracking-wider uppercase">ONGOING</span>
                           </div>
                         );
                       } else if (displayType === 'past') {
                          return (
-                          <div className="flex items-center justify-center bg-[#081C36]/50 backdrop-blur-xl px-2.5 md:px-3.5 h-6 md:h-8 rounded-full border border-white/20 shadow-lg">
-                            <span className="text-white text-[9px] md:text-[10px] font-bold leading-none tracking-wider uppercase">Past Event</span>
+                          <div className="flex items-center bg-[#081C36]/50 backdrop-blur-xl px-2 py-0.5 md:px-3 h-6 md:h-8 rounded-full border border-white/20 shadow-lg">
+                            <span className="text-white text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Past Event</span>
                           </div>
                         );
                       } else {
                         return (
-                          <div className="flex items-center justify-center bg-[#081C36]/50 backdrop-blur-xl px-2.5 md:px-3.5 h-6 md:h-8 rounded-full border border-white/20 shadow-lg">
-                            <span className="text-white text-[9px] md:text-[10px] font-bold leading-none tracking-wider uppercase">Upcoming</span>
+                          <div className="flex items-center bg-[#081C36]/50 backdrop-blur-xl px-2 py-0.5 md:px-3 h-6 md:h-8 rounded-full border border-white/20 shadow-lg">
+                            <span className="text-white text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Upcoming</span>
                           </div>
                         );
                       }
@@ -210,8 +210,8 @@ export function EventsPage() {
                     
                     {/* Event Type / Category */}
                     {event.category && (
-                      <div className="flex items-center justify-center bg-[#081C36]/50 backdrop-blur-xl px-2.5 md:px-3.5 h-6 md:h-8 rounded-full shadow-lg border border-white/20">
-                        <span className="text-white text-[9px] md:text-[10px] font-inter font-bold leading-none tracking-wider uppercase">{event.category}</span>
+                      <div className="flex items-center bg-[#081C36]/50 backdrop-blur-xl px-2 py-0.5 md:px-3 h-6 md:h-8 rounded-full shadow-lg border border-white/20">
+                        <span className="text-white text-[9px] md:text-[10px] font-inter font-bold tracking-wider uppercase">{event.category}</span>
                       </div>
                     )}
                   </div>
@@ -374,7 +374,7 @@ export function EventsPage() {
                 )}
                 
                 <div className="px-6 md:px-10 pb-8 md:pb-10 pt-24 relative z-10 w-full pointer-events-none">
-                  <span className="inline-flex items-center justify-center bg-white/10 backdrop-blur-xl text-white px-4 py-1.5 rounded-full text-[10px] font-bold leading-none uppercase tracking-[0.2em] border border-white/30 mb-3 shadow-lg">
+                  <span className="inline-block bg-white/10 backdrop-blur-xl text-white px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] border border-white/30 mb-3 shadow-lg">
                     {selectedEvent.category || 'Event'}
                   </span>
                   <h2 className="text-2xl md:text-4xl font-bold text-white leading-tight drop-shadow-md">

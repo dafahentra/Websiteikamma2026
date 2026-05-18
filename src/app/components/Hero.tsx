@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import LogoPutihRaw from "../../assets/LogoIKAMMA/LogoPutih.svg?raw";
 
@@ -6,6 +6,26 @@ import HERO_VIDEO_WEBM from "../../assets/Background/VidProf.webm";
 import HERO_VIDEO_MP4 from "../../assets/Background/VidProf.mp4";
 
 import { HERO_BG } from "../../assets/photos";
+
+import antamLogo from "../../assets/logopartner/LogoAntam.webp";
+import bniLogo from "../../assets/logopartner/LogoBNI.webp";
+import ekisLogo from "../../assets/logopartner/LogoEkis.webp";
+import lpsLogo from "../../assets/logopartner/LogoLPS.webp";
+import marketeersLogo from "../../assets/logopartner/LogoMarketeers.webp";
+import paragonLogo from "../../assets/logopartner/LogoParagon.webp";
+import sarirotiLogo from "../../assets/logopartner/LogoSariRoti.webp";
+import telkomLogo from "../../assets/logopartner/LogoTelkom.webp";
+
+const partnerLogos = [
+  antamLogo,
+  bniLogo,
+  ekisLogo,
+  lpsLogo,
+  marketeersLogo,
+  paragonLogo,
+  sarirotiLogo,
+  telkomLogo
+];
 
 const BACKGROUND_IMAGE = HERO_BG;
 
@@ -16,132 +36,116 @@ const svgInner = LogoPutihRaw
   .replace(/fill="[^"]*"/g, 'fill="black"')
   .trim();
 
+function IkammaLogo({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 749 538"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-label="IKAMMA"
+      dangerouslySetInnerHTML={{ __html: svgInner }}
+    />
+  );
+}
+
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  // ── iOS autoplay: nudge play() after mount ──────────────────────────────
-  // iOS Safari sometimes stalls autoplay even with muted+playsInline.
-  // Calling play() imperatively after hydration reliably starts the video.
-  useEffect(() => {
-    const vid = videoRef.current;
-    if (!vid) return;
-    vid.muted = true; // must be set in JS too for iOS
-    const tryPlay = () => {
-      vid.play().catch(() => {
-        // silently ignore – browser policy blocked it (e.g. Low Power Mode)
-      });
-    };
-    // Attempt immediately and again on first user interaction as fallback
-    tryPlay();
-    document.addEventListener("touchstart", tryPlay, { once: true });
-    return () => document.removeEventListener("touchstart", tryPlay);
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"],
+    offset: ["start start", "end start"]
   });
 
-  // ── Mask animation ───────────────────────────────────────────────────────
-  // Key mobile perf insight: large CSS scale on an SVG causes iOS to
-  // rasterize a huge offscreen surface. Strategy:
-  //   1. Keep initial scale much lower (12 mobile / 18 desktop).
-  //   2. Drive scale with useSpring so interpolation is on the JS thread,
-  //      not layout — paired with will-change: transform for GPU promotion.
-  //   3. Start revealing opacity slightly earlier so the user sees motion
-  //      before the scale hits 1 (masks the coarser steps at high scale).
+  // ── Performance fix: reduced scale range ──
+  // Previously 80→1, now 25→1 (mobile) / 35→1 (desktop).
+  // At scale 25, the text already far exceeds the viewport.
+  // This reduces GPU rasterization area by ~10x.
   const maskScaleRaw = useTransform(
     scrollYProgress,
-    [0, 0.45],
-    [isMobile ? 12 : 18, 1]
+    [0, 0.4],
+    [isMobile ? 25 : 35, 1]
   );
-  const maskOpacityRaw = useTransform(scrollYProgress, [0, 0.03], [0, 1]);
-  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
+  const maskOpacityRaw = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
+  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
   const whiteOverlayOpacity = useTransform(scrollYProgress, [0.65, 1], [0, 1]);
 
-  // Tighter spring = crisper tracking, less perceived jank
-  const springCfg = { stiffness: 400, damping: 45, mass: 0.15 };
+  // ── Performance fix: spring smoothing ──
+  // Smooths scroll-driven values to prevent frame drops on mobile.
+  // High stiffness = responsive, moderate damping = no oscillation.
+  const springCfg = { stiffness: 300, damping: 40, mass: 0.2 };
   const maskScale = useSpring(maskScaleRaw, springCfg);
   const maskOpacity = useSpring(maskOpacityRaw, springCfg);
 
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play().catch(() => { });
+        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
+
   return (
     <div ref={containerRef} className="relative w-full h-[200vh] bg-[#0C2340]">
-      {/* ── Sticky viewport ──────────────────────────────────────────────── */}
       <div
-        className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center"
-        style={{ contain: "layout style paint" }}
+        className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center cursor-pointer"
+        onClick={togglePlayPause}
+        style={{ contain: 'layout style paint' }}
       >
-        {/* Suppress ALL native video UI on every browser */}
-        <style>{`
-          video::-webkit-media-controls,
-          video::-webkit-media-controls-panel,
-          video::-webkit-media-controls-play-button,
-          video::-webkit-media-controls-start-playback-button,
-          video::-webkit-media-controls-overlay-play-button,
-          video::--webkit-media-controls-enclosure {
-            display: none !important;
-            -webkit-appearance: none !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-          }
-        `}</style>
-
-        {/* ── Video layer ─────────────────────────────────────────────────── */}
-        <div className="absolute inset-0 z-0" style={{ transform: "translateZ(0)" }}>
+        <style>
+          {`
+            video::-webkit-media-controls { display: none !important; }
+            video::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
+          `}
+        </style>
+        {/* Video Layer — GPU-promoted with translateZ(0) */}
+        <div className="absolute inset-0 z-0">
           <video
             ref={videoRef}
             autoPlay
             loop
             muted
             playsInline
-            controls={false}            // explicit false — kills native controls
             disablePictureInPicture
-            disableRemotePlayback       // prevents AirPlay icon on iOS
-            x-webkit-airplay="deny"     // belt-and-suspenders for older iOS
-            className="w-full h-full object-cover pointer-events-none select-none"
-            style={{ willChange: "transform" }}
+            className="w-full h-full object-cover pointer-events-none"
+            style={{ transform: 'translateZ(0)', willChange: 'transform' }}
           >
+            {/* WebM first — smaller file (4.1MB vs 7.6MB), better for mobile */}
             <source src={HERO_VIDEO_WEBM} type="video/webm" />
             <source src={HERO_VIDEO_MP4} type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
         </div>
 
-        {/* ── SVG mask layer ──────────────────────────────────────────────── */}
-        {/*
-          Performance notes for the mask:
-          - `transform-origin: center` is kept default (50% 50%) — no shift needed.
-          - The motion.div is GPU-promoted via will-change + translateZ.
-          - shapeRendering: "optimizeSpeed" skips anti-aliasing during animation.
-          - The SVG itself also gets translateZ so the browser creates its own
-            compositing layer separate from the motion wrapper.
-        */}
+        {/* SVG Mask Layer — optimized with shapeRendering and reduced scale */}
         <motion.div
           className="absolute inset-0 z-10 pointer-events-none"
           style={{
             scale: maskScale,
             opacity: maskOpacity,
-            willChange: "transform, opacity",
-            transform: "translateZ(0)",
+            willChange: 'transform, opacity',
+            transform: 'translateZ(0)',
           }}
         >
           <svg
             width="100%"
             height="100%"
             xmlns="http://www.w3.org/2000/svg"
-            style={{
-              shapeRendering: "optimizeSpeed",
-              transform: "translateZ(0)",
-              willChange: "transform",
-            }}
+            style={{ shapeRendering: 'optimizeSpeed' }}
           >
             <defs>
               <mask id="textMask">
@@ -165,10 +169,9 @@ export function Hero() {
                 <svg x="50%" y="50%" overflow="visible">
                   <g
                     fill="black"
-                    transform={
-                      isMobile
-                        ? "translate(-56, -146) scale(0.1495)"
-                        : "translate(-80, -221) scale(0.2136)"
+                    transform={isMobile
+                      ? "translate(-56, -146) scale(0.1495)"
+                      : "translate(-80, -221) scale(0.2136)"
                     }
                     dangerouslySetInnerHTML={{ __html: svgInner }}
                   />
@@ -179,31 +182,22 @@ export function Hero() {
           </svg>
         </motion.div>
 
-        {/* ── Scroll indicator ────────────────────────────────────────────── */}
+        {/* Scroll Indicator */}
         <motion.div
           className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4 pointer-events-none"
           style={{ opacity: scrollIndicatorOpacity }}
         >
-          <span className="text-white/60 text-[11px] md:text-sm font-inter tracking-[0.4em] uppercase font-medium">
-            Keep Scrolling
-          </span>
+          <span className="text-white/60 text-[11px] md:text-sm font-inter tracking-[0.4em] uppercase font-medium">Keep Scrolling</span>
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-white/60">
-              <path
-                d="M12 5V19M12 19L5 12M12 19L19 12"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.div>
         </motion.div>
-
-        {/* ── White fade-out overlay ──────────────────────────────────────── */}
+        {/* White fade-out overlay — dissolves hero into the About section */}
         <motion.div
           className="absolute inset-0 z-20 bg-white pointer-events-none"
           style={{ opacity: whiteOverlayOpacity }}

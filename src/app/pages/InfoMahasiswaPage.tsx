@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams, useNavigate } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Clock, CalendarDays, Filter, Search, X, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Clock, CalendarDays, Filter, Search, X, ArrowRight, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
@@ -57,6 +57,8 @@ export function InfoMahasiswaPage() {
   const [activeStatus, setActiveStatus] = useState<typeof STATUS_FILTERS[number]>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const [selectedInfo, setSelectedInfo] = useState<InfoItem | null>(null);
+  const [zoomedImage, setZoomedImage] = useState<string | null>(null);
 
   const [infoItems, setInfoItems] = useState<InfoItem[]>([]);
   const [isMobile, setIsMobile] = useState(false);
@@ -116,6 +118,18 @@ const CATEGORY_COLORS: Record<Category, string> = {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  // Prevent scrolling when modal is open
+  useEffect(() => {
+    if (selectedInfo || zoomedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedInfo, zoomedImage]);
 
   // Read ?category= from URL
   useEffect(() => {
@@ -314,7 +328,7 @@ const CATEGORY_COLORS: Record<Category, string> = {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                onClick={() => navigate('/info-mahasiswa/' + createSlug(item.title))}
+                onClick={() => setSelectedInfo(item)}
                 className="group cursor-pointer flex flex-col bg-white rounded-xl md:rounded-2xl border border-[#081C36]/10 overflow-hidden hover:shadow-lg transition-all duration-300"
               >
                 {/* Poster Image */}
@@ -348,12 +362,12 @@ const CATEGORY_COLORS: Record<Category, string> = {
                       const displayStatus = isActuallyClosed ? 'closed' : item.status;
                       
                       return displayStatus === 'open' ? (
-                        <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3 h-7 md:px-4 md:h-10 rounded-full border border-white/30 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+                        <div className="flex items-center gap-1.5 bg-[#081C36]/50 backdrop-blur-xl px-3 h-7 md:px-4 md:h-8 rounded-full border border-white/20 shadow-lg">
                           <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
                           <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">OPEN</span>
                         </div>
                       ) : (
-                        <div className="flex items-center bg-white/10 backdrop-blur-md px-3 h-7 md:px-4 md:h-10 rounded-full border border-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+                        <div className="flex items-center bg-[#081C36]/50 backdrop-blur-xl px-3 h-7 md:px-4 md:h-8 rounded-full border border-white/20 shadow-lg">
                           <span className="text-white text-[10px] md:text-xs font-inter font-bold tracking-wider uppercase">CLOSED</span>
                         </div>
                       );
@@ -364,11 +378,11 @@ const CATEGORY_COLORS: Record<Category, string> = {
                 {/* Content */}
                 <div className="p-3 md:p-5 flex flex-col flex-grow">
                   {/* Header Meta: Category & Date */}
-                  <div className="flex flex-wrap items-center justify-between gap-1 mb-2 md:mb-3">
-                    <span className={`flex items-center px-3 h-7 md:px-4 md:h-10 rounded-full text-white text-[10px] md:text-xs font-inter font-bold uppercase tracking-wider ${CATEGORY_COLORS[item.category]}`}>
+                  <div className="flex flex-wrap items-center justify-between gap-1 mb-3">
+                    <span className={`inline-flex items-center px-3 py-1 md:px-4 md:py-1.5 rounded-full text-white text-[10px] md:text-[11px] font-inter font-bold uppercase tracking-wider ${CATEGORY_COLORS[item.category]}`}>
                       {item.category}
                     </span>
-                    <span className="text-[#081C36]/50 text-xs sm:text-sm font-inter">
+                    <span className="text-[#081C36]/50 text-[11px] md:text-xs font-inter font-medium flex items-center">
                       {item.periodStart === item.periodEnd ? item.periodStart : `${item.periodStart} - ${item.periodEnd}`}
                     </span>
                   </div>
@@ -473,6 +487,151 @@ const CATEGORY_COLORS: Record<Category, string> = {
 
 
       <Footer />
+
+      {/* Modal */}
+      <AnimatePresence>
+        {selectedInfo && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-12 overflow-y-auto">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedInfo(null)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-5xl bg-white rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden z-10 flex flex-col md:flex-row max-h-[90vh] md:h-[650px]"
+            >
+              <button onClick={() => setSelectedInfo(null)} className="absolute top-4 right-4 z-[60] w-10 h-10 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-md">
+                <X size={20} />
+              </button>
+              
+              {/* LEFT: Image & Title */}
+              <div 
+                className="w-full md:w-[45%] bg-[#081C36] relative shrink-0 h-72 md:h-auto flex flex-col justify-end group cursor-pointer overflow-hidden"
+                onClick={() => setZoomedImage(selectedInfo.poster)}
+              >
+                <div className="absolute inset-0">
+                  <img src={selectedInfo.poster} alt={selectedInfo.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/50" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#081C36] via-[#081C36]/60 to-transparent opacity-90" />
+                  
+                  {/* Hover icon */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                    <div className="bg-black/40 backdrop-blur-md p-4 rounded-full text-white shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                      <ZoomIn size={28} />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="px-6 md:px-10 pb-8 md:pb-10 pt-24 relative z-10 w-full pointer-events-none">
+                  <span className="inline-block bg-white/10 backdrop-blur-xl text-white px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] border border-white/30 mb-3 shadow-lg">
+                    {selectedInfo.category || 'Info'}
+                  </span>
+                  <h2 className="text-2xl md:text-4xl font-bold text-white leading-tight drop-shadow-md">
+                    {selectedInfo.title}
+                  </h2>
+                </div>
+              </div>
+
+              {/* RIGHT: Content */}
+              <div className="w-full md:w-[55%] flex flex-col overflow-y-auto bg-white">
+                <div className="bg-gray-50 border-b border-gray-100 px-6 md:px-10 py-5 md:py-6 flex flex-wrap gap-4 md:gap-8 text-[#081C36]/80 text-sm font-medium shrink-0">
+                  <div className="flex items-center gap-2">
+                    <CalendarDays size={18} className="text-[#081C36]/50" />
+                    <span>
+                      {selectedInfo.periodStart === selectedInfo.periodEnd 
+                        ? selectedInfo.periodStart 
+                        : `${selectedInfo.periodStart} - ${selectedInfo.periodEnd}`}
+                    </span>
+                  </div>
+                  {selectedInfo.organizer && (
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-[#081C36]">Oleh: {selectedInfo.organizer}</span>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="p-6 md:p-10 shrink-0">
+                  <div 
+                    className="prose prose-sm md:prose-base max-w-none prose-slate prose-headings:font-inter prose-headings:font-bold prose-headings:text-[#081C36] prose-p:text-gray-700 prose-p:leading-[1.8] prose-img:rounded-xl"
+                    dangerouslySetInnerHTML={{ __html: selectedInfo.fullDescription || selectedInfo.description }}
+                  />
+                  
+                  <div className="mt-8">
+                    {(() => {
+                      const now = new Date();
+                      now.setHours(0, 0, 0, 0);
+                      const parseIKAMMADate = (str: string) => {
+                        if (!str) return null;
+                        const parts = str.split(' ');
+                        if (parts.length !== 3) return null;
+                        const day = parseInt(parts[0]);
+                        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                        const month = months.indexOf(parts[1]);
+                        const year = parseInt(parts[2]);
+                        if (month === -1) return null;
+                        return new Date(year, month, day);
+                      };
+                      const deadline = selectedInfo.deadlineDate ? new Date(selectedInfo.deadlineDate) : parseIKAMMADate(selectedInfo.periodEnd);
+                      if (deadline) deadline.setHours(0, 0, 0, 0);
+                      const isActuallyClosed = (deadline && now > deadline) || selectedInfo.status === 'closed';
+
+                      return !isActuallyClosed ? (
+                        <a
+                          href={selectedInfo.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-4 bg-[#081C36] text-white font-inter font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 hover:bg-[#0a2545] transition-colors duration-300 rounded-xl shadow-lg"
+                        >
+                          Buka Tautan Pendaftaran <ExternalLink size={16} />
+                        </a>
+                      ) : (
+                        <div className="w-full py-4 bg-red-50 text-red-500 font-inter font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 cursor-not-allowed rounded-xl border border-red-100">
+                          PENDAFTARAN DITUTUP
+                        </div>
+                      );
+                    })()}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Image Zoom Lightbox */}
+      <AnimatePresence>
+        {zoomedImage && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setZoomedImage(null)}
+              className="fixed inset-0 bg-black/95 backdrop-blur-sm cursor-zoom-out"
+            />
+            <motion.img
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              src={zoomedImage}
+              alt="Zoomed"
+              className="relative z-10 max-w-full max-h-[95vh] object-contain rounded-lg shadow-2xl pointer-events-none"
+            />
+            <button 
+              onClick={() => setZoomedImage(null)} 
+              className="absolute top-4 right-4 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-md"
+            >
+              <X size={24} />
+            </button>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

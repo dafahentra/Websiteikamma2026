@@ -109,31 +109,13 @@ export const AdminInfoForm = () => {
 
   const formatDateForInput = (dateStr: string) => {
     if (!dateStr) return '';
-    
-    if (dateStr.includes('-')) {
-      const match = dateStr.match(/^(\d{4}-\d{2}-\d{2})/);
-      if (match) return match[1];
-    }
-    
+    if (dateStr.includes('-') && dateStr.split('-').length === 3) return dateStr;
     const parts = dateStr.split(' ');
-    if (parts.length === 3) {
-      const day = parts[0].padStart(2, '0');
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-      const monthIndex = months.indexOf(parts[1]);
-      if (monthIndex !== -1) {
-        const month = (monthIndex + 1).toString().padStart(2, '0');
-        return `${parts[2]}-${month}-${day}`;
-      }
-    }
-    
-    try {
-      const d = new Date(dateStr);
-      if (!isNaN(d.getTime())) {
-        return d.toISOString().split('T')[0];
-      }
-    } catch(e) {}
-    
-    return '';
+    if (parts.length !== 3) return '';
+    const day = parts[0].padStart(2, '0');
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    const month = (months.indexOf(parts[1]) + 1).toString().padStart(2, '0');
+    return `${parts[2]}-${month}-${day}`;
   };
 
   const formatDateForStorage = (dateStr: string) => {
